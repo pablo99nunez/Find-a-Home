@@ -8,7 +8,7 @@ const createNewPet = async (PetData) => {
 
 const findPet = async (petID) => {
   const PetInDB = await PetModel.findOne({_id: petID})
-  return petInDB
+  return PetInDB
 }
 
 const findAllPets = async (filter) => {
