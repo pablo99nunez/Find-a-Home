@@ -13,7 +13,7 @@ const findUser = async (userData) => {
 }
 
 const findAllUsers = async (filter) => {
-    const allUsers = await UserModel.find()
+    const allUsers = await UserModel.find(filter)
     return allUsers
  
 }

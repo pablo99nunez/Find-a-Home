@@ -15,9 +15,9 @@ router.get('/profile',async (req, res) => {
 
 router.get('/', async(req,res) => {
   try {
-    const user = req.query
-    if(!user) user = ''
-    const users = await findAllUsers(user)
+    const filter = req.body
+    if(!filter) filter = {}
+    const users = await findAllUsers(filter)
     res.status(200).send(users)
   } catch (error) {
     res.status(501).send({error: error.message})
