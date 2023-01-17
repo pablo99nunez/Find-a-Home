@@ -6,8 +6,7 @@ const UserModel = require('../models/user');
 router.get('/profile',async (req, res) => {
   try {
     const userEmail = req.body.email
-    if(userEmail) {
-      const user = await findUser(userEmail)}
+    const user = await findUser(userEmail)
       res.send(user)
   } catch (error) {
     res.status(501).send({error: error.message})
@@ -27,15 +26,15 @@ router.get('/', async(req,res) => {
 
 router.post('/',async (req,res) => {
   try {
-    const user = req.body
-    const createdUser = await createNewUser(user)
+    const {email} = req.body
+    const createdUser = await createNewUser(email)
     res.status(200).send(createdUser)
   } catch (error) {
     res.status(501).send({error: error.message})
   }
 })
 
-router.put('/', async(req, res) => {
+router.put('/profile', async(req, res) => {
   try{
     const user = req.body
     const updatedUser = await updateUser(user)

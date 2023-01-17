@@ -7,7 +7,7 @@ const createNewUser = async (user) => {
 }
 
 const findUser = async (userData) => {
-    const userInDB = await UserModel.findOne(userData)
+    const userInDB = await UserModel.findOne({email: userData})
     return userInDB
  
 }
