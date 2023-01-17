@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
     fontSize: 18,
     marginHorizontal: 80,
-    marginTop: 24,
   },
   dogAge: {
     marginTop: 1,
@@ -79,13 +78,11 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     fontSize: 15,
     marginHorizontal: 80,
-    marginTop: 24,
   },
   dogRescued: {
     marginTop: 1,
     padding: 4,
     backgroundColor: "red",
     marginHorizontal: 80,
-    marginTop: 24,
   },
 });
