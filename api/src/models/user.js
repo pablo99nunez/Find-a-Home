@@ -3,15 +3,7 @@ const validator = require('validator')
 const { toJSON/* , paginate */ } = require('./plugins');
 
 
-function tel_argentino_valido ( tel ) {
-  //eliminamos todo lo que no es dígito
-  num = preg_replace( '/\D+/', '', tel);
-  //devolver si coincidió con el regex
-  return preg_match(
-      '/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/D',
-      num
-  );
-}
+
 
 const userSchema = mongoose.Schema(
   {
@@ -40,11 +32,6 @@ const userSchema = mongoose.Schema(
     phone:{
       type: String,
       required: true,
-      validate(value){
-        if(!tel_argentino_valido(value)){
-          throw new Error('Invalid phone')
-        }
-      }
     },
     profilePic: {
       type: String,
