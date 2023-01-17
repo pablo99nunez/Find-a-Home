@@ -1,49 +1,30 @@
 const PetModel = require('../models/pet');
 
-const createNewUser = async (userData) => {
-try {
-  const newUser = await UserModel.create(userData, function(err,user){
-    if(err){throw new Error('We could not add the user to our data base')}
-    else return newUser
-  })
-} catch (error) {
-  return error
-}
+const createNewPet = async (PetData) => {
+  const newPet = new PetModel(PetData)
+  await newPet.save()
+  return newPet
+ }
+
+const findPet = async (petID) => {
+  const PetInDB = await PetModel.findOne({_id: petID})
+  return petInDB
 }
 
-const findUser = async (userData) => {
-  try {
-    const userInDB = await UserModel.findOne(userData)
-    if (userInDB) {return userInDB}
-    else return false
-  } catch (error) {
-    return error
-  }
+const findAllPets = async (filter = {}) => {
+  const allPets = await PetModel.find(filter)
+  return allPets
 }
 
-const findAllUsers = async (filter = {}) => {
-  try {
-    const allUsers = await UserModel.find(filter)
-    if (allUsers) allUsers;
-    else return false
-  } catch (error) {
-    return error
-  }
-}
-
-const updateUser = async(userData) => {
-  try {
-   const user = {email: userData.email}
-   const updatedUser = await UserModel.updateOne(user, userData)
-   return updatedUser
-  } catch (error) {
-    return error
-  }
+const updatePet = async(PetData, petID) => {
+   const queryCondition = {_id: petID}
+   const updatedPet = await PetModel.updateOne(queryCondition, PetData)
+   return updatedPet
 }
 
 module.exports = {
-  createNewUser,
-  findUser,
-  findAllUsers,
-  updateUser
+  createNewPet,
+  findPet,
+  findAllPets,
+  updatePet
 }

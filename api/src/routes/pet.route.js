@@ -1,50 +1,45 @@
 const express = require('express');
-const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
+const { findPet, findAllPets, createNewPet, updatePet } = require('../controllers/petController');
 const router = express.Router();
-const UserModel = require('../models/user');
 
-router.get('/profile',(req, res) => {
+//get all pets
+router.get('/', async (req, res) => {
   try {
-    const userEmail = req.body.email
-    if(userEmail) {
-      const user = findUser(userEmail)}
-      res.send(user)
+    await findAllPets({})
   } catch (error) {
-    res.status(501).send({error: error.message})
+    res.status(501).send({ error: error.message })
   }
 })
 
-router.get('/:ID', (req,res) => {
+//create pet
+router.post('/', async (req, res) => {
   try {
-    const user = req.query
-    if(!user) user = {}
-    findAllUsers(user)
+    const newPet = req.body
+    await createNewPet(newPet)
   } catch (error) {
-    res.status(501).send({error: error.message})
+    res.status(501).send({ error: error.message })
   }
 })
 
-router.put('/:ID', (req,res) => {
+//get by ID
+router.get('/:ID', async (req, res) => {
   try {
-    const newUser = req.body
-    createNewUser(newUser)
+    const pet = await findPet(req.params.ID)
+    res.send(pet)
   } catch (error) {
-    res.status(501).send({error: error.message})
+    res.status(501).send({ error: error.message })
   }
 })
 
-router.put('/',(req, res) => {
-  try{
-    const user = req.body
-    const updatedUser = updateUser(user)
-  res.send({message: 'usuario editado', payload: updatedUser });
-} catch(err){
-  res.status(501).send({error: err.message})
-}
+//modify pet
+router.put('/:ID', async (req, res) => {
+  try {
+    const modifiedPetData = req.body
+    const updatedUser = await updatePet(modifiedPetData, req.params.ID)
+    res.send({ message: 'usuario editado', payload: updatedUser });
+  } catch (err) {
+    res.status(501).send({ error: err.message })
+  }
 });
-
-
-
-
 
 module.exports = router;
