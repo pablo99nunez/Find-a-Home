@@ -77,6 +77,12 @@ const userSchema = mongoose.Schema(
     }],
     address: {
       type: String,
+    },
+    pets: {
+      type: Array, //ids de mascotas
+    },
+    shelters: { //ids de refugios
+      type: Array,
     }
   },
   {
