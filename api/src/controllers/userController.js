@@ -1,14 +1,7 @@
 const UserModel = require('../models/user');
 
-const createNewUser = async (dataToken) => {
+const createNewUser = async (userData) => {
 try {
-  const userData ={
-    name: 'Name',
-    lastName: "Last Name",
-    email: dataToken.email,
-    email_verified: dataToken.email_verified,
-    picture: dataToken.picture
-  }
   const newUser = await UserModel.create(userData, function(err,user){
     if(err){throw new Error('We could not add the user to our data base')}
     else return newUser
@@ -18,9 +11,9 @@ try {
 }
 }
 
-const findUser = async (dataToken) => {
+const findUser = async (userData) => {
   try {
-    const userInDB = await UserModel.findOne({email: dataToken.email})
+    const userInDB = await UserModel.findOne(userData)
     if (userInDB) {return userInDB}
     else return false
   } catch (error) {
@@ -38,3 +31,19 @@ const findAllUsers = async (filter = {}) => {
   }
 }
 
+const updateUser = async(userData) => {
+  try {
+   const user = {email: userData.email}
+   const updatedUser = await UserModel.updateOne(user, userData)
+   return updatedUser
+  } catch (error) {
+    return error
+  }
+}
+
+module.exports = {
+  createNewUser,
+  findUser,
+  findAllUsers,
+  updateUser
+}
