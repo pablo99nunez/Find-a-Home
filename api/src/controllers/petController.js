@@ -1,44 +1,25 @@
 const PetModel = require('../models/pet');
 
 const createNewPet = async (PetData) => {
-try {
-  const newPet = await PetModel.create(PetData, function(err,Pet){
-    if(err){throw new Error('We could not add the Pet to our data base')}
-    else return newPet
-  })
-} catch (error) {
-  return error
-}
-}
+  const newPet = new PetModel(PetData)
+  await newPet.save()
+  return newPet
+ }
 
 const findPet = async (petID) => {
-  try {
-    const PetInDB = await PetModel.findOne({_id: petID})
-    if (PetInDB) {return PetInDB}
-    else return false
-  } catch (error) {
-    return error
-  }
+  const PetInDB = await PetModel.findOne({_id: petID})
+  return petInDB
 }
 
 const findAllPets = async (filter = {}) => {
-  try {
-    const allPets = await PetModel.find(filter)
-    if (allPets) allPets;
-    else return false
-  } catch (error) {
-    return error
-  }
+  const allPets = await PetModel.find(filter)
+  return allPets
 }
 
 const updatePet = async(PetData, petID) => {
-  try {
    const queryCondition = {_id: petID}
    const updatedPet = await PetModel.updateOne(queryCondition, PetData)
    return updatedPet
-  } catch (error) {
-    return error
-  }
 }
 
 module.exports = {
