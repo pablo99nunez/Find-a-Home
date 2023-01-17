@@ -1,13 +1,11 @@
 var React = require('react');
-var {LoginButton, Profile} = require('./LoginButton')
 
 //registro
 function DataEntryForm() {
     return (
         <div>
-            <LoginButton/>
-            <Profile/>
-            <form action="/superadmin" method="post">
+            
+            <form action="/" method="post">
                 <div>
                     <input
                         type="text"
@@ -34,13 +32,6 @@ function DataEntryForm() {
                 </div>
                 <div>
                     
-                </div>
-                <div>
-                    <select name="role" id="role">
-                        <option value="admin">admin</option>
-                        <option value="limpiadora">limpiadora</option>
-                        <option value="contratista">contratista</option>
-                    </select>
                 </div>
                 <div>
                     <input
@@ -72,12 +63,11 @@ function DataList({ dataItems }) {
             <thead>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Role</th>
                 <th>Image</th>
                 <th>Adress</th>
                 <th>
                     Delete{' '}
-                    {dataItems.length > 1 && <a href="/superadmin/delete?all=true">all</a>}
+                    {dataItems.length > 1 && <a href="/admin/delete?all=true">all</a>}
                 </th>
             </thead>
             {dataItems.map((item) => {
@@ -86,11 +76,10 @@ function DataList({ dataItems }) {
                     <tr key={id} id={id}>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
-                        <td>{item.role}</td>
                         <td>{item.image}</td>
                         <td>{item.adress}</td>
                         <td>
-                            <a href={'/superadmin/delete?id=' + id}>X</a>
+                            <a href={'admin/delete?id=' + id}>Delete</a>
                         </td>
                     </tr>
                 );

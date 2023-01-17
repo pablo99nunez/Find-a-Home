@@ -7,23 +7,13 @@ const cors = require('cors')
 // read .env file
 require('dotenv').config();
 const mongoose = require('mongoose');
-const UserModel = require('./models/user');
-const routes = require('./routes/v1');
-//-----------------------------
 
+const routes = require('./routes');
+//-----------------------------
 /* eslint no-return-await: 0 */
 mongoose.set('strictQuery', true)
 const DATABASE_URL = process.env.DATABASE_URL? process.env.DATABASE_URL: 'mongodb://localhost:27017';
 const DATABASE_NAME = process.env.DATABASE_NAME || 'my-tutorial-db';
-
-
-
-console.log(`DB:${DATABASE_URL}`);
-const authConfig = {
-    domain: process.env.AUTH0_DOMAIN,
-    audience: process.env.AUTH0_AUDIENCE
-  };
-
 
 
 main().catch(err => console.log(err));
@@ -52,31 +42,24 @@ const create = async () => {
         'jsx',
         render.createEngine({ beautify: true })
     );
-
-    // RUTA AUTH0 ------------------------------------------------------------------------
-    // Define a route that requires the user to be an admin
-    // app.use(auth(config));
     app.use(routes)
-    app.get('/status', (req, res) => {
-        res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-      });
 
     
-    // RUTA AUTH0 ------------------------------------------------------------------------
-    // Display form and table
-app.get('/', async (req, res) => {
-    timeStamp(req);
+   
+//     // Display form and table
+// app.get('/', async (req, res) => {
+//     timeStamp(req);
        
-    // return react front-end
-    res.render('home');
-  });
+//     // return react front-end
+//     res.redirect('/admin')
+//   });
 
-    // instead of 404 - just return home page
-    app.get('*', (req, res) => {
-        timeStamp(req);
+//     // instead of 404 - just return home page
+//     app.get('*', (req, res) => {
+//         timeStamp(req);
 
-        res.redirect('/');
-    });
+//        res.status(400).send(error)
+//     });
 
     return app;
 };

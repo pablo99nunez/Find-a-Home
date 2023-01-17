@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { checkJwt } = require('../../utils/checktoken');
-const UserModel = require('../../models/user');
+const UserModel = require('../models/user');
 
-router.get('/profile', checkJwt, async (req, res) => {
+router.get('/profile', async (req, res) => {
   try{
   let user = await UserModel.findOne({ email: req.auth.email });
   if (user)
@@ -38,7 +37,7 @@ catch(err){
 });
 
 
-router.get('/',checkJwt, async (req, res) => {
+router.get('/', async (req, res) => {
   try{
   let user = await UserModel.findOne({ email: req.auth.email });
   res.send(user);
@@ -49,7 +48,7 @@ catch(err){
 });
 
 
-router.put('/',checkJwt, async (req, res) => {
+router.put('/', async (req, res) => {
   try{
 
   

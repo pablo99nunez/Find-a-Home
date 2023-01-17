@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
 const { toJSON/* , paginate */ } = require('./plugins');
-//const { roles } = require('../config/roles');
+
+
+function tel_argentino_valido ( tel ) {
+  //eliminamos todo lo que no es dígito
+  num = preg_replace( '/\D+/', '', tel);
+  //devolver si coincidió con el regex
+  return preg_match(
+      '/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/D',
+      num
+  );
+}
 
 const userSchema = mongoose.Schema(
   {
-    name: {
+    firstName: {
       type: String,
       required: true,
       trim: true,
@@ -27,42 +37,46 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    role: {
+    phone:{
       type: String,
-      enum: ['limpiadora','admin','contratista', undefined],
-      default: undefined,
+      required: true,
+      validate(value){
+        if(!tel_argentino_valido(value)){
+          throw new Error('Invalid phone')
+        }
+      }
     },
-    email_verified: {
-      type: Boolean,
-      default: false,
-    },
-    picture: {
+    profilePic: {
       type: String,
       validate(value) {
         if (!value.match(/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/)) {
           throw new Error('image must be correct and complete url direction');
         }
       },
-    },
-    image: {
-      type: String,
-      validate(value) {
-        if (!value.match(/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/)) {
-          throw new Error('image must be correct and complete url direction');
-        }
-      },
-    },
-    address: {
-      type: String,
-    },
-    availableDays: {
-      type: Array,
-    },
-    availableHours: {
-      type: String,
     },
     profile: {
       type: Object,
+    },
+    lastModifiedDate:{
+      type: Date
+    },
+    type:{
+      type: String
+    },
+    valoration:{
+      type: Number,
+    },
+    reviewsQty:{
+      type: Number
+    },
+    description:{
+      type: String
+    },
+    gallery:[{
+      type: String
+    }],
+    address: {
+      type: String,
     }
   },
   {
