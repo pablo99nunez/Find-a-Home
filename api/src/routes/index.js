@@ -1,6 +1,8 @@
 const express = require('express');
 const userRoute = require('./user.route');
 
+const petRoute = require('./pet.route');
+
 
 
 const router = express.Router();
@@ -12,7 +14,7 @@ const defaultRoutes = [
   },
   {
     path: '/pet',
-    route: userRoute,
+    route: petRoute,
   },
 ];
 
