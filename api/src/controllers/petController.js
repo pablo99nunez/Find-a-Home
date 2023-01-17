@@ -11,7 +11,7 @@ const findPet = async (petID) => {
   return petInDB
 }
 
-const findAllPets = async (filter = {}) => {
+const findAllPets = async (filter) => {
   const allPets = await PetModel.find(filter)
   return allPets
 }
