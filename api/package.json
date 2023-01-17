@@ -1,0 +1,62 @@
+{
+  "name": "js-e2e-express-mongo",
+  "version": "1.0.0",
+  "description": "JavaScript server written with Express.js and the native MongoDB API",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles",
+    "start:dev": "npm run lint && npm run start",
+    "start": "nodemon node src/index.js",
+    "lint": "eslint src/**/*.js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diberry/js-e2e-express-mongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diberry/js-e2e-express-mongo/issues"
+  },
+  "homepage": "https://github.com/diberry/js-e2e-express-mongo#readme",
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^1.12.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.18.2",
+    "express-jwt": "^8.3.0",
+    "express-openid-connect": "^2.11.0",
+    "express-react-views": "^0.11.0",
+    "jwks-rsa": "^3.0.1",
+    "mongodb": "^3.6.2",
+    "mongoose": "^6.8.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "serve-static": "^1.14.1",
+    "validator": "^13.7.0"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
+}
