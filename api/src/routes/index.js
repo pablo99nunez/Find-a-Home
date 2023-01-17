@@ -10,6 +10,10 @@ const defaultRoutes = [
     path: '/user',
     route: userRoute,
   },
+  {
+    path: '/pet',
+    route: userRoute,
+  },
 ];
 
 

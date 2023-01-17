@@ -18,33 +18,42 @@ const petSchema = mongoose.Schema(
     birthday: {
       type: Date,
     },
-    lastModifiedDate:{
-      type: Date
-    },
-    inscriptionDate:{
-      type: Date
-    },
-    description:{
+    description: {
       type: String,
       required: true,
     },
-    gallery:[{
-      type: String
+    size: {
+      type: String,
+      required: true
+    },
+    profilePic: {
+      type: String,
+      required: true,
+    },
+    gallery: [{
+      type: String,
+      default: []
     }],
-    profilePic:{
-      type: String,
-      required: true,
+    owner: {
+      type: Number
     },
-    currentLocation: {
-      type: String,
+    lastModifiedDate: {
+      type: Date
+    },
+    inscriptionDate: {
+      type: Date
     },
     state: {
       //['Adotpable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found', ]
-      type: String
+      type: String,
+      default: 'Adoptable'
+      
     },
-    owner: {
-      type: String
-    }
+    currentLocation: {
+      type: String,
+      default: 'Owner Home'
+    },
+    
   },
   {
     timestamps: true,
