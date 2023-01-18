@@ -10,15 +10,15 @@ import {
   Image,
 } from "react-native";
 
-export default function Detail({route, navigation}){
-  const {profilePic}= route.params
-  console.log(profilePic)
-  return(
+export default function Detail({ route, navigation }) {
+  const { profilePic } = route.params;
+  console.log(profilePic);
+  return (
     <View>
-      <Image 
-      style={{ width: 300, height: 300, margin: 35}}
-      source={{uri: profilePic}}
+      <Image
+        style={{ width: 300, height: 300, margin: 35 }}
+        source={{ uri: profilePic }}
       />
     </View>
-  )
+  );
 }

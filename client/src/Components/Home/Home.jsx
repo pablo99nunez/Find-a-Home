@@ -68,7 +68,7 @@ export default function App({ navigation }) {
       age: 5,
       rescued: "1400 days ago",
       profilePic:
-        "https://www.bunko.pet/__export/1630188561615/sites/debate/img/2021/08/28/gato_calle_crop1630188454704.jpeg_976912859.jpeg",
+        "https://i.pinimg.com/736x/f6/ea/84/f6ea8499f125c182bbc0b932025d1bdc.jpg",
     },
   ];
   return (
