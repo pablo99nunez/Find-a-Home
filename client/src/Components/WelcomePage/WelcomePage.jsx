@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     imgbg2: {
         position: 'absolute',
-        bottom:-70
+        bottom:-90
     },
     slide1: {
         width,
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         flexDirection: "row",
         alignSelf: "center",
-        bottom: 70,
+        bottom: 0,
+        marginBottom: 40
     },
     dotActive:{
         color: '#AB4E68',
