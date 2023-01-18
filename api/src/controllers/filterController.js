@@ -13,10 +13,15 @@ const filtroSize = async (sizeMascota) => {
     return allPets
   }
 
-  
+ //filtra por edad
+  const filtroAge = async (AgeMascota) => {
+    console.log(AgeMascota);
+    const allPets = await PetModel.find({ age: { $eq: AgeMascota } });
+    return allPets
+  }
 
   //   await PetModel.find({ specie: { $eq: 'gato' } });
 
   module.exports = {
-    filtroSpecie, filtroSize
+    filtroSpecie, filtroSize, filtroAge
   }
