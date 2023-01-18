@@ -12,7 +12,6 @@ import {
 
 export default function Detail({ route, navigation }) {
   const { profilePic } = route.params;
-  console.log(profilePic);
   return (
     <View>
       <Image

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { MaterialIcons, AntDesign, Ionicons } from "@expo/vector-icons";
 
 export const Header = ({ navigation }) => {
+  console.log("holis");
   const openProfile = () => {};
   const openHome = () => {};
   const openMenu = () => {
@@ -31,7 +32,7 @@ export const Header = ({ navigation }) => {
       />
 
       <View>
-        <Text style={styles.headerText}>Botón o Logo?</Text>
+        <Text style={styles.headerText}>Logo</Text>
       </View>
     </View>
   );
