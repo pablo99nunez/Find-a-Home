@@ -19,14 +19,6 @@ async function main() {
 //como main es asincronica, es una promesa, tiene .catch:
 main().catch(err => console.log(err));
 
-
-//lo vamos a usar en los controllers, NO BORRAR
-const timeStamp = (req) => {
-    const date = new Date();
-    const currentTimeStamp = date.getTime();
-    console.log(`${currentTimeStamp} - ${req.protocol}//${req.headers.host}${req.originalUrl}`);
-};
-
 const create = async () => {
     //crea el server de express, no lo inicia todavía, tiene q iniciarl luego de conectar a la database
     const app = express();
