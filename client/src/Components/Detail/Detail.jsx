@@ -7,7 +7,7 @@ import {
   ImageBackground
 } from "react-native";
 
-export default function Detail({route, navigation}){
+export default function Detail({route}){
   const {profilePic, name , age , rescued, createdAt}= route.params
   const dateOf = createdAt.slice(0,10)
   const today = new Date()
@@ -50,3 +50,4 @@ const styles = StyleSheet.create({
     color:'#f5c936',
   }
 })
+
