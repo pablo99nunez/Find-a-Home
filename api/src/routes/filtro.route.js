@@ -5,8 +5,7 @@ const router = express.Router();
 //filtra por especie
 router.get('/specie/:variable', async (req, res) => {
     try {
-    const especie = req.params.variable
-      const allPets = await filtroSpecie(especie)
+      const allPets = await filtroSpecie(req.params.variable)
       res.send({message: 'todas las mascotas', payload: allPets})
     } catch (error) {
       res.status(501).send({ error: error.message })

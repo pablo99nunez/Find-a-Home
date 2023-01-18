@@ -4,15 +4,25 @@ const { toJSON/* , paginate */ } = require('./plugins');
 
 const userSchema = mongoose.Schema(
   {
+    userType: {
+      type: String,
+      enum : ['user','shelter','volunteer','admin'],
+      required: true,
+      default: 'user'
+    },
     firstName: {
       type: String,
       required: true,
       trim: true,
+      minlength: 2,
+      maxlength: 30     
     },
     lastName: {
       type: String,
       required: true,
       trim: true,
+      minlength: 2,
+      maxlength: 30    
     },
     email: {
       type: String,
@@ -29,6 +39,11 @@ const userSchema = mongoose.Schema(
     phone:{
       type: String,
       required: true,
+      validate(value) {
+        if (!validator.isMobilePhone(value)) {
+          throw new Error('Invalid phone number');
+        }
+      },
     },
     profilePic: {
       type: String,
@@ -44,30 +59,30 @@ const userSchema = mongoose.Schema(
     lastModifiedDate:{
       type: Date
     },
-    type:{
-      type: String
-    },
-    valoration:{
+    rating:{
       type: Number,
+      min: 0,
+      max: 5
     },
     reviewsQty:{
       type: Number
     },
     description:{
-      type: String
+      type: String,
+      maxlength: 400
     },
     gallery:[{
       type: String
     }],
     address: {
       type: String,
+      minlength: 2,
+      maxlength: 100
     },
     pets: {
       type: Array, //ids de mascotas
     },
-    shelters: { //ids de refugios
-      type: Array,
-    }
+  
   },
   {
     timestamps: {
@@ -92,18 +107,6 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   return !!user;
 };
 
-
-userSchema.pre('save', async function (next) {
-  const user = this;
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
-  }
-  next();
-});
-
-/**
- * @typedef User
- */
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
