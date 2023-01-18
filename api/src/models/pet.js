@@ -14,6 +14,7 @@ const petSchema = mongoose.Schema(
     },
     age: {
       type: String,
+      required: true,
       enum: ['0 a 8 meses','8 meses a 2 años','2 años o más'],
     },
     name: {
@@ -26,7 +27,7 @@ const petSchema = mongoose.Schema(
     specie: {
       type: String,
       required: true,
-      enum : ['Perro','Gato','Otros'],
+      enum : ['Perro','Gato','Otro'],
       default: 'Perro'
     },
     birthday: {
