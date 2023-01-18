@@ -19,8 +19,8 @@ const findAllUsers = async (filter) => {
 }
 
 const updateUser = async(userData) => {
-   const user = {email: userData.email}
-   const updatedUser = await UserModel.updateOne(user, userData)
+   const queryConditions = {email: userData.email}
+   const updatedUser = await UserModel.updateOne(queryConditions, userData)
    return updatedUser
 }
 

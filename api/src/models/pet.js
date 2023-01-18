@@ -35,13 +35,7 @@ const petSchema = mongoose.Schema(
       default: []
     }],
     owner: {
-      type: Number
-    },
-    lastModifiedDate: {
-      type: Date
-    },
-    inscriptionDate: {
-      type: Date
+      type: String
     },
     state: {
       //['Adotpable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found', ]
@@ -56,7 +50,10 @@ const petSchema = mongoose.Schema(
     
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: 'created_at', // Use `created_at` to store the created date
+      updatedAt: 'updated_at' // and `updated_at` to store the last updated date
+    }
   }
 );
 

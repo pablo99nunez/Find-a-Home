@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 //get by ID
 router.get('/:ID', async (req, res) => {
   try {
-    const pet = await findPet(req.params.ID)
+    const pet = await findPet(''+req.params.ID)
     res.send({ message: 'mascota encontrada', payload: pet })
   } catch (error) {
     res.status(501).send({ error: error.message })

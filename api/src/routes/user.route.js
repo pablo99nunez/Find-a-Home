@@ -1,7 +1,6 @@
 const express = require('express');
 const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
 const router = express.Router();
-const UserModel = require('../models/user');
 
 router.get('/profile',async (req, res) => {
   try {
@@ -26,8 +25,8 @@ router.get('/', async(req,res) => {
 
 router.post('/',async (req,res) => {
   try {
-    const {email} = req.body
-    const createdUser = await createNewUser(email)
+    const user = req.body
+    const createdUser = await createNewUser(user)
     res.status(200).send(createdUser)
   } catch (error) {
     res.status(501).send({error: error.message})

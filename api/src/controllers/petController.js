@@ -11,8 +11,9 @@ const findPet = async (petID) => {
   return PetInDB
 }
 
+//el más antiguo aparece primero
 const findAllPets = async (filter) => {
-  const allPets = await PetModel.find(filter)
+  const allPets = await PetModel.find(filter).sort([['created_at', 1]])
   return allPets
 }
 
@@ -26,6 +27,8 @@ const deletePet = async(petID) => {
    const deletedPet = await PetModel.deleteOne(queryCondition)
    return deletedPet
 }
+
+
 
 module.exports = {
   createNewPet,
