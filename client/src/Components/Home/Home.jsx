@@ -10,6 +10,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { Header } from "../Header/Header";
 
 export default function App({ navigation }) {
   const dogs = [
@@ -72,9 +73,8 @@ export default function App({ navigation }) {
   ];
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text>Find a Home App</Text>
-      </View>
+      <Header />
+
       <View style={styles.body}>
         <FlatList
           keyExtractor={(item) => item.id}
@@ -109,13 +109,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffa",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
   },
-  header: {
-    backgroundColor: "yellow",
-    padding: 20,
-  },
+
   body: {
     backgroundColor: "yellow",
     padding: 10,
