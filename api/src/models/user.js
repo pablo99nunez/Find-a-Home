@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('validator')
 const { toJSON/* , paginate */ } = require('./plugins');
 
-
-
-
 const userSchema = mongoose.Schema(
   {
     firstName: {
