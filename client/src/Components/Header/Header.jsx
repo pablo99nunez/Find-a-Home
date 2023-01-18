@@ -1,24 +1,31 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { MaterialsIcon } from "@expo/vector-icons";
 
 export const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>Header/Nav</Text>
+      {/*icon for the menu */}
+      <View>
+        <Text style={styles.headerText}>Nav Bar</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    height: 80,
-    paddingTop: 38,
-    backgroundColor: "coral",
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
   },
-  title: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 20,
+  headerText: {
     fontWeight: "bold",
+    fontSize: 16,
+    color: "#333",
+    letterSpacing: 3,
   },
 });
