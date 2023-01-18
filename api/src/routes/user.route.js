@@ -1,7 +1,6 @@
 const express = require('express');
 const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
 const router = express.Router();
-const UserModel = require('../models/user');
 
 router.get('/profile',async (req, res) => {
   try {

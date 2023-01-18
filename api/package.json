@@ -36,20 +36,15 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.12.1",
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.18.2",
     "express-jwt": "^8.3.0",
     "express-openid-connect": "^2.11.0",
-    "express-react-views": "^0.11.0",
     "jwks-rsa": "^3.0.1",
     "mongodb": "^3.6.2",
     "mongoose": "^6.8.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "serve-static": "^1.14.1",
     "validator": "^13.7.0"
   },

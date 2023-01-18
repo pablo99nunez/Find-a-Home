@@ -1,69 +1,37 @@
 // IMPORTS
 const express = require('express');
-const render = require('express-react-views');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors')
-// read .env file
-require('dotenv').config();
 const mongoose = require('mongoose');
-
 const routes = require('./routes');
-//-----------------------------
-/* eslint no-return-await: 0 */
+const bodyParser = require('body-parser');
+const cors = require('cors')
+// permite leer archivo .env.
+require('dotenv').config();
+
+//Configuracion de mongoose para conectar con la database
 mongoose.set('strictQuery', true)
-const DATABASE_URL = process.env.DATABASE_URL? process.env.DATABASE_URL: 'mongodb://localhost:27017';
-const DATABASE_NAME = process.env.DATABASE_NAME || 'my-tutorial-db';
-
-
+const DATABASE_URL = process.env.DATABASE_URL ? process.env.DATABASE_URL : 'mongodb://localhost:27017';
+const DATABASE_NAME = process.env.DATABASE_NAME || 'findahome';
+//conecta mongoose a la database
+async function main() {
+    await mongoose.connect(DATABASE_URL + '/' + DATABASE_NAME);
+    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
+//como main es asincronica, es una promesa, tiene .catch:
 main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect(DATABASE_URL+ '/' + DATABASE_NAME);
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
-
-
-const timeStamp = (req) => {
-    const date = new Date();
-    const currentTimeStamp = date.getTime();
-    console.log(`${currentTimeStamp} - ${req.protocol}//${req.headers.host}${req.originalUrl}`);
-};
-
 const create = async () => {
-
+    //crea el server de express, no lo inicia todavía, tiene q iniciarl luego de conectar a la database
     const app = express();
-    app.use(cors())
-    app.use(express.json({limit: "50mb"}))
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(express.static('public'));
-    app.set('views', path.join(__dirname, './views'));
-    app.set('view engine', 'jsx');
-    app.engine(
-        'jsx',
-        render.createEngine({ beautify: true })
-    );
+    //MIDDLEWARES, se meten en todos los request y en todos los sends
+    app.use(cors()) //discrimina quien puede hacer peticiones al backend, poner pagina del frontend al deployar.
+    app.use(express.json({ limit: "50mb" })) //transforma json en strings automaticamente y viceversa.
+    app.use(bodyParser.urlencoded({ extended: true })); //permite anidacion de objetos y arrays
+    app.use(express.static('public')); //no recuerdo
+    //FIN MIDDLEWARES
+    //Todas las Rutas:
     app.use(routes)
-
-    
-   
-//     // Display form and table
-// app.get('/', async (req, res) => {
-//     timeStamp(req);
-       
-//     // return react front-end
-//     res.redirect('/admin')
-//   });
-
-//     // instead of 404 - just return home page
-//     app.get('*', (req, res) => {
-//         timeStamp(req);
-
-//        res.status(400).send(error)
-//     });
-
-    return app;
-};
+    return app
+}
 
 module.exports = {
     create

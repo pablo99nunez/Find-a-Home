@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const validator = require('validator')
 const { toJSON/* , paginate */ } = require('./plugins');
 
-
-
-
 const userSchema = mongoose.Schema(
   {
     firstName: {
@@ -73,7 +70,10 @@ const userSchema = mongoose.Schema(
     }
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: 'created_at', // Use `created_at` to store the created date
+      updatedAt: 'updated_at' // and `updated_at` to store the last updated date
+    }
   }
 );
 
