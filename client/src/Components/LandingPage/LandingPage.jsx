@@ -1,14 +1,11 @@
 import React from 'react';
-import { Button, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { LandingButton } from '../Buttons/Buttons';
 
 const LandingPage = ({ navigation }) => {
     return(
         <View style={styles.container}>
-            <Button
-                title="Find a Home"
-                onPress={() => navigation.navigate('Welcome')}
-                style={styles.boton}
-            />
+            <LandingButton onPress={() => navigation.navigate('Welcome')}/>
         </View>
     )
 }
@@ -20,8 +17,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#3A302E',
     },
-    boton: {
-        backgroundColor: '#FFC733'
-    }
 })
 export default LandingPage;
