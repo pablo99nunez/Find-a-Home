@@ -1,93 +1,38 @@
-import React, { useState, useRef } from "react";
-import { Picker } from '@react-native-picker/picker';
-import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
+
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-export default function RegisterLastSteps({ route }) {
+const RegisterLastSteps = ({ route }) => {
 	const { telefono, pais, departamento, provincia } = route.params
-	const [userNewInput, setuserNewInput] = useState({ telefono, pais, departamento, provincia, condiciones: {} })
-
-	const [selectedCountry, setSelectedCountry] = useState();
-	const [selectedProvince, setSelectedProvince] = useState();
-	const [selectedDepto, setSelectedDepto] = useState();
-	const pickerRef = useRef();
-
-	function open() {
-		pickerRef.current.focus();
-	}
-
-	function close() {
-		pickerRef.current.blur();
+	const [userNewInput, setuserNewInput] = useState({ telefono, pais, departamento, provincia, condiciones: "" })
+	const [checkState, setCheckState] = useState({})
+	const HandleCheck = (option) => {
+		setCheckState({ ...checkState, [option]: !checkState[option] })
+		setuserNewInput({ ...userNewInput, [option]: !checkState[option] })
 	}
 	console.log(userNewInput)
-
 	return (
 		<ScrollView>
 			<Image
 				style={styles.icon}
 				source={require("../../images/logo-black.png")}
 			/>
-			<View style={styles.container}><View style={styles.divisionLine}></View>
-				<Text style={styles.textTitles}>¡Bienvenido!</Text>
+			<View style={styles.container}>
 				<View style={styles.divisionLine}></View>
-				<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
-				<Text style={styles.textSubTitles}>podrás comenzar:</Text>
-
-				<View>
-					<Text style={styles.text}>Telefono</Text>
-					<TextInput
-						style={styles.input}
-						value={userNewInput}
-						placeholder={"   011 555-5555"}
-						placeholderTextColor="#ffffff50"
-						onChangeText={(text) => setuserNewInput({ ...userNewInput, telefono: text })}
-					/>
-				</View>
-
-
-				<View>
-					<Text style={styles.text}>País:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={selectedCountry}
-						onValueChange={(itemValue, itemIndex) =>
-							setSelectedCountry(itemValue)
-						}>
-						<Picker.Item label="Argentina" value="Argentina" />
-						<Picker.Item label="Francia" value="Francia" />
-						<Picker.Item label="Croacia" value="Croacia" />
-					</Picker>
-				</View>
-
-				<View>
-					<Text style={styles.text}>Provincia:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={selectedProvince}
-						onValueChange={(itemValue, itemIndex) =>
-							setSelectedProvince(itemValue)
-						}>
-						<Picker.Item label="La rioja" value="La rioja" />
-						<Picker.Item label="Mendoza" value="Mendoza" />
-						<Picker.Item label="Buenos Aires" value="Buenos Aires" />
-					</Picker>
-				</View>
-
-				<View>
-					<Text style={styles.text}>Departamento:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={selectedDepto}
-						onValueChange={(itemValue, itemIndex) =>
-							setSelectedDepto(itemValue)
-						}>
-						<Picker.Item label="depto1" value="depto1" />
-						<Picker.Item label="depto2" value="depto2" />
-						<Picker.Item label="CABA" value="CABA" />
-					</Picker>
-				</View>
-
+				<TouchableOpacity onPress={() => HandleCheck("Techo")}>
+					<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
+					<Text style={checkState.AlimentoBalanceado ? styles.checkIsActive : styles.checkInactive}>Alimento Balanceado</Text>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
+					<Text style={checkState.PaseosDiarios ? styles.checkIsActive : styles.checkInactive}>Paseos Diarios</Text>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
+					<Text style={checkState.Vacunas ? styles.checkIsActive : styles.checkInactive}>Vacunas</Text>
+				</TouchableOpacity>
 
 				<View style={styles.divisionLine}></View>
 				<View style={styles.divisionLine}></View>
@@ -156,5 +101,29 @@ const styles = StyleSheet.create({
 		height: 1,
 		width: "80%",
 
+	},
+	checkIsActive: {
+		backgroundColor: '#AB4E68',
+		textAlign: 'center',
+		color: "#FFF",
+		fontSize: 25,
+		minWidth: 90,
+		height: 55,
+		borderRadius: 35,
+		padding: 10,
+		margin: 10,
+	},
+	checkInactive: {
+		backgroundColor: '#d9d9d971',
+		color: "#0000004e",
+		fontSize: 25,
+		height: 55,
+		textAlign: 'center',
+		minWidth: 90,
+		borderRadius: 35,
+		padding: 10,
+		margin: 10,
 	}
 })
+
+export default RegisterLastSteps;
