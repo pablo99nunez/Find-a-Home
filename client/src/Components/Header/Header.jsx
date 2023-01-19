@@ -3,12 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { MaterialIcons, AntDesign, Ionicons } from "@expo/vector-icons";
 
 export const Header = ({ navigation }) => {
-  
   const openProfile = () => {};
   const openHome = () => {};
-  const openMenu = () => {
-    /*  navigation.openDrawer(); */
-  };
+  const openMenu = () => {};
 
   return (
     <View style={styles.header}>
