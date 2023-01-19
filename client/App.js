@@ -29,10 +29,10 @@ export default function App() {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen 
-        name="Detail" 
-        component={Detail}
-        options={{ headerShown: false }}
+        <Stack.Screen
+          name="Detail"
+          component={Detail}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -45,7 +45,6 @@ export default function App() {
           component={RegisterLastSteps}
           options={{ headerShown: false }}
         />
-       
       </Stack.Navigator>
     </NavigationContainer>
   );
