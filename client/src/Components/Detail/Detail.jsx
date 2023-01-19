@@ -6,10 +6,10 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient"
 import { FlatList } from "react-native-gesture-handler";
+
 
 export default function Detail({route, navigation}){
   const {profilePic, name , createdAt, gallery}= route.params
@@ -37,7 +37,7 @@ export default function Detail({route, navigation}){
               <Text style={styles.title}>{name.toUpperCase()}</Text>
               <View style={styles.banderin}>
                 <Text style={{fontWeight: 'bold', textAlign:'right', marginRight: 10}}>{days} dias</Text>
-                <Text style={{textAlign:'right', marginRight: 10}}>buscando hogar</Text>
+                <Text className='font-bold' style={{textAlign:'right', marginRight: 10}}>buscando hogar</Text>
               </View>
           </View>
         </LinearGradient> 
@@ -91,8 +91,6 @@ const styles = StyleSheet.create({
   photos:{
     flex:1, 
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-start'
   }
   
 
