@@ -6,8 +6,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 // permite leer archivo .env.
 require('dotenv').config();
+//firebase
+var firebaseAdmin = require("firebase-admin")
+var firebaseJson = require(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-//Configuracion de mongoose para conectar con la database
+
+//MONGOOSE
 mongoose.set('strictQuery', true)
 const DATABASE_URL = process.env.DATABASE_URL ? process.env.DATABASE_URL : 'mongodb://localhost:27017';
 const DATABASE_NAME = process.env.DATABASE_NAME || 'findahome';
@@ -18,6 +22,38 @@ async function main() {
 }
 //como main es asincronica, es una promesa, tiene .catch:
 main().catch(err => console.log(err));
+//-----------
+
+//FIREBASE INIT
+
+const firebaseApp = firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(firebaseJson)
+});
+//-----------
+
+//FIREBASE MIDDLEWHARE
+const appCheckVerification = async (req, res, next) => {
+    const appCheckToken = req.header('X-Firebase-AppCheck');
+
+    if (!appCheckToken) {
+        res.status(401);
+
+        return next('Unauthorized');
+    }
+    console.log(appCheckToken);
+    try {
+        const appCheckClaims = await firebaseAdmin.appCheck().verifyToken(appCheckToken);
+
+        // If verifyToken() succeeds, continue with the next middleware
+        // function in the stack.
+        console.log(appCheckClaims);
+        return next();
+    } catch (err) {
+        res.status(401);
+        return next('Unauthorized');
+    }
+}
+//-----------
 
 const create = async () => {
     //crea el server de express, no lo inicia todavía, tiene q iniciarl luego de conectar a la database
@@ -30,6 +66,10 @@ const create = async () => {
     //FIN MIDDLEWARES
     //Todas las Rutas:
     app.use(routes)
+    app.get('/check', [appCheckVerification], (req, res) => {
+        // Handle request.
+        res.send({message: 'endpoint reached'})
+    });
     return app
 }
 
