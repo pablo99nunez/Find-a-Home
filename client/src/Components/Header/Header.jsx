@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { MaterialIcons, AntDesign, Ionicons } from "@expo/vector-icons";
 
 export const Header = ({ navigation }) => {
-  
   const openProfile = () => {};
   const openHome = () => {};
   const openMenu = () => {
@@ -12,14 +11,14 @@ export const Header = ({ navigation }) => {
 
   return (
     <View style={styles.header}>
-      <AntDesign
-        name="profile"
+      <MaterialIcons
+        name="menu"
         size={25}
         onPress={openProfile}
         style={styles.iconLeft}
       />
-      <Ionicons
-        name="logo-android"
+      <MaterialIcons
+        name=""
         size={25}
         onPress={openHome}
         style={styles.iconCenter}
@@ -30,10 +29,6 @@ export const Header = ({ navigation }) => {
         onPress={openMenu}
         style={styles.iconRight}
       />
-
-      <View>
-        <Text style={styles.headerText}>Logo</Text>
-      </View>
     </View>
   );
 };
