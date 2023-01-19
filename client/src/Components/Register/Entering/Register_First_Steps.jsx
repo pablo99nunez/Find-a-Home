@@ -4,7 +4,9 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpa
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-export default function Register({ navigation }) {
+
+export default function RegisterFirstSteps({ navigation }) {
+	
 	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
 	const pickerRef = useRef();
 
