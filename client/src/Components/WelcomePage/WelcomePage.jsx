@@ -164,12 +164,12 @@ const styles = StyleSheet.create({
   dotActive: {
     color: "#AB4E68",
     letterSpacing: 20,
-    fontSize: 40,
+    fontSize: 15,
   },
   dot: {
     color: "#ACACAC",
     letterSpacing: 20,
-    fontSize: 40,
+    fontSize: 15,
   },
   container: {
     backgroundColor: "#3A302E",
