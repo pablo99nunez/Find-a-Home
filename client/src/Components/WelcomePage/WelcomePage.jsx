@@ -5,7 +5,7 @@ import {
   Dimensions,
   StyleSheet,
   ScrollView,
-  Button,
+  TouchableOpacity,
   Image,
 } from "react-native";
 
@@ -84,11 +84,14 @@ const Welcome = ({ navigation }) => {
           <Text style={styles.text}>lleven sin un hogar.</Text>
         </View>
         <View style={styles.slide4}>
-          <Text style={styles.text}>Aca va la etiqueta de login</Text>
-          <Button
-            title="Entrar como invitado"
-            onPress={() => navigation.navigate("Home")}
-          />
+          <Text style={styles.textTitles}>Registrate</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
+          </TouchableOpacity>
+          <View style={styles.divisionLine}></View>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.textSubTitles}>Ingresar como invitado</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <View style={styles.wrapDot}>
@@ -168,6 +171,50 @@ const styles = StyleSheet.create({
     letterSpacing: 20,
     fontSize: 40,
   },
+  container: {
+    backgroundColor: "#3A302E",
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textTitles: {
+    color: "#FFF",
+    textAlign: 'center',
+    fontSize: 25,
+  },
+  textSubTitles: {
+    color: "#FFF",
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  input: {
+    width: 200,
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    margin: 10,
+  },
+  googleLogo: {
+    width: 50,
+    height: 50,
+  },
+  googleCircle: {
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ACACAC',
+    width: 66,
+    height: 66,
+    borderRadius: 100
+  },
+  divisionLine: {
+    marginTop: 20,
+    marginBottom: 20,
+    height: 1,
+    width: "80%",
+    backgroundColor: "#ACACAC",
+  }
 });
 
 export default Welcome;
