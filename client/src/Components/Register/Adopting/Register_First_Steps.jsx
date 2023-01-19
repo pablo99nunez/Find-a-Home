@@ -21,7 +21,7 @@ export default function Register({ navigation }) {
 		<ScrollView>
 			<Image
 				style={styles.icon}
-				source={require("../../images/logo-black.png")}
+				source={require("../../../images/logo-black.png")}
 			/>
 			<View style={styles.container}><View style={styles.divisionLine}></View>
 				<Text style={styles.textTitles}>¡Bienvenido!</Text>
