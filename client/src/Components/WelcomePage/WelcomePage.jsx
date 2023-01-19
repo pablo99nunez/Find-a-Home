@@ -85,7 +85,7 @@ const Welcome = ({ navigation }) => {
         </View>
         <View style={styles.slide4}>
           <Text style={styles.textTitles}>Registrate</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <TouchableOpacity onPress={() => navigation.navigate('RegisterFirstSteps')}>
             <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
           </TouchableOpacity>
           <View style={styles.divisionLine}></View>

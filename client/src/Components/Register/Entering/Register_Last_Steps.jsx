@@ -4,22 +4,33 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-const RegisterLastSteps = ({ route }) => {
+
+const RegisterLastSteps = ({ route, navigation }) => {
+
 	const { telefono, pais, departamento, provincia } = route.params
 	const [userNewInput, setuserNewInput] = useState({ telefono, pais, departamento, provincia, condiciones: "" })
 	const [checkState, setCheckState] = useState({})
+
 	const HandleCheck = (option) => {
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, [option]: !checkState[option] })
 	}
-	console.log(userNewInput)
+
 	return (
 		<ScrollView>
 			<Image
 				style={styles.icon}
-				source={require("../../images/logo-black.png")}
+				source={require("../../../images/logo-black.png")}
 			/>
 			<View style={styles.container}>
+
+				<Text style={styles.textTitles}>¡Bienvenido!</Text>
+				<View style={styles.divisionLine}></View>
+				<Text style={styles.textSubTitles}>¿Que condiciones</Text>
+				<Text style={styles.textSubTitles}>puedes ofrecer a tus</Text>
+				<Text style={styles.textSubTitles}>mascotas?</Text>
+				<View style={styles.divisionLine}></View>
+
 				<View style={styles.divisionLine}></View>
 				<TouchableOpacity onPress={() => HandleCheck("Techo")}>
 					<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
@@ -36,9 +47,14 @@ const RegisterLastSteps = ({ route }) => {
 
 				<View style={styles.divisionLine}></View>
 				<View style={styles.divisionLine}></View>
-			</View><TouchableOpacity
-				onPress={() => console.log("Navigate")}
-			><Text style={styles.next}>Continue</Text></TouchableOpacity>
+			</View>
+				<TouchableOpacity
+					onPress={() => navigation.navigate("Home")}
+				>
+					<Text style={styles.next}>
+						Continue
+					</Text>
+				</TouchableOpacity>
 
 		</ScrollView>
 	)

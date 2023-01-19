@@ -4,18 +4,12 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpa
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
-export default function Register({ navigation }) {
+
+
+export default function RegisterFirstStepsAdopting({ navigation }) {
+
 	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
 	const pickerRef = useRef();
-
-	function open() {
-		pickerRef.current.focus();
-	}
-
-	function close() {
-		pickerRef.current.blur();
-	}
-
 
 	return (
 		<ScrollView>
@@ -24,10 +18,10 @@ export default function Register({ navigation }) {
 				source={require("../../../images/logo-black.png")}
 			/>
 			<View style={styles.container}><View style={styles.divisionLine}></View>
-				<Text style={styles.textTitles}>¡Bienvenido!</Text>
+				<Text style={styles.textTitles}>¡Ya casi!</Text>
 				<View style={styles.divisionLine}></View>
 				<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
-				<Text style={styles.textSubTitles}>podrás comenzar:</Text>
+				<Text style={styles.textSubTitles}>podrás adoptar:</Text>
 
 				<View>
 					<Text style={styles.text}>Telefono</Text>
@@ -87,7 +81,7 @@ export default function Register({ navigation }) {
 				<View style={styles.divisionLine}></View>
 				<View style={styles.divisionLine}></View>
 			</View><TouchableOpacity
-				onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
+				onPress={() => navigation.navigate("RegisterLastStepsAdopting", userInput)}
 			><Text style={styles.next}>Continue</Text></TouchableOpacity>
 
 		</ScrollView>
