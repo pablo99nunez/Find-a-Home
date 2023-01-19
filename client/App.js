@@ -4,8 +4,12 @@ import Home from "./src/Components/Home/Home";
 import LandingPage from "./src/Components/LandingPage/LandingPage";
 import Welcome from "./src/Components/WelcomePage/WelcomePage";
 import Detail from "./src/Components/Detail/Detail";
-import Register from "./src/Components/Register/Entering/Register_First_Steps";
+import RegisterFirstSteps from "./src/Components/Register/Entering/Register_First_Steps";
 import RegisterLastSteps from "./src/Components/Register/Entering/Register_Last_Steps";
+import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
+import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
+import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -36,8 +40,8 @@ export default function App() {
         />
 
         <Stack.Screen
-          name="Register"
-          component={Register}
+          name="RegisterFirstSteps"
+          component={RegisterFirstSteps}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -45,7 +49,28 @@ export default function App() {
           component={RegisterLastSteps}
           options={{ headerShown: false }}
         />
-       
+
+        {/* =================================== */}
+
+        <Stack.Screen
+          name="GoogleRegister"
+          component={GoogleRegister}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterFirstStepsAdopting"
+          component={RegisterFirstStepsAdopting}
+          options={{ headerShown: false }}
+          />
+        <Stack.Screen
+          name="RegisterLastStepsAdopting"
+          component={RegisterLastStepsAdopting}
+          options={{ headerShown: false }}
+          />
+
+        {/* =================================== */}
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );
