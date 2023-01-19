@@ -5,15 +5,30 @@ const { toJSON/* , paginate */ } = require('./plugins');
 
 const petSchema = mongoose.Schema(
   {
+
+    state: {
+      //['Adotpable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found', ]
+      type: String,
+      default: 'Adoptable'
+      
+    },
+    age: {
+      type: String,
+      required: true,
+      enum: ['0 a 8 meses','8 meses a 2 años','2 años o más'],
+    },
     name: {
       type: String,
       required: true,
-      trim: true,
+      trim: true, //le saca el espacio al inicio y al final
+      minlength: 1,
+      maxlength: 30   
     },
     specie: {
       type: String,
       required: true,
-      trim: true,
+      enum : ['Perro','Gato','Otro'],
+      default: 'Perro'
     },
     birthday: {
       type: Date,
@@ -21,10 +36,12 @@ const petSchema = mongoose.Schema(
     description: {
       type: String,
       required: true,
+      maxlength: 400
     },
     size: {
       type: String,
-      required: true
+      enum : ['small','medium','large'],
+      default: 'medium'
     },
     profilePic: {
       type: String,
@@ -36,12 +53,6 @@ const petSchema = mongoose.Schema(
     }],
     owner: {
       type: String
-    },
-    state: {
-      //['Adotpable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found', ]
-      type: String,
-      default: 'Adoptable'
-      
     },
     currentLocation: {
       type: String,
