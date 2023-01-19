@@ -17,7 +17,7 @@ const RegisterLastSteps = ({ route }) => {
 		<ScrollView>
 			<Image
 				style={styles.icon}
-				source={require("../../images/logo-black.png")}
+				source={require("../../../images/logo-black.png")}
 			/>
 			<View style={styles.container}>
 				<View style={styles.divisionLine}></View>
