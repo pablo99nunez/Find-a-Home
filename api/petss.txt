@@ -1,0 +1,58 @@
+{
+  state: 'Adoptable',
+  age: '0 a 8 meses',
+  name: 'Whiskers',
+  specie: 'Gato',
+  birthday: new Date('2022-01-01'),
+  description: 'Whiskers es un gatito muy cariñoso y curioso. Le encanta jugar con cualquier cosa que encuentra y siempre está listo para recibir mimos.',
+  size: 'small',
+  profilePic: 'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg',
+  gallery: ['https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg','https://cdn.pixabay.com/photo/2015/03/26/09/54/cat-690424_960_720.jpg'],
+  owner: null,
+  currentLocation: 'Animals Shelter'
+}
+
+
+{
+  state: 'InAdoptionProcess',
+  age: '0 a 8 meses',
+  name: 'Buddy',
+  specie: 'Perro',
+  birthday: new Date('2021-07-01'),
+  description: 'Buddy es un cachorro muy juguetón y cariñoso. Está en proceso de ser adoptado, le encanta jugar y aprender nuevos trucos.',
+  size: 'small',
+  profilePic: 'https://images.dog.ceo/breeds/pomeranian/n02112018_7252.jpg',
+  gallery: ['https://images.dog.ceo/breeds/pomeranian/n02112018_7252.jpg','https://images.dog.ceo/breeds/pomeranian/n02112018_7256.jpg'],
+  owner: null,
+  currentLocation: 'Animals Shelter'
+}
+
+{
+  state: 'Adoptable',
+  age: '8 meses a 2 años',
+  name: 'Charlie',
+  specie: 'Perro',
+  birthday: new Date('2020-06-01'),
+  description: 'Charlie es un perro muy juguetón y cariñoso. Le encanta jugar al frisbee y dar paseos. Es muy bueno con los niños y otros animales.',
+  size: 'medium',
+  profilePic: 'https://cdn.pixabay.com/photo/2016/05/09/10/42/weimaraner-1381186_960_720.jpg',
+  gallery: ['https://cdn.pixabay.com/photo/2016/05/09/10/42/weimaraner-1381186_960_720.jpg','https://cdn.pixabay.com/photo/2016/03/26/13/09/dog-1280537_960_720.jpg'],
+  owner: null,
+  currentLocation: 'Animals Shelter'
+}
+
+
+{
+  state: 'Adoptable',
+  age: '2 años o más',
+  name: 'Luna',
+  specie: 'Gato',
+  birthday: new Date('2017-12-01'),
+  description: 'Luna es un gato muy cariñoso y tranquilo. Le encanta dormir en lugares altos y recibir mimos. Es muy independiente y no necesita mucha atención.',
+  size: 'medium',
+  profilePic: 'https://cdn.pixabay.com/photo/2015/02/10/15/28/cat-631704_960_720.jpg',
+  gallery: ['https://cdn.pixabay.com/photo/2015/02/10/15/28/cat-631704_960_720.jpg','https://cdn.pixabay.com/photo/2015/03/26/09/54/cat-690424_960_720.jpg'],
+  owner: null,
+  currentLocation: 'Animals Shelter'
+}
+
