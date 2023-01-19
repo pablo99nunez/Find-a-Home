@@ -49,6 +49,25 @@ export default function App() {
           component={RegisterLastSteps}
           options={{ headerShown: false }}
         />
+        {/* =================================== */}
+
+        <Stack.Screen
+          name="GoogleRegister"
+          component={GoogleRegister}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterFirstStepsAdopting"
+          component={RegisterFirstStepsAdopting}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterLastStepsAdopting"
+          component={RegisterLastStepsAdopting}
+          options={{ headerShown: false }}
+        />
+
+        {/* =================================== */}
       </Stack.Navigator>
     </NavigationContainer>
   );
