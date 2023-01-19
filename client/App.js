@@ -27,7 +27,11 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Detail" component={Detail} />
+        <Stack.Screen 
+        name="Detail" 
+        component={Detail}
+        options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
