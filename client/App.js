@@ -9,6 +9,7 @@ import RegisterLastSteps from "./src/Components/Register/Entering/Register_Last_
 import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
 import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
+import UserDetail from "./src/Components/UserDetail/UserDetail";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,12 @@ export default function App() {
         <Stack.Screen
           name="Detail"
           component={Detail}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="UserDetail"
+          component={UserDetail}
           options={{ headerShown: false }}
         />
 
