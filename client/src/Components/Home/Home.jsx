@@ -9,10 +9,13 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+import Card from "../Card/Card";
 import { Header } from "../Header/Header";
+const { width, height } = Dimensions.get("screen");
 
-export default function App({ navigation }) {
+export default function Home({ navigation }) {
   const dogs = [
     {
       id: 1,
@@ -101,32 +104,20 @@ export default function App({ navigation }) {
   ];
   return (
     <View style={styles.container}>
-      <Header />
-      <Button onPress={() => navigation.navigate("UserDetail")} title="perfil"/>
-      <View style={styles.body}>
+      <Header navigation={navigation} />
         <FlatList
+          style={styles.body}
+          numColumns={2}
           keyExtractor={(item) => item.id}
           data={dogs}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Detail", item)}
             >
-              <View>
-                <Text style={styles.dogName}>{item.name}</Text>
-                <Image
-                  style={{ width: 100, height: 100, marginHorizontal: 80 }}
-                  source={{
-                    uri: item.profilePic,
-                  }}
-                />
-                <Text style={styles.dogAge}>{item.age}</Text>
-                <Text style={styles.dogRescued}>{item.rescued}</Text>
-              </View>
+            <Card item={item}/>
             </TouchableOpacity>
           )}
         ></FlatList>
-      </View>
-
       <StatusBar style="auto" />
     </View>
   );
@@ -136,30 +127,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffa",
+    width,
   },
 
   body: {
     backgroundColor: "#AB4E68",
     padding: 10,
-  },
-  dogName: {
-    marginTop: 24,
-    padding: 15,
-    // backgroundColor: "pink",
-    fontSize: 18,
-    marginHorizontal: 10,
-  },
-  dogAge: {
-    marginTop: 1,
-    padding: 4,
-    // backgroundColor: "orange",
-    fontSize: 15,
-    marginHorizontal: 10,
-  },
-  dogRescued: {
-    marginTop: 1,
-    padding: 4,
-    // backgroundColor: "red",
-    marginHorizontal: 10,
   },
 });
