@@ -20,6 +20,7 @@ import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
 import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
+import { CreateDog } from './src/Components/CreateDog/CreateDog';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+      <Stack.Screen
+          name="CreateDog"
+          component={CreateDog}
+          options={{ headerShown: false }}
+        />
+  
         <Stack.Screen
           name="LandigPage"
           component={LandingPage}
@@ -87,6 +95,7 @@ export default function App() {
           component={RegisterLastStepsAdopting}
           options={{ headerShown: false }}
         />
+
 
         {/* =================================== */}
       </Stack.Navigator>
