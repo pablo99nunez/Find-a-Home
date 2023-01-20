@@ -16,7 +16,6 @@ const LandingPage = ({ navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log('spam?');
             async function evitaReturnDelUseEffect() {
                 const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
                 if (tokenLocalStorage)
