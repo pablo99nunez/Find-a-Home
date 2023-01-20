@@ -3,6 +3,12 @@ module.exports = {
   content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {},
+    fontFamily: {
+      'roboto': ['Roboto']
+    },
+    backgroundImage: {
+      'google': "url('/images/Google.svg)"
+    }
   },
   plugins: [],
 }
