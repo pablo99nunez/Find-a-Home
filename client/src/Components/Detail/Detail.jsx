@@ -54,9 +54,9 @@ export default function Detail({route, navigation}){
         />
       )}
       ></FlatList> : null}
-      <Text className='text-2xl color-yellow'>{description}</Text>
+      <Text className='text-2xl text-center'>{description}</Text>
+
       
-      <Button title='Adoptar'/>
     </View>
   )
 }
