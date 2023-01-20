@@ -102,6 +102,7 @@ export default function App({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
+      <Button onPress={() => navigation.navigate("UserDetail")} title="perfil"/>
       <View style={styles.body}>
         <FlatList
           keyExtractor={(item) => item.id}
