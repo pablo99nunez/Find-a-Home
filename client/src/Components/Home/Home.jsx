@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import Card from "../../Card/Card";
 import { Header } from "../Header/Header";
 const { width, height } = Dimensions.get("screen");
 
@@ -104,12 +105,8 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      {/* <Button
-        onPress={() => navigation.navigate("UserDetail")}
-        title="perfil"
-      /> */}
-      <View style={styles.body}>
         <FlatList
+          style={styles.body}
           numColumns={2}
           keyExtractor={(item) => item.id}
           data={dogs}
@@ -117,22 +114,10 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               onPress={() => navigation.navigate("Detail", item)}
             >
-              <View>
-                <Text style={styles.dogName}>{item.name}</Text>
-                <Image
-                  style={{ width: 100, height: 100, marginHorizontal: 80 }}
-                  source={{
-                    uri: item.profilePic,
-                  }}
-                />
-                <Text style={styles.dogAge}>{item.age}</Text>
-                <Text style={styles.dogRescued}>{item.rescued}</Text>
-              </View>
+            <Card item={item}/>
             </TouchableOpacity>
           )}
         ></FlatList>
-      </View>
-
       <StatusBar style="auto" />
     </View>
   );
@@ -148,25 +133,5 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#AB4E68",
     padding: 10,
-  },
-  dogName: {
-    marginTop: 24,
-    padding: 15,
-    // backgroundColor: "pink",
-    fontSize: 18,
-    marginHorizontal: 10,
-  },
-  dogAge: {
-    marginTop: 1,
-    padding: 4,
-    // backgroundColor: "orange",
-    fontSize: 15,
-    marginHorizontal: 10,
-  },
-  dogRescued: {
-    marginTop: 1,
-    padding: 4,
-    // backgroundColor: "red",
-    marginHorizontal: 10,
   },
 });
