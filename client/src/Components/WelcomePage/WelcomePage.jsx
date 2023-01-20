@@ -13,6 +13,7 @@ const { width, height } = Dimensions.get("window");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
+  
 
   const onchange = (nativeEvent) => {
     if (nativeEvent) {
@@ -86,6 +87,10 @@ const Welcome = ({ navigation }) => {
         <View style={styles.slide4}>
           <Text style={styles.textTitles}>Registrate</Text>
           <TouchableOpacity onPress={() => navigation.navigate('RegisterFirstSteps')}>
+            <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
+          </TouchableOpacity>
+          <Text style={styles.textTitles}>Registro Real:</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
             <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
           </TouchableOpacity>
           <View style={styles.divisionLine}></View>

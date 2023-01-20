@@ -1,78 +1,109 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
-
-
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const RegisterLastSteps = ({ route, navigation }) => {
 
 	const { telefono, pais, departamento, provincia } = route.params
 	const [userNewInput, setuserNewInput] = useState({ telefono, pais, departamento, provincia, condiciones: "" })
 	const [checkState, setCheckState] = useState({})
-
+	const [accepted, setAccepted] = useState(false);
 	const HandleCheck = (option) => {
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, [option]: !checkState[option] })
 	}
 
+
 	return (
-		<ScrollView>
-			<Image
-				style={styles.icon}
-				source={require("../../../images/logo-black.png")}
-			/>
-			<View style={styles.container}>
 
-				<Text style={styles.textTitles}>¡Bienvenido!</Text>
-				<View style={styles.divisionLine}></View>
-				<Text style={styles.textSubTitles}>¿Que condiciones</Text>
-				<Text style={styles.textSubTitles}>puedes ofrecer a tus</Text>
-				<Text style={styles.textSubTitles}>mascotas?</Text>
-				<View style={styles.divisionLine}></View>
 
-				<View style={styles.divisionLine}></View>
-				<TouchableOpacity onPress={() => HandleCheck("Techo")}>
-					<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
-					<Text style={checkState.AlimentoBalanceado ? styles.checkIsActive : styles.checkInactive}>Alimento Balanceado</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
-					<Text style={checkState.PaseosDiarios ? styles.checkIsActive : styles.checkInactive}>Paseos Diarios</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
-					<Text style={checkState.Vacunas ? styles.checkIsActive : styles.checkInactive}>Vacunas</Text>
-				</TouchableOpacity>
+		<View className="flex flex-col flex-row-6 w-full h-screen items-center space-y-3" style={styles.container}>
+			<KeyboardAwareScrollView
+				style={{ flex: 1, width: '100%' }}
+				keyboardShouldPersistTaps="always">
 
-				<View style={styles.divisionLine}></View>
-				<View style={styles.divisionLine}></View>
-			</View>
+				<View className="items-end w-full" style={styles.divisionPanel}>
+					<Image
+						style={styles.icon}
+						source={require("../../../images/logo-black.png")}
+					/>
+				</View>
+
+
+				<View className="w-full" style={styles.divisionPanel}>
+					<Text style={styles.textTitles}>¡Bienvenido!</Text>
+				</View>
+
+
+				<View className="w-full" style={styles.divisionPanel}>
+					<Text style={styles.textSubTitles}>¿Que condiciones</Text>
+					<Text style={styles.textSubTitles}>puedes ofrecer a tus</Text>
+					<Text style={styles.textSubTitles}>mascotas?</Text>
+				</View>
+
+
+				<View className="w-full items-start" style={styles.divisionPanel}>
+					<TouchableOpacity onPress={() => HandleCheck("Techo")}>
+						<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
+						<Text style={checkState.AlimentoBalanceado ? styles.checkIsActive : styles.checkInactive}>Alimento Balanceado</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
+						<Text style={checkState.PaseosDiarios ? styles.checkIsActive : styles.checkInactive}>Paseos Diarios</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
+						<Text style={checkState.Vacunas ? styles.checkIsActive : styles.checkInactive}>Vacunas</Text>
+					</TouchableOpacity>
+				</View>
+
+				<View className="flex flex-row justify-center content-center items-start w-full ml-5" style={styles.divisionPanel}>
+					<View className="w-7 h-7" style={styles.divisionPanel}>
+						<TouchableOpacity onPress={() => setAccepted(!accepted)}>
+							<Text style={accepted ? styles.termIsActive : styles.termInactive}>	{accepted && "✔"}
+							</Text>
+						</TouchableOpacity>
+					</View>
+
+					<View className="w-full flex flex-row h-7" style={styles.divisionPanel}><Text>Acepto</Text>
+						<TouchableOpacity onPress={() => console.log('terms link here')}>
+							<Text className="text-[#AB4E68]"> Terminos y condiciones</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+
+			</KeyboardAwareScrollView>
+
+			<View className="items-end w-full" style={styles.divisionPanel}>
+
 				<TouchableOpacity
-					onPress={() => navigation.navigate("Home")}
-				>
+					onPress={() => navigation.navigate("Home")}>
 					<Text style={styles.next}>
 						Continue
 					</Text>
 				</TouchableOpacity>
 
-		</ScrollView>
+			</View>
+
+
+
+
+
+
+
+		</View>
+
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 18,
-		width: WIDTH,
-		height: HEIGHT,
+		padding: 15,
+		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center',
 		backgroundColor: '#FFC733',
 	},
 	icon: {
-		position: "absolute",
-		top: 0,
-		right: 0,
 		width: 50,
 		resizeMode: "contain",
 	},
@@ -83,15 +114,12 @@ const styles = StyleSheet.create({
 	next: {
 		color: '#000',
 		fontSize: 30,
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		margin: 10,
 	},
 	textTitles: {
 		color: "#000",
 		textAlign: 'center',
 		fontSize: 55,
+		marginTop: 10,
 	},
 	textSubTitles: {
 		color: "#000",
@@ -99,46 +127,49 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		fontSize: 30,
 	},
-	input: {
-		backgroundColor: '#1E1E1E',
-		color: "#FFF",
-		fontSize: 25,
-		width: 350,
-		height: 40,
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: 'gray',
-		padding: 5,
-		margin: 10,
-	},
-	divisionLine: {
-		marginTop: 20,
-		marginBottom: 20,
-		height: 1,
-		width: "80%",
+
+	divisionPanel: {
+		marginTop: 10,
 
 	},
 	checkIsActive: {
 		backgroundColor: '#AB4E68',
-		textAlign: 'center',
 		color: "#FFF",
-		fontSize: 25,
-		minWidth: 90,
-		height: 55,
 		borderRadius: 35,
+		textAlign: 'center',
+		fontSize: 20,
 		padding: 10,
-		margin: 10,
+		margin: 2,
 	},
 	checkInactive: {
+		backgroundColor: '#d9d9d947',
+		color: "#0000004e",
+		borderRadius: 35,
+		textAlign: 'center',
+		fontSize: 20,
+		padding: 10,
+		margin: 2,
+	},
+	termIsActive: {
+		backgroundColor: '#AB4E68',
+		color: "#FFF",
+		borderWidth: 2,
+		borderColor: "#AB4E68",
+		textAlign: 'center',
+		fontSize: 20,
+		borderRadius: 5,
+		margin: 2,
+		overflow: "visible",
+	},
+	termInactive: {
 		backgroundColor: '#d9d9d971',
 		color: "#0000004e",
-		fontSize: 25,
-		height: 55,
+		borderWidth: 2,
+		borderColor: "#AB4E68",
 		textAlign: 'center',
-		minWidth: 90,
-		borderRadius: 35,
-		padding: 10,
-		margin: 10,
+		fontSize: 20,
+		borderRadius: 5,
+		margin: 2,
 	}
 })
 

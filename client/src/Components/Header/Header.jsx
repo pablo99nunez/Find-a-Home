@@ -80,12 +80,13 @@ export const Header = () => {
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    position: "relative",
-    marginHorizontal: 10,
-    marginVertical: 35,
-    top: 20,
-    left: 320,
+  header: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
   },
   popUp: {
     borderRadius: 10,

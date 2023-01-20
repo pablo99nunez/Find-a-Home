@@ -102,6 +102,10 @@ export default function App({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
+      <Button
+        onPress={() => navigation.navigate("UserDetail")}
+        title="perfil"
+      />
       <View style={styles.body}>
         <FlatList
           keyExtractor={(item) => item.id}
@@ -138,27 +142,27 @@ const styles = StyleSheet.create({
   },
 
   body: {
-    backgroundColor: "yellow",
+    backgroundColor: "#AB4E68",
     padding: 10,
   },
   dogName: {
     marginTop: 24,
     padding: 15,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     fontSize: 18,
     marginHorizontal: 10,
   },
   dogAge: {
     marginTop: 1,
     padding: 4,
-    backgroundColor: "orange",
+    // backgroundColor: "orange",
     fontSize: 15,
     marginHorizontal: 10,
   },
   dogRescued: {
     marginTop: 1,
     padding: 4,
-    backgroundColor: "red",
+    // backgroundColor: "red",
     marginHorizontal: 10,
   },
 });

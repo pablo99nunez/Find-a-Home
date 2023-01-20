@@ -1,12 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Picker } from '@react-native-picker/picker';
 import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
 
 export default function RegisterFirstSteps({ navigation }) {
-	
+
 	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
 	const pickerRef = useRef();
 
@@ -20,18 +19,28 @@ export default function RegisterFirstSteps({ navigation }) {
 
 
 	return (
-		<ScrollView>
-			<Image
-				style={styles.icon}
-				source={require("../../../images/logo-black.png")}
-			/>
-			<View style={styles.container}><View style={styles.divisionLine}></View>
-				<Text style={styles.textTitles}>¡Bienvenido!</Text>
-				<View style={styles.divisionLine}></View>
-				<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
-				<Text style={styles.textSubTitles}>podrás comenzar:</Text>
 
-				<View>
+		<View className="flex flex-col" style={styles.container}>
+			<KeyboardAwareScrollView
+				style={{ flex: 1, width: '100%' }}
+				keyboardShouldPersistTaps="always">
+
+				<View className="items-end" style={styles.divisionPanel}>
+					<Image
+						style={styles.icon}
+						source={require("../../../images/logo-black.png")}
+					/>
+				</View>
+
+
+				<View className="items-end" style={styles.divisionPanel}>
+					<Text style={styles.textTitles}>¡Bienvenido!</Text>
+					<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
+					<Text style={styles.textSubTitles}>podrás comenzar:</Text>
+				</View>
+
+				<View style={styles.divisionPanel}>
+
 					<Text style={styles.text}>Telefono</Text>
 					<TextInput
 						style={styles.input}
@@ -40,12 +49,13 @@ export default function RegisterFirstSteps({ navigation }) {
 						placeholderTextColor="#ffffff50"
 						onChangeText={(text) => setUserInput({ ...userInput, telefono: text })}
 					/>
+
 				</View>
 
 
-				<View>
+				<View style={styles.divisionPanel}>
 					<Text style={styles.text}>País:</Text>
-					<Picker style={styles.input}
+					<Picker style={styles.inputPicker}
 						ref={pickerRef}
 						selectedValue={userInput.pais}
 						onValueChange={(itemValue, itemIndex) =>
@@ -57,9 +67,10 @@ export default function RegisterFirstSteps({ navigation }) {
 					</Picker>
 				</View>
 
-				<View>
+
+				<View style={styles.divisionPanel}>
 					<Text style={styles.text}>Provincia:</Text>
-					<Picker style={styles.input}
+					<Picker style={styles.inputPicker}
 						ref={pickerRef}
 						selectedValue={userInput.provincia}
 						onValueChange={(itemValue, itemIndex) =>
@@ -71,9 +82,10 @@ export default function RegisterFirstSteps({ navigation }) {
 					</Picker>
 				</View>
 
-				<View>
+
+				<View style={styles.divisionPanel}>
 					<Text style={styles.text}>Departamento:</Text>
-					<Picker style={styles.input}
+					<Picker style={styles.inputPicker}
 						ref={pickerRef}
 						selectedValue={userInput.departamento}
 						onValueChange={(itemValue, itemIndex) =>
@@ -84,31 +96,32 @@ export default function RegisterFirstSteps({ navigation }) {
 						<Picker.Item label="CABA" value="CABA" />
 					</Picker>
 				</View>
+			</KeyboardAwareScrollView>
+			<View className="items-end mt-10" style={styles.divisionPanel}>
+
+				<TouchableOpacity
+					onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
+				><Text style={styles.next}>Continue</Text></TouchableOpacity>
+			</View>
 
 
-				<View style={styles.divisionLine}></View>
-				<View style={styles.divisionLine}></View>
-			</View><TouchableOpacity
-				onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
-			><Text style={styles.next}>Continue</Text></TouchableOpacity>
 
-		</ScrollView>
+		</View>
+
+
+
+
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 18,
-		width: WIDTH,
-		height: HEIGHT,
+		padding: 15,
+		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center',
 		backgroundColor: '#FFC733',
 	},
 	icon: {
-		position: "absolute",
-		top: 0,
-		right: 0,
 		width: 50,
 		resizeMode: "contain",
 	},
@@ -119,15 +132,13 @@ const styles = StyleSheet.create({
 	next: {
 		color: '#000',
 		fontSize: 30,
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		margin: 10,
 	},
 	textTitles: {
 		color: "#000",
 		textAlign: 'center',
+		alignSelf: 'center',
 		fontSize: 55,
+		margin: 10,
 	},
 	textSubTitles: {
 		color: "#000",
@@ -147,11 +158,17 @@ const styles = StyleSheet.create({
 		padding: 5,
 		margin: 10,
 	},
-	divisionLine: {
-		marginTop: 20,
-		marginBottom: 20,
-		height: 1,
-		width: "80%",
+	inputPicker: {
+		backgroundColor: '#1E1E1E',
+		color: "#FFF",
+		fontSize: 25,
+		borderWidth: 1,
+		borderColor: 'gray',
+		padding: 1,
 
-	}
+	},
+	divisionPanel: {
+		width: "95%",
+	},
+
 })

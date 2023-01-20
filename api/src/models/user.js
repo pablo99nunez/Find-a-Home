@@ -74,14 +74,17 @@ const userSchema = mongoose.Schema(
     gallery:[{
       type: String
     }],
+    pets: {
+      type: Array, //ids de mascotas
+    },
     address: {
       type: String,
       minlength: 2,
       maxlength: 100
     },
-    pets: {
-      type: Array, //ids de mascotas
-    },
+    conditions: {
+      type: Object,
+    }
   
   },
   {

@@ -1,4 +1,14 @@
-import { NavigationContainer } from "@react-navigation/native";
+//aca hago cagadas
+import 'react-native-gesture-handler';
+import React from 'react'
+import { LoginScreen, RegistrationScreen } from './src/screens'
+import { decode, encode } from 'base-64'
+if (!global.btoa) { global.btoa = encode }
+if (!global.atob) { global.atob = decode }
+
+//fin dd cagadas
+
+import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
 import LandingPage from "./src/Components/LandingPage/LandingPage";
@@ -9,6 +19,7 @@ import RegisterLastSteps from "./src/Components/Register/Entering/Register_Last_
 import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
 import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
+import UserDetail from "./src/Components/UserDetail/UserDetail";
 
 const Stack = createStackNavigator();
 
@@ -21,23 +32,33 @@ export default function App() {
           component={LandingPage}
           initialParams={{ fromChild: "Initial" }}
           options={{ headerShown: false }}
-        />
+          />
         <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{ headerShown: false }}
-        />
+          />
         <Stack.Screen
           name="Home"
           component={Home}
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen 
-        name="Detail" 
-        component={Detail}
-        options={{ headerShown: false }}
-        />
+        <Stack.Screen
+          name="Detail"
+          component={Detail}
+          options={{ headerShown: false }}
+          />
+
+        <Stack.Screen
+          name="UserDetail"
+          component={UserDetail}
+          options={{ headerShown: false }}
+          />
+          
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+       
 
         <Stack.Screen
           name="RegisterFirstSteps"
@@ -49,7 +70,6 @@ export default function App() {
           component={RegisterLastSteps}
           options={{ headerShown: false }}
         />
-
         {/* =================================== */}
 
         <Stack.Screen
@@ -61,16 +81,14 @@ export default function App() {
           name="RegisterFirstStepsAdopting"
           component={RegisterFirstStepsAdopting}
           options={{ headerShown: false }}
-          />
+        />
         <Stack.Screen
           name="RegisterLastStepsAdopting"
           component={RegisterLastStepsAdopting}
           options={{ headerShown: false }}
-          />
+        />
 
         {/* =================================== */}
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "328480437483",
+    "project_id": "findahomehenry",
+    "storage_bucket": "findahomehenry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328480437483:android:2f85100c9ae747c386baae",
+        "android_client_info": {
+          "package_name": "com.reactnativefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328480437483-2r8dfjugoqcomqa83su8qpr5rd8sido1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6tFOTP1fYYoVL2_1Z2v7dY1ylAfqLKxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328480437483-2r8dfjugoqcomqa83su8qpr5rd8sido1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

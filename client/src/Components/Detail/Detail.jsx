@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient"
 import { FlatList } from "react-native-gesture-handler";
+import { ButtonYellow } from "../Buttons/Buttons";
 
 
 export default function Detail({route, navigation}){
@@ -22,6 +23,7 @@ export default function Detail({route, navigation}){
   const days = difference/(1000 * 3600 * 24)
   
   return(
+    
     <View style={styles.wrapper}>
       <ImageBackground 
       style={{ width: '100%', height: 350, backgroundImage: 'linear-gradient'}}
@@ -54,9 +56,9 @@ export default function Detail({route, navigation}){
         />
       )}
       ></FlatList> : null}
-      <Text className='text-2xl color-yellow'>{description}</Text>
+      <Text className='text-2xl text-center'>{description}</Text>
+      <ButtonYellow text='Adoptar' onPress={()=> alert('Adoptar')}/>
       
-      <Button title='Adoptar'/>
     </View>
   )
 }
@@ -64,7 +66,8 @@ export default function Detail({route, navigation}){
 const styles = StyleSheet.create({
   wrapper:{
     flex:5,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    // backgroundColor: 'grey'
   },
   title:{
     textAlign: 'center',
