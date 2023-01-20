@@ -6,13 +6,14 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import {LinearGradient} from "expo-linear-gradient"
 import { FlatList } from "react-native-gesture-handler";
 
 
 export default function Detail({route, navigation}){
-  const {profilePic, name , createdAt, gallery}= route.params
+  const {profilePic, name , createdAt, gallery, description}= route.params
   const dateOf = createdAt.slice(0,10)
   const today = new Date().toISOString().slice(0,10)
   const day1 = new Date(today); 
@@ -30,6 +31,7 @@ export default function Detail({route, navigation}){
           <View style={styles.wrapper}>
               <TouchableOpacity onPress={()=> navigation.goBack()}>
                 <Image 
+                className = 'drop-shadow-2xl'
                 style={styles.logo}
                 source={require("../../images/FindAHome.png")}
                 />
@@ -37,25 +39,24 @@ export default function Detail({route, navigation}){
               <Text style={styles.title}>{name.toUpperCase()}</Text>
               <View style={styles.banderin}>
                 <Text style={{fontWeight: 'bold', textAlign:'right', marginRight: 10}}>{days} dias</Text>
-                <Text className='font-bold' style={{textAlign:'right', marginRight: 10}}>buscando hogar</Text>
+                <Text style={{textAlign:'right', marginRight: 10}}>buscando hogar</Text>
               </View>
           </View>
         </LinearGradient> 
       </ImageBackground>
-      <View style={styles.photos}>
-      {gallery? <FlatList 
+      {gallery? <FlatList horizontal={true} 
       keyExtractor={(name) => name}
       data={gallery}
       renderItem={({item}) => (
         <Image
-        style={{ width: 100, height: 100 }}
-        source={{
-          uri: item,
-        }}
-      />
+        style={{ width: 90, height: 90 , marginLeft: 25 }}
+        source={{uri: item}}
+        />
       )}
       ></FlatList> : null}
-      </View>
+      <Text className='text-2xl text-center'>{description}</Text>
+
+      
     </View>
   )
 }
@@ -88,10 +89,7 @@ const styles = StyleSheet.create({
     top: 40,
     right: 0
   },
-  photos:{
-    flex:1, 
-    flexDirection: 'row',
-  }
+ 
   
 
 

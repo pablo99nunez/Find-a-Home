@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
@@ -111,8 +111,10 @@ const styles = StyleSheet.create({
   bg: {
     position: "absolute",
     resizeMode: "contain",
-    top: -250,
-    right: -300,
+    width,
+    height,
+    top: -400,
+    right: -280,
   },
   icon: {
     position: "absolute",
@@ -123,7 +125,9 @@ const styles = StyleSheet.create({
   },
   imgbg2: {
     position: "absolute",
-    bottom: -90,
+    width,
+    height: height * 0.30,
+    bottom: 0,
   },
   slide1: {
     width,
