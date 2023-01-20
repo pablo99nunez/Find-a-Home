@@ -9,8 +9,10 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { Header } from "../Header/Header";
+const { width, height } = Dimensions.get("screen");
 
 export default function App({ navigation }) {
   const dogs = [
@@ -102,12 +104,13 @@ export default function App({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
-      <Button
+      {/* <Button
         onPress={() => navigation.navigate("UserDetail")}
         title="perfil"
-      />
+      /> */}
       <View style={styles.body}>
         <FlatList
+          numColumns={2}
           keyExtractor={(item) => item.id}
           data={dogs}
           renderItem={({ item }) => (
@@ -139,6 +142,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffa",
+    width,
   },
 
   body: {

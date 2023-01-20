@@ -8,11 +8,14 @@ import {
   SafeAreaView,
   Animated,
   Easing,
+  Dimensions,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-/* import SelectDropDown from "react-native-select-dropdown"; */
 
-export const Header = () => {
+const { width, height } = Dimensions.get("screen");
+
+export const Header = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
   const species = ["perro", "gato", "otro"];
@@ -33,11 +36,22 @@ export const Header = () => {
       easing: Easing.linear,
     }).start(() => to === 0 && setVisible(false));
   };
+  const userDet = () => {
+    navigation.navigate("UserDetail");
+  };
   return (
-    <>
-      {/* <SelectDropDown data={species} /> */}
+    <View style={styles.container}>
+      {/* <TouchableOpacity onPress={() => userDet}>
+        <Image source={require("../../images/profilePic.jpg")} />
+      </TouchableOpacity> */}
+
+      <Image
+        className="drop-shadow-2xl w-14 h-14 absolute left-44 top-7"
+        source={require("../../images/FindAHome.png")}
+        resizeMode={"contain"}
+      />
       <TouchableOpacity onPress={() => resizeBox(1)}>
-        <Icon name="menu" size={34} color={"#212121"} style={styles.icon} />
+        <Icon name="menu" size={40} style={styles.icon} color={"#FFC733"} />
       </TouchableOpacity>
       <Modal transparent visible={visible}>
         <SafeAreaView style={{ flex: 1 }} onTouchStart={() => resizeBox(0)}>
@@ -75,18 +89,23 @@ export const Header = () => {
           </Animated.View>
         </SafeAreaView>
       </Modal>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    width: "100%",
-    height: "10%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "red",
+  container: {
+    width,
+    height: 80,
+    backgroundColor: "#AB4E68",
+  },
+  icon: {
+    position: "absolute",
+    margin: 15,
+    width: 50,
+    height: 50,
+    top: 20,
+    left: 340,
   },
   popUp: {
     borderRadius: 10,
