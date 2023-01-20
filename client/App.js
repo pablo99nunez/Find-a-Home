@@ -1,4 +1,15 @@
-import { NavigationContainer } from "@react-navigation/native";
+//aca hago cagadas
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react'
+import { LoginScreen, HomeScreen, RegistrationScreen } from './src/screens'
+import { decode, encode } from 'base-64'
+if (!global.btoa) { global.btoa = encode }
+if (!global.atob) { global.atob = decode }
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//fin dd cagadas
+
+import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
 import LandingPage from "./src/Components/LandingPage/LandingPage";
@@ -14,20 +25,40 @@ import UserDetail from "./src/Components/UserDetail/UserDetail";
 const Stack = createStackNavigator();
 
 export default function App() {
+  //ojo mas cagadas
+ /*  const [authorizedUser, setAuthorizedUser] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    async function evitaReturnDelUseEffect() {
+      const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
+      if (tokenLocalStorage)
+        setAuthorizedUser(tokenLocalStorage)
+
+      const userData = await AsyncStorage.getItem('user')
+      if (userData)
+        setUser(userData)
+    }
+    evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
+  }, []) */
+
+  //fin cagadas
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      
+               
         <Stack.Screen
           name="LandigPage"
           component={LandingPage}
           initialParams={{ fromChild: "Initial" }}
           options={{ headerShown: false }}
-        />
+          />
         <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{ headerShown: false }}
-        />
+          />
         <Stack.Screen
           name="Home"
           component={Home}
@@ -38,13 +69,17 @@ export default function App() {
           name="Detail"
           component={Detail}
           options={{ headerShown: false }}
-        />
+          />
 
         <Stack.Screen
           name="UserDetail"
           component={UserDetail}
           options={{ headerShown: false }}
-        />
+          />
+          
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+       
 
         <Stack.Screen
           name="RegisterFirstSteps"

@@ -1,4 +1,12 @@
 import React from "react";
+
+//3 lineas son las importaciones q hago por todos lados
+//Deberia modularizar? Sí.
+//Voy a modularizar? Yo diria que no.
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAuth, signOut } from 'firebase/auth';
+import firebase  from '../../firebase/config'
+
 import {
   StyleSheet,
   Text,
@@ -15,6 +23,27 @@ import {LinearGradient} from "expo-linear-gradient"
 const { width, height } = Dimensions.get("screen")
 
 export default function UserDetail({route, navigation}){
+
+
+
+//NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
+    const auth = getAuth(firebase);
+    function logoutUser() {
+        signOut(auth).then(() => {
+          // clear session storage
+          AsyncStorage.removeItem('@accessToken', () => {
+            AsyncStorage.removeItem('user', () => {
+                alert('Logged Out Successfully');
+                navigation.navigate('LandigPage')
+                
+              })
+          })
+        }).catch((error) => {
+          // An error happened.
+          alert(error);
+        });
+      }
+//-----------------------------------------------------------
   
   const user = { 
     id: 1, 
@@ -125,6 +154,12 @@ export default function UserDetail({route, navigation}){
             </TouchableOpacity>
           )}
         ></FlatList>
+        <View style={styles.formContainer}>
+  
+                <TouchableOpacity className="flex items-center m-4" style={styles.button} onPress={logoutUser}>
+                    <Text style={styles.buttonText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
       </View>
     </View>
   )
