@@ -1,10 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Picker } from '@react-native-picker/picker';
 import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from "react-native";
+import GoogleImage from "../../../images/Google.svg"
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
+
 export default function GoogleRegister({ navigation }) {
+
 	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
 	const pickerRef = useRef();
 
@@ -20,24 +23,19 @@ export default function GoogleRegister({ navigation }) {
 	return (
 		<ScrollView>
 			<Image
-				style={styles.icon}
-				// source={require("../../../images/logo-black.png")}
+				className="absolute top-[16px] right-[22] z-[1]"
+				source={require("../../../images/logo-black.png")}
 			/>
-			<View style={styles.container}><View style={styles.divisionLine}></View>
-				<Text style={styles.textTitles}>¡Ya casi!</Text>
-				<View style={styles.divisionLine}></View>
-
-				<Text style={styles.textSubTitles}>Debes registrarte para</Text>
-				<Text style={styles.textSubTitles}>poder adoptar una</Text>
-				<Text style={styles.textSubTitles}>mascota</Text>
-				
-				<TouchableOpacity onPress={() => navigation.navigate('RegisterLastStepsAdopting')}>
-           			<View style={styles.googleCircle}>
-						<Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} >
-						</Image>
-					</View>
-          		</TouchableOpacity>
-
+			<View className="h-screen items-center justify-center bg-[#FFC733]">
+				<Text className="absolute top-[121px] w-[230px] mx-auto font-roboto font-light text-[64px] leading-[75px] flex items-center text-center">¡Ya casi!</Text>
+				<Text className="absolute top-[217px] w-[330px] mx-auto px-8 font-roboto text-[28px] font-light leading-[33px] flex items-center text-center">
+					Debes registrarte para poder adoptar una mascota
+				</Text>
+				<TouchableOpacity>
+					<View>
+						<GoogleImage width={94} height={94}/>
+					</View>					
+				</TouchableOpacity>
 			</View>
 		</ScrollView>
 	)
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FFC733',
 	},
 	icon: {
-		position: "absolute",
+		position: "relative",
 		top: 0,
 		right: 0,
 		width: 50,
