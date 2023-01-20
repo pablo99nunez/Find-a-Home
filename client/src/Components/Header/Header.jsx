@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   icon: {
     position: "relative",
     marginHorizontal: 10,
-    marginVertical: 35,
+    marginVertical: 10,
     top: 20,
     left: 320,
   },
