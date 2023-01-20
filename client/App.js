@@ -1,11 +1,10 @@
 //aca hago cagadas
 import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react'
-import { LoginScreen, HomeScreen, RegistrationScreen } from './src/screens'
+import React from 'react'
+import { LoginScreen, RegistrationScreen } from './src/screens'
 import { decode, encode } from 'base-64'
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //fin dd cagadas
 
@@ -25,29 +24,9 @@ import UserDetail from "./src/Components/UserDetail/UserDetail";
 const Stack = createStackNavigator();
 
 export default function App() {
-  //ojo mas cagadas
- /*  const [authorizedUser, setAuthorizedUser] = useState(false);
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
-  useEffect(() => {
-    async function evitaReturnDelUseEffect() {
-      const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
-      if (tokenLocalStorage)
-        setAuthorizedUser(tokenLocalStorage)
-
-      const userData = await AsyncStorage.getItem('user')
-      if (userData)
-        setUser(userData)
-    }
-    evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
-  }, []) */
-
-  //fin cagadas
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      
-               
         <Stack.Screen
           name="LandigPage"
           component={LandingPage}

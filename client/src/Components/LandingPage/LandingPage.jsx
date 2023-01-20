@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { LandingButton } from '../Buttons/Buttons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const LandingPage = ({ navigation }) => {
@@ -9,29 +10,38 @@ const LandingPage = ({ navigation }) => {
     const [authorizedUser, setAuthorizedUser] = useState('');
 
     //carga datos del local StorAsh
-    useEffect(() => {
-        async function evitaReturnDelUseEffect() {
-            const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
-            if (tokenLocalStorage)
-                setAuthorizedUser(tokenLocalStorage)
-            else
-                setAuthorizedUser('')
+    //useEffect(() => {
+       
+    //}, [])
 
-            const userData = await AsyncStorage.getItem('user')
-            if (userData)
-                setUser(userData)
-            else
-                setUser({})
-        }
-        evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log('spam?');
+            async function evitaReturnDelUseEffect() {
+                const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
+                if (tokenLocalStorage)
+                    setAuthorizedUser(tokenLocalStorage)
+                else
+                    setAuthorizedUser(false)
+    
+                const userData = await AsyncStorage.getItem('user')
+                if (userData)
+                    setUser(userData)
+                else
+                    setUser(false)
+            }
+            evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
+          
+        }, [])
+      );
 
     return (
         <View style={styles.container}>
-            {!Object.keys(user).length ?
-                <LandingButton onPress={() => navigation.navigate('Welcome')} />
+            {user ?
+                <LandingButton onPress={() => navigation.navigate('Home')} />
                 :
-                <LandingButton onPress={() => navigation.navigate('Home')} />}
+                <LandingButton onPress={() => navigation.navigate('Welcome')} />
+            }
         </View>
     )
 }
