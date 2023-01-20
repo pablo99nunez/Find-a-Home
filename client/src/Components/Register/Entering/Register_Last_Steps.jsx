@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
-
-
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const RegisterLastSteps = ({ route, navigation }) => {
 
@@ -20,57 +17,63 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	return (
 
 
-		<View className="flex flex-col flex-row-6 h-screen items-center space-y-3" style={styles.container}>
+		<View className="flex flex-col flex-row-6 w-full h-screen items-center space-y-3" style={styles.container}>
+			<KeyboardAwareScrollView
+				style={{ flex: 1, width: '100%' }}
+				keyboardShouldPersistTaps="always">
+
+				<View className="items-end w-full" style={styles.divisionPanel}>
+					<Image
+						style={styles.icon}
+						source={require("../../../images/logo-black.png")}
+					/>
+				</View>
 
 
-			<View className="items-end w-full" style={styles.divisionPanel}>
-				<Image
-					style={styles.icon}
-					source={require("../../../images/logo-black.png")}
-				/>
-			</View>
+				<View className="w-full" style={styles.divisionPanel}>
+					<Text style={styles.textTitles}>¡Bienvenido!</Text>
+				</View>
 
 
-			<View className="w-full" style={styles.divisionPanel}>
-				<Text style={styles.textTitles}>¡Bienvenido!</Text>
-			</View>
+				<View className="w-full" style={styles.divisionPanel}>
+					<Text style={styles.textSubTitles}>¿Que condiciones</Text>
+					<Text style={styles.textSubTitles}>puedes ofrecer a tus</Text>
+					<Text style={styles.textSubTitles}>mascotas?</Text>
+				</View>
 
 
-			<View className="w-full" style={styles.divisionPanel}>
-				<Text style={styles.textSubTitles}>¿Que condiciones</Text>
-				<Text style={styles.textSubTitles}>puedes ofrecer a tus</Text>
-				<Text style={styles.textSubTitles}>mascotas?</Text>
-			</View>
-
-
-			<View className="w-full items-start" style={styles.divisionPanel}>
-				<TouchableOpacity onPress={() => HandleCheck("Techo")}>
-					<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
-					<Text style={checkState.AlimentoBalanceado ? styles.checkIsActive : styles.checkInactive}>Alimento Balanceado</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
-					<Text style={checkState.PaseosDiarios ? styles.checkIsActive : styles.checkInactive}>Paseos Diarios</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
-					<Text style={checkState.Vacunas ? styles.checkIsActive : styles.checkInactive}>Vacunas</Text>
-				</TouchableOpacity>
-			</View>
-			<View className="flex flex-row justify-center content-center items-start w-full" style={styles.divisionPanel}>
-				<View className="w-7 h-7" style={styles.divisionPanel}>
-					<TouchableOpacity onPress={() => setAccepted(!accepted)}>
-						<Text style={accepted ? styles.termIsActive : styles.termInactive}>	{accepted && "✔"}
-						</Text>
+				<View className="w-full items-start" style={styles.divisionPanel}>
+					<TouchableOpacity onPress={() => HandleCheck("Techo")}>
+						<Text style={checkState.Techo ? styles.checkIsActive : styles.checkInactive}>Techo</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
+						<Text style={checkState.AlimentoBalanceado ? styles.checkIsActive : styles.checkInactive}>Alimento Balanceado</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
+						<Text style={checkState.PaseosDiarios ? styles.checkIsActive : styles.checkInactive}>Paseos Diarios</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
+						<Text style={checkState.Vacunas ? styles.checkIsActive : styles.checkInactive}>Vacunas</Text>
 					</TouchableOpacity>
 				</View>
 
-				<View className="w-full flex flex-row h-7" style={styles.divisionPanel}><Text>Acepto</Text>
-					<TouchableOpacity onPress={() => console.log('terms link here')}>
-						<Text className="text-[#AB4E68]"> Terminos y condiciones</Text>
-					</TouchableOpacity>
+				<View className="flex flex-row justify-center content-center items-start w-full ml-5" style={styles.divisionPanel}>
+					<View className="w-7 h-7" style={styles.divisionPanel}>
+						<TouchableOpacity onPress={() => setAccepted(!accepted)}>
+							<Text style={accepted ? styles.termIsActive : styles.termInactive}>	{accepted && "✔"}
+							</Text>
+						</TouchableOpacity>
+					</View>
+
+					<View className="w-full flex flex-row h-7" style={styles.divisionPanel}><Text>Acepto</Text>
+						<TouchableOpacity onPress={() => console.log('terms link here')}>
+							<Text className="text-[#AB4E68]"> Terminos y condiciones</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View>
+
+			</KeyboardAwareScrollView>
+
 			<View className="items-end w-full" style={styles.divisionPanel}>
 
 				<TouchableOpacity
@@ -90,18 +93,14 @@ const RegisterLastSteps = ({ route, navigation }) => {
 
 		</View>
 
-
-
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 18,
-		width: WIDTH,
-		height: HEIGHT,
+		padding: 15,
+		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center',
 		backgroundColor: '#FFC733',
 	},
 	icon: {

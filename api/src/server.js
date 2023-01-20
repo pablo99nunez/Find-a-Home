@@ -38,14 +38,15 @@ const appCheckVerification = async (req, res, next) => {
     if (!appCheckToken) {
         res.status(401);
 
+        console.log('a sadasd');
         return next('Unauthorized');
     }
-    console.log(appCheckToken);
     try {
         const appCheckClaims = await firebaseAdmin.appCheck().verifyToken(appCheckToken);
 
         // If verifyToken() succeeds, continue with the next middleware
         // function in the stack.
+        console.log('a ver');
         console.log(appCheckClaims);
         return next();
     } catch (err) {

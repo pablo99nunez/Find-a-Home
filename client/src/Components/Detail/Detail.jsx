@@ -15,6 +15,7 @@ import { calculateAdoptionDays } from "../Funciones/DiasAdopcion";
 import { HeaderDetail } from "./HeaderDetail";
 
 
+
 export default function Detail({route, navigation}){
   
   const {profilePic, name , createdAt, gallery, description}= route.params
@@ -23,6 +24,7 @@ export default function Detail({route, navigation}){
   
   return(
     
+
     <View className='bg-[#acacac] h-full'>
       <ImageBackground style={styles.profilePic} source={{uri: profilePic}}>
         <LinearGradient colors={['#00000000', '#acacac']} style={{height : '100%', width : '100%'}}>
@@ -43,6 +45,7 @@ export default function Detail({route, navigation}){
               )}></FlatList> : null}
             </View>  
 
+
           </View>
         </LinearGradient> 
       </ImageBackground>
@@ -56,7 +59,6 @@ export default function Detail({route, navigation}){
 }
 
 const styles = StyleSheet.create({
- 
   profilePic:{ 
     width: '100%', 
     height: 350
