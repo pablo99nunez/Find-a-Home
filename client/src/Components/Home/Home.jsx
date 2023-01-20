@@ -14,7 +14,7 @@ import {
 import { Header } from "../Header/Header";
 const { width, height } = Dimensions.get("screen");
 
-export default function App({ navigation }) {
+export default function Home({ navigation }) {
   const dogs = [
     {
       id: 1,
@@ -103,7 +103,7 @@ export default function App({ navigation }) {
   ];
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation} />
       {/* <Button
         onPress={() => navigation.navigate("UserDetail")}
         title="perfil"
