@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import Card from "../../Card/Card";
+import Card from "../Card/Card";
 import { Header } from "../Header/Header";
 const { width, height } = Dimensions.get("screen");
 
