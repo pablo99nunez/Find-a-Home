@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation }) => {
+export const Header = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
   const species = ["perro", "gato", "otro"];
@@ -36,14 +36,14 @@ export const Header = ({ navigation }) => {
       easing: Easing.linear,
     }).start(() => to === 0 && setVisible(false));
   };
-  const userDet = () => {
-    navigation.navigate("UserDetail");
-  };
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onPress={() => userDet}>
-        <Image source={require("../../images/profilePic.jpg")} />
-      </TouchableOpacity> */}
+      <TouchableOpacity onPress={() => navigation.navigate('UserDetail')}>
+        <Image 
+        className="drop-shadow-2xl w-12 h-12 absolute left-5 top-8 rounded-full"
+        resizeMode={"contain"}
+        source={require("../../images/profilePic.jpg")}/>
+      </TouchableOpacity>
 
       <Image
         className="drop-shadow-2xl w-14 h-14 absolute left-44 top-7"
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
     borderColor: "#333",
     borderWidth: 1,
     backgroundColor: "#FFC733",
-    paddingHorizontal: 100,
-    paddingVertical: 85,
+    paddingHorizontal: 130,
+    paddingVertical: 150,
     position: "absolute",
     top: 75,
     right: 20,
