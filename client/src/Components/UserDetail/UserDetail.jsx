@@ -18,13 +18,17 @@ import {
   FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"
+import { callApiWithAppCheckExample } from "../../firebase/fetch.middleware";
 
 
 const { width, height } = Dimensions.get("screen")
 
 export default function UserDetail({ route, navigation }) {
+//test, borrable:
+  function doFetchCheck() {
+    callApiWithAppCheckExample()
 
-
+  }
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);
@@ -162,6 +166,12 @@ export default function UserDetail({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      <View>
+
+          <TouchableOpacity className="flex items-center m-4" style={styles.button} onPress={doFetchCheck}>
+            <Text style={styles.buttonText}>FEEEEEETCHHH</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   )
 }
