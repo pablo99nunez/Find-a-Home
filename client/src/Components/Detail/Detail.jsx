@@ -19,9 +19,6 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { Characteristics } from "./Characteristics";
 
 
-export default function Detail({ route, navigation }) {
-  const { profilePic, name, createdAt, gallery, description } = route.params;
-
 export default function Detail({route, navigation}){
   
   const {profilePic, name , createdAt, gallery, description, size, age}= route.params
@@ -118,5 +115,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#d9d9d9'
   }
 })
-
 
