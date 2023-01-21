@@ -15,7 +15,9 @@ import { calculateAdoptionDays } from "../Funciones/DiasAdopcion";
 import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
+
 import { Characteristics } from "./Characteristics";
+
 
 export default function Detail({ route, navigation }) {
   const { profilePic, name, createdAt, gallery, description } = route.params;
@@ -30,6 +32,7 @@ export default function Detail({route, navigation}){
 
   // variables
   const snapPoints = useMemo(() => ['55%', '77%'], []);
+
   const [open, setOpen] = useState(-1)
   // callbacks
   const handleSheetChanges = useCallback((index) => {
@@ -45,6 +48,7 @@ export default function Detail({route, navigation}){
               <View >
                   <HeaderDetail onPress={()=> navigation.goBack()} days={days}/>
               </View>
+
 
               <View className='h-52'>
                   <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
@@ -72,21 +76,26 @@ export default function Detail({route, navigation}){
         <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
         </View>
       
+
       </View>
 
 
       <BottomSheet
+
       backgroundStyle={styles.containerInput}
       ref={bottomSheetRef}
       index={open}
       snapPoints={snapPoints}
+
       onChange={handleSheetChanges}
       keyboardBehavior='extend'
       enablePanDownToClose={true}
       onClose={()=> setOpen(-1)}
+
       >
         <BottomView/>
       </BottomSheet>
+
       
 
     </View>

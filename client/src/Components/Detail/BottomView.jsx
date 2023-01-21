@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -11,6 +12,7 @@ const BottomView = () => {
         <BottomSheetTextInput style={styles.input} multiline/>
         <ButtonYellow text='Enviar Solicitud' onPress={()=> alert('solicitud enviada')}/>
       </View>
+
   );
 };
 
