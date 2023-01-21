@@ -19,7 +19,7 @@ export const LandingButton = (props) => {
 export const ButtonYellow = (props) => {
     const {onPress, text} = props
     return (
-        <TouchableOpacity style={styles.yellow} onPress={onPress} >
+        <TouchableOpacity className='bg-[#ffc733] w-2/3 self-center rounded-lg py-3 mb-2.5' style={styles.yellow} onPress={onPress} >
             <Text style={styles.text}>{text}</Text>
         </TouchableOpacity>
     )
@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     yellow: {
-        backgroundColor: '#FFC733',
-        width: '60%',
-        alignSelf: 'center',
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginBottom: 10
+        // backgroundColor: '#FFC733',
+        // width: '60%',
+        // alignSelf: 'center',
+        // paddingVertical: 10,
+        // borderRadius: 10,
+        // marginBottom: 10,
     },
     text:{
         textAlign: 'center',

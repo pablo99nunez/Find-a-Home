@@ -16,19 +16,23 @@ import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
 
+import { Characteristics } from "./Characteristics";
+
+
 export default function Detail({ route, navigation }) {
   const { profilePic, name, createdAt, gallery, description } = route.params;
 
 export default function Detail({route, navigation}){
   
-  const {profilePic, name , createdAt, gallery, description}= route.params
+  const {profilePic, name , createdAt, gallery, description, size, age}= route.params
 
   const days = calculateAdoptionDays(createdAt)
 
   const bottomSheetRef = useRef(null);
 
   // variables
-  const snapPoints = useMemo(() => ['55%', '70%'], []);
+  const snapPoints = useMemo(() => ['55%', '77%'], []);
+
   const [open, setOpen] = useState(-1)
   // callbacks
   const handleSheetChanges = useCallback((index) => {
@@ -45,8 +49,9 @@ export default function Detail({route, navigation}){
                   <HeaderDetail onPress={()=> navigation.goBack()} days={days}/>
               </View>
 
-              <View className='h-40'>
-                  <Text className='text-[#f5c936] text-4xl text-center my-6'>{name.toUpperCase()}</Text>
+
+              <View className='h-52'>
+                  <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
               </View>
 
               <View>
@@ -59,23 +64,38 @@ export default function Detail({route, navigation}){
             </View>
           </LinearGradient>
         </ImageBackground>
-        <Text className='text-2xl text-center'>{description}</Text>
+
+        <Text className='text-2xl text-center my-9'>{description}</Text>
+
+        <View className='my-20'>
+          <Characteristics size={size} age={age}/>
+        </View>
+        
+        <View className='aboslute bottom-0 h-25 flex justify-end'> 
+
         <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
+        </View>
+      
+
       </View>
 
 
       <BottomSheet
+
+      backgroundStyle={styles.containerInput}
       ref={bottomSheetRef}
       index={open}
       snapPoints={snapPoints}
-      keyboardBehavior="fillParent"
+
       onChange={handleSheetChanges}
       keyboardBehavior='extend'
       enablePanDownToClose={true}
       onClose={()=> setOpen(-1)}
-    >
-      <BottomView/>
-    </BottomSheet>
+
+      >
+        <BottomView/>
+      </BottomSheet>
+
       
 
     </View>
@@ -86,12 +106,16 @@ const styles = StyleSheet.create({
 
   profilePic:{ 
     width: '100%', 
-    height: 350
+    height: 400
   },
   gallery:{ 
     width: 90, 
     height: 90 , 
-    marginLeft: 25
+    marginLeft: 25,
+    borderRadius: 5
+  },
+  containerInput:{
+    backgroundColor: '#d9d9d9'
   }
 })
 
