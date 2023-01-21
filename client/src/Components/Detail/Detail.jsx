@@ -17,6 +17,8 @@ import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Characteristics } from "./Characteristics";
 
+export default function Detail({ route, navigation }) {
+  const { profilePic, name, createdAt, gallery, description } = route.params;
 
 export default function Detail({route, navigation}){
   
@@ -73,7 +75,6 @@ export default function Detail({route, navigation}){
       </View>
 
 
-
       <BottomSheet
       backgroundStyle={styles.containerInput}
       ref={bottomSheetRef}
@@ -87,6 +88,7 @@ export default function Detail({route, navigation}){
         <BottomView/>
       </BottomSheet>
       
+
     </View>
   );
 }
