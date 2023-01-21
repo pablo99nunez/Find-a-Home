@@ -1,28 +1,16 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import BottomSheet, { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { ButtonYellow } from '../Buttons/Buttons';
 
 const BottomView = () => {
-  // ref
-  const bottomSheetRef = useRef(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['50%', '100%'], []);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
+  
   // renders
   return (
       <View>
         <BottomSheetTextInput style={styles.input} multiline/>
         <ButtonYellow text='Enviar Solicitud' onPress={()=> alert('solicitud enviada')}/>
       </View>
-      
-    
   );
 };
 
