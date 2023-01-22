@@ -11,8 +11,8 @@ const petSchema = mongoose.Schema(
     },
     age: {
       type: String,
-      required: true,
-      enum: ['0 a 8 meses', '8 meses a 2 años', '2 años o más'],
+      // required: true,
+      // enum: ['0 a 8 meses', '8 meses a 2 años', '2 años o más'],
     },
     name: {
       type: String,
@@ -23,7 +23,7 @@ const petSchema = mongoose.Schema(
     },
     specie: {
       type: String,
-      required: true,
+      // required: true,
       enum: ['Perro', 'Gato', 'Otro'],
       default: 'Perro',
     },
@@ -32,7 +32,7 @@ const petSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
+      // required: true,
       maxlength: 400,
     },
     size: {
@@ -42,7 +42,7 @@ const petSchema = mongoose.Schema(
     },
     profilePic: {
       type: String,
-      required: true,
+      // required: true,
     },
     gallery: [
       {

@@ -76,30 +76,56 @@ export const CreateDog = ({navigation}) =>{
     const [crear, setCrear] = useState({
       name: "",
       description: "",
-      birthday: "",
+      age: "",
         size: "",
         profilePic: ""
     })
 
-    const HandleSubmit = async () =>{
-      const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
-      const data = crear;
-      const apiResponse = await axios.post('http://localhost:8080/pet', data, {
-          headers: {
-              'Authorization': `Bearer ${tokenLocalStorage}`,
-              'X-Firebase-AppCheck': tokenLocalStorage,
-          }
-      })
-      .then(response => console.log(response.data))
-      .catch(err => console.error(err));
-      console.log({ respuesta: apiResponse });
-  };
+
+    const HandleSubmit = async () => {
+      const IPv4 = "192.168.178.211";
+      let info = JSON.stringify(crear);
+      let url = `http://${IPv4}:8080/pet`;
+      try {
+        await axios({
+          method: 'post',
+          url: url,
+          headers: { 'Content-Type': 'application/json' }, 
+          data: crear
+        });
+        setCrear({
+          name: "",
+          description: "",
+          age: "",
+          size: "",
+          profilePic: ""
+        });
+        alert("Creo que se creo");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+//  const HandleSubmit = (crear) => {
+//   return async function () {
+// try{
+//    let esperar =  await axios.get("http://localhost:8080/filtro/size/small",)
+//       alert(esperar)
+
+//     }
+//     catch(err){
+//       console.log(err)
+//     }
+//   }
+// }
 
     return(
 
         <>
 <View style={{flexDirection: 'row'}}>
+<TouchableOpacity onPress={() => navigation.goBack()}>
     <Image source={require('../../images/flecha.png')} style={{width: 20, height: 20, marginRight: 30, marginTop: 60}} />
+    </TouchableOpacity>
     <Text style={{ fontSize: 30, marginTop: 50}}>Añadir mascota:</Text>
 </View>
         <ScrollView style={styles.container}>
@@ -108,20 +134,24 @@ export const CreateDog = ({navigation}) =>{
                 placeholder="Nombre de tu mascota"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, name: text })} />
+                onChangeText={(text) => setCrear({ ...crear, name: text })} 
+                />
                 <Text style={{ fontSize: 30, marginRight: 10}}>Descripcion:</Text>
             <TextInput style={styles.input}
                 placeholder="Como es?"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, description: text })} />
+                onChangeText={(text) => setCrear({ ...crear, description: text })} 
+ />
 
 <Text style={{ fontSize: 30, marginRight: 10}}>Fecha de nacimiento:</Text>
             <TextInput style={styles.input}
                 placeholder="Cuando nacio?"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, birthday: text })} />
+                     onChangeText={(text) => setCrear({ ...crear, age: text })} 
+
+                />
 
 <Text style={{ fontSize: 30, marginRight: 10}}>Tamaño:</Text>
 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
@@ -176,10 +206,13 @@ export const CreateDog = ({navigation}) =>{
                 </TouchableOpacity>
                 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
+                <TouchableOpacity onPress={HandleSubmit}>
+                <Image
+                            source={require('../../images/camera.png')}
+                            style={styles.imagen}
+                            />
+                             </TouchableOpacity>
 
-                <ButtonYellow onPress={() => HandleSubmit() }
-              
-                />
                                 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
         </ScrollView>
