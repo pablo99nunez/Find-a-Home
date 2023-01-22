@@ -90,7 +90,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="CreateDog"
           component={CreateDog}
           options={{ headerShown: false }}

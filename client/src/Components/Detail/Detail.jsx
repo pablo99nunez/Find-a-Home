@@ -40,7 +40,7 @@ export default function Detail({route, navigation}){
       <View className='bg-[#acacac] h-full'>
         <ImageBackground style={styles.profilePic} source={{uri: profilePic}}>
           <LinearGradient colors={['#00000000', '#acacac']} style={{height : '100%', width : '100%'}}>
-            <View>
+            <View className='h-1/3'>
 
               <View >
                   <HeaderDetail onPress={()=> navigation.goBack()} days={days}/>
@@ -62,17 +62,17 @@ export default function Detail({route, navigation}){
           </LinearGradient>
         </ImageBackground>
 
-        <Text className='text-2xl text-center my-9'>{description}</Text>
 
-        <View className='my-20'>
+        <View className='h-1/4'>
+        <Text className='text-2xl text-center my-9'>{description}</Text>
           <Characteristics size={size} age={age}/>
         </View>
-        
-        <View className='aboslute bottom-0 h-25 flex justify-end'> 
+
+        <View className='h-1/3 flex justify-end m-[-30px]'>
 
         <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
         </View>
-      
+
 
       </View>
 
@@ -93,7 +93,7 @@ export default function Detail({route, navigation}){
         <BottomView/>
       </BottomSheet>
 
-      
+
 
     </View>
   );
