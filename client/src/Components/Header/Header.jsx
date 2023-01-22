@@ -16,9 +16,10 @@ import { Picker } from "@react-native-picker/picker";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation, filterBySpecie }) => {
+export const Header = ({ navigation, filterBySpecie, filterBySize }) => {
   const [userInput, setUserInput] = useState({
     especie: "",
+    tamaño: "",
   });
   const pickerRef = useRef();
 
@@ -27,6 +28,7 @@ export const Header = ({ navigation, filterBySpecie }) => {
   const scale = useRef(new Animated.Value(0)).current;
 
   const [specie, setSpecie] = useState("All");
+  const [size, setSize] = useState("All");
 
   /* useEffect(() => {
     getPets();
@@ -114,7 +116,6 @@ export const Header = ({ navigation, filterBySpecie }) => {
                 ref={pickerRef}
                 selectedValue={specie}
                 onValueChange={(itemValue, itemIndex) => {
-                  console.log(itemValue);
                   filterBySpecie(itemValue);
                   setSpecie(itemValue);
                 }}
@@ -138,11 +139,15 @@ export const Header = ({ navigation, filterBySpecie }) => {
               <Picker
                 style={styles.inputPicker}
                 ref={pickerRef}
-                selectedValue={userInput.especie}
-                onValueChange={(itemValue, itemIndex) =>
-                  setUserInput({ ...userInput, especie: itemValue })
-                }
+                selectedValue={size}
+                onValueChange={(itemValue, itemIndex) => {
+                  console.log(itemValue);
+                  filterBySize(itemValue);
+                  setSize(itemValue);
+                }}
               >
+                <Picker.Item label="Seleccionar" value="Seleccionar" />
+                <Picker.Item label="Todos" value="All" />
                 <Picker.Item label="Small" value="Small" />
                 <Picker.Item label="Medium" value="Medium" />
                 <Picker.Item label="Large" value="Large" />
@@ -174,7 +179,7 @@ const styles = StyleSheet.create({
     borderColor: "#333",
     borderWidth: 1,
     backgroundColor: "#FFC733",
-    paddingHorizontal: 130,
+    paddingHorizontal: 150,
     paddingVertical: 150,
     position: "absolute",
     top: 75,

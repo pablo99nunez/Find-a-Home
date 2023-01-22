@@ -22,13 +22,13 @@ export default function Home({ navigation }) {
       id: 1,
       name: "Yoshi",
       age: "2 años o mas",
-      specie: "Perro",
+      specie: "Otro",
       birthday: "2022-04-15",
       description:
         "Me gusta jugar con una pelota y correr. Soy muy bueno con chicos y otros perritos",
-      size: "medium",
+      size: "Medium",
       profilePic:
-        "https://resizer.glanacion.com/resizer/5QeUzKF3eQwZWQVTbjU7sL2nmgc=/768x0/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/FHNNVHNWPNHJXBGQMNPDEULCPU.jpg",
+        "https://i.pinimg.com/originals/a9/a8/44/a9a844efde8eaaeef14e37861974a0b4.jpg",
       createdAt: "2023-01-01T22:58:33.462Z",
       gallery: [
         "https://blog.mascotaysalud.com/wp-content/uploads/2018/02/perro-negro-1.jpg",
@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
         "https://thumbs.dreamstime.com/b/gatito-gris-durmiendo-en-el-sof%C3%A1-gato-armario-de-la-casa-162888338.jpg",
       ],
       description: "Soy bastante calmo. Me llevo bien con perros y gatos",
-      size: "large",
+      size: "Large",
     },
     {
       id: 3,
@@ -65,7 +65,7 @@ export default function Home({ navigation }) {
         "https://img.freepik.com/fotos-premium/perro-callejero-marron-que-ha-sido-cuidado-mirada-sospecha_49071-4517.jpg?w=2000",
       ],
       description: "me gusta salir a pasear, me llevo muy bien con nenes",
-      size: "small",
+      size: "Small",
     },
     {
       id: 4,
@@ -77,7 +77,7 @@ export default function Home({ navigation }) {
         "https://res.cloudinary.com/teepublic/image/private/s--A0BRFtE8--/c_crop,x_10,y_10/c_fit,h_1152/c_crop,g_north_west,h_1038,w_1038,x_-28,y_60/l_upload:v1565806151:production:blanks:vdbwo35fw6qtflw9kezw/fl_layer_apply,g_north_west,x_-139,y_-111/b_rgb:ffffff/c_limit,f_auto,h_630,q_90,w_630/v1637527593/production/designs/25742122_0.jpg",
       createdAt: "2023-01-10T22:58:33.462Z",
       description: "soy muy amigable",
-      size: "large",
+      size: "Large",
     },
     {
       id: 5,
@@ -89,7 +89,7 @@ export default function Home({ navigation }) {
         "https://www.hogarmania.com/archivos/202004/chequeo-veterinario-en-gatos-recogidos-de-la-calle-1280x720x80xX.jpg",
       createdAt: "2023-01-12T22:58:33.462Z",
       description: "AMO dormir...",
-      size: "small",
+      size: "Small",
     },
     {
       id: 6,
@@ -102,7 +102,7 @@ export default function Home({ navigation }) {
       createdAt: "2023-01-15T22:58:33.462Z",
       description:
         "Soy el perro de Santi, viajé 20 horas en auto, en el duro invierno",
-      size: "medium",
+      size: "Medium",
     },
     {
       id: 7,
@@ -114,7 +114,7 @@ export default function Home({ navigation }) {
         "https://images.theconversation.com/files/465530/original/file-20220526-24-59vyo6.jpg?ixlib=rb-1.1.0&rect=0%2C0%2C5194%2C3452&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip",
       createdAt: "2023-01-13T22:58:33.462Z",
       description: "Soy muy mimosa, se usar la cajita con arena",
-      size: "small",
+      size: "Small",
     },
     {
       id: 8,
@@ -126,7 +126,7 @@ export default function Home({ navigation }) {
         "https://vajiramandravi.s3.us-east-1.amazonaws.com/media/2018/12/18/23/14/21/5.jpg",
       createdAt: "2023-01-13T22:58:33.462Z",
       description: "juego furbo",
-      size: "medium",
+      size: "Medium",
     },
   ];
   const [pet, setPet] = useState(petDb);
@@ -138,9 +138,20 @@ export default function Home({ navigation }) {
     } else setPet(petDb.filter((el) => el.specie == specie));
   };
 
+  const filterBySize = (size) => {
+    console.log(size);
+    if (size === "All") {
+      setPet(petDb);
+    } else setPet(petDb.filter((el) => el.size == size));
+  };
+
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} filterBySpecie={filterBySpecie} />
+      <Header
+        navigation={navigation}
+        filterBySpecie={filterBySpecie}
+        filterBySize={filterBySize}
+      />
       <FlatList
         style={styles.body}
         numColumns={2}
