@@ -58,7 +58,8 @@ export default function Home({ navigation }) {
       age: "2 años o mas",
       specie: "Perro",
       birthday: "2022-04-15",
-      profilePic: "https://wallpaperaccess.com/full/3595399.jpg",
+      profilePic: 
+        "https://wallpaperaccess.com/full/3595399.jpg",
       createdAt: "2023-01-07T22:58:33.462Z",
       gallery: [
         "https://img.freepik.com/fotos-premium/perro-callejero-marron-que-ha-sido-cuidado-mirada-sospecha_49071-4515.jpg?w=360",

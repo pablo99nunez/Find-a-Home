@@ -86,7 +86,7 @@ export default function RegisterFirstSteps({ navigation }) {
 							data={Localities.filter((ele) => ele.key == userInput.provincia)}
 							setSelected={(value) => setUserInput({...userInput, departamento: value})}
 							placeholder="Departamento"	
-							search={false}
+							// search={false}
 							boxStyles={{backgroundColor:"#1E1E1E"}}
 							inputStyles={{color:"#7E7E7E", fontSize: 18}}
 							dropdownStyles={{backgroundColor:"#2E2E2E"}}
