@@ -9,141 +9,69 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity, //botton
   Button,
+  ScrollView
 } from "react-native";
 import { ButtonYellow } from "../Buttons/Buttons";
 import { useState } from "react";
-import {
-    launchCamera,
-    launchImageLibrary
-  } from 'react-native-image-picker';
   import {
     SafeAreaView,
     Platform,
     PermissionsAndroid,
   } from 'react-native';
 import perro from "./running-dog-silhouette.png"
-
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
 export const CreateDog = () =>{
 
 
 
-    const [filePath, setFilePath] = useState({});
+  let permissionGranted = false;
 
-    const requestCameraPermission = async () => {
-      if (Platform.OS === 'android') {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: 'Camera Permission',
-              message: 'App needs camera permission',
-            },
-          );
-          // If CAMERA Permission is granted
-          return granted === PermissionsAndroid.RESULTS.GRANTED;
-        } catch (err) {
-          console.warn(err);
-          return false;
-        }
-      } else return true;
-    };
-  
-    const requestExternalWritePermission = async () => {
-      if (Platform.OS === 'android') {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-            {
-              title: 'External Storage Write Permission',
-              message: 'App needs write permission',
-            },
-          );
-          // If WRITE_EXTERNAL_STORAGE Permission is granted
-          return granted === PermissionsAndroid.RESULTS.GRANTED;
-        } catch (err) {
-          console.warn(err);
-          alert('Write permission err', err);
-        }
-        return false;
-      } else return true;
-    };
-  
-    const captureImage = async (type) => {
-      let options = {
-        mediaType: type,
-        maxWidth: 300,
-        maxHeight: 550,
-        quality: 1,
-        videoQuality: 'low',
-        durationLimit: 30, //Video max duration in seconds
-        saveToPhotos: true,
-      };
-      let isCameraPermitted = await requestCameraPermission();
-      let isStoragePermitted = await requestExternalWritePermission();
-      if (isCameraPermitted && isStoragePermitted) {
-        launchCamera(options, (response) => {
-          console.log('Response = ', response);
-  
-          if (response.didCancel) {
-            alert('User cancelled camera picker');
-            return;
-          } else if (response.errorCode == 'camera_unavailable') {
-            alert('Camera not available on device');
-            return;
-          } else if (response.errorCode == 'permission') {
-            alert('Permission not satisfied');
-            return;
-          } else if (response.errorCode == 'others') {
-            alert(response.errorMessage);
-            return;
+  const requestGalleryPermission = async () => {
+    return new Promise((resolve) => {
+      try {
+        PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          {
+            title: 'Permiso para acceder a la galería',
+            message: 'Necesitamos acceder a tu galería para seleccionar imágenes.',
+            buttonNeutral: 'Preguntarme luego',
+            buttonNegative: 'Cancelar',
+            buttonPositive: 'Aceptar',
+          },
+        ).then((granted) => {
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('Galería permitida');
+          } else {
+            console.log('Galería no permitida');
           }
-          console.log('base64 -> ', response.base64);
-          console.log('uri -> ', response.uri);
-          console.log('width -> ', response.width);
-          console.log('height -> ', response.height);
-          console.log('fileSize -> ', response.fileSize);
-          console.log('type -> ', response.type);
-          console.log('fileName -> ', response.fileName);
-          setFilePath(response);
+          resolve(granted);
         });
+      } catch (err) {
+        console.warn(err);
       }
-    };
+    });
+  };
   
-    const chooseFile = (type) => {
-      let options = {
-        mediaType: type,
-        maxWidth: 300,
-        maxHeight: 550,
-        quality: 1,
-      };
-      launchImageLibrary(options, (response) => {
-        console.log('Response = ', response);
-  
+  const openCamera = async () => {
+    await requestGalleryPermission();
+      launchImageLibrary({}, (response) => {
         if (response.didCancel) {
-          alert('User cancelled camera picker');
-          return;
-        } else if (response.errorCode == 'camera_unavailable') {
-          alert('Camera not available on device');
-          return;
-        } else if (response.errorCode == 'permission') {
-          alert('Permission not satisfied');
-          return;
-        } else if (response.errorCode == 'others') {
-          alert(response.errorMessage);
-          return;
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          setFoto(response.uri);
         }
-        console.log('base64 -> ', response.base64);
-        console.log('uri -> ', response.uri);
-        console.log('width -> ', response.width);
-        console.log('height -> ', response.height);
-        console.log('fileSize -> ', response.fileSize);
-        console.log('type -> ', response.type);
-        console.log('fileName -> ', response.fileName);
-        setFilePath(response);
       });
-    };
+    
+  }
+
+
+
     const [crear, setCrear] = useState({
         nombre: "",
         descripcion: "",
@@ -153,30 +81,36 @@ export const CreateDog = () =>{
     })
 
     return(
-        <><View style={styles.container}>
-            <Text style={{ fontWeight: 'bold' }}> Nombre</Text>
+
+        <>
+<View style={{flexDirection: 'row'}}>
+    <Image source={require('../../images/flecha.png')} style={{width: 20, height: 20, marginRight: 30, marginTop: 60}} />
+    <Text style={{ fontSize: 30, marginTop: 50}}>Añadir mascota:</Text>
+</View>
+        <ScrollView style={styles.container}>
+                <Text style={{ fontSize: 30, marginRight: 10}}>Nombre:</Text>
             <TextInput style={styles.input}
-                placeholder="Nombre"
-                placeholderTextColor="#9a73ef"
+                placeholder="Nombre de tu mascota"
+                placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
                 onChangeText={(text) => setCrear({ ...crear, nombre: text })} />
-            <Text style={{ fontWeight: 'bold', }}> Descripcion</Text>
+                <Text style={{ fontSize: 30, marginRight: 10}}>Descripcion:</Text>
             <TextInput style={styles.input}
-                placeholder="Ingresa la descripcion del animal"
-                placeholderTextColor="#9a73ef"
+                placeholder="Como es?"
+                placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
                 onChangeText={(text) => setCrear({ ...crear, descripcion: text })} />
 
-            <Text style={{ fontWeight: 'bold', }}> Fecha de nacimiento</Text>
+<Text style={{ fontSize: 30, marginRight: 10}}>Fecha de nacimiento:</Text>
             <TextInput style={styles.input}
-                placeholder="Ingresa la fecha aproximada de nacimiento"
-                placeholderTextColor="#9a73ef"
+                placeholder="Cuando nacio?"
+                placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
                 onChangeText={(text) => setCrear({ ...crear, fecha_de_nacimiento: text })} />
 
-            <Text style={{ fontWeight: 'bold', }}> Tamaño</Text>
+<Text style={{ fontSize: 30, marginRight: 10}}>Tamaño:</Text>
+<Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
-            <View style={styles.container2}>
                 <TouchableOpacity onPress={() => setCrear({ ...crear, tamaño: "pequeño" })}>
                     {crear.tamaño === "pequeño" ?
                         <Image
@@ -214,64 +148,34 @@ export const CreateDog = () =>{
                             style={styles.grande} />}
                 </TouchableOpacity>
 
-            </View>
-            {/* <ButtonYellow
-    text= "asd"
-    onPress={()=> alert("apretastes el boton")}
-    />
-     */}
-        </View><SafeAreaView style={{ flex: 1 }}>
-                <Text style={styles.titleText}>
-                    Example of Image Picker in React Native
-                </Text>
-                <View style={styles.container}>
-                    {/* <Image
-      source={{
-        uri: 'data:image/jpeg;base64,' + filePath.data,
-      }}
-      style={styles.imageStyle}
-    /> */}
-                    <Image
-                        source={{ uri: filePath.uri }}
-                        style={styles.imageStyle} />
-                    <Text style={styles.textStyle}>{filePath.uri}</Text>
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.buttonStyle}
-                        onPress={() => captureImage('photo')}>
-                        <Text style={styles.textStyle}>
-                            Launch Camera for Image
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.buttonStyle}
-                        onPress={() => captureImage('video')}>
-                        <Text style={styles.textStyle}>
-                            Launch Camera for Video
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.buttonStyle}
-                        onPress={() => chooseFile('photo')}>
-                        <Text style={styles.textStyle}>Choose Image</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.buttonStyle}
-                        onPress={() => chooseFile('video')}>
-                        <Text style={styles.textStyle}>Choose Video</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView></>
+                <Text style={{ fontSize: 30, marginRight: 10}}>Foto:</Text>
+                <Text style={{ fontSize: 10, marginRight: 10}}></Text>
+
+                <TouchableOpacity onPress={() =>openCamera()}>
+  
+  {/* <Image source={{uri: foto}} style={styles.foto} /> */}
+                <Image
+                            source={require('../../images/camera.png')}
+                            style={styles.imagen}
+                            />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 30, marginRight: 10}}></Text>
+
+                <ButtonYellow
+              
+                />
+                                <Text style={{ fontSize: 30, marginRight: 10}}></Text>
+
+        </ScrollView>
+
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-       paddingTop: 23
-    },
+       paddingTop: 23,
+      },
     titleText: {
         fontSize: 22,
         fontWeight: 'bold',
@@ -282,6 +186,13 @@ const styles = StyleSheet.create({
         padding: 10,
         color: 'black',
         textAlign: 'center',
+      },
+      imagen: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 40
       },
       buttonStyle: {
         alignItems: 'center',
@@ -303,28 +214,32 @@ const styles = StyleSheet.create({
         backgroundColor: 'yellow',
       },
     perrochico: {
-        width: 50,
-        height: 50,
-        marginLeft: -150
+        width: 60,
+        height: 60,
+        marginLeft: 10
       },
       mediano: {
         width: 80,
         height: 80,
-        marginTop: -15
+        marginLeft: 120,
+        marginTop: -70
+
 
       },
       grande: {
         width: 100,
         height: 100,
         marginLeft: 250,
-        marginTop: -20
+        marginTop: -90
 
       },
     input: {
        margin: 15,
        height: 40,
-       borderColor: '#7a42f4',
-       borderWidth: 1
+       borderWidth: 1,
+       backgroundColor: '#656568',
+       borderRadius: 5
+
     },
     submitButton: {
        backgroundColor: '#7a42f4',

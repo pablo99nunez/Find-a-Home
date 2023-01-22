@@ -89,12 +89,12 @@ export default function App() {
           component={RegisterLastStepsAdopting}
           options={{ headerShown: false }}
         />
-
-<Stack.Screen
+      <Stack.Screen
           name="CreateDog"
           component={CreateDog}
           options={{ headerShown: false }}
         />
+
         {/* =================================== */}
       </Stack.Navigator>
     </NavigationContainer>

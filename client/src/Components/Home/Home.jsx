@@ -146,6 +146,11 @@ export default function Home({ navigation }) {
   };
 
   return (
+    <View>
+    <View>
+    <HomeStack.Screen name="Home1" component={HomeScreen1} />
+
+    </View>
     <View style={styles.container}>
       <Header
         navigation={navigation}
@@ -164,6 +169,7 @@ export default function Home({ navigation }) {
         )}
       ></FlatList>
       <StatusBar style="auto" />
+    </View>
     </View>
   );
 }

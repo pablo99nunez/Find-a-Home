@@ -10,7 +10,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/android-manifest": "^0.2.5",
     "@expo/webpack-config": "^0.17.2",
     "@gorhom/bottom-sheet": "^4.4.5",
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -24,6 +23,7 @@
     "axios": "^1.2.3",
     "base-64": "^1.0.0",
     "expo": "~47.0.12",
+    "expo-constants": "^14.0.2",
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.16.0",

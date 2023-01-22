@@ -20,6 +20,16 @@
     "ios": {
       "supportsTablet": true
     },
+    "plugins": [
+      [
+        "./plugins/withAndroidMainActivityAttributes",
+        {
+          "android:showWhenLocked": true,
+          "android:turnScreenOn": true
+        }
+    
+      ]
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -30,4 +40,5 @@
       "favicon": "./assets/favicon.png"
     }
   }
+  
 }
