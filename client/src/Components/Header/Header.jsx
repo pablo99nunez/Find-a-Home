@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,21 +12,36 @@ import {
   Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Picker } from "@react-native-picker/picker";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({navigation}) => {
+export const Header = ({ navigation, filterBySpecie }) => {
+  const [userInput, setUserInput] = useState({
+    especie: "",
+  });
+  const pickerRef = useRef();
+
+  ///
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
-  const species = ["perro", "gato", "otro"];
-  const options = [
-    {
-      title: "Especie",
-      icon: "star",
-      action: () => console.log("filtro especie"),
-    },
-    { title: "Tamaño", icon: "plus", action: () => alert("Story") },
-  ];
+
+  const [specie, setSpecie] = useState("All");
+
+  /* useEffect(() => {
+    getPets();
+  }, [specie]); */
+
+  /*   const getPets = async () => {      GENTE!!!!!!!!!!!!!!: ESTE SERÁ EL FILTRO REAL, CUANDO CONECTEMOS LAS PETS DE LA DB AL FRONT UWU
+    const IPv4 = "192.168.1.118";
+    let url = `http://${IPv4}:8080/filtro/specie/${specie}`;
+
+    const result = await fetch(url)
+      .then((res) => res.json())
+      .then((data) => data)
+      .catch((err) => err);
+  }; */
+
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
@@ -36,13 +51,15 @@ export const Header = ({navigation}) => {
       easing: Easing.linear,
     }).start(() => to === 0 && setVisible(false));
   };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('UserDetail')}>
-        <Image 
-        className="drop-shadow-2xl w-12 h-12 absolute left-5 top-8 rounded-full"
-        resizeMode={"contain"}
-        source={require("../../images/profilePic.jpg")}/>
+      <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
+        <Image
+          className="drop-shadow-2xl w-12 h-12 absolute left-5 top-8 rounded-full"
+          resizeMode={"contain"}
+          source={require("../../images/profilePic.jpg")}
+        />
       </TouchableOpacity>
 
       <Image
@@ -69,23 +86,68 @@ export const Header = ({navigation}) => {
               },
             ]}
           >
-            {options.map((op, i) => (
-              <TouchableOpacity
-                style={styles.option}
-                key={i}
-                onPress={() => {
-                  op.action;
+            {/* {options.map((op, i) => (
+              <View>
+                <TouchableOpacity
+                  style={styles.option}
+                  key={i}
+                  onPress={() => {
+                    op.action();
+                  }}
+                >
+                  <Text>{op.title}</Text>
+                  <Icon
+                    name={op.icon}
+                    size={40}
+                    color={"#212121"}
+                    style={{ marginLeft: 10 }}
+                  />
+                </TouchableOpacity>
+              </View>
+            ))} */}
+            <View>
+              <TouchableOpacity style={styles.option} key={1}>
+                <Text>Especie</Text>
+              </TouchableOpacity>
+              <Picker
+                style={styles.inputPicker}
+                ref={pickerRef}
+                selectedValue={specie}
+                onValueChange={(itemValue, itemIndex) => {
+                  console.log(itemValue);
+                  filterBySpecie(itemValue);
+                  setSpecie(itemValue);
                 }}
               >
-                <Text>{op.title}</Text>
-                <Icon
-                  name={op.icon}
-                  size={40}
-                  color={"#212121"}
-                  style={{ marginLeft: 10 }}
-                />
+                <Picker.Item label="Seleccionar" value="Seleccionar" />
+                <Picker.Item label="Todos" value="All" />
+                <Picker.Item label="Perro" value="Perro" />
+                <Picker.Item label="Gato" value="Gato" />
+
+                <Picker.Item label="Otro" value="Otro" />
+              </Picker>
+              <TouchableOpacity
+                style={styles.option}
+                key={2}
+                onPress={() => {
+                  alert("tamaño filtro tests");
+                }}
+              >
+                <Text>Tamaño</Text>
               </TouchableOpacity>
-            ))}
+              <Picker
+                style={styles.inputPicker}
+                ref={pickerRef}
+                selectedValue={userInput.especie}
+                onValueChange={(itemValue, itemIndex) =>
+                  setUserInput({ ...userInput, especie: itemValue })
+                }
+              >
+                <Picker.Item label="Small" value="Small" />
+                <Picker.Item label="Medium" value="Medium" />
+                <Picker.Item label="Large" value="Large" />
+              </Picker>
+            </View>
           </Animated.View>
         </SafeAreaView>
       </Modal>
@@ -123,5 +185,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderColor: "#ccc",
+  },
+  inputPicker: {
+    backgroundColor: "#1E1E1E",
+    color: "#FFF",
+    fontSize: 25,
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 1,
   },
 });
