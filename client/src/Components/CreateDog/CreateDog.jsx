@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import {
   StyleSheet,
   Text,
@@ -22,7 +23,7 @@ import perro from "./running-dog-silhouette.png"
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
-export const CreateDog = () =>{
+export const CreateDog = ({navigation}) =>{
 
 
 
@@ -73,12 +74,26 @@ export const CreateDog = () =>{
 
 
     const [crear, setCrear] = useState({
-        nombre: "",
-        descripcion: "",
-        fecha_de_nacimiento: "",
-        tamaño: "",
-        foto: ""
+      name: "",
+      description: "",
+      birthday: "",
+        size: "",
+        profilePic: ""
     })
+
+    const HandleSubmit = async () =>{
+      const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
+      const data = crear;
+      const apiResponse = await axios.post('http://localhost:8080/pet', data, {
+          headers: {
+              'Authorization': `Bearer ${tokenLocalStorage}`,
+              'X-Firebase-AppCheck': tokenLocalStorage,
+          }
+      })
+      .then(response => console.log(response.data))
+      .catch(err => console.error(err));
+      console.log({ respuesta: apiResponse });
+  };
 
     return(
 
@@ -93,26 +108,26 @@ export const CreateDog = () =>{
                 placeholder="Nombre de tu mascota"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, nombre: text })} />
+                onChangeText={(text) => setCrear({ ...crear, name: text })} />
                 <Text style={{ fontSize: 30, marginRight: 10}}>Descripcion:</Text>
             <TextInput style={styles.input}
                 placeholder="Como es?"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, descripcion: text })} />
+                onChangeText={(text) => setCrear({ ...crear, description: text })} />
 
 <Text style={{ fontSize: 30, marginRight: 10}}>Fecha de nacimiento:</Text>
             <TextInput style={styles.input}
                 placeholder="Cuando nacio?"
                 placeholderTextColor="#fcfcfc"
                 autoCapitalize="none"
-                onChangeText={(text) => setCrear({ ...crear, fecha_de_nacimiento: text })} />
+                onChangeText={(text) => setCrear({ ...crear, birthday: text })} />
 
 <Text style={{ fontSize: 30, marginRight: 10}}>Tamaño:</Text>
 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
-                <TouchableOpacity onPress={() => setCrear({ ...crear, tamaño: "pequeño" })}>
-                    {crear.tamaño === "pequeño" ?
+                <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" })}>
+                    {crear.size === "small" ?
                         <Image
 
                             source={require('../../images/perro_rosa.png')}
@@ -124,8 +139,8 @@ export const CreateDog = () =>{
                             style={styles.perrochico} />}
 
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setCrear({ ...crear, tamaño: "mediano" })}>
-                    {crear.tamaño === "mediano" ?
+                <TouchableOpacity onPress={() => setCrear({ ...crear, size: "medium" })}>
+                    {crear.size === "medium" ?
                         <Image
                             source={require('../../images/perro_rosa.png')}
                             style={styles.mediano} />
@@ -137,8 +152,8 @@ export const CreateDog = () =>{
 
 
 
-                <TouchableOpacity onPress={() => setCrear({ ...crear, tamaño: "grande" })}>
-                    {crear.tamaño === "grande" ?
+                <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}>
+                    {crear.size === "large" ?
                         <Image
                             source={require('../../images/perro_rosa.png')}
                             style={styles.grande} />
@@ -161,7 +176,8 @@ export const CreateDog = () =>{
                 </TouchableOpacity>
                 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
-                <ButtonYellow
+
+                <ButtonYellow onPress={() => HandleSubmit() }
               
                 />
                                 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
