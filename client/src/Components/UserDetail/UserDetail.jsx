@@ -19,9 +19,13 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"
 import { callApiWithAppCheckExample } from "../../firebase/fetch.middleware";
+import { ButtonYellow } from "../Buttons/Buttons";
+import Header from "./Header";
 
 
-const { width, height } = Dimensions.get("screen")
+// const { width, height } = Dimensions.get("screen")
+const HEIGHT = Dimensions.get("screen").height
+
 
 export default function UserDetail({ route, navigation }) {
 //test, borrable:
@@ -57,7 +61,7 @@ export default function UserDetail({ route, navigation }) {
     age: 35,
     rating: 5,
     profilePic: 'https://pbs.twimg.com/media/FdSKUwgWIAEJNX0.jpg',
-    description: "Soy Lionel Andrés Messi Cuccittini, nací en Rosario, el 24 de junio de 1987, soy conocido como Leo Messi, soy un futbolista argentino que juega como delantero o centrocampista. Jugador histórico del Fútbol Club Barcelona, al que estuve ligado veinte años, y desde 2021 integro el plantel del Paris Saint-Germain de la Ligue 1 de Francia.",
+    description: "Soy Lionel Andrés Messi Cuccittini, nací en Rosario, el 24 de junio de 1987, soy conocido como Leo Messi, soy un futbolista argentino que juega como delantero o centrocampista, actual Mejor Jugador y Campeón del Mundo",
     address: "Torre Eiffel",
     pets: [{
       id: 100,
@@ -106,7 +110,9 @@ export default function UserDetail({ route, navigation }) {
 
   return (
 
-    <View style={{ height, backgroundColor: '#ACACAC' }}>
+    <View style={{height: HEIGHT}}
+    className="bg-[#ACACAC] flex justify-between">
+
       <ImageBackground
         style={{ width: '100%', height: 350, backgroundImage: 'linear-gradient' }}
         source={{ uri: user.profilePic }}
@@ -114,43 +120,42 @@ export default function UserDetail({ route, navigation }) {
       >
         <LinearGradient colors={['#00000000', '#ACACAC']} style={{ height: '100%', width: '100%' }}>
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-              <Image
-                className="absolute top-10 left-5 w-10 h-10"
-                source={require("../../images/FindAHome.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                className="absolute top-10 right-5 w-10 h-10"
-                source={require("../../images/Trust.png")}
-              />
-            </TouchableOpacity>
+            <Header onPress={() => navigation.navigate('Home')}/>
             <Image
-              className="absolute w-56 h-56 top-14 inset-x-1/4 rounded-full"
+              className="w-80 h-80 bottom-6 mx-auto rounded-full"
               source={{ uri: user.profilePic }}
             />
-            <Text className="text-center top-80 text-4xl" style={{ color: "#f5c936" }}>{user.firstName} {user.lastName}</Text>
-            <Text className="absolute top-96 left-5 text-center text-xl">Edad: {user.age} años</Text>
-            <Text className="absolute top-96 right-5 text-center text-xl">Rating: {user.rating} ⭐</Text>
+            <View className="flex flex-row justify-between w-11/12 mx-auto top-4">            
+              <Text className=" text-4xl">
+                {user.firstName} {user.lastName}
+              </Text>            
+              <Text className=" text-4xl">
+                {user.rating} ⭐
+              </Text>
+            </View>
           </View>
         </LinearGradient>
       </ImageBackground>
-      <Text className="absolute bottom-60 text-base text-center m-10">{user.description}</Text>
-      <View className="absolute bottom-20">
+
+      <View>
+        <Text className="text-center text-2xl top-14 text-[#2A2B20]">
+          {user.description}
+        </Text>
+      </View>
+
+      <View className="-top-8 mx-auto">
         <FlatList
           keyExtractor={(item) => item.id}
           data={user.pets}
           horizontal={true}
+          // className="bg-black w-12/12"
           renderItem={({ item }) => (
-            <TouchableOpacity
-              className="grid grid-rows-3"
+            <TouchableOpacity            
               onPress={() => navigation.navigate("Detail", item)}
             >
-              <View className="flex items-center m-4">
-                <Text>{item.name}</Text>
+              <View className="flex items-center mx-4">
                 <Image
-                  style={{ width: 100, height: 100 }}
+                  style={{ width: 120, height: 120 }}
                   source={{
                     uri: item.profilePic,
                   }}
@@ -159,19 +164,12 @@ export default function UserDetail({ route, navigation }) {
             </TouchableOpacity>
           )}
         ></FlatList>
-        <View style={styles.formContainer}>
-
-          <TouchableOpacity className="flex items-center m-4" style={styles.button} onPress={logoutUser}>
-            <Text style={styles.buttonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
       </View>
-      <View>
 
-          <TouchableOpacity className="flex items-center m-4" style={styles.button} onPress={doFetchCheck}>
-            <Text style={styles.buttonText}>FEEEEEETCHHH</Text>
-          </TouchableOpacity>
-        </View>
+      <View className='-top-20'>
+        <ButtonYellow text='Logout' onPress={logoutUser}/>
+      </View>
+
     </View>
   )
 }

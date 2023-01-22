@@ -15,12 +15,18 @@ router.get('/', async (req, res) => {
 //create pet
 router.post('/', async (req, res) => {
   try {
-    const newPet = await createNewPet(req.body)
+    const {profilePic, size, name, description, birthday} = req.body
+    console.log(req.body)
+    const newPet = await createNewPet({profilePic, size, name, description, birthday})
     res.status(200).send({ message: 'mascota creada', payload: newPet })
+    console.log(newPet)
   } catch (error) {
     res.status(501).send({ error: error.message })
+    console.log(error)
+
   }
 })
+
 
 //get by ID
 router.get('/:ID', async (req, res) => {

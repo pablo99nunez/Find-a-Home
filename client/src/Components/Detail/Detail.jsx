@@ -51,26 +51,35 @@ export default function Detail({route, navigation}){
                   <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
               </View>
 
-              <View>
-                {gallery? <FlatList horizontal={true} keyExtractor={(name) => name} data={gallery}
-                renderItem={({item}) => (
-                  <Image style={styles.gallery} source={{uri: item}}/>
-                  )}></FlatList> : null}
+              <View className="mx-auto">
+                {gallery? 
+                <FlatList 
+                  horizontal={true} 
+                  keyExtractor={(name) => name} 
+                  data={gallery}
+                  renderItem={({item}) => (
+                    <Image style={styles.gallery} source={{uri: item}}/>
+                  )}>                    
+                </FlatList> 
+                : 
+                <View className="min-h-[120px]">
+                </View>}
               </View> 
 
             </View>
           </LinearGradient>
         </ImageBackground>
-
-
-        <View className='h-1/4'>
-        <Text className='text-2xl text-center my-9'>{description}</Text>
-          <Characteristics size={size} age={age}/>
+        
+        
+        <View className='h-1/4 p-6'>
+          <Text className='text-4xl text-center my-9 w-10/12 mx-auto'>
+            {description}
+          </Text>
         </View>
-
-        <View className='h-1/3 flex justify-end m-[-30px]'>
-
-        <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
+        <Characteristics size={size} age={age}/>
+        
+        <View className='h-1/3 flex justify-evenly'>
+          <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
         </View>
 
 
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
 
   profilePic:{ 
     width: '100%', 
-    height: 400
+    height:400
   },
   gallery:{ 
     width: 90, 

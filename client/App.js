@@ -21,14 +21,13 @@ import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Regis
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreateDog } from './src/Components/CreateDog/CreateDog';
-
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
 
+      <Stack.Navigator>
         <Stack.Screen
           name="LandigPage"
           component={LandingPage}
@@ -97,6 +96,7 @@ export default function App() {
         />
         {/* =================================== */}
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 }

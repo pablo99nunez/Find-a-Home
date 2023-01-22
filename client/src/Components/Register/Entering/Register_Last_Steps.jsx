@@ -61,21 +61,21 @@ const RegisterLastSteps = ({ route, navigation }) => {
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
-					<Text className={checkState.Techo ?
+					<Text className={checkState.AlimentoBalanceado ?
 						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
 						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
 						Alimento Balanceado
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
-					<Text className={checkState.Techo ?
+					<Text className={checkState.PaseosDiarios ?
 						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
 						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
 						Paseos Diarios
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
-					<Text className={checkState.Techo ?
+					<Text className={checkState.Vacunas ?
 						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
 						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
 						Vacunas
