@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import GoogleImage from "../../images/Google.svg"
 
 const { width, height } = Dimensions.get("window");
 
@@ -85,18 +86,21 @@ const Welcome = ({ navigation }) => {
           <Text style={styles.text}>lleven sin un hogar.</Text>
         </View>
         <View style={styles.slide4}>
+          <Image
+              style={styles.icon}
+              source={require("../../images/icon1-icon3-welcome.png")}
+          />
           <Text style={styles.textTitles}>Registrate</Text>
           <TouchableOpacity onPress={() => navigation.navigate('RegisterFirstSteps')}>
-            <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
-          </TouchableOpacity>
-          <Text style={styles.textTitles}>Registro Real:</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-            <View style={styles.googleCircle}><Image style={styles.googleLogo} source={{ uri: ("https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png") }} ></Image></View>
+            <View style={styles.googleCircle}>
+							<GoogleImage width={86} height={86}/>
+            </View>
           </TouchableOpacity>
           <View style={styles.divisionLine}></View>
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
             <Text style={styles.textSubTitles}>Ingresar como invitado</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
       <View style={styles.wrapDot}>
@@ -187,14 +191,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textTitles: {
-    color: "#FFF",
+    color: "#FFFFFF",
     textAlign: 'center',
-    fontSize: 25,
+    position: 'relative',
+    top: 10,
+    marginBottom: 40,
+    fontWeight: "normal",
+    fontSize: 35,
   },
   textSubTitles: {
-    color: "#FFF",
+    top: 20,
+    color: "#8F8F8F",
+    fontWeight: "normal",
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 25,
   },
   input: {
     width: 200,
@@ -209,12 +219,14 @@ const styles = StyleSheet.create({
     height: 50,
   },
   googleCircle: {
-    marginTop: 20,
+    top: 10,
+    marginTop: 10,
+    marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ACACAC',
-    width: 66,
-    height: 66,
+    width: 86,
+    height: 86,
     borderRadius: 100
   },
   divisionLine: {

@@ -29,8 +29,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
 
-
-  
         <Stack.Screen
           name="LandigPage"
           component={LandingPage}
