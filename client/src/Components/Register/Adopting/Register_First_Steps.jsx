@@ -1,6 +1,16 @@
 import React, { useState, useRef } from "react";
 import { Picker } from '@react-native-picker/picker';
-import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, 
+	Text,
+	 Dimensions,
+	  StyleSheet,
+	   ScrollView,
+	    TextInput,
+		 TouchableOpacity,
+		  Image } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
+import States from "../States.json"
+import Localities from "../Localities.json"
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -8,142 +18,97 @@ const HEIGHT = Dimensions.get("window").height;
 
 export default function RegisterFirstStepsAdopting({ navigation }) {
 
-	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
-	const pickerRef = useRef();
-
+	const [userInput, setUserInput] = useState({ 
+		telefono: "",
+		pais: "", 
+		provincia: "", 
+		departamento: "" ,
+	})
+	
 	return (
 		<ScrollView>
 			<Image
-				style={styles.icon}
+				className="absolute top-[16px] right-[22] z-[1]"
 				source={require("../../../images/logo-black.png")}
 			/>
-			<View style={styles.container}><View style={styles.divisionLine}></View>
-				<Text style={styles.textTitles}>¡Ya casi!</Text>
-				<View style={styles.divisionLine}></View>
-				<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
-				<Text style={styles.textSubTitles}>podrás adoptar:</Text>
+			<View className="h-screen items-center justify-center bg-[#FFC733]">
+				<Text className="absolute top-[121px] w-auto mx-auto font-roboto font-light text-[90px] leading-auto flex items-center text-center">
+					¡Ya casi!
+				</Text>
+				<Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-[38px] leading-auto flex items-center text-center">				
+					Solo unos datos más y podrás adoptar:
+				</Text>
 
-				<View>
-					<Text style={styles.text}>Telefono</Text>
-					<TextInput
-						style={styles.input}
-						value={userInput}
-						placeholder={"   011 555-5555"}
-						placeholderTextColor="#ffffff50"
-						onChangeText={(text) => setUserInput({ ...userInput, telefono: text })}
-					/>
+				<View className="w-[466px] mt-32">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Teléfono:
+					</Text>		
+						<TextInput						
+							className="bg-[#1E1E1E] text-[#7E7E7E] rounded-[11px] w-[466px] h-[46px] mx-auto pl-[9px] text-[18px]"						
+							value={userInput}							
+							placeholder={"   011 555-5555"}
+							placeholderTextColor="#ffffff50"
+							onChangeText={(text) => setUserInput({ ...userInput, telefono: text })}
+						/>
 				</View>
 
-
-				<View>
-					<Text style={styles.text}>País:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={userInput.pais}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, pais: itemValue })
-						}>
-						<Picker.Item label="Argentina" value="Argentina" />
-						<Picker.Item label="Francia" value="Francia" />
-						<Picker.Item label="Croacia" value="Croacia" />
-					</Picker>
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Pais:
+					</Text>		
+						<SelectList 
+							data={[{key:"Argentina", value:"Argentina"}]}
+							setSelected={(val) => setUserInput({...userInput, pais: val})}
+							placeholder="Pais"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-				<View>
-					<Text style={styles.text}>Provincia:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={userInput.provincia}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, provincia: itemValue })
-						}>
-						<Picker.Item label="La rioja" value="La rioja" />
-						<Picker.Item label="Mendoza" value="Mendoza" />
-						<Picker.Item label="Buenos Aires" value="Buenos Aires" />
-					</Picker>
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Provincia:
+					</Text>		
+						<SelectList 
+							data={States}
+							setSelected={(val) => setUserInput({...userInput, provincia: val})}
+							placeholder="Provincia"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-				<View>
-					<Text style={styles.text}>Departamento:</Text>
-					<Picker style={styles.input}
-						ref={pickerRef}
-						selectedValue={userInput.departamento}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, departamento: itemValue })
-						}>
-						<Picker.Item label="depto1" value="depto1" />
-						<Picker.Item label="depto2" value="depto2" />
-						<Picker.Item label="CABA" value="CABA" />
-					</Picker>
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Departamento:
+					</Text>		
+						<SelectList 
+							data={Localities.filter((ele) => ele.key == userInput.provincia)}
+							setSelected={(value) => setUserInput({...userInput, departamento: value})}
+							placeholder="Departamento"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-
-				<View style={styles.divisionLine}></View>
-				<View style={styles.divisionLine}></View>
-			</View><TouchableOpacity
+			</View>
+			<TouchableOpacity
 				onPress={() => navigation.navigate("RegisterLastStepsAdopting", userInput)}
-			><Text style={styles.next}>Continue</Text></TouchableOpacity>
+			>
+				<Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+					Continue
+				</Text>
+			</TouchableOpacity>
 
 		</ScrollView>
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		padding: 18,
-		width: WIDTH,
-		height: HEIGHT,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#FFC733',
-	},
-	icon: {
-		position: "absolute",
-		top: 0,
-		right: 0,
-		width: 50,
-		resizeMode: "contain",
-	},
-	text: {
-		color: '#000',
-		fontSize: 20,
-	},
-	next: {
-		color: '#000',
-		fontSize: 30,
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		margin: 10,
-	},
-	textTitles: {
-		color: "#000",
-		textAlign: 'center',
-		fontSize: 55,
-	},
-	textSubTitles: {
-		color: "#000",
-		textAlign: 'left',
-		alignSelf: 'flex-start',
-		fontSize: 30,
-	},
-	input: {
-		backgroundColor: '#1E1E1E',
-		color: "#FFF",
-		fontSize: 25,
-		width: 350,
-		height: 40,
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: 'gray',
-		padding: 5,
-		margin: 10,
-	},
-	divisionLine: {
-		marginTop: 20,
-		marginBottom: 20,
-		height: 1,
-		width: "80%",
-
-	}
-})

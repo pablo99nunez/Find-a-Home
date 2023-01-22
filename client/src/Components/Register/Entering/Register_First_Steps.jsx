@@ -2,111 +2,108 @@ import React, { useState, useRef } from "react";
 import { Picker } from '@react-native-picker/picker';
 import { View, Text, Dimensions, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+//¿¿Why you import Keyboard Aware Scroll View??
+
+import { SelectList } from "react-native-dropdown-select-list";
+import States from "../States.json"
+import Localities from "../Localities.json"
 
 
 export default function RegisterFirstSteps({ navigation }) {
 
-	const [userInput, setUserInput] = useState({ telefono: "", pais: "", provincia: "", departamento: "" })
-	const pickerRef = useRef();
-
-	function open() {
-		pickerRef.current.focus();
-	}
-
-	function close() {
-		pickerRef.current.blur();
-	}
-
+	const [userInput, setUserInput] = useState({ 
+		telefono: "", 
+		pais: "", 
+		provincia: "", 
+		departamento: "" 
+	})
 
 	return (
 
-		<View className="flex flex-col" style={styles.container}>
-			<KeyboardAwareScrollView
-				style={{ flex: 1, width: '100%' }}
-				keyboardShouldPersistTaps="always">
+		<ScrollView>
+				<Image
+				className="absolute top-[16px] right-[22] z-[1]"
+				source={require("../../../images/logo-black.png")}
+			/>
+			<View className="h-screen items-center justify-center bg-[#FFC733]">
+				<Text className="absolute top-[121px] w-auto mx-auto font-roboto font-light text-[90px] leading-auto flex items-center text-center">
+					¡Bienvenido!
+				</Text>
+				<Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-[38px] leading-auto flex items-center text-center">				
+					Solo unos datos más y podrás comenzar:
+				</Text>
 
-				<View className="items-end" style={styles.divisionPanel}>
-					<Image
-						style={styles.icon}
-						source={require("../../../images/logo-black.png")}
-					/>
+				<View className="w-[466px] mt-32">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Teléfono:
+					</Text>		
+						<TextInput						
+							className="bg-[#1E1E1E] text-[#7E7E7E] rounded-[11px] w-[466px] h-[46px] mx-auto pl-[9px] text-[18px]"						
+							value={userInput}							
+							placeholder={"   011 555-5555"}
+							placeholderTextColor="#ffffff50"
+							onChangeText={(text) => setUserInput({ ...userInput, telefono: text })}
+						/>
 				</View>
 
-
-				<View className="items-end" style={styles.divisionPanel}>
-					<Text style={styles.textTitles}>¡Bienvenido!</Text>
-					<Text style={styles.textSubTitles}>Solo unos datos más y</Text>
-					<Text style={styles.textSubTitles}>podrás comenzar:</Text>
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Pais:
+					</Text>		
+						<SelectList 
+							data={[{key:"Argentina", value:"Argentina"}]}
+							setSelected={(val) => setUserInput({...userInput, pais: val})}
+							placeholder="Pais"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-				<View style={styles.divisionPanel}>
-
-					<Text style={styles.text}>Telefono</Text>
-					<TextInput
-						style={styles.input}
-						value={userInput}
-						placeholder={"   011 555-5555"}
-						placeholderTextColor="#ffffff50"
-						onChangeText={(text) => setUserInput({ ...userInput, telefono: text })}
-					/>
-
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Provincia:
+					</Text>		
+						<SelectList 
+							data={States}
+							setSelected={(val) => setUserInput({...userInput, provincia: val})}
+							placeholder="Provincia"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-
-				<View style={styles.divisionPanel}>
-					<Text style={styles.text}>País:</Text>
-					<Picker style={styles.inputPicker}
-						ref={pickerRef}
-						selectedValue={userInput.pais}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, pais: itemValue })
-						}>
-						<Picker.Item label="Argentina" value="Argentina" />
-						<Picker.Item label="Francia" value="Francia" />
-						<Picker.Item label="Croacia" value="Croacia" />
-					</Picker>
+				<View className="w-[466px]">
+				 	<Text className="relative text-[26px] font-[23px]">
+						Departamento:
+					</Text>		
+						<SelectList 
+							data={Localities.filter((ele) => ele.key == userInput.provincia)}
+							setSelected={(value) => setUserInput({...userInput, departamento: value})}
+							placeholder="Departamento"	
+							search={false}
+							boxStyles={{backgroundColor:"#1E1E1E"}}
+							inputStyles={{color:"#7E7E7E", fontSize: 18}}
+							dropdownStyles={{backgroundColor:"#2E2E2E"}}
+							dropdownTextStyles={{color:"#6E6E6E", fontSize: 18}}							
+						/>
 				</View>
 
-
-				<View style={styles.divisionPanel}>
-					<Text style={styles.text}>Provincia:</Text>
-					<Picker style={styles.inputPicker}
-						ref={pickerRef}
-						selectedValue={userInput.provincia}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, provincia: itemValue })
-						}>
-						<Picker.Item label="La rioja" value="La rioja" />
-						<Picker.Item label="Mendoza" value="Mendoza" />
-						<Picker.Item label="Buenos Aires" value="Buenos Aires" />
-					</Picker>
-				</View>
-
-
-				<View style={styles.divisionPanel}>
-					<Text style={styles.text}>Departamento:</Text>
-					<Picker style={styles.inputPicker}
-						ref={pickerRef}
-						selectedValue={userInput.departamento}
-						onValueChange={(itemValue, itemIndex) =>
-							setUserInput({ ...userInput, departamento: itemValue })
-						}>
-						<Picker.Item label="depto1" value="depto1" />
-						<Picker.Item label="depto2" value="depto2" />
-						<Picker.Item label="CABA" value="CABA" />
-					</Picker>
-				</View>
-			</KeyboardAwareScrollView>
-			<View className="items-end mt-10" style={styles.divisionPanel}>
-
-				<TouchableOpacity
-					onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
-				><Text style={styles.next}>Continue</Text></TouchableOpacity>
 			</View>
+			<TouchableOpacity
+				onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
+			>
+				<Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+					Continue
+				</Text>
+			</TouchableOpacity>
 
-
-
-		</View>
+		</ScrollView>
 
 
 
