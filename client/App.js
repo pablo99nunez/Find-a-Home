@@ -29,11 +29,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
 
-      <Stack.Screen
-          name="CreateDog"
-          component={CreateDog}
-          options={{ headerShown: false }}
-        />
+
   
         <Stack.Screen
           name="LandigPage"
@@ -95,7 +91,11 @@ export default function App() {
           component={RegisterLastStepsAdopting}
           options={{ headerShown: false }}
         />
-
+      <Stack.Screen
+          name="CreateDog"
+          component={CreateDog}
+          options={{ headerShown: false }}
+        />
 
         {/* =================================== */}
       </Stack.Navigator>

@@ -100,6 +100,11 @@ export default function App({ navigation }) {
     },
   ];
   return (
+    <View>
+    <View>
+    <HomeStack.Screen name="Home1" component={HomeScreen1} />
+
+    </View>
     <View style={styles.container}>
       <Header />
       <Button onPress={() => navigation.navigate("UserDetail")} title="perfil"/>
@@ -128,6 +133,7 @@ export default function App({ navigation }) {
       </View>
 
       <StatusBar style="auto" />
+    </View>
     </View>
   );
 }
