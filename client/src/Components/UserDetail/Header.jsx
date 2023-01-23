@@ -5,7 +5,7 @@ import {
        Image } from 'react-native'
 
 
-const Header = ({onPress}) => {
+const Header = ({onPress, navigation}) => {
   return (
     <View className="flex flex-row justify-between mx-[4%] w-auto mt-[6%]">
         <TouchableOpacity onPress={onPress}>
@@ -15,7 +15,7 @@ const Header = ({onPress}) => {
             />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigation}>
             <Image
                 className="w-16 h-16"
                 source={require("../../images/Trust.png")}

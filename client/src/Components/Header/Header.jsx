@@ -17,17 +17,15 @@ import { SelectList } from "react-native-dropdown-select-list";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation, filterBySpecie }) => {
-  const [userInput, setUserInput] = useState({
-    especie: "",
-  });
+export const Header = ({ navigation, filterBySpecie, filterBySize}) => {
+
   const pickerRef = useRef();
 
   ///
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
 
-  const [specie, setSpecie] = useState("All");
+  const [specie, setSpecie] = useState("");
 
   /* useEffect(() => {
     getPets();
@@ -51,7 +49,7 @@ export const Header = ({ navigation, filterBySpecie }) => {
       duration: 200,
       easing: Easing.linear,
     })
-    // .start(() => to === 0 && setVisible(false));
+    .start(() => to === 0 && setVisible(false));
   };
 
   return (
@@ -79,9 +77,16 @@ export const Header = ({ navigation, filterBySpecie }) => {
       </TouchableOpacity>
 
       <Modal transparent visible={visible}>
-        <SafeAreaView onTouchStart={() => resizeBox(0)}>
+        <SafeAreaView >
+          <View className="h-20 justify-end items-end mr-6 pb-3 content-center opacity-0">
+            <Icon 
+            name="menu" 
+            size={50} 
+            color={"#FFC733"} 
+            onTouchStart={() => resizeBox(0)}/>
+          </View>
           <Animated.View
-            className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] top-20 w-full"
+            className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full"
             // style={[
             //   styles.popUp,
             //   {
@@ -122,14 +127,20 @@ export const Header = ({ navigation, filterBySpecie }) => {
 
               <SelectList
                 data={[
-                  {key:"Todos", value:"Todos"},
+                  {key:"All", value:"Todos"},
                   {key:"Perro", value:"Perro"},
                   {key:"Gato", value:"Gato"},
                   {key:"Otro", value:"Otro"}
                 ]}
                 placeholder="Seleccionar"
+                setSelected={(val)=>{
+                  filterBySpecie(val)
+                  setSpecie(val)
+                }}
                 boxStyles={{backgroundColor:"#1E1E1E"}}
                 inputStyles={{color:"#FFF", fontSize: 18, padding:5}}
+                dropdownStyles={{backgroundColor:"#2E2E2E"}}
+                dropdownTextStyles={{color:"#FFF", fontSize: 18}}							
               />
 
               <Text className="ml-3 mt-14 mb-4 text-4xl">
@@ -137,25 +148,71 @@ export const Header = ({ navigation, filterBySpecie }) => {
               </Text>
               
               <View className="flex flex-row  justify-around items-end w-11/12 mx-auto">
-                <TouchableOpacity>
+                <TouchableOpacity 
+                  onPress={() => { 
+                    if (specie !== "Small"){
+                    filterBySize("Small")
+                    setSpecie("Small") } else {
+                    filterBySize("All")                  
+                    setSpecie("")}
+                  }}>
+                  {specie == "Small" ?
                   <Image
-                  className="mt-8 mb-24"
-                  style={{width:90, height:90}}
-                  source={require('../../images/perro_negro.png')}
+                      className="mt-8 mb-24"
+                      style={{width:90, height:90}}
+                      source={require('../../images/perro_rosa.png')}
+                    />
+                  :
+                  <Image
+                    className="mt-8 mb-24"
+                    style={{width:90, height:90}}
+                    source={require('../../images/perro_negro.png')}
                   />
+                  }
                 </TouchableOpacity>
-                <TouchableOpacity>
-                  <Image
-                  className="mt-8 mb-24 "
-                  style={{width:145, height:145}}
-                  source={require('../../images/perro_negro.png')}
-                  />
+                <TouchableOpacity 
+                  onPress={() => {
+                    if (specie !== "Medium"){
+                      filterBySize("Medium")
+                      setSpecie("Medium") } else {
+                      filterBySize("All")                  
+                      setSpecie("")}                   
+                  }}>
+                  {specie == "Medium" ?
+                    <Image
+                      className="mt-8 mb-24"
+                      style={{width:145, height:145}}
+                      source={require('../../images/perro_rosa.png')}
+                    />
+                    :
+                    <Image
+                    className="mt-8 mb-24"
+                    style={{width:145, height:145}}
+                    source={require('../../images/perro_negro.png')}
+                    />
+                  }
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity 
+                  onPress={() => {
+                    if (specie !== "Large"){
+                      filterBySize("Large")
+                      setSpecie("Large") } else {
+                      filterBySize("All")                  
+                      setSpecie("")}                    
+                  }}>
+                  {specie == "Large" ?
                   <Image
-                  className="mt-8 mb-24 "
-                  source={require('../../images/perro_negro.png')}
+                    className="mt-8 mb-24"
+                    // style={{width:145, height:145}}
+                    source={require('../../images/perro_rosa.png')}
                   />
+                  :
+                  <Image
+                    className="mt-8 mb-24"
+                    // style={{width:145, height:145}}
+                    source={require('../../images/perro_negro.png')}
+                  />
+                  }
                 </TouchableOpacity>
               </View>
               {/* <Picker
@@ -197,7 +254,7 @@ export const Header = ({ navigation, filterBySpecie }) => {
                 <Picker.Item label="Large" value="Large" />
               </Picker>*/}
             </View>
-          </Animated.View>
+          </Animated.View>        
         </SafeAreaView>
       </Modal>
     </View>

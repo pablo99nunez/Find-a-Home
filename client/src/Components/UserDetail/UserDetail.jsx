@@ -120,7 +120,7 @@ export default function UserDetail({ route, navigation }) {
       >
         <LinearGradient colors={['#00000000', '#ACACAC']} style={{ height: '100%', width: '100%' }}>
           <View>
-            <Header onPress={() => navigation.navigate('Home')}/>
+            <Header onPress={() => navigation.navigate('Home')} navigation={() => navigation.navigate("CreateDog")}/>
             <Image
               className="w-80 h-80 bottom-6 mx-auto rounded-full"
               source={{ uri: user.profilePic }}
