@@ -137,11 +137,11 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(getAllPets)
+    dispatch(getAllPets())
   }, [])
 
   const allPets = useSelector((state) => state.allPets)
-
+ console.log(allPets.payload);
   const [pet, setPet] = useState(petDb);
 
   const filterBySpecie = (specie) => {
@@ -155,7 +155,6 @@ export default function Home({ navigation }) {
       setPet(petDb);
     } else setPet(pet.filter((el) => el.size == size));
   };
-console.log(allPets);
 
   return (
     <View style={styles.container}>
@@ -168,7 +167,7 @@ console.log(allPets);
         style={styles.body}
         numColumns={2}
         keyExtractor={(item) => item.id}
-        data={allPets}
+        data={allPets.payload}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
             <Card item={item} />
