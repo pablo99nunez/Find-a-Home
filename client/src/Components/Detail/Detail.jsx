@@ -21,9 +21,9 @@ import { Characteristics } from "./Characteristics";
 
 export default function Detail({route, navigation}){
   
-  const {profilePic, name , createdAt, gallery, description, size, age}= route.params
-
-  const days = calculateAdoptionDays(createdAt)
+  const {profilePic, name , created_at, gallery, description, size, age}= route.params
+  console.log(created_at);
+  const days = calculateAdoptionDays(created_at)
 
   const bottomSheetRef = useRef(null);
 
