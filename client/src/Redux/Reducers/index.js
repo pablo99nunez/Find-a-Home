@@ -3,7 +3,7 @@ const GET_ALL_PETS = 'GET_ALL_PETS'
 const initialState = {
     allPets: []
 }
-
+// console.log(initialState.allPets);
 const rootReducer = (state = initialState, action) => {
 
     switch (action.type) {
