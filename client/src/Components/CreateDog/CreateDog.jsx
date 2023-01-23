@@ -62,7 +62,7 @@ export const CreateDog = ({navigation}) =>{
     };
 
     const HandleSubmit = async () => {
-      const IPv4 = "192.168.178.211";
+      const IPv4 = "192.168.68.54";
       let info = JSON.stringify(crear);
       let url = `http://${IPv4}:8080/pet`;
       try {

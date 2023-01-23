@@ -5,7 +5,7 @@ export const callApiWithAppCheckExample = async () => {
    const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
    //const tokenLocalStorage = 'asds'
     //hace fetch
-    const apiResponse = await fetch('http://localhost:8080/pet', {
+    const apiResponse = await fetch('http://192.168.68.54:8080/pet', {
         headers: {
             'Authorization': `Bearer ${tokenLocalStorage}`,
             'X-Firebase-AppCheck': tokenLocalStorage
