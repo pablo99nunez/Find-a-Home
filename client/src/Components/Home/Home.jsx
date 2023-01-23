@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,9 @@ import {
 } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
+import { useDispatch, useSelector } from "react-redux"
+import { getAllPets } from "../../Redux/Actions";
+
 const { width, height } = Dimensions.get("screen");
 
 export default function Home({ navigation }) {
@@ -130,6 +133,15 @@ export default function Home({ navigation }) {
       size: "Medium",
     },
   ];
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getAllPets)
+  }, [])
+
+  const allPets = useSelector((state) => state.allPets)
+
   const [pet, setPet] = useState(petDb);
 
   const filterBySpecie = (specie) => {
@@ -143,6 +155,7 @@ export default function Home({ navigation }) {
       setPet(petDb);
     } else setPet(pet.filter((el) => el.size == size));
   };
+console.log(allPets);
 
   return (
     <View style={styles.container}>
@@ -155,7 +168,7 @@ export default function Home({ navigation }) {
         style={styles.body}
         numColumns={2}
         keyExtractor={(item) => item.id}
-        data={pet}
+        data={allPets}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
             <Card item={item} />
