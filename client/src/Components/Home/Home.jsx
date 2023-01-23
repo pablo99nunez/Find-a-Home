@@ -133,14 +133,12 @@ export default function Home({ navigation }) {
   const [pet, setPet] = useState(petDb);
 
   const filterBySpecie = (specie) => {
-    console.log(specie);
     if (specie === "All") {
       setPet(petDb);
     } else setPet(petDb.filter((el) => el.specie == specie));
   };
 
   const filterBySize = (size) => {
-    console.log(size);
     if (size === "All") {
       setPet(petDb);
     } else setPet(petDb.filter((el) => el.size == size));
@@ -164,6 +162,12 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         )}
       ></FlatList>
+      {/* <TouchableOpacity className="fixed bg-inherit">
+        <Image
+        className="w-16 h-16 flex flex-row justify-center items-center mx-auto w-16"
+        source={require("../../images/Trust.png")}
+        />
+      </TouchableOpacity> */}
       <StatusBar style="auto" />
     </View>
   );
