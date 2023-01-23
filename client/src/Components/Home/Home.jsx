@@ -135,13 +135,13 @@ export default function Home({ navigation }) {
   const filterBySpecie = (specie) => {
     if (specie === "All") {
       setPet(petDb);
-    } else setPet(petDb.filter((el) => el.specie == specie));
+    } else setPet(pet.filter((el) => el.specie == specie));
   };
 
   const filterBySize = (size) => {
     if (size === "All") {
       setPet(petDb);
-    } else setPet(petDb.filter((el) => el.size == size));
+    } else setPet(pet.filter((el) => el.size == size));
   };
 
   return (
