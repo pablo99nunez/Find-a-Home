@@ -30,9 +30,15 @@ import { CreateDog } from './src/Components/CreateDog/CreateDog';
 import { Provider } from 'react-redux';
 import store from './src/Redux/Store';
 import HomeScreen from './src/screens/HomeScreen/HomeScreen'
+import axios from "axios"
+axios.defaults.baseURL = "http://192.168.178.211:8080"
+
 const Stack = createStackNavigator();
 
 export default function App() {
+
+
+
   return (
     <Provider store={store}>
       <NavigationContainer>
