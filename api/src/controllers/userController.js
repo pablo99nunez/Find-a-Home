@@ -1,13 +1,15 @@
-const UserModel = require('../models/user');
+const UserModel = require('../models/user.model');
 
 const createNewUser = async (user) => {
+  const userExists = await UserModel.findOne({email: user.email})
+  if(!!userExists) throw new Error("El usuario ya existe")
   const newUser = new UserModel(user)
   await newUser.save()
   return newUser
 }
 
-const findUser = async (userData) => {
-    const userInDB = await UserModel.findOne({email: userData})
+const findUser = async (userEmail) => {
+    const userInDB = await UserModel.findOne({email: userEmail})
     return userInDB
  
 }
@@ -18,9 +20,9 @@ const findAllUsers = async (filter) => {
  
 }
 
-const updateUser = async(userData) => {
-   const queryConditions = {email: userData.email}
-   const updatedUser = await UserModel.updateOne(queryConditions, userData)
+const updateUser = async(newUserData, userEmail) => {
+   const queryConditions = {email: userEmail}
+   const updatedUser = await UserModel.updateOne(queryConditions, newUserData)
    return updatedUser
 }
 

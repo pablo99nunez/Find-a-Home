@@ -1,4 +1,4 @@
-const PetModel = require('../models/pet');
+const PetModel = require('../models/pet.model');
 
 //filtra por especie
 const filtroSpecie = async (specieMascota) => {

@@ -3,58 +3,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
+const { checkJwt, firebaseAdmin, setAdmin } = require('./utils/firebase-stuff');
 // permite leer archivo .env.
 require('dotenv').config();
-//firebase
-var firebaseAdmin = require("firebase-admin")
-var firebaseJson = require(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 
-//MONGOOSE
+//#region  MONGOOSE  
 mongoose.set('strictQuery', true)
 const DATABASE_URL = process.env.DATABASE_URL ? process.env.DATABASE_URL : 'mongodb://localhost:27017';
 const DATABASE_NAME = process.env.DATABASE_NAME || 'findahome';
-//conecta mongoose a la database
-async function main() {
-    await mongoose.connect(DATABASE_URL + '/' + DATABASE_NAME);
-    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+async function main() {//conecta mongoose a la database
+         await mongoose.connect(DATABASE_URL+"/"+DATABASE_NAME);
+// use  `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
-//como main es asincronica, es una promesa, tiene .catch:
-main().catch(err => console.log(err));
-//-----------
 
-//FIREBASE INIT
+main().catch(err => console.log({error: 'Error al conectar con la database' + err.message})); //como main es asincronica, es una promesa, tiene .catch:
+//#endregion
 
-const firebaseApp = firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(firebaseJson)
-});
-//-----------
-
-//FIREBASE MIDDLEWHARE
-const appCheckVerification = async (req, res, next) => {
-    const appCheckToken = req.header('X-Firebase-AppCheck');
-
-    if (!appCheckToken) {
-        res.status(401);
-
-        console.log('a sadasd');
-        return next('Unauthorized');
-    }
-    try {
-        const appCheckClaims = await firebaseAdmin.appCheck().verifyToken(appCheckToken);
-
-        // If verifyToken() succeeds, continue with the next middleware
-        // function in the stack.
-        console.log('a ver');
-        console.log(appCheckClaims);
-        return next();
-    } catch (err) {
-        res.status(401);
-        return next('Unauthorized');
-    }
-}
-//-----------
 
 const create = async () => {
     //crea el server de express, no lo inicia todavía, tiene q iniciarl luego de conectar a la database
@@ -67,10 +33,12 @@ const create = async () => {
     //FIN MIDDLEWARES
     //Todas las Rutas:
     app.use(routes)
-    app.get('/check', [appCheckVerification], (req, res) => {
-        // Handle request.
-        res.send({message: 'endpoint reached'})
+
+    app.get('/check', checkJwt, async (req, res) => {
+        setAdmin(req.user.uid)
+        res.send({message: 'Token asdasd, has accedido a esta ruta privilegiada pequeño saltamontes reached', user: req.user})
     });
+
     return app
 }
 
