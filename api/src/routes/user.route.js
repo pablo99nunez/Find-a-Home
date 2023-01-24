@@ -28,17 +28,14 @@ router.get('/', checkJwt, async (req, res) => {
 })
 // checkJwt,
 //logeado, user, crea un usuario con los datos del token + los q se manden por body
-router.post('/', async (req, res) => {
+//Tabien sirve como ruta de edicion por ahora.
+router.post('/',checkJwt, async (req, res) => {
   try {
-
-    // const newUser = Object.assign(req.body, {
-    //   email: req.user.email,
-    //   email_verified: req.user.email_verified,
-
-    // })
-    const newUser = req.body;
-    console.log(newUser);
-
+    //para q no pueda cambiar su email desde el body
+    const newUser = Object.assign(req.body, {
+      email: req.user.email,
+      email_verified: req.user.email_verified,
+    })
     const createdUser = await createNewUser(newUser)
     res.status(200).send(createdUser)
   } catch (error) {
@@ -46,10 +43,11 @@ router.post('/', async (req, res) => {
   }
 })
 
-//logeado, edita a uno mismo, solo puede editarse a si mismo
+//logeado, edita a uno mismo, solo puede editarse a si mismo y no puede cambiarse el email
 router.put('/profile', checkJwt, async (req, res) => {
   try {
     const newUserData = req.body
+    //no puede cambiarse el email:
     const updatedUser = await updateUser(newUserData, req.user.email)
     res.status(200).send({ message: 'usuario editado', payload: updatedUser });
   } catch (err) {
@@ -66,7 +64,7 @@ router.put('/confirm', checkJwt, async (req, res) => {
     const parametros = [req.body.petID, req.user.email, req.body.newOwnerEmail]
     validateroute["/user/confirm"](...parametros)
     const petWithNewOwner = await confirmAdoption(...parametros)
-    res.status(200).send({ message: 'Mascota cambio de dueño y ubicación:', payload: petWithNewOwner });
+    res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
   } catch (err) {
     res.status(501).send({ error: err.message })
   }
