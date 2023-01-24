@@ -23,13 +23,9 @@ import {
 import perro from "./running-dog-silhouette.png"
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';
+import {uploadFire} from "../../firebase/config"
 
 export const CreateDog = ({ navigation }) => {
-
-
-
-
-
 
   const [crear, setCrear] = useState({
     name: "",
@@ -40,26 +36,23 @@ export const CreateDog = ({ navigation }) => {
   })
 
 
-  let Udpload = async () => {
+
+//agarra la imagen que pickas
+  let upload = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: false,
-      aspect: [4, 3],
-      base64: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
     });
-    if (!result.cancelled) {
-      let base64Img = `data:image/jpg;base64,${result.base64}`;
-      let data = {
-        "file": base64Img,
-        "upload_preset": "your_upload_preset",
-      }
-      try {
-        let response = await axios.post("https://api.cloudinary.com/v1_1/dvhstnw3u/upload", data)
-        setCrear({ ...crear, profilePic: data.secure_url });
-      } catch (error) {
-        console.error(error);
-      }
+
+    if (!result.canceled) { //si no se cancelo y se cerro la biblioteca lo pasa a formato blob
+        const response = await fetch(result.assets[0]); 
+        const blob = await response.blob();
+        uploadFire(blob); //lo sube a firebase funcion en firebase config
     }
-  };
+};
+
 
   const HandleSubmit = async () => {
     let info = JSON.stringify(crear);
@@ -161,7 +154,7 @@ export const CreateDog = ({ navigation }) => {
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={() => Udpload()}>
+        <TouchableOpacity onPress={() => upload()}>
 
           {/* <Image source={{uri: foto}} style={styles.foto} /> */}
           {crear.profilePic.length ? <Image
