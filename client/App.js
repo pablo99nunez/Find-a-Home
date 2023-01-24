@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { LoginScreen, RegistrationScreen } from "./src/screens";
 import { decode, encode } from "base-64";
-import { BASE_URL_IP } from "@env"
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -37,7 +37,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          
+
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -66,10 +66,10 @@ export default function App() {
             component={UserDetail}
             options={{ headerShown: false }}
           />
-
+          {/* 
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -82,10 +82,10 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Login" component={LoginScreen}/>
+          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
-          
+
           {/* =================================== */}
 
           <Stack.Screen
