@@ -35,6 +35,7 @@ export default function LoginScreen({ navigation }) {
                     await AsyncStorage.setItem('@accessToken', tkn);
                     const datosUsuario = JSON.stringify(resp.user)
                     await AsyncStorage.setItem('user', datosUsuario);
+                    console.log(tkn)
                 })
             }
             navigation.navigate('Home', resp.user)
