@@ -1,21 +1,34 @@
 
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { BottomSheetTextInput, BottomSheetView} from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { ButtonYellow } from '../Buttons/Buttons';
+import axios from 'axios';
 
 
-
-const BottomView = () => {
-
+const BottomView = ({ petId, auth }) => {
+  const token = auth.currentUser.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
-  
+  console.log(petId)
+  async function AdoptionRequest() {
+    setSent(true)
+    const data = { message: 'John Doe', petID: petId };
+
+    const response = await axios.put('http://192.168.0.235:8080/pet/profile/solicitud', data, {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+      .catch(error => console.error('Error:', error));
+  }
   // renders
   return (
-      !sent? <View>
-        <BottomSheetTextInput style={styles.input} multiline/>
-        <ButtonYellow text='Enviar Solicitud' onPress={()=> setSent(true)}/>
-      </View> :
+    !sent ? <View>
+      <BottomSheetTextInput style={styles.input} multiline />
+      <ButtonYellow text='Enviar Solicitud' onPress={() => AdoptionRequest()} />
+    </View> :
       <View>
         <BottomSheetView>
           <Text className='text-2xl text-center my-9'>¡Solicitud enviada!</Text>
@@ -47,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#1e1e1e',
     width: '80%',
-    height:250,
+    height: 250,
     alignSelf: 'center',
     color: '#D9D9D9'
   },

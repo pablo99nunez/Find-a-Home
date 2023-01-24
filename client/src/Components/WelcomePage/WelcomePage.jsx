@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get("window");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
-  
+
 
   const onchange = (nativeEvent) => {
     if (nativeEvent) {
@@ -86,14 +86,21 @@ const Welcome = ({ navigation }) => {
           <Text style={styles.text}>lleven sin un hogar.</Text>
         </View>
         <View style={styles.slide4}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+            <Text style={styles.textSubTitles}>Home Screen</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.textSubTitles}>Login</Text>
+          </TouchableOpacity>
+
           <Image
-              style={styles.icon}
-              source={require("../../images/icon1-icon3-welcome.png")}
+            style={styles.icon}
+            source={require("../../images/icon1-icon3-welcome.png")}
           />
           <Text style={styles.textTitles}>Registrate</Text>
           <TouchableOpacity onPress={() => navigation.navigate('RegisterFirstSteps')}>
             <View style={styles.googleCircle}>
-							<GoogleImage width={86} height={86}/>
+              <GoogleImage width={86} height={86} />
             </View>
           </TouchableOpacity>
           <View style={styles.divisionLine}></View>

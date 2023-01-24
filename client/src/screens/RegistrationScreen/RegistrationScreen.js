@@ -5,12 +5,12 @@ import styles from './styles';
 
 
 //firebase linea 1
-import firebase  from '../../firebase/config'
-import { getAuth, onAuthStateChanged , signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
+import firebase from '../../firebase/config'
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function RegistrationScreen({navigation}) {
+export default function RegistrationScreen({ navigation }) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -19,33 +19,34 @@ export default function RegistrationScreen({navigation}) {
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
- //firebase linea 2 (todo el bloque {... })
- const auth = getAuth(firebase);
-        onAuthStateChanged(auth, user => {
-         // Check for user status
-         
+    //firebase linea 2 (todo el bloque {... })
+    const auth = getAuth(firebase);
+    onAuthStateChanged(auth, user => {
+        // Check for user status
 
-        });
-//firebase 3
+
+    });
+    //firebase 3
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
             alert("Passwords don't match.")
             return
         }
-        createUserWithEmailAndPassword(auth,email,password).then((resp)=>{
+        createUserWithEmailAndPassword(auth, email, password).then((resp) => {
+            console.log(resp)
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
-                  await AsyncStorage.setItem('@accessToken', tkn);
-                  const datosUsuario = JSON.stringify(resp.user)
-                  await AsyncStorage.setItem('user', datosUsuario);
+                    await AsyncStorage.setItem('@accessToken', tkn);
+                    const datosUsuario = JSON.stringify(resp.user)
+                    await AsyncStorage.setItem('user', datosUsuario);
                 })
-              }
+            }
             navigation.navigate('RegisterFirstSteps')
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err.message);
         })
 
-        
+
         /* firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)

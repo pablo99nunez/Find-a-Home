@@ -23,84 +23,84 @@ import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreateDog } from './src/Components/CreateDog/CreateDog';
 import { Provider } from 'react-redux';
 import store from './src/Redux/Store';
-
+import HomeScreen from './src/screens/HomeScreen/HomeScreen'
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-  <Provider store={store}>
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="LandigPage"
-          component={LandingPage}
-          initialParams={{ fromChild: "Initial" }}
-          options={{ headerShown: false }}
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="LandigPage"
+            component={LandingPage}
+            initialParams={{ fromChild: "Initial" }}
+            options={{ headerShown: false }}
           />
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ headerShown: false }}
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
           />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Detail"
-          component={Detail}
-          options={{ headerShown: false }}
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
           />
 
-        <Stack.Screen
-          name="UserDetail"
-          component={UserDetail}
-          options={{ headerShown: false }}
+          <Stack.Screen
+            name="Detail"
+            component={Detail}
+            options={{ headerShown: false }}
           />
-          
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
-       
 
-        <Stack.Screen
-          name="RegisterFirstSteps"
-          component={RegisterFirstSteps}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RegisterLastSteps"
-          component={RegisterLastSteps}
-          options={{ headerShown: false }}
-        />
-        {/* =================================== */}
+          <Stack.Screen
+            name="UserDetail"
+            component={UserDetail}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="GoogleRegister"
-          component={GoogleRegister}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RegisterFirstStepsAdopting"
-          component={RegisterFirstStepsAdopting}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RegisterLastStepsAdopting"
-          component={RegisterLastStepsAdopting}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
-        <Stack.Screen
-          name="CreateDog"
-          component={CreateDog}
-          options={{ headerShown: false }}
-        />
-        {/* =================================== */}
-      </Stack.Navigator>
+          <Stack.Screen
+            name="RegisterFirstSteps"
+            component={RegisterFirstSteps}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterLastSteps"
+            component={RegisterLastSteps}
+            options={{ headerShown: false }}
+          />
+          {/* =================================== */}
 
-    </NavigationContainer>
-  </Provider>
+          <Stack.Screen
+            name="GoogleRegister"
+            component={GoogleRegister}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterFirstStepsAdopting"
+            component={RegisterFirstStepsAdopting}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterLastStepsAdopting"
+            component={RegisterLastStepsAdopting}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="CreateDog"
+            component={CreateDog}
+            options={{ headerShown: false }}
+          />
+          {/* =================================== */}
+        </Stack.Navigator>
+
+      </NavigationContainer>
+    </Provider>
   );
 }

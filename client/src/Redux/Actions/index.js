@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'http://192.168.68.54:8080/pet'
+const url = 'http://192.168.0.235:8080/pet'
 
 const GET_ALL_PETS = 'GET_ALL_PETS'
 

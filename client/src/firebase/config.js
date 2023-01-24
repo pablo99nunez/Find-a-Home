@@ -2,11 +2,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyDRTnBQKqCxWVqBmvOG3p9ykmx9LI30Yjk",
     authDomain: "findahomehenry.firebaseapp.com",
-    
+
     projectId: "findahomehenry",
     storageBucket: "findahomehenry.appspot.com",
     messagingSenderId: "328480437483",
