@@ -54,8 +54,8 @@ const petSchema = mongoose.Schema(
       type: Array,
     },
     currentLocation: {
-      type: String,
-      default: 'Owner Home',
+      type: Array,
+      default: ['Provincia', 'Localidad'],
     },
     solicitudes: { //objeto de {'interestedEmail','FullName', 'requestMessage', 'profilePic'} 
       type: Array,
