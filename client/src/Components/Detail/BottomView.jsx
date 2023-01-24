@@ -4,17 +4,17 @@ import { View, StyleSheet, Text } from 'react-native';
 import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import { ButtonYellow } from '../Buttons/Buttons';
 import axios from 'axios';
-
+import { BASE_URL_IP } from "@env"
 
 const BottomView = ({ petId, auth }) => {
-  const token = auth.currentUser.stsTokenManager.accessToken;
+  const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
-  console.log(petId)
+  console.log(token)
   async function AdoptionRequest() {
     setSent(true)
     const data = { message: 'John Doe', petID: petId };
 
-    const response = await axios.put('http://192.168.0.235:8080/pet/profile/solicitud', data, {
+    const response = await axios.put(`${BASE_URL_IP}/pet/profile/solicitud`, data, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`

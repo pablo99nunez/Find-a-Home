@@ -43,7 +43,7 @@ export default function Detail({ route, navigation }) {
 
   function HandleLoginToAdoption() {
 
-    auth?.currentUser?.uid ? setOpen(0)
+    auth.currentUser?.uid ? setOpen(0)
       : navigation.navigate('Login')
 
   }

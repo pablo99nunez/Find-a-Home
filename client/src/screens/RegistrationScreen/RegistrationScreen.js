@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-
-
+import axios from 'axios';
+import { BASE_URL_IP } from "@env"
 //firebase linea 1
 import firebase from '../../firebase/config'
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -33,6 +33,7 @@ export default function RegistrationScreen({ navigation }) {
             return
         }
         createUserWithEmailAndPassword(auth, email, password).then((resp) => {
+
             console.log(resp)
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
@@ -41,11 +42,26 @@ export default function RegistrationScreen({ navigation }) {
                     await AsyncStorage.setItem('user', datosUsuario);
                 })
             }
+            createUserInDb(fullName, email, password);
             navigation.navigate('RegisterFirstSteps')
         }).catch((err) => {
             console.log(err.message);
         })
 
+        //CREAMOS EL USUARIO EN LA BASE DE DATOS
+        const createUserInDb = async (fullName, email, password) => {
+            const profilePic = "https://i.pravatar.cc/150?u=thefakeuser.jpg"
+            const phone = "01155555555"
+            const data = { firstName: fullName, lastName: fullName, profilePic, email: email, phone };
+            console.log("DATA FOR DB CREATION:", data)
+            const response = await axios.post(`${BASE_URL_IP}/user`, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Authorization': `Bearer ${token}`
+                }
+            }).then(response => console.log(response))
+                .catch(error => console.error('Error:', error));
+        }
 
         /* firebase
             .auth()

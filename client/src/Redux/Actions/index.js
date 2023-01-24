@@ -1,6 +1,6 @@
 import axios from 'axios'
-
-const url = 'http://192.168.68.54:8080'
+import { BASE_URL_IP } from "@env"
+const url = BASE_URL_IP
 
 const GET_ALL_PETS = 'GET_ALL_PETS'
 const GET_PETS_FILTERED_SPECIE = 'GET_PETS_FILTERED_SPECIE'
@@ -9,7 +9,7 @@ const GET_PETS_FILTERED_BOTH_FILTERS = 'GET_PETS_FILTERED_BOTH_FILTERS'
 
 export const getAllPets = () => {
     return async (dispatch) => {
-        const json = await axios.get('http://192.168.68.54:8080/pet')
+        const json = await axios.get(`${url}/pet`)
         return dispatch({
             type: GET_ALL_PETS,
             payload: json.data

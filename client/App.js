@@ -3,12 +3,14 @@ import "react-native-gesture-handler";
 import React from "react";
 import { LoginScreen, RegistrationScreen } from "./src/screens";
 import { decode, encode } from "base-64";
+import { BASE_URL_IP } from "@env"
 if (!global.btoa) {
   global.btoa = encode;
 }
 if (!global.atob) {
   global.atob = decode;
 }
+
 
 //fin dd cagadas
 
@@ -66,6 +68,7 @@ export default function App() {
 
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
           <Stack.Screen
             name="RegisterFirstSteps"

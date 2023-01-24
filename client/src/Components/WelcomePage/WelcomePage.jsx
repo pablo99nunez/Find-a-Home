@@ -98,7 +98,7 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/icon1-icon3-welcome.png")}
           />
           <Text style={styles.textTitles}>Registrate</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('RegisterFirstSteps')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
             <View style={styles.googleCircle}>
               <GoogleImage width={86} height={86} />
             </View>
