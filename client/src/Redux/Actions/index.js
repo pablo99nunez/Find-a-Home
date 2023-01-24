@@ -1,9 +1,13 @@
 import axios from 'axios'
 import { BASE_URL_IP } from "@env"
-export const url = BASE_URL_IP || 'http://192.168.0.14:8080'
+import { auth } from '../../firebase/authentication'
+
+export const url = BASE_URL_IP || `http://192.168.0.14:8080`
+
 if(!BASE_URL_IP){
     alert("No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://192.168.0.14:8080/")
 }
+
 const GET_ALL_PETS = 'GET_ALL_PETS'
 const GET_PETS_FILTERED_SPECIE = 'GET_PETS_FILTERED_SPECIE'
 const GET_PETS_FILTERED_SIZE = 'GET_PETS_FILTERED_SIZE'
@@ -28,16 +32,29 @@ export const getPetsFilteredBySpecie = (payload) => {
         })
     }
 }
+/*METE ESTO EN CADA AXIOS LUEGO DE LA URL
+, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        },
+      }
 
+*/
 export const getPetsFilteredBySize = (payload) => {
     return async (dispatch) => {
-        const json = await axios.get(url + `/pet/filter/size/${payload}`)
+        const json = await axios.get(url + `/pet/filter/size/${payload}`, data, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+            },
+          })
         return dispatch({
             type: GET_PETS_FILTERED_SIZE,
             payload: json.data
         })
     }
-}
+} 
 
 export const getPetsFilteredByTwoFilters = (payload) => {
     return async (dispatch) => {
@@ -49,3 +66,10 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
 }
 
+export const PetPost = (payload) => {
+    return async function () {
+        const petPost = await axios.post(url + `/pet`, payload)
+        return petPost
+
+    }
+}

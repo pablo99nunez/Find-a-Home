@@ -5,70 +5,107 @@ import {
   Text,
   View,
   Image,
-  ImageBackground,
   TextInput,
-  TouchableWithoutFeedback,
   TouchableOpacity, //botton
-  Button,
   ScrollView,
-  Alert
 } from "react-native";
-import { ButtonYellow } from "../Buttons/Buttons";
 import { useState } from "react";
-import {
-  SafeAreaView,
-  Platform,
-  PermissionsAndroid,
-} from 'react-native';
-import perro from "./running-dog-silhouette.png"
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import {firebase} from '../../firebase/config'
+
+
 import * as ImagePicker from 'expo-image-picker';
-import {uploadFire} from "../../firebase/config"
+import { url } from "../../Redux/Actions";
+import { auth } from "../../firebase/authentication";
 
 export const CreateDog = ({ navigation }) => {
 
   const [crear, setCrear] = useState({
     name: "",
     description: "",
-    age: "",
-    size: "",
+    birthday: "2020-04-04",
+    size: "small",
     profilePic: ""
   })
+  const [image, setImage] = useState(null)
+  const [uploading, setUploading] = useState(false)
 
 
 
-//agarra la imagen que pickas
-  let upload = async () => {
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
-    if (!result.canceled) { //si no se cancelo y se cerro la biblioteca lo pasa a formato blob
-        const response = await fetch(result.assets[0]); 
-        const blob = await response.blob();
-        uploadFire(blob); //lo sube a firebase funcion en firebase config
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      uploadImage()
     }
-};
+  };
+
+  const uploadImage = async () => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', image, true);
+      xhr.send(null);
+    })
+    const ref = firebase.storage().ref().child(`Pictures/${crear.name}`)
+    const snapshot = ref.put(blob)
+    snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      ()=>{
+        setUploading(true)
+      },
+      (error) => {
+        setUploading(false)
+        console.log(error)
+        blob.close()
+        return 
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploading(false)
+          console.log("Download URL: ", url)
+          setCrear({...crear, profilePic:url})
+          console.log(crear.profilePic)
+          blob.close()
+          return url
+        })
+      }
+      )
+  
+    }
 
 
   const HandleSubmit = async () => {
     let info = JSON.stringify(crear);
-    let url = `http://${BASE_URL_IP}/pet`;
+    let urlA = `${url}/pet`;
     try {
       await axios({
         method: 'post',
-        url: url,
-        headers: { 'Content-Type': 'application/json' },
+        url: urlA,
+        headers: { 
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${auth.currentUser.stsTokenManager.accessToken}`
+      },
         data: crear
       });
       setCrear({
         name: "",
         description: "",
-        age: "",
-        size: "",
+        birthday: "2019-04-04",
+        size: "small",
         profilePic: ""
       });
       alert("Creo que se creo");
@@ -107,7 +144,7 @@ export const CreateDog = ({ navigation }) => {
           placeholder="Cuando nacio?"
           placeholderTextColor="#fcfcfc"
           autoCapitalize="none"
-          onChangeText={(text) => setCrear({ ...crear, age: text })}
+          onChangeText={(text) => setCrear({ ...crear, birthday: text })}
 
         />
 
@@ -154,21 +191,18 @@ export const CreateDog = ({ navigation }) => {
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={() => upload()}>
-
-          {/* <Image source={{uri: foto}} style={styles.foto} /> */}
-          {crear.profilePic.length ? <Image
-            source={crear.profilePic}
-
-            style={styles.imagen}
-          /> :
-            <Image
+        <TouchableOpacity onPress={() => pickImage()}>
+ {!crear.profilePic ? <Image
               source={require('../../images/camera.png')}
 
               style={styles.imagen}
-            />}
-
+            /> :
+            <Image source={{uri: image}} style={{width: 250 , height: 200, marginLeft: 70}}/>}
+          {/* <Image source={{uri: foto}} style={styles.foto} /> */}
+           
         </TouchableOpacity>
+
+
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
         <TouchableOpacity onPress={HandleSubmit}>
@@ -181,7 +215,9 @@ export const CreateDog = ({ navigation }) => {
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
       </ScrollView>
-
+      <View style={styles.container}>
+     
+    </View>
     </>
   )
 }
