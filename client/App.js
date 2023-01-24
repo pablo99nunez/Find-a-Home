@@ -1,10 +1,14 @@
 //aca hago cagadas
-import 'react-native-gesture-handler';
-import React from 'react'
-import { LoginScreen, RegistrationScreen } from './src/screens'
-import { decode, encode } from 'base-64'
-if (!global.btoa) { global.btoa = encode }
-if (!global.atob) { global.atob = decode }
+import "react-native-gesture-handler";
+import React from "react";
+import { LoginScreen, RegistrationScreen } from "./src/screens";
+import { decode, encode } from "base-64";
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
 
 //fin dd cagadas
 
@@ -62,7 +66,6 @@ export default function App() {
 
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -99,7 +102,6 @@ export default function App() {
           />
           {/* =================================== */}
         </Stack.Navigator>
-
       </NavigationContainer>
     </Provider>
   );

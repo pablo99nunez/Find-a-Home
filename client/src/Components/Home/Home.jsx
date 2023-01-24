@@ -14,20 +14,22 @@ import {
 } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
-import { useDispatch, useSelector } from "react-redux"
+import UserDetail from "../UserDetail/UserDetail";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { CreateDog } from "../CreateDog/CreateDog";
 
 const { width, height } = Dimensions.get("screen");
-
+const Tab = createBottomTabNavigator();
 export default function Home({ navigation }) {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllPets());
+  }, []);
 
-  useEffect(()=>{
-    dispatch(getAllPets())
-  }, [])
-
-  const allPets = useSelector((state) => state.allPets)
+  const allPets = useSelector((state) => state.allPets);
   // const [pet, setPet] = useState(petDb);
 
   // const filterBySpecie = (specie) => {
@@ -66,7 +68,21 @@ export default function Home({ navigation }) {
         source={require("../../images/Trust.png")}
         />
       </TouchableOpacity> */}
+
       <StatusBar style="auto" />
+      <View style={styles.floatingAdoptionContainer}>
+        <View>
+          <TouchableOpacity
+            style={styles.adoptionButton}
+            onPress={() => navigation.navigate("CreateDog")}
+          >
+            <Image
+              className="w-16 h-16 "
+              source={require("../../images/Trust.png")}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
@@ -81,5 +97,19 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#AB4E68",
     padding: 10,
+  },
+  floatingAdoptionContainer: {
+    width: 80,
+    height: 80,
+    position: "absolute",
+    bottom: 15,
+    right: 15,
+  },
+  adoptionButton: {
+    borderRadius: 100,
+    backgroundColor: "#FFC733",
+    paddingVertical: 8,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
