@@ -9,10 +9,10 @@ import { BASE_URL_IP } from "@env"
 const BottomView = ({ petId, auth }) => {
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
-  console.log(token)
+  const [message, setMessage] = useState('')
   async function AdoptionRequest() {
     setSent(true)
-    const data = { message: 'John Doe', petID: petId };
+    const data = { message, petID: petId };
 
     const response = await axios.put(`${BASE_URL_IP}/pet/profile/solicitud`, data, {
       headers: {
@@ -26,7 +26,7 @@ const BottomView = ({ petId, auth }) => {
   // renders
   return (
     !sent ? <View>
-      <BottomSheetTextInput style={styles.input} multiline />
+      <BottomSheetTextInput style={styles.input} multiline onChangeText={(text)=> setMessage(text)}/>
       <ButtonYellow text='Enviar Solicitud' onPress={() => AdoptionRequest()} />
     </View> :
       <View>
