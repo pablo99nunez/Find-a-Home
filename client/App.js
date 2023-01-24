@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { LoginScreen, RegistrationScreen } from "./src/screens";
 import { decode, encode } from "base-64";
-import { BASE_URL_IP } from "@env"
+
 if (!global.btoa) {
   global.btoa = encode;
 }

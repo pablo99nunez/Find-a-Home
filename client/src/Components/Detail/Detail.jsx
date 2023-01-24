@@ -21,7 +21,7 @@ import { getAuth } from 'firebase/auth';
 export default function Detail({ route, navigation }) {
   //FIREBASE ZONE - DO NOT CHANGE
   const auth = getAuth(firebase);
-  console.log()
+  console.log(auth)
   //
   const { profilePic, name, created_at, gallery, description, size, age } = route.params
   console.log(created_at);
