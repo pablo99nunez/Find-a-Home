@@ -24,6 +24,7 @@ import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
 import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
+import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import { CreateDog } from "./src/Components/CreateDog/CreateDog";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
@@ -35,6 +36,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+          
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -64,8 +66,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -77,6 +78,11 @@ export default function App() {
             component={RegisterLastSteps}
             options={{ headerShown: false }}
           />
+
+          <Stack.Screen name="Login" component={LoginScreen}/>
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          
           {/* =================================== */}
 
           <Stack.Screen
