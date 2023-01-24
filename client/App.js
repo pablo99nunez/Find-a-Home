@@ -81,11 +81,6 @@ export default function App() {
             component={RegisterLastSteps}
             options={{ headerShown: false }}
           />
-
-          <Stack.Screen name="Login" component={LoginScreen}/>
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
-          
           {/* =================================== */}
 
           <Stack.Screen
