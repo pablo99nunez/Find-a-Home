@@ -11,6 +11,7 @@ const firebaseConfig = {
     storageBucket: "findahomehenry.appspot.com",
     messagingSenderId: "328480437483",
     appId: "1:328480437483:web:e54fb1f45facfaaa86baae",
+    
 };
 
 

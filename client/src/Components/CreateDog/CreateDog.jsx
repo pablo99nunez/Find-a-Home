@@ -23,9 +23,9 @@ import { useState } from "react";
 import perro from "./running-dog-silhouette.png"
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';
-
+import { getStorage, ref } from "firebase/storage";
+import fire from "../../firebase/config";
 export const CreateDog = ({navigation}) =>{
-
 
 
 
@@ -38,28 +38,45 @@ export const CreateDog = ({navigation}) =>{
         size: "",
         profilePic: ""
     })
+    const [imagen, setImagen] = useState("")
 
 
     let Udpload = async () => {
+
       let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: false,
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
         aspect: [4, 3],
-        base64: true,
+        quality: 1,
       });
-      if (!result.cancelled) {
-        let base64Img = `data:image/jpg;base64,${result.base64}`;
-        let data = {
-          "file": base64Img,
-          "upload_preset": "your_upload_preset",
-        }
-        try {
-          let response = await axios.post("https://api.cloudinary.com/v1_1/dvhstnw3u/upload", data)
-          setCrear({ ...crear, profilePic: data.secure_url });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
+      let json = JSON.stringify(result)
+      uploadImage(result.assets[0].uri)
+      .then((resolve => {
+       let ref = fire.store().ref().child("images/" + crear.name )
+        ref.put(resolve)
+      }))
+      setImagen(result.assets[0].uri);
+      if (!result.canceled) console.log("se cancelo")
+      
+    }
+
+   const  uploadImage = (uri) => {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.onerror = reject;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            resolve(xhr.response);
+          }
+        };
+     
+        xhr.open("GET", uri);
+        xhr.responseType = "blob";
+        xhr.send();
+      });
+     };
+      
+    
 
     const HandleSubmit = async () => {
       const IPv4 = "192.168.68.54";
