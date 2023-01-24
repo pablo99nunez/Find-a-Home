@@ -15,9 +15,9 @@ router.get('/', async (req, res) => {
 //create pet
 router.post('/', async (req, res) => {
   try {
-    const {profilePic, size, name, description, age} = req.body
+    const {profilePic, specie, size, name, description, age} = req.body
     console.log(req.body)
-    const newPet = await createNewPet({profilePic, size, name, description, age})
+    const newPet = await createNewPet({profilePic, specie, size, name, description, age})
     res.status(200).send({ message: 'mascota creada', payload: newPet })
     console.log(newPet)
   } catch (error) {
