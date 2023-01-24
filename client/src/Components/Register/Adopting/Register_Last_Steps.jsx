@@ -11,7 +11,7 @@ import { View,
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 
-const RegisterLastStepsAdopting = ({ route }) => {
+const RegisterLastStepsAdopting = ({ route , navigation}) => {
 
 	const { 
 		telefono, 
@@ -29,6 +29,7 @@ const RegisterLastStepsAdopting = ({ route }) => {
 	})
 
 	const [checkState, setCheckState] = useState({})
+	const [accepted, setAccepted] =useState(false)
 
 	const HandleCheck = (option) => {
 		setCheckState({ ...checkState, [option]: !checkState[option] })

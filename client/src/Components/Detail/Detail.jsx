@@ -5,8 +5,6 @@ import {
   View,
   Image,
   ImageBackground,
-  TouchableOpacity,
-  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,13 +13,27 @@ import { calculateAdoptionDays } from "../Funciones/DiasAdopcion";
 import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
-
 import { Characteristics } from "./Characteristics";
+import { getAuth } from "firebase/auth";
+
+
 
 
 export default function Detail({route, navigation}){
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+
+const solicitarAdopcion = ()=>{
+  if (!user) { //ESTO VA ASI (USER) PERO HASTA QUE ESTE FIREBASE IMPLEMENTADO LO DEJAMOS AL REVEZ
+    setOpen(0)
+  } else {
+    navigation.navigate("RegisterFireBase")
+  }
+}
   
-  const {profilePic, name , createdAt, gallery, description, size, age}= route.params
+  const {profilePic, name , createdAt, gallery, description, size, age, id}= route.params
 
   const days = calculateAdoptionDays(createdAt)
 
@@ -34,6 +46,8 @@ export default function Detail({route, navigation}){
   // callbacks
   const handleSheetChanges = useCallback((index) => {
   }, []);
+
+
   
   return(
     <View> 
@@ -48,7 +62,7 @@ export default function Detail({route, navigation}){
 
 
               <View className='h-52'>
-                  <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
+                  <Text className='text-[#f5c936] text-4xl text-center'>{name.toUpperCase()}</Text>
               </View>
 
               <View className="mx-auto">
@@ -71,15 +85,15 @@ export default function Detail({route, navigation}){
         </ImageBackground>
         
         
-        <View className='h-1/4 p-6'>
-          <Text className='text-4xl text-center my-9 w-10/12 mx-auto'>
+        <View className='h-1/4 flex content-center items-center'>
+          <Text className='text-3xl text-center w-11/12 mx-auto my-auto'>
             {description}
           </Text>
         </View>
         <Characteristics size={size} age={age}/>
         
-        <View className='h-1/3 flex justify-evenly'>
-          <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
+        <View className='h-1/4 flex justify-center'>
+          <ButtonYellow text='Adoptar' onPress={()=> solicitarAdopcion()}/>
         </View>
 
 
@@ -99,7 +113,7 @@ export default function Detail({route, navigation}){
       onClose={()=> setOpen(-1)}
 
       >
-        <BottomView/>
+        <BottomView id={id}/>
       </BottomSheet>
 
 

@@ -3,7 +3,6 @@ import { View, Image} from 'react-native'
 
 export const Size = (props) => {
   const{size} = props
-  console.log(size)
   return (
     <View className='flex flex-row items-end'>
       <Image className='h-9 w-9' source={size === 'Small'? require('../../images/perro_rosa.png') : require('../../images/perro_negro.png')} />

@@ -35,9 +35,7 @@ export default function RegistrationScreen({navigation}) {
         createUserWithEmailAndPassword(auth,email,password).then((resp)=>{
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
-                  await AsyncStorage.setItem('@accessToken', tkn);
-                  const datosUsuario = JSON.stringify(resp.user)
-                  await AsyncStorage.setItem('user', datosUsuario);
+                  await AsyncStorage.setItem('authorization', 'Bearer '+tkn);
                 })
               }
             navigation.navigate('RegisterFirstSteps')

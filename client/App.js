@@ -94,6 +94,12 @@ export default function App() {
           component={CreateDog}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name='RegisterFireBase'
+          component={RegistrationScreen}
+          />
+
         {/* =================================== */}
       </Stack.Navigator>
 

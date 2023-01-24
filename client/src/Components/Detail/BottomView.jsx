@@ -6,15 +6,37 @@ import { ButtonYellow } from '../Buttons/Buttons';
 
 
 
-const BottomView = () => {
+
+const BottomView = ({id}) => {
 
   const [sent, setSent] = useState(false)
+  const [message, setMessage] =useState('')
+  const sendRequest = ()=> { 
+    const newRequest = {
+      method: 'PUT',
+      headers:{
+        "Content-Type": "aplication/json",
+        // "Authorization":"Bearer "  ACA VA EL TOKEN
+      },
+      body:{
+        message,
+        id
+      },
+
+    }
+    fetch(`/pet/profile/solicitud`, newRequest )
+    .then((response) => response.json())
+    .then((data) => setSent(true))
+    .catch((err)=> alert(err.message))
+  }
   
   // renders
   return (
       !sent? <View>
-        <BottomSheetTextInput style={styles.input} multiline/>
-        <ButtonYellow text='Enviar Solicitud' onPress={()=> setSent(true)}/>
+        <BottomSheetTextInput style={styles.input} onChangeText={(text)=>{ setMessage(text)}} multiline/>
+        <ButtonYellow text='Enviar Solicitud' 
+        onPress={sendRequest}/>
+        <ButtonYellow text='Perfil Usuario' onPress={()=> alert('redireccion perfil dueño')}/>
       </View> :
       <View>
         <BottomSheetView>
