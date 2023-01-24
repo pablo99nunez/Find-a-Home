@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { BASE_URL_IP } from "@env"
-const url = BASE_URL_IP
-
+// export const url = BASE_URL_IP || `http://192.168.178.211:8080`
+// if(!BASE_URL_IP){
+//     alert("No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://192.168.0.14:8080/")
+// }
 const GET_ALL_PETS = 'GET_ALL_PETS'
 const GET_PETS_FILTERED_SPECIE = 'GET_PETS_FILTERED_SPECIE'
 const GET_PETS_FILTERED_SIZE = 'GET_PETS_FILTERED_SIZE'
@@ -47,3 +49,10 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
 }
 
+export const PetPost = (payload) => {
+    return async function () {
+        const petPost = await axios.post(url + `/pet`, payload)
+        return petPost
+
+    }
+}
