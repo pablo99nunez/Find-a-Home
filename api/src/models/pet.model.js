@@ -7,12 +7,8 @@ const petSchema = mongoose.Schema(
     state: {
       //['Adotpable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found', ]
       type: String,
+      enum: ['Adoptable','NotAdoptable', 'InAdoptionProcess' , 'Adopted', 'Lost', 'Found'],
       default: 'Adoptable',
-    },
-    age: {
-      type: String,
-      // required: true,
-      // enum: ['0 a 8 meses', '8 meses a 2 años', '2 años o más'],
     },
     name: {
       type: String,
@@ -32,8 +28,8 @@ const petSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      // required: true,
       maxlength: 400,
+      default: 'Sin descripcion.',
     },
     size: {
       type: String,
@@ -42,7 +38,7 @@ const petSchema = mongoose.Schema(
     },
     profilePic: {
       type: String,
-      // required: true,
+      default: 'https://www.shutterstock.com/image-photo/manipulated-image-very-long-dachshund-260nw-38764216.jpg',
     },
     gallery: [
       {
@@ -50,13 +46,21 @@ const petSchema = mongoose.Schema(
         default: [],
       },
     ],
-    owner: {
+    //dueño = owener
+    owner: { //ower: 'cacaa@gmail.com'
       type: String,
+    },
+    ownerHistory: { //['cacaa@gmail.com', 'pepee@gmail.com']
+      type: Array,
     },
     currentLocation: {
       type: String,
       default: 'Owner Home',
     },
+    solicitudes: { //objeto de {'interestedEmail','FullName', 'requestMessage', 'profilePic'} 
+      type: Array,
+      default: []
+    }
   },
   {
     timestamps: {
@@ -66,7 +70,7 @@ const petSchema = mongoose.Schema(
   }
 );
 
-// add plugin that converts mongoose to json
+// le saca el _ a algunas cosas
 petSchema.plugin(toJSON);
 //petSchema.plugin(paginate);
 

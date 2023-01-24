@@ -31,7 +31,7 @@ router.get('/specie/:variable', async (req, res) => {
 //filtra por tamaño
 router.get('/size/:tamano', async (req, res) => {
   try {
-    console.log(req.params.tamano);
+
     const allPets = await filtroSize(req.params.tamano);
     res.send({ message: 'todas las mascotas', payload: allPets });
   } catch (error) {
