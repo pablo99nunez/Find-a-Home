@@ -5,8 +5,6 @@ import {
   View,
   Image,
   ImageBackground,
-  TouchableOpacity,
-  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,7 +13,6 @@ import { calculateAdoptionDays } from "../Funciones/DiasAdopcion";
 import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
-
 import { Characteristics } from "./Characteristics";
 //FIREBASE IMPORT ZONE
 import firebase from '../../firebase/config'
