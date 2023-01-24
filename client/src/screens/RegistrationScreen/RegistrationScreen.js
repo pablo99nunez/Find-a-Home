@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-
-
+import axios from 'axios';
+import { BASE_URL_IP } from "@env"
 //firebase linea 1
-import firebase  from '../../firebase/config'
-import { getAuth, onAuthStateChanged , signInWithEmailAndPassword, createUserWithEmailAndPassword} from 'firebase/auth';
+import firebase from '../../firebase/config'
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function RegistrationScreen({navigation}) {
+export default function RegistrationScreen({ navigation }) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -19,33 +19,50 @@ export default function RegistrationScreen({navigation}) {
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
- //firebase linea 2 (todo el bloque {... })
- const auth = getAuth(firebase);
-        onAuthStateChanged(auth, user => {
-         // Check for user status
-         
+    //firebase linea 2 (todo el bloque {... })
+    const auth = getAuth(firebase);
+    onAuthStateChanged(auth, user => {
+        // Check for user status
 
-        });
-//firebase 3
+
+    });
+    //firebase 3
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
             alert("Passwords don't match.")
             return
         }
-        createUserWithEmailAndPassword(auth,email,password).then((resp)=>{
+        createUserWithEmailAndPassword(auth, email, password).then((resp) => {
+
+            console.log(resp)
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
-                  await AsyncStorage.setItem('@accessToken', tkn);
-                  const datosUsuario = JSON.stringify(resp.user)
-                  await AsyncStorage.setItem('user', datosUsuario);
+                    await AsyncStorage.setItem('@accessToken', tkn);
+                    const datosUsuario = JSON.stringify(resp.user)
+                    await AsyncStorage.setItem('user', datosUsuario);
                 })
-              }
+            }
+            createUserInDb(fullName, email, password);
             navigation.navigate('RegisterFirstSteps')
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err.message);
         })
 
-        
+        //CREAMOS EL USUARIO EN LA BASE DE DATOS
+        const createUserInDb = async (fullName, email, password) => {
+            const profilePic = "https://i.pravatar.cc/150?u=thefakeuser.jpg"
+            const phone = "01155555555"
+            const data = { firstName: fullName, lastName: fullName, profilePic, email: email, phone };
+            console.log("DATA FOR DB CREATION:", data)
+            const response = await axios.post(`${BASE_URL_IP}/user`, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Authorization': `Bearer ${token}`
+                }
+            }).then(response => console.log(response))
+                .catch(error => console.error('Error:', error));
+        }
+
         /* firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
