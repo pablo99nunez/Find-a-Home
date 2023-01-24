@@ -14,7 +14,7 @@ const GET_PETS_FILTERED_BOTH_FILTERS = 'GET_PETS_FILTERED_BOTH_FILTERS'
 
 export const getAllPets = () => {
     return async (dispatch) => {
-        const json = await axios.get(`${url}pet`)
+        const json = await axios.get(`${url}/pet`)
         return dispatch({
             type: GET_ALL_PETS,
             payload: json.data
@@ -40,7 +40,7 @@ export const getPetsFilteredBySize = (payload) => {
             payload: json.data
         })
     }
-}
+} 
 
 export const getPetsFilteredByTwoFilters = (payload) => {
     return async (dispatch) => {
