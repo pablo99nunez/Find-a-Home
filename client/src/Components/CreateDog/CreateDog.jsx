@@ -14,14 +14,16 @@ import {firebase} from '../../firebase/config'
 
 
 import * as ImagePicker from 'expo-image-picker';
+import { url } from "../../Redux/Actions";
+import { auth } from "../../firebase/authentication";
 
 export const CreateDog = ({ navigation }) => {
 
   const [crear, setCrear] = useState({
     name: "",
     description: "",
-    age: "",
-    size: "",
+    birthday: "2020-04-04",
+    size: "small",
     profilePic: ""
   })
   const [image, setImage] = useState(null)
@@ -88,19 +90,22 @@ export const CreateDog = ({ navigation }) => {
 
   const HandleSubmit = async () => {
     let info = JSON.stringify(crear);
-    let url = `http://${BASE_URL_IP}/pet`;
+    let urlA = `${url}/pet`;
     try {
       await axios({
         method: 'post',
-        url: url,
-        headers: { 'Content-Type': 'application/json' },
+        url: urlA,
+        headers: { 
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${auth.currentUser.stsTokenManager.accessToken}`
+      },
         data: crear
       });
       setCrear({
         name: "",
         description: "",
-        age: "",
-        size: "",
+        birthday: "2019-04-04",
+        size: "small",
         profilePic: ""
       });
       alert("Creo que se creo");
@@ -139,7 +144,7 @@ export const CreateDog = ({ navigation }) => {
           placeholder="Cuando nacio?"
           placeholderTextColor="#fcfcfc"
           autoCapitalize="none"
-          onChangeText={(text) => setCrear({ ...crear, age: text })}
+          onChangeText={(text) => setCrear({ ...crear, birthday: text })}
 
         />
 
