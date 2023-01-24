@@ -21,21 +21,22 @@ export default function LoginScreen({ navigation }) {
 
     //firebase linea 2 (todo el bloque {... })
     const auth = getAuth(firebase);
+
     onAuthStateChanged(auth, user => {
         // Check for user status
     });
-  //"stsTokenManager": {"accessToken": "..
-  
+    //"stsTokenManager": {"accessToken": "..
+
     //firebase linea 3
     const onLoginPress = () => {
         signInWithEmailAndPassword(auth, email, password).then((resp) => {
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
-                  await AsyncStorage.setItem('@accessToken', tkn);
-                  const datosUsuario = JSON.stringify(resp.user)
-                  await AsyncStorage.setItem('user', datosUsuario);
+                    await AsyncStorage.setItem('@accessToken', tkn);
+                    const datosUsuario = JSON.stringify(resp.user)
+                    await AsyncStorage.setItem('user', datosUsuario);
                 })
-              }
+            }
             navigation.navigate('Home', resp.user)
         }).catch((err) => {
             console.log(err.message);

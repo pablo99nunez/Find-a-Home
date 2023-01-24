@@ -26,16 +26,17 @@ router.get('/', checkJwt, async (req, res) => {
     res.status(501).send({ error: error.message })
   }
 })
-
+// checkJwt,
 //logeado, user, crea un usuario con los datos del token + los q se manden por body
-router.post('/', checkJwt, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
 
-    const newUser = Object.assign(req.body, {
-      email: req.user.email,
-      email_verified: req.user.email_verified,
+    // const newUser = Object.assign(req.body, {
+    //   email: req.user.email,
+    //   email_verified: req.user.email_verified,
 
-    })
+    // })
+    const newUser = req.body;
     console.log(newUser);
 
     const createdUser = await createNewUser(newUser)
