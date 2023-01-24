@@ -21,9 +21,9 @@ import { Characteristics } from "./Characteristics";
 
 export default function Detail({route, navigation}){
   
-  const {profilePic, name , createdAt, gallery, description, size, age}= route.params
-
-  const days = calculateAdoptionDays(createdAt)
+  const {profilePic, name , created_at, gallery, description, size, age}= route.params
+  console.log(created_at);
+  const days = calculateAdoptionDays(created_at)
 
   const bottomSheetRef = useRef(null);
 
@@ -40,7 +40,7 @@ export default function Detail({route, navigation}){
       <View className='bg-[#acacac] h-full'>
         <ImageBackground style={styles.profilePic} source={{uri: profilePic}}>
           <LinearGradient colors={['#00000000', '#acacac']} style={{height : '100%', width : '100%'}}>
-            <View>
+            <View className='h-1/3'>
 
               <View >
                   <HeaderDetail onPress={()=> navigation.goBack()} days={days}/>
@@ -51,28 +51,37 @@ export default function Detail({route, navigation}){
                   <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
               </View>
 
-              <View>
-                {gallery? <FlatList horizontal={true} keyExtractor={(name) => name} data={gallery}
-                renderItem={({item}) => (
-                  <Image style={styles.gallery} source={{uri: item}}/>
-                  )}></FlatList> : null}
+              <View className="mx-auto">
+                {gallery? 
+                <FlatList 
+                  horizontal={true} 
+                  keyExtractor={(name) => name} 
+                  data={gallery}
+                  renderItem={({item}) => (
+                    <Image style={styles.gallery} source={{uri: item}}/>
+                  )}>                    
+                </FlatList> 
+                : 
+                <View className="min-h-[120px]">
+                </View>}
               </View> 
 
             </View>
           </LinearGradient>
         </ImageBackground>
-
-        <Text className='text-2xl text-center my-9'>{description}</Text>
-
-        <View className='my-20'>
-          <Characteristics size={size} age={age}/>
-        </View>
         
-        <View className='aboslute bottom-0 h-25 flex justify-end'> 
-
-        <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
+        
+        <View className='h-1/4 p-6'>
+          <Text className='text-4xl text-center my-9 w-10/12 mx-auto'>
+            {description}
+          </Text>
         </View>
-      
+        <Characteristics size={size} age={age}/>
+        
+        <View className='h-1/3 flex justify-evenly'>
+          <ButtonYellow text='Adoptar' onPress={()=> setOpen(0)}/>
+        </View>
+
 
       </View>
 
@@ -93,7 +102,7 @@ export default function Detail({route, navigation}){
         <BottomView/>
       </BottomSheet>
 
-      
+
 
     </View>
   );
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
 
   profilePic:{ 
     width: '100%', 
-    height: 400
+    height:400
   },
   gallery:{ 
     width: 90, 

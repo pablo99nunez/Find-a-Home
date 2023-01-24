@@ -10,7 +10,8 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity, //botton
   Button,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 import { ButtonYellow } from "../Buttons/Buttons";
 import { useState } from "react";
@@ -21,55 +22,12 @@ import { useState } from "react";
   } from 'react-native';
 import perro from "./running-dog-silhouette.png"
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
+import * as ImagePicker from 'expo-image-picker';
 
 export const CreateDog = ({navigation}) =>{
 
 
 
-  let permissionGranted = false;
-
-  const requestGalleryPermission = async () => {
-    return new Promise((resolve) => {
-      try {
-        PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          {
-            title: 'Permiso para acceder a la galería',
-            message: 'Necesitamos acceder a tu galería para seleccionar imágenes.',
-            buttonNeutral: 'Preguntarme luego',
-            buttonNegative: 'Cancelar',
-            buttonPositive: 'Aceptar',
-          },
-        ).then((granted) => {
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('Galería permitida');
-          } else {
-            console.log('Galería no permitida');
-          }
-          resolve(granted);
-        });
-      } catch (err) {
-        console.warn(err);
-      }
-    });
-  };
-  
-  const openCamera = async () => {
-    await requestGalleryPermission();
-      launchImageLibrary({}, (response) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        } else {
-          setFoto(response.uri);
-        }
-      });
-    
-  }
 
 
 
@@ -82,8 +40,29 @@ export const CreateDog = ({navigation}) =>{
     })
 
 
+    let Udpload = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: false,
+        aspect: [4, 3],
+        base64: true,
+      });
+      if (!result.cancelled) {
+        let base64Img = `data:image/jpg;base64,${result.base64}`;
+        let data = {
+          "file": base64Img,
+          "upload_preset": "your_upload_preset",
+        }
+        try {
+          let response = await axios.post("https://api.cloudinary.com/v1_1/dvhstnw3u/upload", data)
+          setCrear({ ...crear, profilePic: data.secure_url });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
     const HandleSubmit = async () => {
-      const IPv4 = "192.168.178.211";
+      const IPv4 = "192.168.68.54";
       let info = JSON.stringify(crear);
       let url = `http://${IPv4}:8080/pet`;
       try {
@@ -105,19 +84,6 @@ export const CreateDog = ({navigation}) =>{
         console.error(error);
       }
     };
-
-//  const HandleSubmit = (crear) => {
-//   return async function () {
-// try{
-//    let esperar =  await axios.get("http://localhost:8080/filtro/size/small",)
-//       alert(esperar)
-
-//     }
-//     catch(err){
-//       console.log(err)
-//     }
-//   }
-// }
 
     return(
 
@@ -196,20 +162,27 @@ export const CreateDog = ({navigation}) =>{
                 <Text style={{ fontSize: 30, marginRight: 10}}>Foto:</Text>
                 <Text style={{ fontSize: 10, marginRight: 10}}></Text>
 
-                <TouchableOpacity onPress={() =>openCamera()}>
+                <TouchableOpacity onPress={() =>Udpload()}>
   
   {/* <Image source={{uri: foto}} style={styles.foto} /> */}
+  {crear.profilePic.length ?   <Image
+                            source={crear.profilePic}
+
+                            style={styles.imagen}
+                            /> :
                 <Image
                             source={require('../../images/camera.png')}
+
                             style={styles.imagen}
-                            />
+                            />}
+
                 </TouchableOpacity>
                 <Text style={{ fontSize: 30, marginRight: 10}}></Text>
 
                 <TouchableOpacity onPress={HandleSubmit}>
                 <Image
-                            source={require('../../images/camera.png')}
-                            style={styles.imagen}
+                            source={require('../../images/buttoncrear.png')}
+                            style={styles.imagen2}
                             />
                              </TouchableOpacity>
 
@@ -242,6 +215,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 40
+      },
+      imagen2: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 40,
+    
       },
       buttonStyle: {
         alignItems: 'center',
