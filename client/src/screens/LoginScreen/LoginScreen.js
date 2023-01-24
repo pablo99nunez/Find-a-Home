@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={async () => {
-                        await loginWithEmailAndPassword().then(ignore => {
+                        await loginWithEmailAndPassword(email, password).then(ignore => {
                             navigation.navigate('Home')
                         })
                     }}>
