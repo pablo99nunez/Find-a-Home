@@ -15,6 +15,6 @@ export const callApiWithAppCheckExample = async () => {
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(err => console.error(err));
-    // consologea respuesta
+    // consologea respue sta
     console.log({ respuesta: apiResponse });
 };
