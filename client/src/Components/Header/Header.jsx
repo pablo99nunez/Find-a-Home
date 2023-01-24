@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Picker } from "@react-native-picker/picker";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets, getPetsFilteredBySize, getPetsFilteredBySpecie } from "../../Redux/Actions";
+import { getAllPets, getPetsFilteredBySize, getPetsFilteredBySpecie, getPetsFilteredByTwoFilters } from "../../Redux/Actions";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -39,11 +39,9 @@ export const Header = ({ navigation, filterBySize}) => {
       dispatch(getPetsFilteredBySpecie(specie))
     } else if (size !== "" && specie === "") {
       dispatch(getPetsFilteredBySize(size))
-    } 
-    // else if (size !== "" && specie !== "") {
-    //   dispatch(getPetsFilteredBySpecie(specie))
-    //   dispatch(getPetsFilteredBySize(size))
-    // }
+    } else if (size !== "" && specie !== "") {
+      dispatch(getPetsFilteredByTwoFilters([size, specie]))
+    }
   }, [specie, size]);
 
   const resizeBox = (to) => {
