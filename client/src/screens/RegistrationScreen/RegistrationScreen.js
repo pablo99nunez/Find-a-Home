@@ -34,16 +34,18 @@ export default function RegistrationScreen({ navigation }) {
         }
         createUserWithEmailAndPassword(auth, email, password).then((resp) => {
 
-            console.log(resp)
             if (resp.user) {
                 resp.user.getIdToken().then(async (tkn) => {
-                    await AsyncStorage.setItem('@accessToken', tkn);
-                    const datosUsuario = JSON.stringify(resp.user)
-                    await AsyncStorage.setItem('user', datosUsuario);
+                    await AsyncStorage.setItem('authorization', "Bearer "+ tkn);
+                    createUserInDb(fullName, email, password);
+                    console.log({authorization: "Bearer "+ tkn})
+                    navigation.navigate('Home')
                 })
+            }else{
+                alert('Hubo un error al registrarse, no se obtubo el token en linea 37 de RegistrationScreen.js!')
             }
-            createUserInDb(fullName, email, password);
-            navigation.navigate('RegisterFirstSteps')
+
+
         }).catch((err) => {
             console.log(err.message);
         })
@@ -54,12 +56,12 @@ export default function RegistrationScreen({ navigation }) {
             const phone = "01155555555"
             const data = { firstName: fullName, lastName: fullName, profilePic, email: email, phone };
             console.log("DATA FOR DB CREATION:", data)
-            const response = await axios.post(`${BASE_URL_IP}/user`, data, {
+            const response = await axios.post(`${BASE_URL_IP}user`, data, {
                 headers: {
                     "Content-Type": "application/json",
                     // 'Authorization': `Bearer ${token}`
                 }
-            }).then(response => console.log(response))
+            }).then(response => console.log('usuario nuevo creado en la mongodb'))
                 .catch(error => console.error('Error:', error));
         }
 
