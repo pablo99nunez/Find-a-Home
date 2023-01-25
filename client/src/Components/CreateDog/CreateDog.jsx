@@ -37,9 +37,13 @@ export const CreateDog = ({ navigation }) => {
 
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+
+
   React.useEffect(() =>{
-    uploadImage()
-  },[image])
+if(!crear.profilePic) uploadImage()
+  },[image, crear.profilePic])
+
+
   const pickImage = async () => {
     try{
     // No permissions request is necessary for launching the image library
@@ -53,6 +57,7 @@ export const CreateDog = ({ navigation }) => {
     if (!result.canceled) {
 
       setImage(result.uri);
+  //  await   uploadImage()
 
       // await uploadImage();
     }
