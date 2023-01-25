@@ -34,7 +34,7 @@ export default function Home({ navigation }) {
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     auth.currentUser?.uid
-      ? navigation.navigate("CreateDog")
+      ? navigation.navigate("CreatePet")
       : navigation.navigate("Login");
   }
   return (

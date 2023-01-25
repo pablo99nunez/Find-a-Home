@@ -131,7 +131,7 @@ export default function UserDetail({ route, navigation }) {
           <View>
             <Header
               onPress={() => navigation.navigate("Home")}
-              navigation={() => navigation.navigate("CreateDog")}
+              navigation={() => navigation.navigate("CreatePet")}
             />
             <Image
               className="w-80 h-80 bottom-6 mx-auto rounded-full"
