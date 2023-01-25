@@ -15,7 +15,7 @@ import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 import { PetPost} from "../../Redux/Actions/index"
 import { useDispatch, useSelector } from "react-redux";
-
+import { validate } from "./validate";
   export const CreateDog = ({ navigation }) => {
     const dispatch = useDispatch();
 
@@ -34,6 +34,8 @@ import { useDispatch, useSelector } from "react-redux";
     size: "",
     profilePic: ""
   })
+
+
   const [image, setImage] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -48,7 +50,7 @@ import { useDispatch, useSelector } from "react-redux";
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -69,7 +71,7 @@ import { useDispatch, useSelector } from "react-redux";
       xhr.open('GET', image, true);
       xhr.send(null);
     })
-    const ref = firebase.storage().ref().child(`Pictures/${crear.name}`)
+    const ref = firebase.storage().ref().child(`Pictures/${Date.now()}-${crear.name}`)
     const snapshot = ref.put(blob)
     snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
       ()=>{
@@ -86,7 +88,6 @@ import { useDispatch, useSelector } from "react-redux";
           setUploading(false)
           console.log("Download URL: ", url)
           setCrear({...crear, profilePic:url})
-          console.log(crear.profilePic)
           blob.close()
           return url
         })
@@ -94,7 +95,6 @@ import { useDispatch, useSelector } from "react-redux";
       )
   
     }
-
   const HandleSubmit = async (crear) => {
     dispatch(PetPost(crear))
     setCrear({    name: "",
@@ -104,6 +104,9 @@ import { useDispatch, useSelector } from "react-redux";
     profilePic: ""})
     alert("se creo")
   };
+
+
+    
 
   return (
 
@@ -116,14 +119,13 @@ import { useDispatch, useSelector } from "react-redux";
       </View>
       <ScrollView style={styles.container}>
         <Text style={{ fontSize: 30, marginRight: 10 }}>Nombre:</Text>
+       
         <TextInput style={styles.input}
           placeholder="Nombre de tu mascota"
           placeholderTextColor="#fcfcfc"
           autoCapitalize="none"
-          onChangeText={(text) => setCrear({ ...crear, name: text })}
-        />
-                <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
-
+          onChangeText={(text) => setCrear(validate({ ...crear, name: text }))}
+        /> 
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
         <TextInput style={styles.input}
