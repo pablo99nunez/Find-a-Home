@@ -28,15 +28,18 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const auth = getAuth(firebase);
 
+
   const allPets = useSelector((state) => state.allPets);
   useEffect(() => {
     dispatch(getAllPets());
   }, [allPets]);
+
   function HandleLoginToAdoption() {
     auth.currentUser?.uid
       ? navigation.navigate("CreateDog")
       : navigation.navigate("Login");
   }
+
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />

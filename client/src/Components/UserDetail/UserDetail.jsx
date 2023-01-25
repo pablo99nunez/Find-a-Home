@@ -109,6 +109,7 @@ export default function UserDetail({ route, navigation }) {
     ],
   };
   const asd = useSelector((state) => state.allPets);
+
   return (
     <View
       style={{ height: HEIGHT }}
@@ -137,8 +138,8 @@ export default function UserDetail({ route, navigation }) {
               source={{ uri: user.profilePic }}
             />
             <View className="flex flex-row justify-between w-11/12 mx-auto top-4">
-              <Text className=" text-4xl">{asd}</Text>
-              <Text className=" text-4xl">{user.rating} ⭐</Text>
+              {/* <Text className=" text-4xl">{asd}</Text> <-- Esto no funciona */}
+              <Text className=" text-4xl">{user.rating}⭐</Text>
             </View>
           </View>
         </LinearGradient>

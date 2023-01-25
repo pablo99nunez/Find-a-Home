@@ -6,8 +6,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 
 const LandingPage = ({ navigation }) => {
-    const [user, setUser] = useState({})
-    const [authorizedUser, setAuthorizedUser] = useState('');
+
+    const [logeado, setLogeado] = useState('');
 
     //carga datos del local StorAsh
     //useEffect(() => {
@@ -17,17 +17,11 @@ const LandingPage = ({ navigation }) => {
     useFocusEffect(
         React.useCallback(() => {
             async function evitaReturnDelUseEffect() {
-                const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
+                const tokenLocalStorage = await AsyncStorage.getItem('authorization')
                 if (tokenLocalStorage)
-                    setAuthorizedUser(tokenLocalStorage)
+                setLogeado(tokenLocalStorage)
                 else
-                    setAuthorizedUser(false)
-    
-                const userData = await AsyncStorage.getItem('user')
-                if (userData)
-                    setUser(userData)
-                else
-                    setUser(false)
+                setLogeado(false)
             }
             evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
           
@@ -36,7 +30,7 @@ const LandingPage = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {user ?
+            {logeado ?
                 <LandingButton onPress={() => navigation.navigate('Home')} />
                 :
                 <LandingButton onPress={() => navigation.navigate('Welcome')} />

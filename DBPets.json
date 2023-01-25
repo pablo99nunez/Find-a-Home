@@ -1,0 +1,298 @@
+[
+    {
+    "state": "Adoptable",
+    "name": "Fido",
+    "specie": "Perro",
+    "birthday": "01/01/2015",
+    "description": "Fido es un perro amigable y juguetón de 8 años de edad. Le encanta jugar al frisbee y dar paseos largos.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/fido.jpg",
+    "gallery": ["https://www.example.com/fido1.jpg", "https://www.example.com/fido2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Mendoza", "Guaymallén"],
+    "solicitudes": []
+    }
+    ,
+    {
+    "state": "Adopted",
+    "name": "Whiskers",
+    "specie": "Gato",
+    "birthday": "05/05/2018",
+    "description": "Whiskers es un gato cariñoso y curioso de 3 años de edad. Le encanta jugar con hilos y dormir en cajas.",
+    "size": "small",
+    "profilePic": "https://www.example.com/whiskers.jpg",
+    "gallery": ["https://www.example.com/whiskers1.jpg", "https://www.example.com/whiskers2.jpg"],
+    "owner": "johndoe@gmail.com",
+    "ownerHistory": ["johndoe@gmail.com"],
+    "currentLocation": ["Mendoza", "Guaymallén"],
+    "solicitudes": []
+    }
+    ,
+    {
+    "state": "Lost",
+    "name": "Buddy",
+    "specie": "Perro",
+    "birthday": "03/03/2010",
+    "description": "Buddy es un perro amigable y leal de 11 años de edad. Se extravió durante un paseo en el parque el 20 de enero.",
+    "size": "large",
+    "profilePic": "https://www.example.com/buddy.jpg",
+    "gallery": ["https://www.example.com/buddy1.jpg", "https://www.example.com/buddy2.jpg"],
+    "owner": "janedoe@gmail.com",
+    "ownerHistory": ["janedoe@gmail.com"],
+    "currentLocation": ["Mendoza", "Guaymallén"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "NotAdoptable",
+    "name": "Max",
+    "specie": "Perro",
+    "birthday": "10/10/2013",
+    "description": "Max es un perro de 7 años de edad con problemas de comportamiento. Necesita entrenamiento especializado.",
+    "size": "large",
+    "profilePic": "https://www.example.com/max.jpg",
+    "gallery": ["https://www.example.com/max1.jpg", "https://www.example.com/max2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Buenos Aires", "Zárate"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "InAdoptionProcess",
+    "name": "Fluffy",
+    "specie": "Gato",
+    "birthday": "12/12/2017",
+    "description": "Fluffy es un gato dulce y cariñoso de 4 años de edad. Está actualmente en proceso de adopción.",
+    "size": "small",
+    "profilePic": "https://www.example.com/fluffy.jpg",
+    "gallery": ["https://www.example.com/fluffy1.jpg", "https://www.example.com/fluffy2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Buenos Aires", "Zárate"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Found",
+    "name": "Sparky",
+    "specie": "Perro",
+    "birthday": "",
+    "description": "Sparky es un perro encontrado en el parque el 15 de febrero. Parece ser joven y amigable.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/sparky.jpg",
+    "gallery": ["https://www.example.com/sparky1.jpg", "https://www.example.com/sparky2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Buenos Aires", "Zárate"],
+    "solicitudes": []
+    },
+    {
+    "state": "Adopted",
+    "name": "Lucy",
+    "specie": "Gato",
+    "birthday": "04/04/2016",
+    "description": "Lucy es un gato dulce y cariñoso de 6 años de edad. Ya fue adoptado por una familia amorosa.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/lucy.jpg",
+    "gallery": ["https://www.example.com/lucy1.jpg", "https://www.example.com/lucy2.jpg"],
+    "owner": "smithfamily@gmail.com",
+    "ownerHistory": ["smithfamily@gmail.com"],
+    "currentLocation": ["Misiones", "Posadas"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Adoptable",
+    "name": "Princess",
+    "specie": "Perro",
+    "birthday": "06/06/2019",
+    "description": "Princess es un perro joven y juguetón de 2 años de edad. Está lista para ser adoptada por una familia amorosa.",
+    "size": "small",
+    "profilePic": "https://www.example.com/princess.jpg",
+    "gallery": ["https://www.example.com/princess1.jpg", "https://www.example.com/princess2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Misiones", "Posadas"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Lost",
+    "name": "Charlie",
+    "specie": "Gato",
+    "birthday": "09/09/2011",
+    "description": "Charlie es un gato de 10 años de edad que se extravió durante un paseo en el parque el 15 de marzo.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/charlie.jpg",
+    "gallery": ["https://www.example.com/charlie1.jpg", "https://www.example.com/charlie2.jpg"],
+    "owner": "brownfamily@gmail.com",
+    "ownerHistory": ["brownfamily@gmail.com"],
+    "currentLocation": ["Misiones", "Posadas"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Found",
+    "name": "Mittens",
+    "specie": "Gato",
+    "birthday": "",
+    "description": "Mittens es un gato encontrado en la calle el 25 de abril. Parece ser adulto y amigable.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/mittens.jpg",
+    "gallery": ["https://www.example.com/mittens1.jpg", "https://www.example.com/mittens2.jpg"],
+    "owner": ["brownfamily@gmail.com"],
+    "currentLocation": ["Misiones", "Posadas"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Adoptable",
+    "name": "Bella",
+    "specie": "Perro",
+    "birthday": "11/11/2014",
+    "description": "Bella es un perro amigable y juguetón de 7 años de edad. Está lista para ser adoptada por una familia amorosa.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/bella.jpg",
+    "gallery": ["https://www.example.com/bella1.jpg", "https://www.example.com/bella2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "InAdoptionProcess",
+    "name": "Rocky",
+    "specie": "Perro",
+    "birthday": "12/12/2016",
+    "description": "Rocky es un perro dulce y cariñoso de 5 años de edad. Está actualmente en proceso de adopción.",
+    "size": "large",
+    "profilePic": "https://www.example.com/rocky.jpg",
+    "gallery": ["https://www.example.com/rocky1.jpg", "https://www.example.com/rocky2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "NotAdoptable",
+    "name": "Sassy",
+    "specie": "Gato",
+    "birthday": "08/08/2015",
+    "description": "Sassy es un gato de 8 años de edad con problemas de salud. Necesita cuidados especializados.",
+    "size": "small",
+    "profilePic": "https://www.example.com/sassy.jpg",
+    "gallery": ["https://www.example.com/sassy1.jpg", "https://www.example.com/sassy2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+    ,
+    {
+    "state": "Lost",
+    "name": "Sammy",
+    "specie": "Perro",
+    "birthday": "09/09/2012",
+    "description": "Sammy es un perro de 9 años de edad que se extravió durante un paseo en el parque el 20 de mayo.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/sammy.jpg",
+    "gallery": ["https://www.example.com/sammy1.jpg", "https://www.example.com/sammy2.jpg"],
+    "owner": "taylorfamily@gmail.com",
+    "ownerHistory": ["taylorfamily@gmail.com"],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+    ,
+    {
+    "state": "Found",
+    "name": "Toby",
+    "specie": "Perro",
+    "birthday": "",
+    "description": "Toby es un perro encontrado en el parque el 15 de junio. Parece ser joven y amigable.",
+    "size": "large",
+    "profilePic": "https://www.example.com/toby.jpg",
+    "gallery": ["https://www.example.com/toby1.jpg", "https://www.example.com/toby2.jpg"],
+    "ownerHistory": ["janedoe@gmail.com"],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Adopted",
+    "name": "Daisy",
+    "specie": "Perro",
+    "birthday": "01/01/2018",
+    "description": "Daisy es un perro joven y juguetón de 3 años de edad. Ya fue adoptado por una familia amorosa.",
+    "size": "small",
+    "profilePic": "https://www.example.com/daisy.jpg",
+    "gallery": ["https://www.example.com/daisy1.jpg", "https://www.example.com/daisy2.jpg"],
+    "owner": "johnsonfamily@gmail.com",
+    "ownerHistory": ["johnsonfamily@gmail.com"],
+    "currentLocation": ["Córdoba", "Capital"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Adoptable",
+    "name": "Buddy",
+    "specie": "Perro",
+    "birthday": "02/02/2019",
+    "description": "Buddy es un perro joven y juguetón de 2 años de edad. Está listo para ser adoptado por una familia amorosa.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/buddy.jpg",
+    "gallery": ["https://www.example.com/buddy1.jpg", "https://www.example.com/buddy2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Entre rios", "Parana"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Lost",
+    "name": "Milo",
+    "specie": "Gato",
+    "birthday": "06/06/2010",
+    "description": "Milo es un gato de 13 años de edad que se extravió durante un paseo en el parque el 10 de julio.",
+    "size": "small",
+    "profilePic": "https://www.example.com/milo.jpg",
+    "gallery": ["https://www.example.com/milo1.jpg", "https://www.example.com/milo2.jpg"],
+    "owner": "garciafamily@gmail.com",
+    "ownerHistory": ["garciafamily@gmail.com"],
+    "currentLocation": ["Entre rios", "Parana"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Found",
+    "name": "Whiskers",
+    "specie": "Gato",
+    "birthday": "",
+    "description": "Whiskers es un gato encontrado en la calle el 15 de agosto. Parece ser adulto y amigable.",
+    "size": "medium",
+    "profilePic": "https://www.example.com/whiskers.jpg",
+    "gallery": ["https://www.example.com/whiskers1.jpg", "https://www.example.com/whiskers2.jpg"],
+    "owner": "",
+    "ownerHistory": [],
+    "currentLocation": ["Entre rios", "Parana"],
+    "solicitudes": []
+    }
+,
+    {
+    "state": "Adopted",
+    "name": "Max",
+    "specie": "Perro",
+    "birthday": "12/12/2017",
+    "description": "Max es un perro joven y juguetón de 4 años de edad. Ya fue adoptado por una familia amorosa.",
+    "size": "large",
+    "profilePic": "https://www.example.com/max.jpg",
+    "gallery": ["https://www.example.com/max1.jpg", "https://www.example.com/max2.jpg"],
+    "owner": "rodriguezfamily@gmail.com",
+    "ownerHistory": ["rodriguezfamily@gmail.com"],
+    "currentLocation": ["Entre rios", "Parana"],
+    "solicitudes": []
+    }
+]

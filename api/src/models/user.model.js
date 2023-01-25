@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
 const { toJSON/* , paginate */ } = require('./plugins');
+/*
+{
+  
+  email: 'rod.toobe2@gmail.com',
+  email_verified: true,
+  
+}
 
+
+*/
 const userSchema = mongoose.Schema(
   {
     userType: {
       type: String,
-      enum : ['user','shelter','volunteer','admin'],
-      required: true,
+      enum: ['user', 'shelter', 'volunteer', 'admin'],
       default: 'user'
     },
     firstName: {
@@ -15,19 +23,19 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
       minlength: 2,
-      maxlength: 30     
+      maxlength: 30
     },
     lastName: {
       type: String,
       required: true,
       trim: true,
       minlength: 2,
-      maxlength: 30    
+      maxlength: 30
     },
     email: {
       type: String,
       required: true,
-      unique: true,
+     // unique: true,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -36,7 +44,10 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    phone:{
+    email_verified: {
+      type: Boolean
+    },
+    phone: {
       type: String,
       required: true,
       validate(value) {
@@ -47,6 +58,7 @@ const userSchema = mongoose.Schema(
     },
     profilePic: {
       type: String,
+      defult: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
       validate(value) {
         if (!value.match(/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/)) {
           throw new Error('image must be correct and complete url direction');
@@ -56,22 +68,22 @@ const userSchema = mongoose.Schema(
     profile: {
       type: Object,
     },
-    lastModifiedDate:{
+    lastModifiedDate: {
       type: Date
     },
-    rating:{
+    rating: {
       type: Number,
       min: 0,
       max: 5
     },
-    reviewsQty:{
+    reviewsQty: {
       type: Number
     },
-    description:{
+    description: {
       type: String,
       maxlength: 400
     },
-    gallery:[{
+    gallery: [{
       type: String
     }],
     pets: {
@@ -80,12 +92,23 @@ const userSchema = mongoose.Schema(
     address: {
       type: String,
       minlength: 2,
-      maxlength: 100
+      maxlength: 100,
+      default: "Desconocida"
     },
     conditions: {
       type: Object,
-    }
-  
+    },
+    misSolicitudes: {
+      type: Array,
+      default: []
+    },
+    geolocation: {
+      type: { 
+        type: String,
+        enum: ['Point', 'Polygon'],
+        default: 'Point' },
+      coordinates: [Number],
+    },
   },
   {
     timestamps: {
@@ -94,6 +117,7 @@ const userSchema = mongoose.Schema(
     }
   }
 );
+//userSchema.index({Location: '2dsphere' });
 
 userSchema.plugin(toJSON);
 //userSchema.plugin(paginate);
