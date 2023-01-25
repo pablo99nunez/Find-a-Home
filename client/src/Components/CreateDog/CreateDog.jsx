@@ -8,11 +8,113 @@ import {
   TouchableOpacity, //botton
   ScrollView,
 } from "react-native";
-import { usePet } from "./usePet";
+import { SelectList } from "react-native-dropdown-select-list";
+import { useState } from "react";
+import {firebase} from '../../firebase/config'
+import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker';
 
-export const CreateDog = ({ navigation }) => {
 
-  const {HandleSubmit, pickImage,image, crear, setCrear} = usePet()
+  export const CreateDog = ({ navigation }) => {
+  
+    const data = [
+      {key:'1', value:'Perro'},
+      {key:'2', value:'Gato'},
+      {key:'3', value:'Otro'},
+  ]
+
+  const [selected, setSelected]= useState()
+
+  const [crear, setCrear] = useState({
+    name: "",
+    description: "",
+    specie: selected,
+    age: "",
+    size: "",
+    profilePic: ""
+  })
+  const [image, setImage] = useState(null)
+  const [uploading, setUploading] = useState(false)
+
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+      uploadImage()
+    }
+  };
+
+  const uploadImage = async () => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', image, true);
+      xhr.send(null);
+    })
+    const ref = firebase.storage().ref().child(`Pictures/${crear.name}`)
+    const snapshot = ref.put(blob)
+    snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      ()=>{
+        setUploading(true)
+      },
+      (error) => {
+        setUploading(false)
+        console.log(error)
+        blob.close()
+        return 
+      },
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          setUploading(false)
+          console.log("Download URL: ", url)
+          setCrear({...crear, profilePic:url})
+          console.log(crear.profilePic)
+          blob.close()
+          return url
+        })
+      }
+      )
+  
+    }
+
+  const HandleSubmit = async () => {
+    let info = JSON.stringify(crear);
+    let url = `http://${BASE_URL_IP}/pet`;
+    try {
+      await axios({
+        method: 'post',
+        url: url,
+        headers: { 'Content-Type': 'application/json' },
+        data: crear
+      });
+      setCrear({
+        name: "",
+        description: "",
+        age: "",
+        size: "",
+        profilePic: ""
+      });
+      alert("Creo que se creo");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
 
@@ -31,6 +133,9 @@ export const CreateDog = ({ navigation }) => {
           autoCapitalize="none"
           onChangeText={(text) => setCrear({ ...crear, name: text })}
         />
+                <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+
+
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
         <TextInput style={styles.input}
           placeholder="Como es?"
@@ -87,7 +192,13 @@ export const CreateDog = ({ navigation }) => {
               source={require('../../images/perro_negro.png')}
               style={styles.grande} />}
         </TouchableOpacity>
-
+        <Text style={{ fontSize: 30, marginRight: 10 }}>Especie:</Text>
+        <SelectList 
+        
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
+        save="value"
+    />
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 
