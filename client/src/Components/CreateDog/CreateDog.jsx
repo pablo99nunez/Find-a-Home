@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,15 +16,15 @@ import { PetPost } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { validate } from "./validate";
 export const CreateDog = ({ navigation }) => {
-  const dispatch = useDispatch();
-
   const data = [
     { key: "1", value: "Perro" },
     { key: "2", value: "Gato" },
     { key: "3", value: "Otro" },
   ];
 
-  const [selected, setSelected] = useState('');
+
+  const [selected, setSelected] = useState("");
+
 
   const [crear, setCrear] = useState({
     name: "",
@@ -34,28 +34,54 @@ export const CreateDog = ({ navigation }) => {
     profilePic: "",
   });
 
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+
+
   const pickImage = async () => {
+    try{
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+    }).catch((err) => {
+      alert(err.message);
     });
+    // const resultsPUNTOassets = [
+    //   {
+    //     assetId: null,
+    //     base64: null,
+    //     duration: null,
+    //     exif: null,
+    //     height: 719,
+    //     rotation: null,
+    //     type: "image",
+    //     uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FFindtheHome-695a0720-aac4-473d-98fa-6d4c2a4ddcb4/ImagePicker/caf4819a-ffce-4cec-97e5-c0e92f2a8606.jpeg",
+    //     width: 958,
+    //   },
+    // ];
 
-    // console.log(result);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-      uploadImage();
+    //console.log(result.assets);
+    if (!result.canceled) {
+      await uploadImage(result.assets[0].uri).catch((err) => {
+        alert(err.message);
+      });
+
     }
+  }
+  catch(err){
+    console.log(err)
+  }
   };
 
-  const uploadImage = async () => {
+
+  const uploadImage = async (imageURI) => {
     const blob = await new Promise((resolve, reject) => {
+
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         resolve(xhr.response);
@@ -64,7 +90,7 @@ export const CreateDog = ({ navigation }) => {
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
-      xhr.open("GET", image, true);
+      xhr.open("GET", imageURI, true);
       xhr.send(null);
     });
     const ref = firebase
@@ -86,7 +112,7 @@ export const CreateDog = ({ navigation }) => {
       () => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
           setUploading(false);
-          console.log("Download URL: ", url);
+          //console.log("Download URL: ", url);
           setCrear({ ...crear, profilePic: url });
           blob.close();
           return url;
@@ -101,30 +127,26 @@ export const CreateDog = ({ navigation }) => {
       birthday: crear.birthday,
       size: crear.size,
       profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
-      specie: selected
-
-    }
+      specie: selected,
+    };
 
     await PetPost(DatosPetAEnviar)
-    .then(sucess=>{
-
-      alert("se creo");
-    })
-    .catch((error)=>{ alert(error.message)})
-    .finally(e=>{
-      setCrear({
-        name: "",
-        description: "",
-        birthday: "",
-        size: "",
-        profilePic: "",
+      .then((sucess) => {
+        alert("se creo");
+      })
+      .catch((error) => {
+        alert(error.message);
+      })
+      .finally((e) => {
+        setCrear({
+          name: "",
+          description: "",
+          birthday: "",
+          size: "",
+          profilePic: "",
+        });
+        setSelected("");
       });
-      setSelected('')
-    }
-      
-    )
-    
-
   };
 
   return (
@@ -236,7 +258,7 @@ export const CreateDog = ({ navigation }) => {
             />
           ) : (
             <Image
-              source={{ uri: image }}
+              source={{ uri: crear.profilePic }}
               style={{ width: 250, height: 200, marginLeft: 70 }}
             />
           )}
@@ -245,7 +267,11 @@ export const CreateDog = ({ navigation }) => {
 
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={()=>{HandleSubmit()}}>
+        <TouchableOpacity
+          onPress={() => {
+            HandleSubmit();
+          }}
+        >
           <Image
             source={require("../../images/buttoncrear.png")}
             style={styles.imagen2}

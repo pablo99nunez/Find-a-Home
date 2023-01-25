@@ -24,26 +24,18 @@ const { width, height } = Dimensions.get("screen");
 const Tab = createBottomTabNavigator();
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, []);
+  const auth = getAuth(firebase);
 
   const allPets = useSelector((state) => state.allPets);
-  // const [pet, setPet] = useState(petDb);
-
-  // const filterBySpecie = (specie) => {
-  //   if (specie === "All") {
-  //     setPet(petDb);
-  //   } else setPet(pet.filter((el) => el.specie == specie));
-  // };
-
-  // const filterBySize = (size) => {
-  //   if (size === "All") {
-  //     setPet(petDb);
-  //   } else setPet(pet.filter((el) => el.size == size));
-  // };
-
+  useEffect(() => {
+    dispatch(getAllPets());
+  }, [allPets]);
+  function HandleLoginToAdoption() {
+    //función que redirige invitados a loggearse al dar al button de "dar en adopción"
+    auth.currentUser?.uid
+      ? navigation.navigate("CreateDog")
+      : navigation.navigate("Login");
+  }
   return (
     <View style={styles.container}>
       <Header
