@@ -19,14 +19,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CreateDog } from "../CreateDog/CreateDog";
-import firebase from "../../firebase/config";
-import { getAuth } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
 const Tab = createBottomTabNavigator();
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-  const auth = getAuth(firebase);
 
 
   const allPets = useSelector((state) => state.allPets);
@@ -34,15 +31,27 @@ export default function Home({ navigation }) {
     dispatch(getAllPets());
   }, [allPets]);
 
-  function HandleLoginToAdoption() {
-    auth.currentUser?.uid
-      ? navigation.navigate("CreateDog")
-      : navigation.navigate("Login");
-  }
+  // const [pet, setPet] = useState(petDb);
+
+  // const filterBySpecie = (specie) => {
+  //   if (specie === "All") {
+  //     setPet(petDb);
+  //   } else setPet(pet.filter((el) => el.specie == specie));
+  // };
+
+  // const filterBySize = (size) => {
+  //   if (size === "All") {
+  //     setPet(petDb);
+  //   } else setPet(pet.filter((el) => el.size == size));
+  // };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
+      <Header
+        navigation={navigation}
+        // filterBySpecie={filterBySpecie}
+        // filterBySize={filterBySize}
+      />
       <FlatList
         style={styles.body}
         numColumns={2}
@@ -66,7 +75,7 @@ export default function Home({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.adoptionButton}
-            onPress={HandleLoginToAdoption}
+            onPress={() => navigation.navigate("CreateDog")}
           >
             <Image
               className="w-16 h-16 "
