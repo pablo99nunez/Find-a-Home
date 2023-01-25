@@ -18,6 +18,8 @@ import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import firebase from "../../firebase/config";
+import { getAuth } from "firebase/auth";
 import { CreateDog } from "../CreateDog/CreateDog";
 
 const { width, height } = Dimensions.get("screen");
@@ -66,7 +68,7 @@ export default function Home({ navigation }) {
         <View>
           <TouchableOpacity
             style={styles.adoptionButton}
-            onPress={() => navigation.navigate("CreateDog")}
+            onPress={HandleLoginToAdoption}
           >
             <Image
               className="w-16 h-16 "
