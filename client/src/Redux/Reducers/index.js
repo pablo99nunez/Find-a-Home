@@ -1,11 +1,8 @@
-
-const GET_ALL_PETS = 'GET_ALL_PETS'
-const GET_PETS_FILTERED_SPECIE = 'GET_PETS_FILTERED_SPECIE'
-const GET_PETS_FILTERED_SIZE = 'GET_PETS_FILTERED_SIZE'
-const GET_PETS_FILTERED_BOTH_FILTERS = 'GET_PETS_FILTERED_BOTH_FILTERS'
+import { GET_ALL_PETS, GET_PETS_FILTERED_BOTH_FILTERS, GET_USER_BY_EMAIL, GET_PETS_FILTERED_SPECIE, GET_PETS_FILTERED_SIZE } from "../Actions"
 
 const initialState = {
     allPets: [],
+    currentUser: {}
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -31,6 +28,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 allPets: action.payload
             }
+        case GET_USER_BY_EMAIL :
+            return {
+                ...state,
+                currentUser: action.payload
+            }    
         default:
             return state;
     }
