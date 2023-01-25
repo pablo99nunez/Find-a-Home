@@ -21,7 +21,6 @@ import { getAuth } from 'firebase/auth';
 export default function Detail({ route, navigation }) {
   //FIREBASE ZONE - DO NOT CHANGE
   const auth = getAuth(firebase);
-  console.log(auth)
   //
   const { profilePic, name, created_at, gallery, description, size, age } = route.params
   console.log(created_at);
@@ -87,7 +86,7 @@ export default function Detail({ route, navigation }) {
             {description}
           </Text>
         </View>
-        <Characteristics size={size} age={age} />
+        <Characteristics size={size.toLowerCase()} age={age} />
 
         <View className='h-1/3 flex justify-evenly'>
           <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
