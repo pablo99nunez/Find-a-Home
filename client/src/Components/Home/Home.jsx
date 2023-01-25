@@ -17,7 +17,7 @@ import { Header } from "../Header/Header";
 import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");

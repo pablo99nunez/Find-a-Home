@@ -15,7 +15,7 @@ import BottomView from "./BottomView";
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Characteristics } from "./Characteristics";
 //FIREBASE IMPORT ZONE
-import firebase from '../../firebase/config'
+import firebase from '../../firebase/firebase-config'
 import { getAuth } from 'firebase/auth';
 
 export default function Detail({ route, navigation }) {
@@ -96,22 +96,28 @@ export default function Detail({ route, navigation }) {
       </View>
 
 
+    { Platform.OS !== 'web'? 
       <BottomSheet
 
-        backgroundStyle={styles.containerInput}
-        ref={bottomSheetRef}
-        index={open}
-        snapPoints={snapPoints}
+          backgroundStyle={styles.containerInput}
+          ref={bottomSheetRef}
+          index={open}
+          snapPoints={snapPoints}
 
-        onChange={handleSheetChanges}
-        keyboardBehavior='extend'
-        enablePanDownToClose={true}
-        onClose={() => setOpen(-1)}
+          onChange={handleSheetChanges}
+          keyboardBehavior='extend'
+          enablePanDownToClose={true}
+          onClose={() => setOpen(-1)}
 
-      >
-        <BottomView auth={auth} petId={petId} />
-      </BottomSheet>
+        >
+          <BottomView auth={auth} petId={petId} />
+        </BottomSheet>
+        :
+        <View className='h-1/3 flex justify-evenly'>
+        <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
+      </View>
 
+}
 
 
     </View>

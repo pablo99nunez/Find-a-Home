@@ -5,7 +5,7 @@ import React from "react";
 //Voy a modularizar? Yo diria que no.
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, signOut } from "firebase/auth";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 
 import {
   StyleSheet,
