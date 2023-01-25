@@ -110,6 +110,7 @@ export const CreateDog = ({ navigation }) => {
 
       alert("se creo");
     })
+    .catch((error)=>{ alert(error.message)})
     .finally(e=>{
       setCrear({
         name: "",
@@ -166,7 +167,7 @@ export const CreateDog = ({ navigation }) => {
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Cuando nacio?"
+          placeholder="AAAA/MM/DD"
           placeholderTextColor="#fcfcfc"
           autoCapitalize="none"
           value={crear.birthday}

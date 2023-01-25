@@ -34,15 +34,7 @@ export const getPetsFilteredBySpecie = (payload) => {
         })
     }
 }
-/*METE ESTO EN CADA AXIOS LUEGO DE LA URL
-, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        },
-      }
 
-*/
 export const getPetsFilteredBySize = (payload) => {
     return async (dispatch) => {
         const json = await axios.get(`${url}/pet/filter/size/${payload}`)
@@ -64,20 +56,20 @@ export const getPetsFilteredByTwoFilters = (payload) => {
 }
 
 export const PetPost = async (bodyPayload) => {
-    console.log(url + '/pet')
-    console.log(url + '/pet')
-    console.log(url + '/pet')
-    console.log(url + '/pet')
-    console.log(bodyPayload);
+    
     const config = {
         headers: {
             "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
             Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
         }
     }
-    const pet = await axios.post(url + '/pet', bodyPayload, config)
-    console.log('Perro creado en, console log en el action/index.js');
-    return pet
+    try {
+        const pet = await axios.post(url + '/pet', bodyPayload, config)
+        return pet   
+    } catch (error) {
+        throw error
+    }
+    
 }
 
 export const getUser = (email) => {
