@@ -68,16 +68,21 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
 }
 
-export const PetPost = (payload) => {
+export const PetPost = async (bodyPayload) => {
+    console.log(url + '/pet')
+    console.log(url + '/pet')
+    console.log(url + '/pet')
+    console.log(url + '/pet')
+    console.log(bodyPayload);
     const config = {
         headers: {
+            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
             Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
         }
     }
-    return async function (dispatch) {
-        const pet = await axios.post(url + '/pet', payload, config)
-          return  pet
-    }
+    const pet = await axios.post(url + '/pet', bodyPayload, config)
+    console.log('Perro creado en, console log en el action/index.js');
+    return pet
 }
 
 export const getUser = (email) => {
