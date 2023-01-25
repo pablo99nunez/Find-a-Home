@@ -33,6 +33,7 @@ export default function Home({ navigation }) {
     dispatch(getAllPets());
   }, [allPets]);
   function HandleLoginToAdoption() {
+    //función que redirige invitados a loggearse al dar al button de "dar en adopción"
     auth.currentUser?.uid
       ? navigation.navigate("CreateDog")
       : navigation.navigate("Login");
