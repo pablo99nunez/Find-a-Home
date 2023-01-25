@@ -15,47 +15,53 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Picker } from "@react-native-picker/picker";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets, getPetsFilteredBySize, getPetsFilteredBySpecie, getPetsFilteredByTwoFilters, getUser } from "../../Redux/Actions";
-import { auth } from '../../firebase/authentication'
+import {
+  getAllPets,
+  getPetsFilteredBySize,
+  getPetsFilteredBySpecie,
+  getPetsFilteredByTwoFilters,
+  getUser,
+} from "../../Redux/Actions";
+import { auth } from "../../firebase/authentication";
+import firebase from "../../firebase/config";
+import { getAuth } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation, filterBySize}) => {
+export const Header = ({ navigation, filterBySize }) => {
+  const auth = getAuth(firebase);
 
+  const email = auth.currentUser?.email;
 
-  const email = auth.currentUser?.email
-  
   const pickerRef = useRef();
 
-  const dispatch = useDispatch()
-  const allPets = useSelector((state) => state.allPets)
+  const dispatch = useDispatch();
+  const allPets = useSelector((state) => state.allPets);
 
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
 
   const [specie, setSpecie] = useState("");
-  const [size, setSize] = useState("")
+  const [size, setSize] = useState("");
 
-   useEffect(() => {
+  useEffect(() => {
     if (size === "" && specie === "") {
-      dispatch(getAllPets())
+      dispatch(getAllPets());
     } else if (size === "" && specie !== "") {
-      dispatch(getPetsFilteredBySpecie(specie))
+      dispatch(getPetsFilteredBySpecie(specie));
     } else if (size !== "" && specie === "") {
-      dispatch(getPetsFilteredBySize(size))
+      dispatch(getPetsFilteredBySize(size));
     } else if (size !== "" && specie !== "") {
-      dispatch(getPetsFilteredByTwoFilters([size, specie]))
+      dispatch(getPetsFilteredByTwoFilters([size, specie]));
     }
   }, [specie, size]);
 
+  useEffect(() => {
+    if (email) dispatch(getUser(email));
+  }, []);
 
-  useEffect(()=> {
-    if(email) dispatch(getUser(email))
-  },[])
- 
+  const currentUser = useSelector((state) => state.currentUser);
 
-  const currentUser = useSelector(state => state.currentUser)
-  
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
@@ -63,19 +69,28 @@ export const Header = ({ navigation, filterBySize}) => {
       useNativeDriver: true,
       duration: 200,
       easing: Easing.linear,
-    })
-    .start(() => to === 0 && setVisible(false));
+    }).start(() => to === 0 && setVisible(false));
   };
 
   return (
     <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[7%]">
-      <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
-        <Image
-          className="w-12 h-12 rounded-full"
-          resizeMode={"contain"}
-          source={require("../../images/profilePic.jpg")}
-        />
-      </TouchableOpacity>
+      {auth.currentUser?.uid ? (
+        <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
+          <Image
+            className="w-12 h-12 rounded-full"
+            resizeMode={"contain"}
+            source={require("../../images/loggedUser.png")}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Image
+            className="w-12 h-12 rounded-full"
+            resizeMode={"contain"}
+            source={require("../../images/profilePic.jpg")}
+          />
+        </TouchableOpacity>
+      )}
 
       <Image
         className="w-14 h-14"
@@ -84,113 +99,112 @@ export const Header = ({ navigation, filterBySize}) => {
       />
 
       <TouchableOpacity onPress={() => resizeBox(1)}>
-        <Icon 
-          name="menu" 
-          className="w-12 h-12"
-          size={50} 
-          color={"#FFC733"} />
+        <Icon name="menu" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
 
       <Modal transparent visible={visible}>
-        <SafeAreaView >
+        <SafeAreaView>
           <View className="h-20 justify-end items-end mr-6 pb-3 content-center opacity-0">
-            <Icon 
-            name="menu" 
-            size={50} 
-            color={"#FFC733"} 
-            onTouchStart={() => resizeBox(0)}/>
+            <Icon
+              name="menu"
+              size={50}
+              color={"#FFC733"}
+              onTouchStart={() => resizeBox(0)}
+            />
           </View>
-          <Animated.View
-            className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full"
-          >          
-            <View className="px-2"> 
-                
-                <Text className="ml-3 mt-14 mb-5 text-4xl">
-                  Especie:
-                </Text>
+          <Animated.View className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full">
+            <View className="px-2">
+              <Text className="ml-3 mt-14 mb-5 text-4xl">Especie:</Text>
 
               <SelectList
                 data={[
-                  {key:"", value:"Todos"},
-                  {key:"Perro", value:"Perro"},
-                  {key:"Gato", value:"Gato"},
-                  {key:"Otro", value:"Otro"}
+                  { key: "", value: "Todos" },
+                  { key: "Perro", value: "Perro" },
+                  { key: "Gato", value: "Gato" },
+                  { key: "Otro", value: "Otro" },
                 ]}
                 placeholder="Seleccionar"
-                setSelected={(val)=>{
+                setSelected={(val) => {
                   // filterBySpecie(val)
-                  setSpecie(val)
+                  setSpecie(val);
                 }}
-                boxStyles={{backgroundColor:"#1E1E1E"}}
-                inputStyles={{color:"#FFF", fontSize: 18, padding:5}}
-                dropdownStyles={{backgroundColor:"#2E2E2E"}}
-                dropdownTextStyles={{color:"#FFF", fontSize: 18}}							
+                boxStyles={{ backgroundColor: "#1E1E1E" }}
+                inputStyles={{ color: "#FFF", fontSize: 18, padding: 5 }}
+                dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+                dropdownTextStyles={{ color: "#FFF", fontSize: 18 }}
               />
 
-              <Text className="ml-3 mt-14 mb-4 text-4xl">
-                Tamaño:
-              </Text>
-              
+              <Text className="ml-3 mt-14 mb-4 text-4xl">Tamaño:</Text>
+
               <View className="flex flex-row  justify-around items-end w-11/12 mx-auto">
-                <TouchableOpacity 
-                  onPress={() => { 
-                    if (size !== "small"){                    
-                    setSize("small") } else {                                    
-                    setSize("")}
-                  }}>
-                  {size == "small" ?
-                  <Image
-                      className="mt-8 mb-24"
-                      style={{width:90, height:90}}
-                      source={require('../../images/perro_rosa.png')}
-                    />
-                  :
-                  <Image
-                    className="mt-8 mb-24"
-                    style={{width:90, height:90}}
-                    source={require('../../images/perro_negro.png')}
-                  />
-                  }
-                </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => {
-                    if (size !== "medium"){                      
-                      setSize("medium") } else {                                 
-                      setSize("")}                   
-                  }}>
-                  {size == "medium" ?
+                    if (size !== "small") {
+                      setSize("small");
+                    } else {
+                      setSize("");
+                    }
+                  }}
+                >
+                  {size == "small" ? (
                     <Image
                       className="mt-8 mb-24"
-                      style={{width:145, height:145}}
-                      source={require('../../images/perro_rosa.png')}
+                      style={{ width: 90, height: 90 }}
+                      source={require("../../images/perro_rosa.png")}
                     />
-                    :
+                  ) : (
                     <Image
-                    className="mt-8 mb-24"
-                    style={{width:145, height:145}}
-                    source={require('../../images/perro_negro.png')}
+                      className="mt-8 mb-24"
+                      style={{ width: 90, height: 90 }}
+                      source={require("../../images/perro_negro.png")}
                     />
-                  }
+                  )}
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => {
-                    if (size !== "large"){                      
-                      setSize("large") } else {                      
-                      setSize("")}                    
-                  }}>
-                  {size == "large" ?
-                  <Image
-                    className="mt-8 mb-24"
-                    // style={{width:145, height:145}}
-                    source={require('../../images/perro_rosa.png')}
-                  />
-                  :
-                  <Image
-                    className="mt-8 mb-24"
-                    // style={{width:145, height:145}}
-                    source={require('../../images/perro_negro.png')}
-                  />
-                  }
+                    if (size !== "medium") {
+                      setSize("medium");
+                    } else {
+                      setSize("");
+                    }
+                  }}
+                >
+                  {size == "medium" ? (
+                    <Image
+                      className="mt-8 mb-24"
+                      style={{ width: 145, height: 145 }}
+                      source={require("../../images/perro_rosa.png")}
+                    />
+                  ) : (
+                    <Image
+                      className="mt-8 mb-24"
+                      style={{ width: 145, height: 145 }}
+                      source={require("../../images/perro_negro.png")}
+                    />
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (size !== "large") {
+                      setSize("large");
+                    } else {
+                      setSize("");
+                    }
+                  }}
+                >
+                  {size == "large" ? (
+                    <Image
+                      className="mt-8 mb-24"
+                      // style={{width:145, height:145}}
+                      source={require("../../images/perro_rosa.png")}
+                    />
+                  ) : (
+                    <Image
+                      className="mt-8 mb-24"
+                      // style={{width:145, height:145}}
+                      source={require("../../images/perro_negro.png")}
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
               {/* <Picker
@@ -232,7 +246,7 @@ export const Header = ({ navigation, filterBySize}) => {
                 <Picker.Item label="large" value="large" />
               </Picker>*/}
             </View>
-          </Animated.View>        
+          </Animated.View>
         </SafeAreaView>
       </Modal>
     </View>
@@ -263,7 +277,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 75,
     right: 20,
-    
   },
   option: {
     flexDirection: "row",
