@@ -2,7 +2,8 @@ import axios from 'axios'
 import { BASE_URL_IP } from "@env"
 import { auth } from '../../firebase/authentication'
 
-export const url = BASE_URL_IP || `http://192.168.178.211:8080`
+export const url = BASE_URL_IP
+
 
 if(!BASE_URL_IP){
     alert("No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://192.168.0.14:8080/")
