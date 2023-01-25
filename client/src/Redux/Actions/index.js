@@ -45,12 +45,7 @@ export const getPetsFilteredBySpecie = (payload) => {
 */
 export const getPetsFilteredBySize = (payload) => {
     return async (dispatch) => {
-        const json = await axios.get(`${url}/pet/filter/size/${payload}`, data, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-            },
-        })
+        const json = await axios.get(`${url}/pet/filter/size/${payload}`)
         return dispatch({
             type: GET_PETS_FILTERED_SIZE,
             payload: json.data
