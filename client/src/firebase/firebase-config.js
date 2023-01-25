@@ -32,15 +32,15 @@ const firebaseConfig = {
   appId: "1:328480437483:web:e54fb1f45facfaaa86baae",
  // measurementId: "G-KP2VVJD4MR"
 };
+const firebaseApp = initializeApp(firebaseConfig);
 
-
-/* if (!firebase.apps.length) {
+/* if (!firebase.apps.length) {    
     firebase.initializeApp(firebaseConfig);
 }
 export { firebase }; */
 
 // Initialize Firebase
-export const firebaseApp = initializeApp(firebaseConfig);
+export default firebaseApp
 
 //como usar
 //1) importar firebaseApp donde se necesite

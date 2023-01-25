@@ -23,7 +23,7 @@ import {
   getUser,
 } from "../../Redux/Actions";
 import { auth } from "../../firebase/authentication";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
