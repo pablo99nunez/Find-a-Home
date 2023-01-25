@@ -15,12 +15,16 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Picker } from "@react-native-picker/picker";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets, getPetsFilteredBySize, getPetsFilteredBySpecie, getPetsFilteredByTwoFilters } from "../../Redux/Actions";
+import { getAllPets, getPetsFilteredBySize, getPetsFilteredBySpecie, getPetsFilteredByTwoFilters, getUser } from "../../Redux/Actions";
+import { auth } from '../../firebase/authentication'
 
 const { width, height } = Dimensions.get("screen");
 
 export const Header = ({ navigation, filterBySize}) => {
 
+
+  const email = auth.currentUser?.email
+  
   const pickerRef = useRef();
 
   const dispatch = useDispatch()
@@ -44,6 +48,14 @@ export const Header = ({ navigation, filterBySize}) => {
     }
   }, [specie, size]);
 
+
+  useEffect(()=> {
+    if(email) dispatch(getUser(email))
+  },[])
+ 
+
+  const currentUser = useSelector(state => state.currentUser)
+  
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
