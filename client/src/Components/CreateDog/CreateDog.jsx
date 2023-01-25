@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios';
 import {
   StyleSheet,
   Text,
@@ -9,21 +8,30 @@ import {
   TouchableOpacity, //botton
   ScrollView,
 } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
 import { useState } from "react";
 import {firebase} from '../../firebase/config'
-
-
+import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
-import { url } from "../../Redux/Actions";
-import { auth } from "../../firebase/authentication";
+import { PetPost} from "../../Redux/Actions/index"
+import { useDispatch, useSelector } from "react-redux";
 
-export const CreateDog = ({ navigation }) => {
+  export const CreateDog = ({ navigation }) => {
+    const dispatch = useDispatch();
+
+    const data = [
+      {key:'1', value:'Perro'},
+      {key:'2', value:'Gato'},
+      {key:'3', value:'Otro'},
+  ]
+
+  const [selected, setSelected]= useState()
 
   const [crear, setCrear] = useState({
     name: "",
     description: "",
-    birthday: "2020-04-04",
-    size: "small",
+    age: "",
+    size: "",
     profilePic: ""
   })
   const [image, setImage] = useState(null)
@@ -87,31 +95,14 @@ export const CreateDog = ({ navigation }) => {
   
     }
 
-
-  const HandleSubmit = async () => {
-    let info = JSON.stringify(crear);
-    let urlA = `${url}/pet`;
-    try {
-      await axios({
-        method: 'post',
-        url: urlA,
-        headers: { 
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${auth.currentUser.stsTokenManager.accessToken}`
-      },
-        data: crear
-      });
-      setCrear({
-        name: "",
-        description: "",
-        birthday: "2019-04-04",
-        size: "small",
-        profilePic: ""
-      });
-      alert("Creo que se creo");
-    } catch (error) {
-      console.error(error);
-    }
+  const HandleSubmit = async (crear) => {
+    dispatch(PetPost(crear))
+    setCrear({    name: "",
+    description: "",
+    age: "",
+    size: "",
+    profilePic: ""})
+    alert("se creo")
   };
 
   return (
@@ -131,6 +122,9 @@ export const CreateDog = ({ navigation }) => {
           autoCapitalize="none"
           onChangeText={(text) => setCrear({ ...crear, name: text })}
         />
+                <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+
+
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
         <TextInput style={styles.input}
           placeholder="Como es?"
@@ -187,7 +181,13 @@ export const CreateDog = ({ navigation }) => {
               source={require('../../images/perro_negro.png')}
               style={styles.grande} />}
         </TouchableOpacity>
-
+        <Text style={{ fontSize: 30, marginRight: 10 }}>Especie:</Text>
+        <SelectList 
+        
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
+        save="value"
+    />
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 

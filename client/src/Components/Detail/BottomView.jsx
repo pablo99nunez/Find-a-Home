@@ -10,6 +10,7 @@ const BottomView = ({ petId, auth }) => {
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
   const [message, setMessage] = useState('')
+
   async function AdoptionRequest() {
     setSent(true)
     const data = { message, petID: petId };
