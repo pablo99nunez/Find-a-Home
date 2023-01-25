@@ -38,10 +38,6 @@ export const CreateDog = ({ navigation }) => {
   const [uploading, setUploading] = useState(false);
 
 
-  React.useEffect(() =>{
-if(!crear.profilePic) uploadImage()
-  },[image, crear.profilePic])
-
 
   const pickImage = async () => {
     try{
