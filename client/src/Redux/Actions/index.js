@@ -2,7 +2,7 @@ import axios from 'axios'
 import { BASE_URL_IP } from "@env"
 import { auth } from '../../firebase/authentication'
 
-export const url = BASE_URL_IP || `http://192.168.0.14:8080`
+export const url = BASE_URL_IP || `http://192.168.178.211:8080`
 
 if(!BASE_URL_IP){
     alert("No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://192.168.0.14:8080/")
@@ -68,10 +68,14 @@ export const getPetsFilteredByTwoFilters = (payload) => {
 }
 
 export const PetPost = (payload) => {
-    return async function () {
-        const petPost = await axios.post(url + `/pet`, payload)
-        return petPost
-
+    const config = {
+        headers: {
+            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        }
+    }
+    return async function (dispatch) {
+        const pet = await axios.post(url + '/pet', payload, config)
+          return  pet
     }
 }
 

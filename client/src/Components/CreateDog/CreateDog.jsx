@@ -13,9 +13,12 @@ import { useState } from "react";
 import {firebase} from '../../firebase/config'
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
+import { PetPost} from "../../Redux/Actions/index"
+import { useDispatch, useSelector } from "react-redux";
 
   export const CreateDog = ({ navigation }) => {
-  
+    const dispatch = useDispatch();
+
     const data = [
       {key:'1', value:'Perro'},
       {key:'2', value:'Gato'},
@@ -33,6 +36,7 @@ import * as ImagePicker from 'expo-image-picker';
   })
   const [image, setImage] = useState(null)
   const [uploading, setUploading] = useState(false)
+
 
 
   const pickImage = async () => {
@@ -91,30 +95,14 @@ import * as ImagePicker from 'expo-image-picker';
   
     }
 
-  const HandleSubmit = async () => {
-    let info = JSON.stringify(crear);
-    let urlA = `${url}/pet`;
-    try {
-      await axios({
-        method: 'post',
-        url: urlA,
-        headers: { 
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${auth.currentUser.stsTokenManager.accessToken}`
-      },
-        data: crear
-      });
-      setCrear({
-        name: "",
-        description: "",
-        birthday: "2019-04-04",
-        size: "small",
-        profilePic: ""
-      });
-      alert("Creo que se creo");
-    } catch (error) {
-      console.error(error);
-    }
+  const HandleSubmit = async (crear) => {
+    dispatch(PetPost(crear))
+    setCrear({    name: "",
+    description: "",
+    age: "",
+    size: "",
+    profilePic: ""})
+    alert("se creo")
   };
 
   return (
