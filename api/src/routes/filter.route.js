@@ -44,7 +44,6 @@ router.get('/size/:tamano', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const {specie, size} = req.query
-    console.log(specie, size);
     const bothFilters = await combinedFilters(specie, size)
     res.send({ message: 'animales filtrades', payload: bothFilters})
   } catch (error) {
