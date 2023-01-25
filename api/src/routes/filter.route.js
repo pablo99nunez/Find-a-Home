@@ -3,6 +3,7 @@ const {
   filtroSpecie,
   filtroSize,
   filtroAge,
+  combinedFilters,
 } = require('../controllers/filterController');
 const { findAllPets } = require('../controllers/petController');
 const router = express.Router();
@@ -31,13 +32,24 @@ router.get('/specie/:variable', async (req, res) => {
 //filtra por tamaño
 router.get('/size/:tamano', async (req, res) => {
   try {
-    console.log(req.params.tamano);
+
     const allPets = await filtroSize(req.params.tamano);
     res.send({ message: 'todas las mascotas', payload: allPets });
   } catch (error) {
     res.status(501).send({ error: error.message });
   }
 });
+
+//Filtra por especia y tamaño
+router.get('/', async (req, res) => {
+  try {
+    const {specie, size} = req.query
+    const bothFilters = await combinedFilters(specie, size)
+    res.send({ message: 'animales filtrades', payload: bothFilters})
+  } catch (error) {
+    res.status(501).send({ error: error.message });
+  }
+})
 
 //filtra por edad
 router.get('/age/', async (req, res) => {
