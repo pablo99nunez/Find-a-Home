@@ -27,7 +27,7 @@ export const getAllPets = () => {
 
 export const getPetsFilteredBySpecie = (payload) => {
     return async (dispatch) => {
-        const json = await axios.get(url + `/pet/filter/specie/${payload}`)
+        const json = await axios.get(`${url}/pet/filter/specie/${payload}`)
         return dispatch({
             type: GET_PETS_FILTERED_SPECIE,
             payload: json.data
@@ -45,7 +45,7 @@ export const getPetsFilteredBySpecie = (payload) => {
 */
 export const getPetsFilteredBySize = (payload) => {
     return async (dispatch) => {
-        const json = await axios.get(url + `/pet/filter/size/${payload}`, data, {
+        const json = await axios.get(`${url}/pet/filter/size/${payload}`, data, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
@@ -60,7 +60,7 @@ export const getPetsFilteredBySize = (payload) => {
 
 export const getPetsFilteredByTwoFilters = (payload) => {
     return async (dispatch) => {
-        const json = await axios.get(url + `/pet/filter?size=${payload[0]}&specie=${payload[1]}`)
+        const json = await axios.get(`${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`)
         return dispatch({
             type: GET_PETS_FILTERED_BOTH_FILTERS,
             payload: json.data
