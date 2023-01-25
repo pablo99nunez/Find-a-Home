@@ -29,8 +29,6 @@ export default function Home({ navigation }) {
   const auth = getAuth(firebase);
 
   const allPets = useSelector((state) => state.allPets);
-
-  const allPets = useSelector((state) => state.allPets);
   useEffect(() => {
     dispatch(getAllPets());
   }, [allPets]);
