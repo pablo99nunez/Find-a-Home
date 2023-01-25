@@ -25,11 +25,12 @@ const Tab = createBottomTabNavigator();
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, []);
 
   const allPets = useSelector((state) => state.allPets);
+  useEffect(() => {
+    dispatch(getAllPets());
+  }, [allPets]);
+
   // const [pet, setPet] = useState(petDb);
 
   // const filterBySpecie = (specie) => {

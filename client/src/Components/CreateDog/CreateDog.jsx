@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -22,7 +22,9 @@ export const CreateDog = ({ navigation }) => {
     { key: "3", value: "Otro" },
   ];
 
+
   const [selected, setSelected] = useState("");
+
 
   const [crear, setCrear] = useState({
     name: "",
@@ -35,7 +37,14 @@ export const CreateDog = ({ navigation }) => {
   // const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+
+  React.useEffect(() =>{
+if(!crear.profilePic) uploadImage()
+  },[image, crear.profilePic])
+
+
   const pickImage = async () => {
+    try{
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -59,16 +68,24 @@ export const CreateDog = ({ navigation }) => {
     //   },
     // ];
 
-    console.log(result.assets);
+
+    //console.log(result.assets);
     if (!result.canceled) {
       await uploadImage(result.assets[0].uri).catch((err) => {
         alert(err.message);
       });
+
     }
+  }
+  catch(err){
+    console.log(err)
+  }
   };
+
 
   const uploadImage = async (imageURI) => {
     const blob = await new Promise((resolve, reject) => {
+
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         resolve(xhr.response);
