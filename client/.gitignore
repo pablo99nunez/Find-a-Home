@@ -11,6 +11,7 @@ npm-debug.*
 web-build/
 
 # dotenv environment variables file
+
 .vscode
 # package-lock.json
 package-lock.json
