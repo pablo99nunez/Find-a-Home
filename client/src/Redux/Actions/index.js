@@ -73,21 +73,21 @@ export const PetPost = async (bodyPayload) => {
 }
 
 export const getUser = (email) => {
+   
     const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
+        method:"GET",
+        headers: {Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`},
     }
-    const data = {
-        email
-    }
+    
+   
     return async function (dispatch) {
-        const user = await axios.get(url + '/user/profile', data, config)
-        console.log(user , "USER EN ACTION")
-          return dispatch({
+        fetch(url+'/user/profile', config)
+        .then(response => response.json())
+        .then(result => {console.log(result)
+           return dispatch({
             type: GET_USER_BY_EMAIL,
-            payload: user
-          })
+            payload: result
+        })})
+        
     }
 }
