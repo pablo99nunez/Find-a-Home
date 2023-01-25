@@ -10,7 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 
-.env
+
 .vscode
 # package-lock.json
 package-lock.json
