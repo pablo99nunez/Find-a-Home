@@ -56,6 +56,42 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
 }
 
+export const putUserData = async (payload) => {
+    /* 
+    ¿que estructura tiene el payload? Esta
+    payload ={
+        "departamento": "Buenos Aires",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "telefono": "3232"
+        "conditions": {} 
+    },
+     */
+    const config = {
+        headers: {
+            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        }
+    }
+    const objetoAenviar = {
+        phone: payload.telefono,
+        adress: [payload.pais,payload.provincia,payload.departamento],
+        conditions: payload.conditions
+    }
+    
+    const json = await axios.put(`${url}/user/profile`, objetoAenviar , config)
+    .catch(error=>alert(error.message))
+    return json
+
+   /*  return async (dispatch) => {
+        const json = await axios.put(`${url}/user/profile`,objetoAenviar,config)
+        return dispatch({
+            type: GET_PETS_FILTERED_BOTH_FILTERS,
+            payload: json.data
+        })
+    } */
+}
+
 export const PetPost = async (bodyPayload) => {
 
     const config = {
@@ -90,6 +126,7 @@ export const getUser = (email) => {
                     payload: result
                 })
             })
+            .catch(err=>alert(err.message))
 
     }
 

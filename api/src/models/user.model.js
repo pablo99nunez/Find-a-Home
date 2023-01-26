@@ -90,10 +90,8 @@ const userSchema = mongoose.Schema(
       type: Array, //ids de mascotas
     },
     address: {
-      type: String,
-      minlength: 2,
-      maxlength: 100,
-      default: "Desconocida"
+      type: Array,
+      default: ["Argentina","Buenos Aires","Azul"]
     },
     conditions: {
       type: Object,
