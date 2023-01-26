@@ -15,11 +15,11 @@ const Card = ({item}) => {
             />
             <LinearGradient
                     className="absolute"
-                    colors={["#00000000", "rgba(0, 0, 0, 0.7)"]}
+                    colors={["#00000000","rgba(0, 0, 0, 0.4)", "#000000"]}
                     style={styles.gradient}
             >
             </LinearGradient>
-            <Text className="absolute bottom-1 text-center items-center" style={styles.dogName}>{item.name}</Text>
+            <Text className="absolute bottom-1 text-center ml-1 mr-1" style={styles.dogName}>{item.name}</Text>
         </View>
     )
 }
