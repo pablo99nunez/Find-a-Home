@@ -54,8 +54,14 @@ export default function RegistrationScreen({ navigation }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        createAccountWithEmailAndPassword(email, password, fullName).then(ignore => {
-                            navigation.navigate('Home')
+                        createAccountWithEmailAndPassword(email, password, fullName)
+                        .then(ignore => {
+                            navigation.navigate('RegisterFirstSteps')
+                        })
+                        .catch(error=>{
+                            if(error.message === 'Firebase: Error (auth/email-already-in-use).')
+                            alert('El email ingresado ya está en uso!')
+                            else alert(error.message)
                         })
                     }}>
                     <Text style={styles.buttonTitle}>Create account</Text>
