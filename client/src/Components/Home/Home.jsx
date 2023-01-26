@@ -11,6 +11,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
@@ -28,9 +29,17 @@ export default function Home({ navigation }) {
   const auth = getAuth(firebase); //traemos la authentication de firebase
 
   const allPets = useSelector((state) => state.allPets);
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, [allPets]);
+
+  {
+    Platform.OS === "web"
+      ? useEffect(() => {
+          dispatch(getAllPets());
+        }, [])
+      : useEffect(() => {
+          dispatch(getAllPets());
+        }, [allPets]);
+  }
+
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     auth.currentUser?.uid

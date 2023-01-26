@@ -10,6 +10,7 @@ import {
   Easing,
   Dimensions,
   Image,
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Picker } from "@react-native-picker/picker";
@@ -61,7 +62,6 @@ export const Header = ({ navigation, filterBySize }) => {
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
- 
 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
@@ -80,7 +80,9 @@ export const Header = ({ navigation, filterBySize }) => {
           <Image
             className="w-12 h-12 rounded-full"
             resizeMode={"contain"}
-            source={{uri: `https://i.pravatar.cc/150?${currentUser.firstName}=thefakeuser.jpg`}}
+            source={{
+              uri: `https://i.pravatar.cc/150?${currentUser.firstName}=thefakeuser.jpg`,
+            }}
           />
         </TouchableOpacity>
       ) : (
@@ -98,117 +100,127 @@ export const Header = ({ navigation, filterBySize }) => {
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
-
+      {Platform.OS === "web" ? <></> : <></>}
       <TouchableOpacity onPress={() => resizeBox(1)}>
         <Icon name="menu" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
-
-      <Modal transparent visible={visible}>
-        <SafeAreaView>
-          <View className="h-20 justify-end items-end mr-6 pb-3 content-center opacity-0">
-            <Icon
-              name="menu"
-              size={50}
-              color={"#FFC733"}
-              onTouchStart={() => resizeBox(0)}
-            />
-          </View>
-          <Animated.View className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full">
-            <View className="px-2">
-              <Text className="ml-3 mt-14 mb-5 text-4xl">Especie:</Text>
-
-              <SelectList
-                data={[
-                  { key: "", value: "Todos" },
-                  { key: "Perro", value: "Perro" },
-                  { key: "Gato", value: "Gato" },
-                  { key: "Otro", value: "Otro" },
-                ]}
-                placeholder="Seleccionar"
-                setSelected={(val) => {
-                  // filterBySpecie(val)
-                  setSpecie(val);
-                }}
-                boxStyles={{ backgroundColor: "#1E1E1E" }}
-                inputStyles={{ color: "#FFF", fontSize: 18, padding: 5 }}
-                dropdownStyles={{ backgroundColor: "#2E2E2E" }}
-                dropdownTextStyles={{ color: "#FFF", fontSize: 18 }}
+      {/* WEB BROWER ACA ----------------------- userddetlail */}
+      {Platform.OS === "web" ? (
+        <TouchableOpacity
+          onPress={() => {
+            if (auth.currentUser?.uid) navigation.navigate("UserDetail");
+            else navigation.navigate("Login");
+          }}
+        >
+          <Text>USER PROFILE WEB BROWSER</Text>
+        </TouchableOpacity>
+      ) : (
+        <Modal transparent visible={visible}>
+          <SafeAreaView>
+            <View className="h-20 justify-end items-end mr-6 pb-3 content-center opacity-0">
+              <Icon
+                name="menu"
+                size={50}
+                color={"#FFC733"}
+                onTouchStart={() => resizeBox(0)}
               />
+            </View>
+            <Animated.View className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full">
+              <View className="px-2">
+                <Text className="ml-3 mt-14 mb-5 text-4xl">Especie:</Text>
 
-              <Text className="ml-3 mt-14 mb-4 text-4xl">Tamaño:</Text>
+                <SelectList
+                  data={[
+                    { key: "", value: "Todos" },
+                    { key: "Perro", value: "Perro" },
+                    { key: "Gato", value: "Gato" },
+                    { key: "Otro", value: "Otro" },
+                  ]}
+                  placeholder="Seleccionar"
+                  setSelected={(val) => {
+                    // filterBySpecie(val)
+                    setSpecie(val);
+                  }}
+                  boxStyles={{ backgroundColor: "#1E1E1E" }}
+                  inputStyles={{ color: "#FFF", fontSize: 18, padding: 5 }}
+                  dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+                  dropdownTextStyles={{ color: "#FFF", fontSize: 18 }}
+                />
 
-              <View className="flex flex-row  justify-around items-end w-11/12 mx-auto">
-                <TouchableOpacity
-                  onPress={() => {
-                    if (size !== "small") {
-                      setSize("small");
-                    } else {
-                      setSize("");
-                    }
-                  }}
-                >
-                  {size == "small" ? (
-                    <Image
-                      className="mt-8 mb-24"
-                      style={{ width: 90, height: 90 }}
-                      source={require("../../images/perro_rosa.png")}
-                    />
-                  ) : (
-                    <Image
-                      className="mt-8 mb-24"
-                      style={{ width: 90, height: 90 }}
-                      source={require("../../images/perro_negro.png")}
-                    />
-                  )}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (size !== "medium") {
-                      setSize("medium");
-                    } else {
-                      setSize("");
-                    }
-                  }}
-                >
-                  {size == "medium" ? (
-                    <Image
-                      className="mt-8 mb-24"
-                      style={{ width: 145, height: 145 }}
-                      source={require("../../images/perro_rosa.png")}
-                    />
-                  ) : (
-                    <Image
-                      className="mt-8 mb-24"
-                      style={{ width: 145, height: 145 }}
-                      source={require("../../images/perro_negro.png")}
-                    />
-                  )}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (size !== "large") {
-                      setSize("large");
-                    } else {
-                      setSize("");
-                    }
-                  }}
-                >
-                  {size == "large" ? (
-                    <Image
-                      className="mt-8 mb-24"
-                      // style={{width:145, height:145}}
-                      source={require("../../images/perro_rosa.png")}
-                    />
-                  ) : (
-                    <Image
-                      className="mt-8 mb-24"
-                      // style={{width:145, height:145}}
-                      source={require("../../images/perro_negro.png")}
-                    />
-                  )}
-                </TouchableOpacity>
-              </View>
-              {/* <Picker
+                <Text className="ml-3 mt-14 mb-4 text-4xl">Tamaño:</Text>
+
+                <View className="flex flex-row  justify-around items-end w-11/12 mx-auto">
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (size !== "small") {
+                        setSize("small");
+                      } else {
+                        setSize("");
+                      }
+                    }}
+                  >
+                    {size == "small" ? (
+                      <Image
+                        className="mt-8 mb-24"
+                        style={{ width: 90, height: 90 }}
+                        source={require("../../images/perro_rosa.png")}
+                      />
+                    ) : (
+                      <Image
+                        className="mt-8 mb-24"
+                        style={{ width: 90, height: 90 }}
+                        source={require("../../images/perro_negro.png")}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (size !== "medium") {
+                        setSize("medium");
+                      } else {
+                        setSize("");
+                      }
+                    }}
+                  >
+                    {size == "medium" ? (
+                      <Image
+                        className="mt-8 mb-24"
+                        style={{ width: 145, height: 145 }}
+                        source={require("../../images/perro_rosa.png")}
+                      />
+                    ) : (
+                      <Image
+                        className="mt-8 mb-24"
+                        style={{ width: 145, height: 145 }}
+                        source={require("../../images/perro_negro.png")}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (size !== "large") {
+                        setSize("large");
+                      } else {
+                        setSize("");
+                      }
+                    }}
+                  >
+                    {size == "large" ? (
+                      <Image
+                        className="mt-8 mb-24"
+                        // style={{width:145, height:145}}
+                        source={require("../../images/perro_rosa.png")}
+                      />
+                    ) : (
+                      <Image
+                        className="mt-8 mb-24"
+                        // style={{width:145, height:145}}
+                        source={require("../../images/perro_negro.png")}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {/* <Picker
                 style={styles.inputPicker}
                 ref={pickerRef}
                 selectedValue={specie}
@@ -218,11 +230,11 @@ export const Header = ({ navigation, filterBySize }) => {
                   setSpecie(itemValue);
                 }}
               >
-                <Picker.Item label="Seleccionar" value="Seleccionar" />
+              <Picker.Item label="Seleccionar" value="Seleccionar" />
                 <Picker.Item label="Todos" value="All" />
                 <Picker.Item label="Perro" value="Perro" />
                 <Picker.Item label="Gato" value="Gato" />
-
+                
                 <Picker.Item label="Otro" value="Otro" />
               </Picker> 
               <TouchableOpacity
@@ -231,25 +243,26 @@ export const Header = ({ navigation, filterBySize }) => {
                 onPress={() => {
                   alert("tamaño filtro tests");
                 }}
-              >
+                >
                 <Text>Tamaño</Text>
-              </TouchableOpacity>
-              <Picker
+                </TouchableOpacity>
+                <Picker
                 style={styles.inputPicker}
                 ref={pickerRef}
                 selectedValue={userInput.especie}
                 onValueChange={(itemValue, itemIndex) =>
                   setUserInput({ ...userInput, especie: itemValue })
                 }
-              >
+                >
                 <Picker.Item label="Small" value="Small" />
                 <Picker.Item label="Medium" value="Medium" />
                 <Picker.Item label="large" value="large" />
               </Picker>*/}
-            </View>
-          </Animated.View>
-        </SafeAreaView>
-      </Modal>
+              </View>
+            </Animated.View>
+          </SafeAreaView>
+        </Modal>
+      )}
     </View>
   );
 };
