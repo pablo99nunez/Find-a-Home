@@ -55,11 +55,9 @@ export const Header = ({ navigation, filterBySize }) => {
     } else if (size !== "" && specie !== "") {
       dispatch(getPetsFilteredByTwoFilters([size, specie]));
     }
-    alert('Bucle infinito Header?')
   }, [specie, size]);
 
   useEffect(() => {
-    alert('Bucle infinito Header2?')
     if (email) dispatch(getUser(email));
   }, []);
 
