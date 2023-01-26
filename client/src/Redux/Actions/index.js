@@ -119,7 +119,7 @@ export const getPetByOwner = (email) => {
                     payload: result
                 })
             })
-            .catch(error=>{
+            .catch(error => {
                 alert('Error en el fetch de getPetByOwner!')
             })
 

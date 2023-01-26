@@ -26,24 +26,25 @@ export default function Detail({ route, navigation }) {
   const auth = getAuth(firebase);
   //
   const { profilePic, name, created_at, gallery, description, size, age, state, owner, solicitudes } = route.params
-  
+
   const days = calculateAdoptionDays(created_at)
-//--------- BOTTOM SHEET FUNCTIONS-----------//
+  //--------- BOTTOM SHEET FUNCTIONS-----------//
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['55%', '77%'], []);
   const [open, setOpen] = useState(-1)
- //------------------------------------------//
- //if no user logged in, it redirects you to login//
+  //------------------------------------------//
+  //if no user logged in, it redirects you to login//
   function HandleLoginToAdoption() {
     auth.currentUser?.uid ? setOpen(0)
       : navigation.navigate('Login')
   }
   //if the owner press solicitudes he will see a list of adoption requests//
-  function handleSolicitudes(){
+  function handleSolicitudes() {
     setOpen(0)
+    console.log(solicitudes)
   }
 
-  const petId = route.params.id; 
+  const petId = route.params.id;
 
   const currentUser = useSelector(state => state.currentUser)
 
@@ -84,29 +85,29 @@ export default function Detail({ route, navigation }) {
 
 
         <View className='h-1/4'>
-          <Text className='text-2xl text-center w-11/12 mx-auto font-semibold'>{state}</Text>           
+          <Text className='text-2xl text-center w-11/12 mx-auto font-semibold'>{state}</Text>
           <Text className='text-2xl text-center w-11/12 mx-auto'>
             {description}
           </Text>
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
 
-      {['Adopted', 'NotAdoptable'].includes(state) ? 
-        null
-      : 
-        <View className='h-1/4 flex justify-evenly'>
-          {currentUser.email === owner ? 
-            <ButtonYellow text='Solicitudes' onPress={()=> handleSolicitudes()}/>
+        {['Adopted', 'NotAdoptable'].includes(state) ?
+          null
           :
-            <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />}
-        </View>}
+          <View className='h-1/4 flex justify-evenly'>
+            {currentUser.email === owner ?
+              <ButtonYellow text='Solicitudes' onPress={() => handleSolicitudes()} />
+              :
+              <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />}
+          </View>}
 
 
       </View>
 
 
-    { Platform.OS !== 'web'? 
-      <BottomSheet
+      {Platform.OS !== 'web' ?
+        <BottomSheet
 
           backgroundStyle={styles.containerInput}
           ref={bottomSheetRef}
@@ -117,18 +118,18 @@ export default function Detail({ route, navigation }) {
           onClose={() => setOpen(-1)}
         >
 
-          {owner === currentUser.email ? 
-            <BottomViewOwner solicitudes={solicitudes}/> 
-          :
+          {owner === currentUser.email ?
+            <BottomViewOwner solicitudes={solicitudes} navigation={navigation} />
+            :
             <BottomView auth={auth} petId={petId} />}
-          
+
         </BottomSheet>
         :
         <View className='h-1/4 flex justify-evenly'>
-        <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
-      </View>
+          <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
+        </View>
 
-}
+      }
 
 
     </View>

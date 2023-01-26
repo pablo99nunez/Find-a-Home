@@ -26,6 +26,7 @@ import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Regis
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreatePet } from "./src/Components/CreatePet/CreatePet";
+import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
@@ -66,6 +67,12 @@ export default function App() {
             name="UserDetail"
             component={UserDetail}
             options={{ headerShown: false }}
+          />
+
+
+          <Stack.Screen
+            name="Solicitud de Adopcion"
+            component={SolicitudPet}
           />
 
           <Stack.Screen
