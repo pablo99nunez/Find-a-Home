@@ -83,7 +83,7 @@ export const getUser = (email) => {
     return async function (dispatch) {
         fetch(url+'/user/profile', config)
         .then(response => response.json())
-        .then(result => {console.log(result)
+        .then(result => {
            return dispatch({
             type: GET_USER_BY_EMAIL,
             payload: result

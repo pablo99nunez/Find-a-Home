@@ -61,6 +61,7 @@ export const Header = ({ navigation, filterBySize }) => {
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
+ 
 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
@@ -79,7 +80,7 @@ export const Header = ({ navigation, filterBySize }) => {
           <Image
             className="w-12 h-12 rounded-full"
             resizeMode={"contain"}
-            source={require("../../images/loggedUser.png")}
+            source={{uri: `https://i.pravatar.cc/150?${currentUser.firstName}=thefakeuser.jpg`}}
           />
         </TouchableOpacity>
       ) : (
