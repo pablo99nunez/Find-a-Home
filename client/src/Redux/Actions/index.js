@@ -102,7 +102,6 @@ export const getPetByOwner = (email) => {
         headers: { Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}` },
     }
 
-
     return async function (dispatch) {
         fetch(url + '/pet/byowner', config)
             .then(response => response.json())

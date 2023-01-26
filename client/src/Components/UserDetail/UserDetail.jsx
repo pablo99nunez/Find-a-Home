@@ -24,6 +24,7 @@ import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPetByOwner } from "../../Redux/Actions";
+import Card from "../Card/Card"
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
@@ -34,8 +35,7 @@ export default function UserDetail({ route, navigation }) {
 
   useEffect(() => {
     dispatch(getPetByOwner());
-    console.log(currentPets)
-  }, [currentPets]);
+  }, [currentUser]);
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);
@@ -55,64 +55,6 @@ export default function UserDetail({ route, navigation }) {
   }
   //-----------------------------------------------------------
 
-  const user = {
-    id: 1,
-    firstName: "Messi",
-    lastName: "Chiquito",
-    age: 35,
-    rating: 5,
-    profilePic: "https://pbs.twimg.com/media/FdSKUwgWIAEJNX0.jpg",
-    description:
-      "Soy Lionel Andrés Messi Cuccittini, nací en Rosario, el 24 de junio de 1987, soy conocido como Leo Messi, soy un futbolista argentino que juega como delantero o centrocampista, actual Mejor Jugador y Campeón del Mundo",
-    address: "Torre Eiffel",
-    pets: [
-      {
-        id: 100,
-        name: "mbappe",
-        age: 2,
-        rescued: "2 days ago",
-        profilePic:
-          "https://d7lju56vlbdri.cloudfront.net/var/ezwebin_site/storage/images/_aliases/img_1col/noticias/publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-seychelles/9851713-3-esl-MX/Publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-Seychelles.png",
-        createdAt: "2023-01-01T22:58:33.462Z",
-        gallery: [
-          "https://d7lju56vlbdri.cloudfront.net/var/ezwebin_site/storage/images/_aliases/img_1col/noticias/publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-seychelles/9851713-3-esl-MX/Publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-Seychelles.png",
-          "https://d7lju56vlbdri.cloudfront.net/var/ezwebin_site/storage/images/_aliases/img_1col/noticias/publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-seychelles/9851713-3-esl-MX/Publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-Seychelles.png",
-          "https://d7lju56vlbdri.cloudfront.net/var/ezwebin_site/storage/images/_aliases/img_1col/noticias/publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-seychelles/9851713-3-esl-MX/Publican-una-secuencia-genomica-de-alta-calidad-de-la-tortuga-gigante-de-Seychelles.png",
-        ],
-        description: "Segundo",
-      },
-      {
-        id: 200,
-        name: "mauricio",
-        age: 2,
-        rescued: "2 days ago",
-        profilePic:
-          "https://www.elmueble.com/medio/2022/10/07/gato-munchkin-o-gato-salchicha_fb219737_900x900.jpg",
-        createdAt: "2023-01-01T22:58:33.462Z",
-        gallery: [
-          "https://www.elmueble.com/medio/2022/10/07/gato-munchkin-o-gato-salchicha_fb219737_900x900.jpg",
-          "https://www.elmueble.com/medio/2022/10/07/gato-munchkin-o-gato-salchicha_fb219737_900x900.jpg",
-          "https://www.elmueble.com/medio/2022/10/07/gato-munchkin-o-gato-salchicha_fb219737_900x900.jpg",
-        ],
-        description: "No se inunda mas",
-      },
-      {
-        id: 300,
-        name: "juan",
-        age: 2,
-        rescued: "2 days ago",
-        profilePic:
-          "https://static.wikia.nocookie.net/mamarre-estudios-espanol/images/a/a3/FB_IMG_1596591789564.jpg/revision/latest?cb=20200806023457&path-prefix=es",
-        createdAt: "2023-01-01T22:58:33.462Z",
-        gallery: [
-          "https://static.wikia.nocookie.net/mamarre-estudios-espanol/images/a/a3/FB_IMG_1596591789564.jpg/revision/latest?cb=20200806023457&path-prefix=es",
-          "https://static.wikia.nocookie.net/mamarre-estudios-espanol/images/a/a3/FB_IMG_1596591789564.jpg/revision/latest?cb=20200806023457&path-prefix=es",
-          "https://static.wikia.nocookie.net/mamarre-estudios-espanol/images/a/a3/FB_IMG_1596591789564.jpg/revision/latest?cb=20200806023457&path-prefix=es",
-        ],
-        description: "Juan 👍",
-      },
-    ],
-  };
 
 
   return (
@@ -150,36 +92,26 @@ export default function UserDetail({ route, navigation }) {
         <Text className=" text-4xl">{currentUser.firstName}</Text>
         <Text className=" text-4xl">{currentUser.rating}⭐</Text>
       </View>
-      <View>
-        <Text className="text-center text-2xl text-[#2A2B20]">
-          {currentUser.description}
-        </Text>
-      </View>
-
-      <View className="-top-8 mx-auto">
+      <View className="">
+        <View>
+          <Text className="text-center text-2xl text-[#2A2B20]">
+            {currentUser.description}
+          </Text>
+        </View>
         <FlatList
-          keyExtractor={(item) => item}
-          data={currentUser.pets}
-          horizontal={true}
+          style={styles.body}
+          numColumns={2}
+          keyExtractor={(item) => item.id}
+          data={currentPets}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", item)}
-
-            >
-              <View className="flex items-center mx-4">
-                <Image
-                  style={{ width: 120, height: 120 }}
-                  source={{
-                    uri: item.profilePic,
-                  }}
-                />
-              </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
+              <Card style={{ width: 120, height: 120 }} item={item} />
             </TouchableOpacity>
           )}
         ></FlatList>
-      </View>
 
-      <View className="-top-20">
+
+
         <ButtonYellow text="Logout" onPress={logoutUser} />
       </View>
     </View>
