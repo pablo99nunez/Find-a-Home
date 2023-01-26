@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-//¿¿Why you import Keyboard Aware Scroll View??
+//¿¿Why you import  Keyboard Aware Scroll View??
 
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
