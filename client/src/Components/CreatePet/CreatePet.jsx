@@ -13,15 +13,25 @@ import { useState } from "react";
 import { firebase } from "../../firebase/config";
 import * as ImagePicker from "expo-image-picker";
 import { PetPost } from "../../Redux/Actions/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { checked } from "../../Redux/Actions/index";
 export const CreatePet = ({ navigation }) => {
+  const dispatch = useDispatch()
   const data = [
     { key: "1", value: "Perro" },
     { key: "2", value: "Gato" },
     { key: "3", value: "Otro" },
   ];
+  const data2 = [
+    { key: "1", value: "Adoptable" },
+    { key: "2", value: "Lost" },
+    { key: "3", value: "Found" },
+    { key: "3", value: "InAdoptionProcess" },
+    { key: "3", value: "NotAdoptable" },
 
+  ];
   const [selected, setSelected] = useState("");
+  const [selected2, setSelected2] = useState("");
 
   const [crear, setCrear] = useState({
     name: "",
@@ -29,6 +39,9 @@ export const CreatePet = ({ navigation }) => {
     birthday: "",
     size: "",
     profilePic: "",
+    state:"",
+    specie: selected,
+    state: selected2
   });
 
   const [error, setError] = useState({
@@ -45,17 +58,13 @@ const validateName = () =>{
   if(nameRegex.test(crear.name)) setError({...error, name: ""})
 }
 const validateDesc = () =>{
-  const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
+  const descripcionRegex = /^[a-zA-Z0-9\s]*$/;
     if(!descripcionRegex.test(crear.description)) setError({...error, description: "La descripcion no puede contener caracteres especiales"})
    if(descripcionRegex.test(crear.description)) setError({...error, description: ""})
 }
 const validateBirthday = () =>{
    if(!crear.birthday) setError({...error, birthday: "Debes seleccionar una fecha de nacimiento aproximada"})
    if(crear.birthday) setError({...error, birthday: ""})
-}
-const validateSize = () =>{
-   if(!crear.size) setError({...error, size: "Por favor selecciona el tamaño de tu mascota"})
-   if(crear.size) setError({...error, size: ""})
 }
 const validateProfilePic = () =>{
    if(!crear.profilePic) setError({...error, profilePic: "Por favor selecciona al menos una foto"})
@@ -134,6 +143,7 @@ const validateProfilePic = () =>{
       size: crear.size,
       profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
       specie: selected,
+      state: selected2
     };
     await PetPost(DatosPetAEnviar)
       .then((sucess) => {
@@ -152,6 +162,7 @@ const validateProfilePic = () =>{
           profilePic: "",
         });
         setSelected("");
+        dispatch(checked("false"))
       });
   }else{
     alert("Por favor completa todos los datos")
@@ -266,6 +277,15 @@ const validateProfilePic = () =>{
           data={data}
           save="value"
         />
+      <Text style={{ fontSize: 10, marginRight: 10}}></Text> 
+
+        <Text style={{ fontSize: 30, marginRight: 10 }}>¿Estado del animal?</Text>
+        <SelectList
+          setSelected={(dataSave) => setSelected2(dataSave)}
+          data={data2}
+          save="value"
+        />
+<Text style={{ fontSize: 10, marginRight: 10}}></Text> 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 
@@ -281,7 +301,6 @@ const validateProfilePic = () =>{
               style={{ width: 250, height: 200, marginLeft: 70 }}
             />
           )}
-          {/* <Image source={{uri: foto}} style={styles.foto} /> */}
         </TouchableOpacity>
 
         {error.profilePic ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.profilePic}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }

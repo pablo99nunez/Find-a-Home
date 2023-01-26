@@ -2,6 +2,7 @@ import { GET_ALL_PETS, GET_PETS_FILTERED_BOTH_FILTERS, GET_USER_BY_EMAIL, GET_PE
 
 const initialState = {
     allPets: [],
+    check: "false",
     currentUser: {},
     currentPets: {}
 }
@@ -12,7 +13,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_PETS:
             return {
                 ...state,
-                allPets: action.payload
+                allPets: action.payload,
             }
         case GET_PETS_FILTERED_SPECIE:
             return {
@@ -40,6 +41,13 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 currentPets: action.payload
             }
+
+        
+            case "CHECKED":
+                return {
+                    ...state,
+                    check: action.payload
+                }    
         default:
             return state;
     }

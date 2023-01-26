@@ -31,7 +31,7 @@ import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import axios from "axios";
-axios.defaults.baseURL = "http://192.168.178.211:8080";
+axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
 
 const Stack = createStackNavigator();
 
