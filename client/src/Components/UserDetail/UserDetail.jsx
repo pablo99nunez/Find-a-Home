@@ -16,9 +16,9 @@ import {
   TouchableOpacity,
   Dimensions,
   FlatList,
+  ScrollView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { callApiWithAppCheckExample } from "../../firebase/fetch.middleware";
 import { ButtonYellow } from "../Buttons/Buttons";
 import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
@@ -58,9 +58,9 @@ export default function UserDetail({ route, navigation }) {
 
 
   return (
-    <View
+    <ScrollView
       style={{ height: HEIGHT }}
-      className="bg-[#ACACAC] flex justify-between"
+      className="bg-[#ACACAC] flex justify-content"
     >
       <ImageBackground
         style={{
@@ -99,7 +99,7 @@ export default function UserDetail({ route, navigation }) {
           </Text>
         </View>
         <FlatList
-          style={styles.body}
+          className='my-auto'
           numColumns={2}
           keyExtractor={(item) => item.id}
           data={currentPets}
@@ -112,10 +112,12 @@ export default function UserDetail({ route, navigation }) {
 
 
 
-        <ButtonYellow text="Logout" onPress={logoutUser} />
+      <ButtonYellow text="Logout" onPress={logoutUser} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+ 
+});
