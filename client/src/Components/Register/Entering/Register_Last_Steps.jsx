@@ -9,7 +9,8 @@ import {
 	Image
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-//Again, Why??
+import { putUserData } from "../../../Redux/Actions";
+//Again, Why?? 
 
 
 const RegisterLastSteps = ({ route, navigation }) => {
@@ -37,7 +38,14 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, [option]: !checkState[option] })
 	}
+	const handleContinuar = () =>{
+		putUserData(userNewInput)
+		.then(resp=>{
+			navigation.navigate("Home")
+		})
+		.catch(err=>alert(err.message))
 
+	}
 
 	return (
 		<ScrollView>
@@ -104,13 +112,20 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				</View>
 
 			</View>
+			{accepted ? 
 			<TouchableOpacity
-				onPress={() => navigation.navigate("Home")}
+				onPress={() => {
+					handleContinuar()
+				}}
 			>
 				<Text className="absolute bottom-[50px] right-[28px] text-[36px]">
-					Continue
+					Continuar
 				</Text>
-			</TouchableOpacity>
+			</TouchableOpacity> :
+			<Text className="absolute bottom-[50px] right-[28px] text-[18px]">
+				Debe aceptar los términos y Condiciones para continuar.
+			</Text>
+			}
 
 		</ScrollView>
 	)
