@@ -100,7 +100,7 @@ export default function UserDetail({ route, navigation }) {
         </View>
         <FlatList
           className='my-auto'
-          numColumns={2}
+          horizontal={true}
           keyExtractor={(item) => item.id}
           data={currentPets}
           renderItem={({ item }) => (
