@@ -21,19 +21,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import { callApiWithAppCheckExample } from "../../firebase/fetch.middleware";
 import { ButtonYellow } from "../Buttons/Buttons";
 import Header from "./Header";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getPetByOwner } from "../../Redux/Actions";
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
 export default function UserDetail({ route, navigation }) {
-
+  const dispatch = useDispatch();
+  const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
-  
-  //test, borrable:
-  function doFetchCheck() {
-    callApiWithAppCheckExample();
-  }
+
+  useEffect(() => {
+    dispatch(getPetByOwner());
+    console.log(currentPets)
+  }, [currentPets]);
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);
@@ -111,7 +113,7 @@ export default function UserDetail({ route, navigation }) {
       },
     ],
   };
-  
+
 
   return (
     <View
@@ -144,10 +146,10 @@ export default function UserDetail({ route, navigation }) {
         </LinearGradient>
       </ImageBackground>
 
-            <View className="flex flex-row justify-between w-11/12 mx-auto">
-              <Text className=" text-4xl">{currentUser.firstName}</Text> 
-              <Text className=" text-4xl">{currentUser.rating}⭐</Text>
-            </View>
+      <View className="flex flex-row justify-between w-11/12 mx-auto">
+        <Text className=" text-4xl">{currentUser.firstName}</Text>
+        <Text className=" text-4xl">{currentUser.rating}⭐</Text>
+      </View>
       <View>
         <Text className="text-center text-2xl text-[#2A2B20]">
           {currentUser.description}
@@ -162,7 +164,7 @@ export default function UserDetail({ route, navigation }) {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Detail", item)}
-              
+
             >
               <View className="flex items-center mx-4">
                 <Image

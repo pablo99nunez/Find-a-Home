@@ -14,6 +14,7 @@ export const GET_PETS_FILTERED_SPECIE = 'GET_PETS_FILTERED_SPECIE'
 export const GET_PETS_FILTERED_SIZE = 'GET_PETS_FILTERED_SIZE'
 export const GET_PETS_FILTERED_BOTH_FILTERS = 'GET_PETS_FILTERED_BOTH_FILTERS'
 export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL'
+export const GET_PET_BY_OWNER = 'GET_PET_BY_OWNER'
 
 export const getAllPets = () => {
     return async (dispatch) => {
@@ -91,4 +92,27 @@ export const getUser = (email) => {
             })
 
     }
+
+}
+
+export const getPetByOwner = (email) => {
+
+    const config = {
+        method: "GET",
+        headers: { Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}` },
+    }
+
+
+    return async function (dispatch) {
+        fetch(url + '/pet/byowner', config)
+            .then(response => response.json())
+            .then(result => {
+                return dispatch({
+                    type: GET_PET_BY_OWNER,
+                    payload: result
+                })
+            })
+
+    }
+
 }
