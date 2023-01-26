@@ -52,6 +52,7 @@ export default function Home({ navigation }) {
       <FlatList
         style={styles.body}
         numColumns={2}
+        initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={allPets.payload}
         renderItem={({ item }) => (
