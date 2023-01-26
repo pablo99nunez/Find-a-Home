@@ -34,7 +34,6 @@ export default function UserDetail({ route, navigation }) {
   const currentUser = useSelector((state) => state.currentUser);
 
   useEffect(() => {
-    alert('Bucle infinito userDetail??')
     dispatch(getPetByOwner());
   }, [currentUser]);
 
