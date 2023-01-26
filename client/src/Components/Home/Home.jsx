@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -30,7 +31,17 @@ export default function Home({ navigation }) {
 
   const allPets = useSelector((state) => state.allPets);
 
-  {
+  //se ejecuta cuando se vé, focus=concentrar algo asi
+  useFocusEffect(React.useCallback(() => {
+        async function evitaReturnDelUseEffect() {
+          dispatch(getAllPets());
+        }
+        evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
+      
+    }, [])
+  );
+
+ /*  {
     Platform.OS === "web"
       ? useEffect(() => {
           dispatch(getAllPets());
@@ -38,7 +49,7 @@ export default function Home({ navigation }) {
       : useEffect(() => {
           dispatch(getAllPets());
         }, [allPets]);
-  }
+  } */
 
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
