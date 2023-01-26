@@ -71,9 +71,8 @@ export default function App() {
 
 
           <Stack.Screen
-            name="SolicitudPet"
+            name="Solicitud de Adopcion"
             component={SolicitudPet}
-            options={{ headerShown: false }}
           />
 
           <Stack.Screen
