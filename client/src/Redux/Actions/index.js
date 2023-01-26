@@ -95,6 +95,9 @@ export const getUser = (email) => {
 
 }
 
+
+//Al fetch hay  q enviarle por body el email
+//{email: email}
 export const getPetByOwner = (email) => {
 
     const config = {
@@ -110,6 +113,9 @@ export const getPetByOwner = (email) => {
                     type: GET_PET_BY_OWNER,
                     payload: result
                 })
+            })
+            .catch(error=>{
+                alert('Error en el fetch de getPetByOwner!')
             })
 
     }
