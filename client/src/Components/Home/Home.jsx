@@ -17,34 +17,29 @@ import { Header } from "../Header/Header";
 import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
-import { CreateDog } from "../CreateDog/CreateDog";
 
 const { width, height } = Dimensions.get("screen");
-const Tab = createBottomTabNavigator();
+
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-  const auth = getAuth(firebase);
+
+  const auth = getAuth(firebase); //traemos la authentication de firebase
 
   const allPets = useSelector((state) => state.allPets);
   useEffect(() => {
     dispatch(getAllPets());
   }, [allPets]);
   function HandleLoginToAdoption() {
-    //función que redirige invitados a loggearse al dar al button de "dar en adopción"
+    //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     auth.currentUser?.uid
-      ? navigation.navigate("CreateDog")
+      ? navigation.navigate("CreatePet")
       : navigation.navigate("Login");
   }
   return (
     <View style={styles.container}>
-      <Header
-        navigation={navigation}
-        // filterBySpecie={filterBySpecie}
-        // filterBySize={filterBySize}
-      />
+      <Header navigation={navigation} />
       <FlatList
         style={styles.body}
         numColumns={2}
@@ -56,12 +51,6 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         )}
       ></FlatList>
-      {/* <TouchableOpacity className="fixed bg-inherit">
-        <Image
-        className="w-16 h-16 flex flex-row justify-center items-center mx-auto w-16"
-        source={require("../../images/Trust.png")}
-        />
-      </TouchableOpacity> */}
 
       <StatusBar style="auto" />
       <View style={styles.floatingAdoptionContainer}>

@@ -5,7 +5,7 @@ import React from "react";
 //Voy a modularizar? Yo diria que no.
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, signOut } from "firebase/auth";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 
 import {
   StyleSheet,
@@ -27,6 +27,9 @@ import { useSelector } from "react-redux";
 const HEIGHT = Dimensions.get("screen").height;
 
 export default function UserDetail({ route, navigation }) {
+
+  const currentUser = useSelector((state) => state.currentUser);
+  
   //test, borrable:
   function doFetchCheck() {
     callApiWithAppCheckExample();
@@ -108,7 +111,7 @@ export default function UserDetail({ route, navigation }) {
       },
     ],
   };
-  const asd = useSelector((state) => state.allPets);
+  
 
   return (
     <View
@@ -121,7 +124,7 @@ export default function UserDetail({ route, navigation }) {
           height: 350,
           backgroundImage: "linear-gradient",
         }}
-        source={{ uri: user.profilePic }}
+        source={{ uri: currentUser.profilePic }}
         blurRadius={10}
       >
         <LinearGradient
@@ -131,35 +134,35 @@ export default function UserDetail({ route, navigation }) {
           <View>
             <Header
               onPress={() => navigation.navigate("Home")}
-              navigation={() => navigation.navigate("CreateDog")}
+              navigation={() => navigation.navigate("CreatePet")}
             />
             <Image
-              className="w-80 h-80 bottom-6 mx-auto rounded-full"
-              source={{ uri: user.profilePic }}
+              className="w-64 h-64 bottom-6 mx-auto rounded-full"
+              source={{ uri: currentUser.profilePic }}
             />
-            <View className="flex flex-row justify-between w-11/12 mx-auto top-4">
-              {/* <Text className=" text-4xl">{asd}</Text> <-- Esto no funciona */}
-              <Text className=" text-4xl">{user.rating}⭐</Text>
-            </View>
           </View>
         </LinearGradient>
       </ImageBackground>
 
+            <View className="flex flex-row justify-between w-11/12 mx-auto">
+              <Text className=" text-4xl">{currentUser.firstName}</Text> 
+              <Text className=" text-4xl">{currentUser.rating}⭐</Text>
+            </View>
       <View>
-        <Text className="text-center text-2xl top-14 text-[#2A2B20]">
-          {user.description}
+        <Text className="text-center text-2xl text-[#2A2B20]">
+          {currentUser.description}
         </Text>
       </View>
 
       <View className="-top-8 mx-auto">
         <FlatList
-          keyExtractor={(item) => item.id}
-          data={user.pets}
+          keyExtractor={(item) => item}
+          data={currentUser.pets}
           horizontal={true}
-          // className="bg-black w-12/12"
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Detail", item)}
+              
             >
               <View className="flex items-center mx-4">
                 <Image

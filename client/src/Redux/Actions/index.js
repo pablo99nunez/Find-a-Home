@@ -56,7 +56,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
 }
 
 export const PetPost = async (bodyPayload) => {
-    
+
     const config = {
         headers: {
             "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
@@ -65,29 +65,30 @@ export const PetPost = async (bodyPayload) => {
     }
     try {
         const pet = await axios.post(url + '/pet', bodyPayload, config)
-        return pet   
+        return pet
     } catch (error) {
         throw error
     }
-    
+
 }
 
 export const getUser = (email) => {
+
     const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
+        method: "GET",
+        headers: { Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}` },
     }
-    const data = {
-        email
-    }
+
+
     return async function (dispatch) {
-        const user = await axios.get(url + '/user/profile', data, config)
-        console.log(user, "USER EN ACTION")
-        return dispatch({
-            type: GET_USER_BY_EMAIL,
-            payload: user
-        })
+        fetch(url + '/user/profile', config)
+            .then(response => response.json())
+            .then(result => {
+                return dispatch({
+                    type: GET_USER_BY_EMAIL,
+                    payload: result
+                })
+            })
+
     }
 }

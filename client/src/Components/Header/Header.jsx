@@ -23,7 +23,7 @@ import {
   getUser,
 } from "../../Redux/Actions";
 import { auth } from "../../firebase/authentication";
-import firebase from "../../firebase/config";
+import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
@@ -61,6 +61,7 @@ export const Header = ({ navigation, filterBySize }) => {
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
+ 
 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
@@ -79,7 +80,7 @@ export const Header = ({ navigation, filterBySize }) => {
           <Image
             className="w-12 h-12 rounded-full"
             resizeMode={"contain"}
-            source={require("../../images/loggedUser.png")}
+            source={{uri: `https://i.pravatar.cc/150?${currentUser.firstName}=thefakeuser.jpg`}}
           />
         </TouchableOpacity>
       ) : (
