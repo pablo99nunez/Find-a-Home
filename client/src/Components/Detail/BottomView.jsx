@@ -12,17 +12,19 @@ const BottomView = ({ petId, auth }) => {
   const [message, setMessage] = useState('')
 
   async function AdoptionRequest() {
-    setSent(true)
     const data = { message, petID: petId };
-
-    const response = await axios.put(`${BASE_URL_IP}/pet/profile/solicitud`, data, {
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => console.log(response))
-      .catch(error => console.error('Error:', error));
+    try {
+      const response = await axios.put(`${BASE_URL_IP}/pet/profile/solicitud`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(response => console.log(response))
+        .finally(setSent(true))
+    } catch (error) {
+      console.log('Error', error)
+    }
   }
   // renders
   return (

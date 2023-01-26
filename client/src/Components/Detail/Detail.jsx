@@ -17,33 +17,34 @@ import { Characteristics } from "./Characteristics";
 //FIREBASE IMPORT ZONE
 import firebase from '../../firebase/firebase-config'
 import { getAuth } from 'firebase/auth';
+import { useSelector } from "react-redux";
+import { BottomViewOwner } from "./BottomViewOwner";
 
 export default function Detail({ route, navigation }) {
   //FIREBASE ZONE - DO NOT CHANGE
   const auth = getAuth(firebase);
   //
-  const { profilePic, name, created_at, gallery, description, size, age } = route.params
-  console.log(created_at);
+  const { profilePic, name, created_at, gallery, description, size, age, state, owner, solicitudes } = route.params
+  
   const days = calculateAdoptionDays(created_at)
-
+//--------- BOTTOM SHEET FUNCTIONS-----------//
   const bottomSheetRef = useRef(null);
-
-  // variables
   const snapPoints = useMemo(() => ['55%', '77%'], []);
-
   const [open, setOpen] = useState(-1)
-  // callbacks
-  const handleSheetChanges = useCallback((index) => {
-  }, []);
-
-
+ //------------------------------------------//
+ //if no user logged in, it redirects you to login//
   function HandleLoginToAdoption() {
-
     auth.currentUser?.uid ? setOpen(0)
       : navigation.navigate('Login')
-
   }
-  const petId = route.params.id;
+  //if the owner press solicitudes he will see a list of adoption requests//
+  function handleSolicitudes(){
+    setOpen(0)
+  }
+
+  const petId = route.params.id; 
+
+  const currentUser = useSelector(state => state.currentUser)
 
   return (
     <View>
@@ -81,16 +82,23 @@ export default function Detail({ route, navigation }) {
         </ImageBackground>
 
 
-        <View className='h-1/4 p-6'>
-          <Text className='text-4xl text-center my-9 w-10/12 mx-auto'>
+        <View className='h-1/4'>
+          <Text className='text-2xl text-center w-11/12 mx-auto font-semibold'>{state}</Text>           
+          <Text className='text-2xl text-center w-11/12 mx-auto'>
             {description}
           </Text>
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
 
-        <View className='h-1/3 flex justify-evenly'>
-          <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
-        </View>
+      {['Adopted', 'NotAdoptable'].includes(state) ? 
+        null
+      : 
+        <View className='h-1/4 flex justify-evenly'>
+          {currentUser.email === owner ? 
+            <ButtonYellow text='Solicitudes' onPress={()=> handleSolicitudes()}/>
+          :
+            <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />}
+        </View>}
 
 
       </View>
@@ -103,17 +111,19 @@ export default function Detail({ route, navigation }) {
           ref={bottomSheetRef}
           index={open}
           snapPoints={snapPoints}
-
-          onChange={handleSheetChanges}
           keyboardBehavior='extend'
           enablePanDownToClose={true}
           onClose={() => setOpen(-1)}
-
         >
-          <BottomView auth={auth} petId={petId} />
+
+          {owner === currentUser.email ? 
+            <BottomViewOwner solicitudes={solicitudes}/> 
+          :
+            <BottomView auth={auth} petId={petId} />}
+          
         </BottomSheet>
         :
-        <View className='h-1/3 flex justify-evenly'>
+        <View className='h-1/4 flex justify-evenly'>
         <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />
       </View>
 
