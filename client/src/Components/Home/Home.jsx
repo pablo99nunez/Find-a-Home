@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
       : useEffect(() => {
         alert('Gucle infinito en el HOME?')
         dispatch(getAllPets());
-      }, [allPets]);
+      }, []);
   }
 
   function HandleLoginToAdoption() {
