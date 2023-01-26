@@ -17,7 +17,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
             keyExtractor={(item) => item.message}
             data={solicitudes}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("SolicitudPet", item)} className='flex flex-row items-center justify-evenly'>
+              <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", item)} className='flex flex-row items-center justify-evenly'>
                 <Image
                   className='rounded-full '
                   style={styles.imagen}
