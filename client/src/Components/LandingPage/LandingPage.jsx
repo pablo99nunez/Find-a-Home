@@ -16,6 +16,7 @@ const LandingPage = ({ navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            alert('Bucle infinito landing?')
             async function evitaReturnDelUseEffect() {
                 const tokenLocalStorage = await AsyncStorage.getItem('authorization')
                 if (tokenLocalStorage)
