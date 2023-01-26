@@ -33,11 +33,11 @@ export default function Home({ navigation }) {
   {
     Platform.OS === "web"
       ? useEffect(() => {
-          dispatch(getAllPets());
-        }, [])
+        dispatch(getAllPets());
+      }, [])
       : useEffect(() => {
-          dispatch(getAllPets());
-        }, [allPets]);
+        dispatch(getAllPets());
+      }, [allPets]);
   }
 
   function HandleLoginToAdoption() {
