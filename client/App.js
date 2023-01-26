@@ -31,11 +31,24 @@ import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import axios from "axios";
+<<<<<<< HEAD
+import { useFonts } from "expo-font";
+import { Roboto_300Light } from "@expo-google-fonts/roboto"
+
 axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
+
+=======
+axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
+>>>>>>> 85207c23ed3c485e237b8bb008b12dd7f3e68613
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_300Light,
+})
+
+if(!fontsLoaded) return null
   return (
     <Provider store={store}>
       <NavigationContainer>

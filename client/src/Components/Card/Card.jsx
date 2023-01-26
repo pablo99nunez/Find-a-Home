@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("screen");
 
 const Card = ({item}) => {
     return (
-        <View className="flex justify-center items-center text-center" style={styles.container}>
+        <View style={styles.container}>
             <Image
                 className="relative"
                 style={styles.imagen}
@@ -19,7 +19,7 @@ const Card = ({item}) => {
                     style={styles.gradient}
             >
             </LinearGradient>
-            <Text className="absolute bottom-1 text-center ml-1 mr-1" style={styles.dogName}>{item.name}</Text>
+            <Text className="absolute bottom-1 text-start ml-2 mb-2" style={styles.dogName}>{item.name}</Text>
         </View>
     )
 }
@@ -32,17 +32,18 @@ container: {
 dogName: {
     fontSize: 25,
     color: 'white',
+    fontFamily: 'Roboto_300Light'
 },
 imagen: {
     width: width * 0.4,
     height: width * 0.4,
-    borderRadius: 40,
+    borderRadius: 20,
     
 },
 gradient:{
     width: width * 0.4,
     height: width * 0.4,
-    borderRadius: 40
+    borderRadius: 20
 }
 })
 export default Card;
