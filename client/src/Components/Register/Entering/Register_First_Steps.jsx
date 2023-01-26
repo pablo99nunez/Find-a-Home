@@ -43,7 +43,7 @@ export default function RegisterFirstSteps({ navigation }) {
           <Text className="relative text-[26px] font-[23px]">Teléfono:</Text>
           <TextInput
             className="bg-[#1E1E1E] text-[#7E7E7E] rounded-[11px] w-[466px] h-[46px] mx-auto pl-[9px] text-[18px]"
-            value={userInput}
+            value={userInput.telefono}
             placeholder={"   011 555-5555"}
             placeholderTextColor="#ffffff50"
             onChangeText={(text) =>
