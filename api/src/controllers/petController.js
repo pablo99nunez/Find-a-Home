@@ -78,11 +78,16 @@ const updatePet = async (PetData, petID, ownerEmail) => {
   return updatedPet
 }
 
-const deletePet = async (petID, ownerEmail) => {
-  const queryCondition = { _id: petID, owner: ownerEmail }
+const deletePet = async (petID) => {
+  const queryCondition = { _id: petID}
   const deletedPet = await PetModel.deleteOne(queryCondition)
   return deletedPet
 }
+/* const deletePet = async (petID, ownerEmail) => {
+  const queryCondition = { _id: petID, owner: ownerEmail }
+  const deletedPet = await PetModel.deleteOne(queryCondition)
+  return deletedPet
+} */
 
 
 
