@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Platform,
 } from "react-native";
 import GoogleImage from "../../images/Google.svg"
 
@@ -100,7 +101,11 @@ const Welcome = ({ navigation }) => {
           <Text style={styles.textTitles}>Registrate</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
             <View style={styles.googleCircle}>
+              {Platform.OS ==='web' ? 
+              <Text>WEB REGISTER</Text>
+              :
               <GoogleImage width={86} height={86} />
+              }
             </View>
           </TouchableOpacity>
           <View style={styles.divisionLine}></View>

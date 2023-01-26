@@ -51,7 +51,7 @@ export const createAccountWithEmailAndPassword = async (
       }
     })
     .catch((err) => {
-      console.log(err.message);
+      throw err
     });
   //CREAMOS EL USUARIO EN LA BASE DE DATOS
   const createUserInDb = async (fullName, email) => {
