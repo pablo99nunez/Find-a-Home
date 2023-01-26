@@ -33,23 +33,23 @@ export default function Home({ navigation }) {
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
   useFocusEffect(React.useCallback(() => {
-        async function evitaReturnDelUseEffect() {
-          dispatch(getAllPets());
-        }
-        evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
-      
-    }, [])
+    async function evitaReturnDelUseEffect() {
+      dispatch(getAllPets());
+    }
+    evitaReturnDelUseEffect() //porq saltaba un warning, pedia autonvocarla adentro
+
+  }, [])
   );
 
- /*  {
-    Platform.OS === "web"
-      ? useEffect(() => {
-          dispatch(getAllPets());
-        }, [])
-      : useEffect(() => {
-          dispatch(getAllPets());
-        }, [allPets]);
-  } */
+  /*  {
+     Platform.OS === "web"
+       ? useEffect(() => {
+         dispatch(getAllPets());
+       }, [])
+       : useEffect(() => {
+           dispatch(getAllPets());
+         }, [allPets]);
+   } */
 
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
