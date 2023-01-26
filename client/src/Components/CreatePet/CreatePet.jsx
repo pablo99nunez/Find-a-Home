@@ -39,19 +39,27 @@ export const CreatePet = ({ navigation }) => {
     profilePic: "",
   });
 
-const validate = () =>{
+const validateName = () =>{
   const nameRegex = /^[0-9A-Za-z\s]{0,100}$/;
-  const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
   if(!nameRegex.test(crear.name)) setError({...error, name: "el nombre no puede contener caracteres especiales"})
   if(nameRegex.test(crear.name)) setError({...error, name: ""})
-  if(!descripcionRegex.test(crear.description)) setError({...error, description: "La descripcion no puede contener caracteres especiales"})
-  if(descripcionRegex.test(crear.description)) setError({...error, description: ""})
-  if(!crear.birthday) setError({...error, birthday: "Debes seleccionar una fecha de nacimiento aproximada"})
-  if(crear.birthday) setError({...error, birthday: ""})
-  if(!crear.size) setError({...error, size: "Por favor selecciona el tamaño de tu mascota"})
-  if(crear.size) setError({...error, size: ""})
-  if(!crear.profilePic) setError({...error, profilePic: "Por favor selecciona al menos una foto"})
-  if(crear.profilePic) setError({...error, profilePic: ""})
+}
+const validateDesc = () =>{
+  const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
+    if(!descripcionRegex.test(crear.description)) setError({...error, description: "La descripcion no puede contener caracteres especiales"})
+   if(descripcionRegex.test(crear.description)) setError({...error, description: ""})
+}
+const validateBirthday = () =>{
+   if(!crear.birthday) setError({...error, birthday: "Debes seleccionar una fecha de nacimiento aproximada"})
+   if(crear.birthday) setError({...error, birthday: ""})
+}
+const validateSize = () =>{
+   if(!crear.size) setError({...error, size: "Por favor selecciona el tamaño de tu mascota"})
+   if(crear.size) setError({...error, size: ""})
+}
+const validateProfilePic = () =>{
+   if(!crear.profilePic) setError({...error, profilePic: "Por favor selecciona al menos una foto"})
+   if(crear.profilePic) setError({...error, profilePic: ""})
 }
 
   const [uploading, setUploading] = useState(false);
@@ -171,7 +179,7 @@ const validate = () =>{
           autoCapitalize="none"
           value={crear.name}
           maxLength={10}
-          onBlur={() => validate()}
+          onBlur={() => validateName()}
           onChangeText={
             (text) => setCrear(/* validate( */ { ...crear, name: text }) /* ) */
           }
@@ -185,7 +193,7 @@ const validate = () =>{
           autoCapitalize="none"
           value={crear.description}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
-          onBlur={() => validate()}
+          onBlur={() => validateDesc()}
         />
   {error.description ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.description}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
 
@@ -199,7 +207,7 @@ const validate = () =>{
           autoCapitalize="none"
           value={crear.birthday}
           onChangeText={(text) => setCrear({ ...crear, birthday: text })}
-          onBlur={() => validate()}
+          onBlur={() => validateBirthday()}
 
         />
           {error.birthday ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.birthday}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
@@ -208,7 +216,7 @@ const validate = () =>{
         <Text style={{ fontSize: 30, marginRight: 10 }}>Tamaño:</Text>
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" }) }  onBlur={() => validate()}>
+        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" }) }  onBlur={() => validateProfilePic()}>
           {crear.size === "small" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
@@ -237,7 +245,7 @@ const validate = () =>{
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}  onBlur={() => validate()}>
+        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}  onBlur={() => validateProfilePic()}>
           {crear.size === "large" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
