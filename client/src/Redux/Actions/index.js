@@ -79,7 +79,7 @@ export const getUser = (email) => {
         headers: {Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`},
     }
     
-   
+   //creo q aesta url hay q enviarle un body con el email {email: email}
     return async function (dispatch) {
         fetch(url+'/user/profile', config)
         .then(response => response.json())
@@ -88,6 +88,8 @@ export const getUser = (email) => {
             type: GET_USER_BY_EMAIL,
             payload: result
         })})
+        .catch(e=>alert(e.message))
+        
         
     }
 }
