@@ -5,6 +5,7 @@ import {
   View,
   Image,
   ImageBackground,
+  Platform,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
