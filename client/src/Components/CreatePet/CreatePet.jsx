@@ -14,7 +14,6 @@ import { firebase } from "../../firebase/config";
 import * as ImagePicker from "expo-image-picker";
 import { PetPost } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import { validate } from "./validate";
 export const CreatePet = ({ navigation }) => {
   const data = [
     { key: "1", value: "Perro" },
@@ -32,12 +31,33 @@ export const CreatePet = ({ navigation }) => {
     profilePic: "",
   });
 
-  // const [image, setImage] = useState(null);
+  const [error, setError] = useState({
+    name: "",
+    description: "",
+    birthday: "",
+    size: "",
+    profilePic: "",
+  });
+
+const validate = () =>{
+  const nameRegex = /^[0-9A-Za-z\s]{0,100}$/;
+  const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
+  if(!nameRegex.test(crear.name)) setError({...error, name: "el nombre no puede contener caracteres especiales"})
+  if(nameRegex.test(crear.name)) setError({...error, name: ""})
+  if(!descripcionRegex.test(crear.description)) setError({...error, description: "La descripcion no puede contener caracteres especiales"})
+  if(descripcionRegex.test(crear.description)) setError({...error, description: ""})
+  if(!crear.birthday) setError({...error, birthday: "Debes seleccionar una fecha de nacimiento aproximada"})
+  if(crear.birthday) setError({...error, birthday: ""})
+  if(!crear.size) setError({...error, size: "Por favor selecciona el tamaño de tu mascota"})
+  if(crear.size) setError({...error, size: ""})
+  if(!crear.profilePic) setError({...error, profilePic: "Por favor selecciona al menos una foto"})
+  if(crear.profilePic) setError({...error, profilePic: ""})
+}
+
   const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
     try {
-      // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -46,21 +66,7 @@ export const CreatePet = ({ navigation }) => {
       }).catch((err) => {
         alert(err.message);
       });
-      // const resultsPUNTOassets = [
-      //   {
-      //     assetId: null,
-      //     base64: null,
-      //     duration: null,
-      //     exif: null,
-      //     height: 719,
-      //     rotation: null,
-      //     type: "image",
-      //     uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FFindtheHome-695a0720-aac4-473d-98fa-6d4c2a4ddcb4/ImagePicker/caf4819a-ffce-4cec-97e5-c0e92f2a8606.jpeg",
-      //     width: 958,
-      //   },
-      // ];
 
-      //console.log(result.assets);
       if (!result.canceled) {
         await uploadImage(result.assets[0].uri).catch((err) => {
           alert(err.message);
@@ -112,6 +118,7 @@ export const CreatePet = ({ navigation }) => {
     );
   };
   const HandleSubmit = async () => {
+    if(!error.length) {
     const DatosPetAEnviar = {
       name: crear.name,
       description: crear.description,
@@ -120,10 +127,10 @@ export const CreatePet = ({ navigation }) => {
       profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
       specie: selected,
     };
-
     await PetPost(DatosPetAEnviar)
       .then((sucess) => {
         alert("se creo");
+        navigation.goBack()
       })
       .catch((error) => {
         alert(error.message);
@@ -138,7 +145,10 @@ export const CreatePet = ({ navigation }) => {
         });
         setSelected("");
       });
-  };
+  }else{
+    alert("Por favor completa todos los datos")
+  }
+}
 
   return (
     <>
@@ -157,23 +167,27 @@ export const CreatePet = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Nombre de tu mascota"
-          placeholderTextColor="#fcfcfc"
+          placeholderTextColor= {!error.name ?"#fcfcfc" : "#d70f0f"}
           autoCapitalize="none"
           value={crear.name}
+          maxLength={10}
+          onBlur={() => validate()}
           onChangeText={
             (text) => setCrear(/* validate( */ { ...crear, name: text }) /* ) */
           }
         />
-
+  {error.name ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.name}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
         <TextInput
           style={styles.input}
           placeholder="Cómo es? Necesita alguna vacúna?"
-          placeholderTextColor="#fcfcfc"
+          placeholderTextColor={!error.description ?"#fcfcfc" : "#d70f0f"}
           autoCapitalize="none"
           value={crear.description}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
+          onBlur={() => validate()}
         />
+  {error.description ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.description}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>
           Fecha de nacimiento:
@@ -185,12 +199,16 @@ export const CreatePet = ({ navigation }) => {
           autoCapitalize="none"
           value={crear.birthday}
           onChangeText={(text) => setCrear({ ...crear, birthday: text })}
+          onBlur={() => validate()}
+
         />
+          {error.birthday ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.birthday}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Tamaño:</Text>
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" })}>
+        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" }) }  onBlur={() => validate()}>
           {crear.size === "small" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
@@ -219,7 +237,7 @@ export const CreatePet = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}>
+        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}  onBlur={() => validate()}>
           {crear.size === "large" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
@@ -232,6 +250,8 @@ export const CreatePet = ({ navigation }) => {
             />
           )}
         </TouchableOpacity>
+        {error.size ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.size}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+
         <Text style={{ fontSize: 30, marginRight: 10 }}>Especie:</Text>
         <SelectList
           setSelected={(dataSave) => setSelected(dataSave)}
@@ -256,7 +276,7 @@ export const CreatePet = ({ navigation }) => {
           {/* <Image source={{uri: foto}} style={styles.foto} /> */}
         </TouchableOpacity>
 
-        <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
+        {error.profilePic ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.profilePic}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
 
         <TouchableOpacity
           onPress={() => {
