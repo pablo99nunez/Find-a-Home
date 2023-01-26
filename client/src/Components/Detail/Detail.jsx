@@ -40,6 +40,7 @@ export default function Detail({ route, navigation }) {
   //if the owner press solicitudes he will see a list of adoption requests//
   function handleSolicitudes(){
     setOpen(0)
+    console.log(solicitudes)
   }
 
   const petId = route.params.id; 
