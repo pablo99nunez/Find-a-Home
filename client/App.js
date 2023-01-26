@@ -41,7 +41,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="LandigPage"
-            component={LandingPage}
+            component={RegisterFirstSteps}
             initialParams={{ fromChild: "Initial" }}
             options={{ headerShown: false }}
           />
