@@ -95,7 +95,12 @@ export const getUser = (email) => {
 
 }
 
-
+export const checked = (payload) =>{
+    return{
+        type: "CHECKED",
+        payload,
+    }
+} 
 //Al fetch hay  q enviarle por body el email
 //{email: email}
 export const getPetByOwner = (email) => {
