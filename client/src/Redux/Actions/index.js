@@ -75,9 +75,10 @@ export const putUserData = async (payload) => {
     }
     const objetoAenviar = {
         phone: payload.telefono,
-        adress: [payload.pais,payload.provincia,payload.departamento],
-        conditions: payload.conditions
+        address: [payload.pais,payload.provincia,payload.departamento],
+        conditions: payload.condiciones
     }
+    console.log(objetoAenviar);
     
     const json = await axios.put(`${url}/user/profile`, objetoAenviar , config)
     .catch(error=>alert(error.message))
@@ -139,7 +140,7 @@ export const checked = (payload) =>{
     }
 } 
 //Al fetch hay  q enviarle por body el email
-//{email: email}
+//{email: email} 
 export const getPetByOwner = (email) => {
 
     const config = {

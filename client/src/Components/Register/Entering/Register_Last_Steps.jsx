@@ -27,23 +27,29 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		pais,
 		departamento,
 		provincia,
-		condiciones: ""
+		condiciones: {},
 	})
 
 	const [checkState, setCheckState] = useState({})
 
 	const [accepted, setAccepted] = useState(false);
 
+	const [loading, setLoading] = useState(false);
+
 	const HandleCheck = (option) => {
 		setCheckState({ ...checkState, [option]: !checkState[option] })
-		setuserNewInput({ ...userNewInput, [option]: !checkState[option] })
+		setuserNewInput({ ...userNewInput, condiciones: { ...userNewInput.condiciones, [option]: !checkState[option]} })
 	}
 	const handleContinuar = () =>{
+		setLoading(true)
 		putUserData(userNewInput)
 		.then(resp=>{
 			navigation.navigate("Home")
 		})
 		.catch(err=>alert(err.message))
+		.finally(e=>{
+			setLoading(false)
+		})
 
 	}
 
@@ -60,7 +66,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				<Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-[38px] leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
-
+{/* El cliente pidió que se haga un componente con estos botones, asi es escalable */}
 				<TouchableOpacity onPress={() => HandleCheck("Techo")} className="mt-28">
 					<Text className={checkState.Techo ?
 						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
@@ -112,8 +118,16 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				</View>
 
 			</View>
-			{accepted ? 
-			<TouchableOpacity
+		{accepted ? 
+			loading ? <TouchableOpacity
+			onPress={() => {
+				
+			}}
+		>
+			<Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+				Cargando...
+			</Text>
+		</TouchableOpacity>: <TouchableOpacity
 				onPress={() => {
 					handleContinuar()
 				}}
@@ -121,7 +135,9 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				<Text className="absolute bottom-[50px] right-[28px] text-[36px]">
 					Continuar
 				</Text>
-			</TouchableOpacity> :
+			</TouchableOpacity>
+			
+			:
 			<Text className="absolute bottom-[50px] right-[28px] text-[18px]">
 				Debe aceptar los términos y Condiciones para continuar.
 			</Text>

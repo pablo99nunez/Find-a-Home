@@ -18,13 +18,18 @@ import States from "../States.json";
 import Localities from "../Localities.json";
 
 export default function RegisterFirstSteps({ navigation }) {
+  const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
     telefono: "",
     pais: "",
     provincia: "",
     departamento: "",
   });
-
+const handleContinuar = () =>{
+  setLoading(true)
+  navigation.navigate("RegisterLastSteps", userInput)
+  setLoading(false)
+}
   return (
     <ScrollView>
       <Image
@@ -100,13 +105,24 @@ export default function RegisterFirstSteps({ navigation }) {
           />
         </View>
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("RegisterLastSteps", userInput)}
+     {loading ? <TouchableOpacity
+        onPress={() => {}}
       >
         <Text className="absolute bottom-[50px] right-[28px] text-[36px]">
-          Continue
+          Loading
         </Text>
       </TouchableOpacity>
+    :  
+    <TouchableOpacity
+        onPress={() => {
+          handleContinuar()
+        }}
+      >
+        <Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+          Continuar
+        </Text>
+      </TouchableOpacity>
+    }
     </ScrollView>
   );
 }
