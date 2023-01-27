@@ -61,11 +61,13 @@ const petSchema = mongoose.Schema(
       type: Array,
       default: []
     },
-    latitud: {
-      type: String
-    },
-    longitud: {
-      type: String
+    coordinates: {
+      latitude: {
+        type: String
+      },
+      longitude: {
+        type: String
+      }
     }
   },
   {
