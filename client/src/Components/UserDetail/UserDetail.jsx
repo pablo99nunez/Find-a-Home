@@ -90,7 +90,7 @@ export default function UserDetail({ route, navigation }) {
 
       <View className="flex flex-row justify-between w-11/12 mx-auto">
         <Text className=" text-4xl">{currentUser.firstName}</Text>
-        <Text className=" text-4xl">{currentUser.rating.rating}⭐</Text>
+        <Text className=" text-4xl">{currentUser.rating}⭐</Text>
       </View>
       <View className="">
         <View>
