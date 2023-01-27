@@ -65,6 +65,7 @@ const refreshStates = async (pet, newOwnerEmail) => {
     try{
     await pet.solicitudes.forEach(async (apply) => {
         const user = await UserModel.findOne({ email: apply.email })
+        
         for (let i = 0; i < user.misSolicitudes.length; i++) {
             if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
                 user.misSolicitudes[i].status = "Aceptado";
@@ -82,13 +83,6 @@ const refreshStates = async (pet, newOwnerEmail) => {
     }
 }
 
-refreshStates()
-.then(() => {
-    console.log("Refresh states completed!");
-})
-.catch((error) => {
-    console.error("An error occurred: ", error);
-});
 
 
 const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud) => {
