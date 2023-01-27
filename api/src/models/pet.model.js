@@ -60,6 +60,12 @@ const petSchema = mongoose.Schema(
     solicitudes: { //objeto de {'interestedEmail','FullName', 'requestMessage', 'profilePic'} 
       type: Array,
       default: []
+    },
+    latitud: {
+      type: String
+    },
+    longitud: {
+      type: String
     }
   },
   {
