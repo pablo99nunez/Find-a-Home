@@ -15,10 +15,16 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
 import Localities from "../Localities.json";
+import { render } from "react-dom";
 
-export default function RegisterFirstSteps({ navigation }) {
+export default function RegisterFirstSteps({ navigation , route}) {
+  const {password, email, firstName, lastName} = route.params
   const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
+    email,
+    password,
+    firstName,
+    lastName,
     telefono: "",
     pais: "",
     provincia: "",
@@ -31,11 +37,7 @@ const handleContinuar = () =>{
 }
   return (
     <ScrollView>
-      <Image
-        className="absolute top-[16px] right-[22] z-[1]"
-        source={require("../../../images/logo-black.png")}
-      />
-      <View className="h-screen flex items-center justify-center bg-[#FFC733] ">
+      <View className="h-screen flex items-center bg-[#FFC733] ">
         <Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
           ¡Bienvenido!
         </Text>
@@ -46,9 +48,9 @@ const handleContinuar = () =>{
         <View className="w-11/12">
           <Text className="">Teléfono:</Text>
           <TextInput
-            className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%]  mx-auto h-11"
+            className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%] pl-4 mx-auto h-11"
             value={userInput.telefono}
-            placeholder={"   011 555-5555"}
+            placeholder={"011 555-5555"}
             placeholderTextColor="#ffffff50"
             onChangeText={(text) =>
               setUserInput({ ...userInput, telefono: text })
@@ -125,6 +127,8 @@ const handleContinuar = () =>{
     </ScrollView>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

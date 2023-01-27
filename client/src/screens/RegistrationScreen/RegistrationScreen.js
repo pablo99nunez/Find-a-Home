@@ -3,38 +3,55 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { createAccountWithEmailAndPassword } from '../../firebase/authentication';
+import { ButtonYellow } from '../../Components/Buttons/Buttons';
+import { StyleSheet } from 'react-native';
+
 
 
 export default function RegistrationScreen({ navigation }) {
-    const [fullName, setFullName] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] =useState('')
     const [email, setEmail] = useState('@gmail.com')
     const [password, setPassword] = useState('123456')
+
+    const user ={firstName,lastName,email,password}
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container}
+        className='flex w-[100%] bg-[#3A302E] items-center'>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
-                keyboardShouldPersistTaps="always">
+                keyboardShouldPersistTaps="always"
+                className='w-[90%]'
+                >
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/icon.png')}
+                    source={require('../../images/FindAHome.png')}
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholder='Full Name'
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
+                    placeholder='Nombre'
                     placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setFullName(text)}
-                    value={fullName}
+                    onChangeText={(text) => setFirstName(text)}
+                    value={firstName}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+                 <TextInput
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
+                    placeholder='Apellido'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(text) => setLastName(text)}
+                    value={lastName}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
-                    placeholder='E-mail'
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'                    
+                    placeholder='Email'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
@@ -42,7 +59,7 @@ export default function RegistrationScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TextInput
-                    style={styles.input}
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
                     placeholder='Password: 123456'
@@ -51,7 +68,7 @@ export default function RegistrationScreen({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
                         createAccountWithEmailAndPassword(email, password, fullName)
@@ -65,7 +82,10 @@ export default function RegistrationScreen({ navigation }) {
                         })
                     }}>
                     <Text style={styles.buttonTitle}>Create account</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                <View className='my-3'>
+                <ButtonYellow onPress={()=> navigation.navigate('RegisterFirstSteps', user)} text={'Continuar'}/>
+                </View>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
@@ -73,3 +93,20 @@ export default function RegistrationScreen({ navigation }) {
         </View>
     )
 }
+
+
+
+
+StyleSheet.create({
+    container: {
+       flex: 1
+    },
+    logo: {
+        flex: 1,
+        height: 140,
+        width: 155,
+        alignSelf: "center",
+        padding: 50,
+        margin:30
+    }
+})

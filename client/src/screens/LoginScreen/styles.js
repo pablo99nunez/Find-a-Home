@@ -2,19 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center'
-    },
-    title: {
-
-    },
-    logo: {
-        flex: 1,
-        height: 120,
-        width: 90,
-        alignSelf: "center",
-        margin: 30
-    },
+        flex: 1
+     },
+     logo: {
+         flex: 1,
+         height: 140,
+         width: 155,
+         alignSelf: "center",
+         padding: 50,
+         margin:30
+     },
     input: {
         height: 48,
         borderRadius: 5,
@@ -48,10 +45,10 @@ export default StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: '#2e2e2d'
+        color: '#fff'
     },
     footerLink: {
-        color: "#788eec",
+        color: "#AB4E68",
         fontWeight: "bold",
         fontSize: 16
     }
