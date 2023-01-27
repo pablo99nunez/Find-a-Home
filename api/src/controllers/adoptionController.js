@@ -64,13 +64,22 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
 const refreshStates = async (pet, newOwnerEmail) => {
     await pet.solicitudes.forEach(async (apply) => {
         const user = await UserModel.findOne({ email: apply.email })
-        user.misSolicitudes = user.misSolicitudes.map((apply) => {
-            if (apply.petID === pet.id && apply.email === newOwnerEmail) {
-                apply.status = 'Aceptado'
-            } else if (apply.petID === pet.id && apply.email !== newOwnerEmail) {
-                apply.status = 'Rechazado'
+        for (let i = 0; i < user.misSolicitudes.length; i++) {
+            if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
+                user.misSolicitudes[i].status = "Aceptado";
+                break;
+            } else if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email !== newOwnerEmail) {
+                user.misSolicitudes[i].status = "Rechazado";
+                break;
             }
-        })
+        }
+        // user.misSolicitudes = user.misSolicitudes.map((apply) => {
+        //     if (apply.petID === pet.id && apply.email === newOwnerEmail) {
+        //         apply.status = 'Aceptado'
+        //     } else if (apply.petID === pet.id && apply.email !== newOwnerEmail) {
+        //         apply.status = 'Rechazado'
+        //     }
+        // })
         await user.save()
     });
 }
