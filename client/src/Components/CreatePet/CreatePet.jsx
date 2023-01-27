@@ -14,12 +14,42 @@ import { firebase } from "../../firebase/config";
 import * as ImagePicker from "expo-image-picker";
 import { PetPost } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
+
+import MapView, { Callout, Marker, Circle } from "react-native-maps";
+import * as Location from "expo-location";
+
 export const CreatePet = ({ navigation }) => {
   const data = [
     { key: "1", value: "Perro" },
     { key: "2", value: "Gato" },
     { key: "3", value: "Otro" },
   ];
+
+  const [pin, setPin] = useState({
+    latitude: -34.628517,
+    longitude: -58.45905,
+  });
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      });
+      console.log(location);
+
+      setPin({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
+  }, []);
 
   const [selected, setSelected] = useState("");
 
@@ -39,28 +69,49 @@ export const CreatePet = ({ navigation }) => {
     profilePic: "",
   });
 
-const validateName = () =>{
-  const nameRegex = /^[0-9A-Za-z\s]{0,100}$/;
-  if(!nameRegex.test(crear.name)) setError({...error, name: "el nombre no puede contener caracteres especiales"})
-  if(nameRegex.test(crear.name)) setError({...error, name: ""})
-}
-const validateDesc = () =>{
-  const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
-    if(!descripcionRegex.test(crear.description)) setError({...error, description: "La descripcion no puede contener caracteres especiales"})
-   if(descripcionRegex.test(crear.description)) setError({...error, description: ""})
-}
-const validateBirthday = () =>{
-   if(!crear.birthday) setError({...error, birthday: "Debes seleccionar una fecha de nacimiento aproximada"})
-   if(crear.birthday) setError({...error, birthday: ""})
-}
-const validateSize = () =>{
-   if(!crear.size) setError({...error, size: "Por favor selecciona el tamaño de tu mascota"})
-   if(crear.size) setError({...error, size: ""})
-}
-const validateProfilePic = () =>{
-   if(!crear.profilePic) setError({...error, profilePic: "Por favor selecciona al menos una foto"})
-   if(crear.profilePic) setError({...error, profilePic: ""})
-}
+  const validateName = () => {
+    const nameRegex = /^[0-9A-Za-z\s]{0,100}$/;
+    if (!nameRegex.test(crear.name))
+      setError({
+        ...error,
+        name: "el nombre no puede contener caracteres especiales",
+      });
+    if (nameRegex.test(crear.name)) setError({ ...error, name: "" });
+  };
+  const validateDesc = () => {
+    const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
+    if (!descripcionRegex.test(crear.description))
+      setError({
+        ...error,
+        description: "La descripcion no puede contener caracteres especiales",
+      });
+    if (descripcionRegex.test(crear.description))
+      setError({ ...error, description: "" });
+  };
+  const validateBirthday = () => {
+    if (!crear.birthday)
+      setError({
+        ...error,
+        birthday: "Debes seleccionar una fecha de nacimiento aproximada",
+      });
+    if (crear.birthday) setError({ ...error, birthday: "" });
+  };
+  const validateSize = () => {
+    if (!crear.size)
+      setError({
+        ...error,
+        size: "Por favor selecciona el tamaño de tu mascota",
+      });
+    if (crear.size) setError({ ...error, size: "" });
+  };
+  const validateProfilePic = () => {
+    if (!crear.profilePic)
+      setError({
+        ...error,
+        profilePic: "Por favor selecciona al menos una foto",
+      });
+    if (crear.profilePic) setError({ ...error, profilePic: "" });
+  };
 
   const [uploading, setUploading] = useState(false);
 
@@ -126,37 +177,39 @@ const validateProfilePic = () =>{
     );
   };
   const HandleSubmit = async () => {
-    if(!error.length) {
-    const DatosPetAEnviar = {
-      name: crear.name,
-      description: crear.description,
-      birthday: crear.birthday,
-      size: crear.size,
-      profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
-      specie: selected,
-    };
-    await PetPost(DatosPetAEnviar)
-      .then((sucess) => {
-        alert("se creo");
-        navigation.goBack()
-      })
-      .catch((error) => {
-        alert(error.message);
-      })
-      .finally((e) => {
-        setCrear({
-          name: "",
-          description: "",
-          birthday: "",
-          size: "",
-          profilePic: "",
+    if (!error.length) {
+      const DatosPetAEnviar = {
+        name: crear.name,
+        description: crear.description,
+        birthday: crear.birthday,
+        size: crear.size,
+        profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
+        specie: selected,
+        latitude: pin.latitude,
+        longitude: pin.longitude,
+      };
+      await PetPost(DatosPetAEnviar)
+        .then((sucess) => {
+          alert("se creo");
+          navigation.goBack();
+        })
+        .catch((error) => {
+          alert(error.message);
+        })
+        .finally((e) => {
+          setCrear({
+            name: "",
+            description: "",
+            birthday: "",
+            size: "",
+            profilePic: "",
+          });
+          setSelected("");
         });
-        setSelected("");
-      });
-  }else{
-    alert("Por favor completa todos los datos")
-  }
-}
+    } else {
+      alert("Por favor completa todos los datos");
+    }
+  };
 
   return (
     <>
@@ -175,7 +228,7 @@ const validateProfilePic = () =>{
         <TextInput
           style={styles.input}
           placeholder="Nombre de tu mascota"
-          placeholderTextColor= {!error.name ?"#fcfcfc" : "#d70f0f"}
+          placeholderTextColor={!error.name ? "#fcfcfc" : "#d70f0f"}
           autoCapitalize="none"
           value={crear.name}
           maxLength={10}
@@ -184,18 +237,28 @@ const validateProfilePic = () =>{
             (text) => setCrear(/* validate( */ { ...crear, name: text }) /* ) */
           }
         />
-  {error.name ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.name}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+        {error.name ? (
+          <Text style={{ fontSize: 10, marginLeft: 70 }}>{error.name}</Text>
+        ) : (
+          <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+        )}
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
         <TextInput
           style={styles.input}
           placeholder="Cómo es? Necesita alguna vacúna?"
-          placeholderTextColor={!error.description ?"#fcfcfc" : "#d70f0f"}
+          placeholderTextColor={!error.description ? "#fcfcfc" : "#d70f0f"}
           autoCapitalize="none"
           value={crear.description}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
           onBlur={() => validateDesc()}
         />
-  {error.description ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.description}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+        {error.description ? (
+          <Text style={{ fontSize: 10, marginLeft: 70 }}>
+            {error.description}
+          </Text>
+        ) : (
+          <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+        )}
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>
           Fecha de nacimiento:
@@ -208,15 +271,20 @@ const validateProfilePic = () =>{
           value={crear.birthday}
           onChangeText={(text) => setCrear({ ...crear, birthday: text })}
           onBlur={() => validateBirthday()}
-
         />
-          {error.birthday ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.birthday}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
-
+        {error.birthday ? (
+          <Text style={{ fontSize: 10, marginLeft: 70 }}>{error.birthday}</Text>
+        ) : (
+          <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+        )}
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Tamaño:</Text>
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "small" }) }  onBlur={() => validateProfilePic()}>
+        <TouchableOpacity
+          onPress={() => setCrear({ ...crear, size: "small" })}
+          onBlur={() => validateProfilePic()}
+        >
           {crear.size === "small" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
@@ -245,7 +313,10 @@ const validateProfilePic = () =>{
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setCrear({ ...crear, size: "large" })}  onBlur={() => validateProfilePic()}>
+        <TouchableOpacity
+          onPress={() => setCrear({ ...crear, size: "large" })}
+          onBlur={() => validateProfilePic()}
+        >
           {crear.size === "large" ? (
             <Image
               source={require("../../images/perro_rosa.png")}
@@ -258,7 +329,11 @@ const validateProfilePic = () =>{
             />
           )}
         </TouchableOpacity>
-        {error.size ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.size}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+        {error.size ? (
+          <Text style={{ fontSize: 10, marginLeft: 70 }}>{error.size}</Text>
+        ) : (
+          <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+        )}
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Especie:</Text>
         <SelectList
@@ -284,7 +359,13 @@ const validateProfilePic = () =>{
           {/* <Image source={{uri: foto}} style={styles.foto} /> */}
         </TouchableOpacity>
 
-        {error.profilePic ? <Text style={{ fontSize: 10, marginLeft: 70}}>{error.profilePic}</Text>: <Text style={{ fontSize: 10, marginRight: 10}}></Text> }
+        {error.profilePic ? (
+          <Text style={{ fontSize: 10, marginLeft: 70 }}>
+            {error.profilePic}
+          </Text>
+        ) : (
+          <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+        )}
 
         <TouchableOpacity
           onPress={() => {
