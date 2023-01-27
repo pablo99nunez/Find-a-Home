@@ -75,8 +75,9 @@ const refreshStates = async (pet, newOwnerEmail) => {
             }
         }
         await user.save()
-    });} catch (error) {
-        console.log("VAS A TIRAR EL SERVIDOR CULIAAAUU")
+    })
+    } catch (error) {
+        throw(error)
     }
 }
 
