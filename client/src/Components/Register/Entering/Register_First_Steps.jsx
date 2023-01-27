@@ -3,7 +3,6 @@ import { Picker } from "@react-native-picker/picker";
 import {
   View,
   Text,
-  Dimensions,
   StyleSheet,
   ScrollView,
   TextInput,
@@ -36,18 +35,18 @@ const handleContinuar = () =>{
         className="absolute top-[16px] right-[22] z-[1]"
         source={require("../../../images/logo-black.png")}
       />
-      <View className="h-screen items-center justify-center bg-[#FFC733]">
-        <Text className="absolute top-[121px] w-auto mx-auto font-roboto font-light text-[90px] leading-auto flex items-center text-center">
+      <View className="h-screen flex items-center justify-center bg-[#FFC733] ">
+        <Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
           ¡Bienvenido!
         </Text>
-        <Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-[38px] leading-auto flex items-center text-center">
+        <Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
         </Text>
 
-        <View className="w-[466px] mt-32">
-          <Text className="relative text-[26px] font-[23px]">Teléfono:</Text>
+        <View className="w-11/12">
+          <Text className="">Teléfono:</Text>
           <TextInput
-            className="bg-[#1E1E1E] text-[#7E7E7E] rounded-[11px] w-[466px] h-[46px] mx-auto pl-[9px] text-[18px]"
+            className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%]  mx-auto h-11"
             value={userInput.telefono}
             placeholder={"   011 555-5555"}
             placeholderTextColor="#ffffff50"
@@ -57,22 +56,22 @@ const handleContinuar = () =>{
           />
         </View>
 
-        <View className="w-[466px]">
-          <Text className="relative text-[26px] font-[23px]">Pais:</Text>
+        <View className="w-11/12">
+          <Text className="">Pais:</Text>
           <SelectList
             data={[{ key: "Argentina", value: "Argentina" }]}
             setSelected={(val) => setUserInput({ ...userInput, pais: val })}
             placeholder="Pais"
             search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E" }}
+            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
 
-        <View className="w-[466px]">
-          <Text className="relative text-[26px] font-[23px]">Provincia:</Text>
+        <View className="w-11/12">
+          <Text className="">Provincia:</Text>
           <SelectList
             data={States}
             setSelected={(val) =>
@@ -80,15 +79,15 @@ const handleContinuar = () =>{
             }
             placeholder="Provincia"
             search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E" }}
+            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
 
-        <View className="w-[466px]">
-          <Text className="relative text-[26px] font-[23px]">
+        <View className="w-11/12">
+          <Text className="">
             Departamento:
           </Text>
           <SelectList
@@ -98,31 +97,31 @@ const handleContinuar = () =>{
             }
             placeholder="Departamento"
             // search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E" }}
+            boxStyles={{ backgroundColor: "#1E1E1E",width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
-      </View>
      {loading ? <TouchableOpacity
         onPress={() => {}}
       >
-        <Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+        <Text className="text-3xl">
           Loading
         </Text>
       </TouchableOpacity>
     :  
-    <TouchableOpacity
+    <TouchableOpacity className='flex flex-row justify-end w-11/12 mt-5'
         onPress={() => {
           handleContinuar()
         }}
       >
-        <Text className="absolute bottom-[50px] right-[28px] text-[36px]">
+        <Text className="text-3xl font-light ">
           Continuar
         </Text>
       </TouchableOpacity>
     }
+      </View>
     </ScrollView>
   );
 }

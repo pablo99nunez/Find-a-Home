@@ -22,10 +22,10 @@ export default function GoogleRegister({ navigation }) {
 				source={require("../../../images/logo-black.png")}
 			/>
 			<View className="h-screen items-center justify-center bg-[#FFC733]">
-				<Text className="absolute top-[121px] w-auto mx-auto font-roboto font-light text-[90px] leading-auto flex items-center text-center">
+				<Text className="absolute top-[121px] w-auto mx-auto font-roboto font-light text-2xl leading-auto flex items-center text-center">
 					¡Ya casi!
 				</Text>
-				<Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-[38px] leading-auto flex items-center text-center">
+				<Text className="absolute top-[242px] w-[430px] mx-auto px-8 font-roboto font-[0] text-lg leading-auto flex items-center text-center">
 					Debes registrarte para poder adoptar una mascota
 				</Text>
 				<TouchableOpacity 
