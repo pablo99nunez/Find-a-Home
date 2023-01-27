@@ -83,20 +83,23 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
 
 const refreshStates = async (pet, newOwnerEmail) => {
     try {
-        pet.solicitudes.forEach(async (apply) => {
-            await UserModel.updateOne(
-                { email: apply.email, "misSolicitudes.petID": pet._id },
-                { 
-                    $set: {
-                        "misSolicitudes.$.status": (apply.email === newOwnerEmail) ? "Aceptado" : "Rechazado"
+        await UserModel.updateMany(
+            { "misSolicitudes.petID": pet._id },
+            {
+                $set: {
+                    "misSolicitudes.$[].status": {
+                        $cond: {
+                            if: { $eq: ["$misSolicitudes.email", newOwnerEmail] },
+                            then: "Aceptado",
+                            else: "Rechazado"
+                        }
                     }
                 }
-            );
-        });
-    } catch (error) {
-        throw error;
-    }
-};
+            })
+        } catch (error) {
+            throw(error)
+        }
+}
 
 
 const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud) => {
