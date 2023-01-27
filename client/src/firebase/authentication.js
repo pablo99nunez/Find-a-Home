@@ -34,14 +34,17 @@ export const loginWithEmailAndPassword = async (email, password) => {
 export const createAccountWithEmailAndPassword = async (
   email,
   password,
-  fullName
+  firstName,
+  lastName, 
+  phone, 
+  conditions
 ) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then((resp) => {
       if (resp.user) {
         resp.user.getIdToken().then(async (tkn) => {
           await AsyncStorage.setItem("authorization", "Bearer " + tkn);
-          await createUserInDb(fullName, email, password);
+          await createUserInDb(firstName, lastName, email, phone, conditions);
           console.log({ authorization: "Bearer " + tkn });
         });
       } else {
@@ -54,15 +57,14 @@ export const createAccountWithEmailAndPassword = async (
       throw err
     });
   //CREAMOS EL USUARIO EN LA BASE DE DATOS
-  const createUserInDb = async (fullName, email) => {
-    const profilePic = "https://i.pravatar.cc/150?u=thefakeuser.jpg";
-    const phone = "01155555555";
+  const createUserInDb = async (firstName,lastName, email, phone, conditions) => {
     const data = {
-      firstName: fullName,
-      lastName: fullName,
-      profilePic: profilePic,
-      email: email,
+      firstName,
+      lastName,
+      profilePic: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532',
+      email,
       phone,
+      conditions
     };
     //console.log("DATA FOR DB CREATION:", data);
     const tokenDelStore = await AsyncStorage.getItem("authorization").catch(
