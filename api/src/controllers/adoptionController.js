@@ -61,31 +61,9 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
     }
 }
 
-// const refreshStates = async (pet, newOwnerEmail) => {
-//     try{
-
-//     await pet.solicitudes.forEach(async (apply) => {
-//         const user = await UserModel.findOne({ email: apply.email })
-//         for (let i = 0; i < user.misSolicitudes.length; i++) {
-//             if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
-//                 user.misSolicitudes[i].status = "Aceptado";
-//                 break;
-//             } else if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email !== newOwnerEmail) {
-//                 user.misSolicitudes[i].status = "Rechazado";
-//                 break;
-//             }
-//         }
-//         await user.save()
-//     })
-
-//     } catch (error) {
-//         throw(error)
-//     }
-// }
-
 const refreshStates = async (pet, newOwnerEmail) => {
-    let promise = new Promise((resolve, reject) => {
-    pet.solicitudes.forEach(async (apply) => {
+    try{
+    await pet.solicitudes.forEach(async (apply) => {
         const user = await UserModel.findOne({ email: apply.email })
         for (let i = 0; i < user.misSolicitudes.length; i++) {
             if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
@@ -98,9 +76,10 @@ const refreshStates = async (pet, newOwnerEmail) => {
         }
         await user.save()
     })
-    resolve();
-    });
-    return promise;
+
+    } catch (error) {
+        throw(error)
+    }
 }
 
 refreshStates()
