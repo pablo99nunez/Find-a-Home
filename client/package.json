@@ -10,6 +10,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/roboto": "^0.2.2",
     "@expo/webpack-config": "^0.17.2",
     "@gorhom/bottom-sheet": "^4.4.5",
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -26,6 +27,7 @@
     "base-64": "^1.0.0",
     "expo": "~47.0.12",
     "expo-constants": "^14.0.2",
+    "expo-font": "^11.0.1",
     "expo-image-picker": "~14.0.2",
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",

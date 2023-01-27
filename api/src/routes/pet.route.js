@@ -1,6 +1,6 @@
 const express = require('express');
 const { createPet } = require('../controllers/createPet');
-const { findPet, findAllPets, updatePet, deletePet } = require('../controllers/petController');
+const { findPet, findAllPets, updatePet, deletePet, filterByOwner } = require('../controllers/petController');
 const {solicitarAdopcion} = require('../controllers/adoptionController')
 const { checkJwt } = require('../utils/firebase-stuff');
 const router = express.Router();
@@ -86,6 +86,18 @@ router.delete('/profile',checkJwt, async (req, res) => {
     res.send({ message: 'Mascota borrada', payload: deletedPet });
   } catch (err) {
     res.status(501).send({ error: err.message })
+  }
+});
+
+router.get('/byowner',checkJwt, async (req, res) => {
+  try {
+   const email = req.user.email
+
+    const allPets = await filterByOwner(email);
+
+    res.send(allPets);
+  } catch (error) {
+    res.status(501).send({ error: error.message });
   }
 });
 

@@ -56,6 +56,43 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
 }
 
+export const putUserData = async (payload) => {
+    /* 
+    ¿que estructura tiene el payload? Esta
+    payload ={
+        "departamento": "Buenos Aires",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "telefono": "3232"
+        "conditions": {} 
+    },
+     */
+    const config = {
+        headers: {
+            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        }
+    }
+    const objetoAenviar = {
+        phone: payload.telefono,
+        address: [payload.pais,payload.provincia,payload.departamento],
+        conditions: payload.condiciones
+    }
+    console.log(objetoAenviar);
+    
+    const json = await axios.put(`${url}/user/profile`, objetoAenviar , config)
+    .catch(error=>alert(error.message))
+    return json
+
+   /*  return async (dispatch) => {
+        const json = await axios.put(`${url}/user/profile`,objetoAenviar,config)
+        return dispatch({
+            type: GET_PETS_FILTERED_BOTH_FILTERS,
+            payload: json.data
+        })
+    } */
+}
+
 export const PetPost = async (bodyPayload) => {
 
     const config = {
@@ -90,14 +127,20 @@ export const getUser = (email) => {
                     payload: result
                 })
             })
+            .catch(err=>alert(err.message))
 
     }
 
 }
 
-
+export const checked = (payload) =>{
+    return{
+        type: "CHECKED",
+        payload,
+    }
+} 
 //Al fetch hay  q enviarle por body el email
-//{email: email}
+//{email: email} 
 export const getPetByOwner = (email) => {
 
     const config = {
@@ -114,7 +157,7 @@ export const getPetByOwner = (email) => {
                     payload: result
                 })
             })
-            .catch(error=>{
+            .catch(error => {
                 alert('Error en el fetch de getPetByOwner!')
             })
 

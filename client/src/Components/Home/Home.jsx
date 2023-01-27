@@ -17,7 +17,7 @@ import Card from "../Card/Card";
 import { Header } from "../Header/Header";
 import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets } from "../../Redux/Actions";
+import { getAllPets, checked } from "../../Redux/Actions";
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useFocusEffect } from "@react-navigation/native";
@@ -28,8 +28,8 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
   const auth = getAuth(firebase); //traemos la authentication de firebase
-
   const allPets = useSelector((state) => state.allPets);
+  const check = useSelector((state) => state.check);
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
   useFocusEffect(

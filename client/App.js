@@ -26,15 +26,25 @@ import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Regis
 import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreatePet } from "./src/Components/CreatePet/CreatePet";
+import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import axios from "axios";
-axios.defaults.baseURL = "http://3.90.65.77:8080/";
+
+import { useFonts } from "expo-font";
+import { Roboto_300Light } from "@expo-google-fonts/roboto";
+
+axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_300Light,
+  });
+
+  if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -67,6 +77,10 @@ export default function App() {
             component={UserDetail}
             options={{ headerShown: false }}
           />
+
+          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
+
+          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
 
           <Stack.Screen
             name="RegisterFirstSteps"

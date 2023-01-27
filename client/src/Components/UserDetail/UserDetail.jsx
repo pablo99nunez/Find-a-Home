@@ -1,8 +1,4 @@
 import React from "react";
-
-//3 lineas son las importaciones q hago por todos lados
-//Deberia modularizar? Sí.
-//Voy a modularizar? Yo diria que no.
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, signOut } from "firebase/auth";
 import firebase from "../../firebase/firebase-config";
@@ -58,9 +54,9 @@ export default function UserDetail({ route, navigation }) {
 
 
   return (
-    <ScrollView
+    <View
       style={{ height: HEIGHT }}
-      className="bg-[#ACACAC] flex justify-content"
+      className="bg-[#ACACAC] flex justify-between"
     >
       <ImageBackground
         style={{
@@ -86,13 +82,12 @@ export default function UserDetail({ route, navigation }) {
             />
           </View>
         </LinearGradient>
-      </ImageBackground>
-
       <View className="flex flex-row justify-between w-11/12 mx-auto">
         <Text className=" text-4xl">{currentUser.firstName}</Text>
-        <Text className=" text-4xl">{currentUser.rating}⭐</Text>
+        <Text className=" text-4xl text-[#ffc733]">{currentUser.rating.rating? currentUser.rating.rating : null}★</Text>
       </View>
-      <View className="">
+      </ImageBackground>
+      <View className="mb-4">
         <View>
           <Text className="text-center text-2xl text-[#2A2B20]">
             {currentUser.description}
@@ -114,7 +109,7 @@ export default function UserDetail({ route, navigation }) {
 
       <ButtonYellow text="Logout" onPress={logoutUser} />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

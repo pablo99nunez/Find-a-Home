@@ -19,12 +19,19 @@ import MapView, { Callout, Marker, Circle } from "react-native-maps";
 import * as Location from "expo-location";
 
 export const CreatePet = ({ navigation }) => {
+  const dispatch = useDispatch();
   const data = [
     { key: "1", value: "Perro" },
     { key: "2", value: "Gato" },
     { key: "3", value: "Otro" },
   ];
-
+  const data2 = [
+    { key: "1", value: "Adoptable" },
+    { key: "2", value: "Lost" },
+    { key: "3", value: "Found" },
+    { key: "3", value: "InAdoptionProcess" },
+    { key: "3", value: "NotAdoptable" },
+  ];
   const [pin, setPin] = useState({
     latitude: -34.628517,
     longitude: -58.45905,
@@ -52,6 +59,7 @@ export const CreatePet = ({ navigation }) => {
   }, []);
 
   const [selected, setSelected] = useState("");
+  const [selected2, setSelected2] = useState("");
 
   const [crear, setCrear] = useState({
     name: "",
@@ -59,6 +67,9 @@ export const CreatePet = ({ navigation }) => {
     birthday: "",
     size: "",
     profilePic: "",
+    state: "",
+    specie: selected,
+    state: selected2,
   });
 
   const [error, setError] = useState({
@@ -79,7 +90,7 @@ export const CreatePet = ({ navigation }) => {
     if (nameRegex.test(crear.name)) setError({ ...error, name: "" });
   };
   const validateDesc = () => {
-    const descripcionRegex = /^[a-zA-Z ]{0,10}$/;
+    const descripcionRegex = /^[a-zA-Z0-9\s]*$/;
     if (!descripcionRegex.test(crear.description))
       setError({
         ...error,
@@ -95,14 +106,6 @@ export const CreatePet = ({ navigation }) => {
         birthday: "Debes seleccionar una fecha de nacimiento aproximada",
       });
     if (crear.birthday) setError({ ...error, birthday: "" });
-  };
-  const validateSize = () => {
-    if (!crear.size)
-      setError({
-        ...error,
-        size: "Por favor selecciona el tamaño de tu mascota",
-      });
-    if (crear.size) setError({ ...error, size: "" });
   };
   const validateProfilePic = () => {
     if (!crear.profilePic)
@@ -341,6 +344,17 @@ export const CreatePet = ({ navigation }) => {
           data={data}
           save="value"
         />
+        <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
+
+        <Text style={{ fontSize: 30, marginRight: 10 }}>
+          ¿Estado del animal?
+        </Text>
+        <SelectList
+          setSelected={(dataSave) => setSelected2(dataSave)}
+          data={data2}
+          save="value"
+        />
+        <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
         <Text style={{ fontSize: 30, marginRight: 10 }}>Foto:</Text>
         <Text style={{ fontSize: 10, marginRight: 10 }}></Text>
 
@@ -356,7 +370,6 @@ export const CreatePet = ({ navigation }) => {
               style={{ width: 250, height: 200, marginLeft: 70 }}
             />
           )}
-          {/* <Image source={{uri: foto}} style={styles.foto} /> */}
         </TouchableOpacity>
 
         {error.profilePic ? (

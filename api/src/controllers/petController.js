@@ -82,8 +82,13 @@ const deletePet = async (petID, ownerEmail) => {
   const queryCondition = { _id: petID, owner: ownerEmail }
   const deletedPet = await PetModel.deleteOne(queryCondition)
   return deletedPet
-}
+};
 
+const filterByOwner = async(email)=>{
+  const filter = {owner: email}
+  const ownerPets = await PetModel.find(filter)
+  return ownerPets
+}
 
 
 module.exports = {
@@ -92,4 +97,5 @@ module.exports = {
   findAllPets,
   updatePet,
   deletePet,
+  filterByOwner,
 }
