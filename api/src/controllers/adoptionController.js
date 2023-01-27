@@ -63,22 +63,39 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
 
 const refreshStates = async (pet, newOwnerEmail) => {
     try{
-    await pet.solicitudes.forEach(async (apply) => {
-        const user = await UserModel.findOne({ email: apply.email })
-        
-        for (let i = 0; i < user.misSolicitudes.length; i++) {
-            if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
-                user.misSolicitudes[i].status = "Aceptado";
-                break;
-            } else if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email !== newOwnerEmail) {
-                user.misSolicitudes[i].status = "Rechazado";
-                break;
+    await pet.solicitudes.forEach((solicitud) => {
+        UserModel.find({email: solicitud.email}, (err, user) => {
+          user.misSolicitudes.forEach((misSolicitud) => {
+            if(misSolicitud.petID === pet.id && misSolicitud.email === newOwnerEmail) {
+              misSolicitud.status = "Aceptado";
+              user.save();
+            } else {
+                misSolicitud.status = "Rechazado";
+                user.save()
             }
-        }
-        await user.save()
+          });
+        });
     })
+    }
+    
+    // try{
+    // await pet.solicitudes.forEach(async (apply) => {
+    //     const user = await UserModel.findOne({ email: apply.email })
+        
+    //     for (let i = 0; i < user.misSolicitudes.length; i++) {
+    //         if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
+    //             user.misSolicitudes[i].status = "Aceptado";
+    //             break;
+    //         } else if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email !== newOwnerEmail) {
+    //             user.misSolicitudes[i].status = "Rechazado";
+    //             break;
+    //         }
+    //     }
+    //     await user.save()
+    // })
 
-    } catch (error) {
+    // }
+     catch (error) {
         throw(error)
     }
 }
