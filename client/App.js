@@ -33,19 +33,18 @@ import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
-import { Roboto_300Light } from "@expo-google-fonts/roboto"
+import { Roboto_300Light } from "@expo-google-fonts/roboto";
 
 axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
-
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
-})
+  });
 
-if(!fontsLoaded) return null
+  if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -79,11 +78,7 @@ if(!fontsLoaded) return null
             options={{ headerShown: false }}
           />
 
-
-          <Stack.Screen
-            name="Solicitud de Adopcion"
-            component={SolicitudPet}
-          />
+          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
 
           <Stack.Screen
             name="RegisterFirstSteps"
