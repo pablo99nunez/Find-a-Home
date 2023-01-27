@@ -31,6 +31,7 @@ export default function Home({ navigation }) {
   const allPets = useSelector((state) => state.allPets);
   const check = useSelector((state) => state.check);
 
+  console.log(allPets.payload);
   //se ejecuta cuando se vé, focus=concentrar algo asi
   useFocusEffect(
     React.useCallback(() => {

@@ -35,7 +35,7 @@ import axios from "axios";
 import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 
-axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
+axios.defaults.baseURL = "http://100.26.168.38:8080/pet";
 
 const Stack = createStackNavigator();
 
