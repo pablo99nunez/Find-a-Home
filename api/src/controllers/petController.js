@@ -78,28 +78,17 @@ const updatePet = async (PetData, petID, ownerEmail) => {
   return updatedPet
 }
 
-const deletePet = async (petID) => {
-  const queryCondition = { _id: petID}
-  const deletedPet = await PetModel.deleteOne(queryCondition)
-  return deletedPet
-}
-const deletePetCondition = async (condition) => {
-  if(Object.keys(condition)>0){
-    const deletedPet = await PetModel.deleteMany(condition)
-    return deletedPet
-  }else
-  return {message: 'manda bien el body'}
-}
-const deleteAllPets = async () => {
-  const deletedPet = await PetModel.deleteMany({})
-  return deletedPet
-}
-/* const deletePet = async (petID, ownerEmail) => {
+const deletePet = async (petID, ownerEmail) => {
   const queryCondition = { _id: petID, owner: ownerEmail }
   const deletedPet = await PetModel.deleteOne(queryCondition)
   return deletedPet
-} */
+};
 
+const filterByOwner = async(email)=>{
+  const filter = {owner: email}
+  const ownerPets = await PetModel.find(filter)
+  return ownerPets
+}
 
 
 module.exports = {
@@ -108,6 +97,5 @@ module.exports = {
   findAllPets,
   updatePet,
   deletePet,
-  deletePetCondition,
-  deleteAllPets
+  filterByOwner,
 }

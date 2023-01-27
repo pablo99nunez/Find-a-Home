@@ -18,8 +18,9 @@ const createNewUser = async (user) => {
 
 }
 
-const findUser = async (userEmail) => {
-  const userInDB = await UserModel.findOne({ email: userEmail })
+
+const findUser = async (email) => {
+  const userInDB = await UserModel.findOne({ email: email })
   return userInDB
 
 }

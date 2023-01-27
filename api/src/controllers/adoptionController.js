@@ -1,5 +1,6 @@
 const UserModel = require('../models/user.model');
 const PetModel = require('../models/pet.model');
+const { findAllPets } = require('./petController');
 //*const { default: mongoose } = require('mongoose');
 const updatePet = async (PetData, petID, ownerEmail) => {
     const queryCondition = { _id: petID, owner: ownerEmail }
@@ -25,14 +26,21 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
         if (target.pets.includes(petID)) throw new Error('La mascota ya es propiedad del destinatario');
 
         const owner = await UserModel.findOne({ email: ownerEmail })//*.session(session)
-
+        
         if (!owner.pets.includes(petID)) throw new Error('La mascota no es tuya! hijo de puta!');
         //CONTROLLER:
-        pet.owner = owner.email //el pet tiene nuevo owner
+        //Rechazados
+        //Cambia estado a Rechazado de todas aquellas personas que hayan querido adoptar
+        await refreshStates(pet, newOwnerEmail)
+        //Adoptando
+        pet.state = "Adopted" //Cambias el estado de la mascota a adoptado
+        pet.owner = target.email //el pet tiene nuevo owner
         pet.ownerHistory.push(newOwnerEmail) //el pet tiene nueva historia de dueño
-        pet.currentLocation = target.address
+        pet.currentLocation = target.address //Le das una nueva dirección
+        pet.solicitudes = pet.solicitudes.map((apply) => apply.email === newOwnerEmail ? [...apply, apply.status = 'Aceptado'] : [...apply,apply.status = 'Rechazado'])
         owner.pets.splice(owner.pets.indexOf(petID), 1) //se lo quita al owner
         target.pets.push(petID) //se lo da al nuevo owner
+        // target.misSolicitudes = target.misSolicitudes.map((apply) => apply.petID == petID ? apply.pet = 'Aceptado' : null) //REMPLAZED BY refreshStates FUNCTION :)
         await pet.save()
         await owner.save()
         await target.save()
@@ -47,6 +55,19 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
     }
 }
 
+const refreshStates = async (pet, newOwnerEmail) => {
+    await pet.solicitudes.forEach(async (apply) => {
+        const user = await UserModel.findOne({ email: apply.email })
+        user.misSolicitudes = user.misSolicitudes.map((apply) => {
+            if (apply.petID === pet.id && apply.email === newOwnerEmail) {
+                apply.status = 'Aceptado'
+            } else if (apply.petID === pet.id && apply.email !== newOwnerEmail) {
+                apply.status = 'Rechazado'
+            }
+        })
+        await user.save()
+    });
+}
 
 
 const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud) => {
@@ -90,17 +111,21 @@ const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitu
         if (indexDeSolicitud !== -1) {
             //objeto de {'interestedEmail','name', 'LastName', 'requestMessage', 'profilePic'}
             pet.solicitudes[indexDeSolicitud] = {
+                status: "Pendiente",
                 email: interestedUser.email,
                 firstName: interestedUser.firstName,
                 lastName: interestedUser.lastName,
                 message: message,
-                profilePic: interestedUser.profilePic
+                profilePic: interestedUser.profilePic,
+                phone: interestedUser.phone
             }
 
             interestedUser.misSolicitudes[indexDeSolicitudUser] = {
+                status: "Pendiente",
                 petID: petID,
                 message: message,
-                owner: petID.owner
+                owner: pet.owner,
+                email: interestedUser.email
             }
             await pet.save()
             await interestedUser.save()
@@ -108,16 +133,20 @@ const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitu
         } else {
             //si no existe, crea una nueva
             pet.solicitudes.push({
+                status: "Pendiente",
                 email: interestedUser.email,
                 firstName: interestedUser.firstName,
                 lastName: interestedUser.lastName,
                 message: message,
-                profilePic: interestedUser.profilePic
+                profilePic: interestedUser.profilePic,
+                phone: interestedUser.phone
             })
             interestedUser.misSolicitudes.push({
+                status: "Pendiente",
                 petID: petID,
                 message: message,
-                owner: petID.owner
+                owner: pet.owner,
+                email: interestedUser.email
             })
             await pet.save()
             await interestedUser.save()

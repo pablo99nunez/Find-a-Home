@@ -3,13 +3,14 @@ const { confirmAdoption } = require('../controllers/adoptionController');
 const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
+const { ratingUpdate } = require('../controllers/ratingUserController');
 const router = express.Router();
 
 //loggeeado, todos, por body mandar "email" de a quien se quiera revisar:
 router.get('/profile', checkJwt, async (req, res) => {
   try {
-    const userEmail = req.body.email
-    const user = await findUser(userEmail)
+    const email = req.user.email
+    const user = await findUser(email)
     res.send(user)
   } catch (error) {
     res.status(501).send({ error: error.message })
@@ -18,7 +19,7 @@ router.get('/profile', checkJwt, async (req, res) => {
 //loggeado, admin, lista todos los usuarios
 router.get('/', checkJwt, async (req, res) => {
   try {
-    const filter = req.body
+    const filter = req.params
     if (!filter) filter = {}
     const users = await findAllUsers(filter)
     res.status(200).send(users)
@@ -62,8 +63,10 @@ router.put('/profile', checkJwt, async (req, res) => {
 router.put('/confirm', checkJwt, async (req, res) => {
   try {
     const parametros = [req.body.petID, req.user.email, req.body.newOwnerEmail]
+    const puntaje = [req.body.rating, req.body.newOwnerEmail]
     validateroute["/user/confirm"](...parametros)
     const petWithNewOwner = await confirmAdoption(...parametros)
+    await ratingUpdate(...puntaje)
     res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
   } catch (err) {
     res.status(501).send({ error: err.message })
@@ -74,4 +77,4 @@ router.put('/confirm', checkJwt, async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = router;
