@@ -70,7 +70,7 @@ const petSchema = mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: 'created_at', // Use `created_at` to store the created date
+      createdAt: 'created_at', // Use `creoloated_at` to store the created date
       updatedAt: 'updated_at', // and `updated_at` to store the last updated date
     },
   }
