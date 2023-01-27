@@ -37,7 +37,13 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
         pet.owner = target.email //el pet tiene nuevo owner
         pet.ownerHistory.push(newOwnerEmail) //el pet tiene nueva historia de dueño
         pet.currentLocation = target.address //Le das una nueva dirección
-        pet.solicitudes = pet.solicitudes.map((apply) => apply.email === newOwnerEmail ? [...apply, apply.status = 'Aceptado'] : [...apply,apply.status = 'Rechazado'])
+
+
+         pet.solicitudes = pet.solicitudes.map((apply) => apply.email === newOwnerEmail ?
+         {...apply, status: 'Aceptado'} :
+          {...apply,status: 'Rechazado'})
+
+
         owner.pets.splice(owner.pets.indexOf(petID), 1) //se lo quita al owner
         target.pets.push(petID) //se lo da al nuevo owner
         // target.misSolicitudes = target.misSolicitudes.map((apply) => apply.petID == petID ? apply.pet = 'Aceptado' : null) //REMPLAZED BY refreshStates FUNCTION :)
