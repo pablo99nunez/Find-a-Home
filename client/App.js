@@ -33,11 +33,11 @@ import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
+
 import { Roboto_300Light } from "@expo-google-fonts/roboto"
 import { ScreenStackHeaderRightView } from "react-native-screens";
 
-axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
-
+axios.defaults.baseURL = "http://100.26.168.38:8080/pet";
 
 const Stack = createStackNavigator();
 
@@ -51,9 +51,9 @@ const Logo =()=>(
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
-})
+  });
 
-if(!fontsLoaded) return null
+  if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -87,11 +87,7 @@ if(!fontsLoaded) return null
             options={{ headerShown: false }}
           />
 
-
-          <Stack.Screen
-            name="Solicitud de Adopcion"
-            component={SolicitudPet}
-          />
+          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
 
           <Stack.Screen
             name="RegisterFirstSteps"

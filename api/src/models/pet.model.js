@@ -60,11 +60,19 @@ const petSchema = mongoose.Schema(
     solicitudes: { //objeto de {'interestedEmail','FullName', 'requestMessage', 'profilePic'} 
       type: Array,
       default: []
+    },
+    coordinates: {
+      latitude: {
+        type: String
+      },
+      longitude: {
+        type: String
+      }
     }
   },
   {
     timestamps: {
-      createdAt: 'created_at', // Use `created_at` to store the created date
+      createdAt: 'created_at', // Use `creoloated_at` to store the created date
       updatedAt: 'updated_at', // and `updated_at` to store the last updated date
     },
   }
