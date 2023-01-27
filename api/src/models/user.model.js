@@ -72,9 +72,22 @@ const userSchema = mongoose.Schema(
       type: Date
     },
     rating: {
-      type: Number,
-      min: 0,
-      max: 5
+      rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        default: 0
+      },
+      acumulator: {
+        type: Number,
+        min: 0,
+        default: 0
+      },
+      totalpoints: {
+        type: Number,
+        min: 0,
+        default: 0
+      }
     },
     reviewsQty: {
       type: Number
@@ -90,8 +103,10 @@ const userSchema = mongoose.Schema(
       type: Array, //ids de mascotas
     },
     address: {
-      type: Array,
-      default: ["Argentina","Buenos Aires","Azul"]
+      type: String,
+      minlength: 2,
+      maxlength: 100,
+      default: "Desconocida"
     },
     conditions: {
       type: Object,

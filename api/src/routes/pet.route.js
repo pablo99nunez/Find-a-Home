@@ -1,6 +1,6 @@
 const express = require('express');
 const { createPet } = require('../controllers/createPet');
-const { findPet, findAllPets, updatePet, deletePet, deleteAllPets, deletePetCondition } = require('../controllers/petController');
+const { findPet, findAllPets, updatePet, deletePet, filterByOwner } = require('../controllers/petController');
 const {solicitarAdopcion} = require('../controllers/adoptionController')
 const { checkJwt } = require('../utils/firebase-stuff');
 const router = express.Router();
@@ -88,22 +88,16 @@ router.delete('/profile',checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message })
   }
 });
-//CONDITIOON DELETE, EJEMPLO body= {name: "Pucho"}
-router.delete('/condition',checkJwt, async (req, res) => {
+
+router.get('/byowner',checkJwt, async (req, res) => {
   try {
-    const deletedPet = await deletePetCondition(req.body)
-    res.send({ message: 'Mascota borrada', payload: deletedPet });
-  } catch (err) {
-    res.status(501).send({ error: err.message })
-  }
-});
-//SOLO ADMIN PUEDE BORRAR PERROS
-router.delete('/all',checkJwt, async (req, res) => {
-  try {
-    const deletedPet = await deleteAllPets()
-    res.send({ message: 'Mascota borrada', payload: deletedPet });
-  } catch (err) {
-    res.status(501).send({ error: err.message })
+   const email = req.user.email
+
+    const allPets = await filterByOwner(email);
+
+    res.send(allPets);
+  } catch (error) {
+    res.status(501).send({ error: error.message });
   }
 });
 
