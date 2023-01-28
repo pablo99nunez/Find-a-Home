@@ -67,6 +67,7 @@ const cleanUserInexistentPets = async (email) => {
         }
     }, (err) => { if (err) { console.error('Error al eliminar la solicitu a un usuario: ' + err.message); } });
     //filtra el pets del usuario por pets inexistentes dentro del arrayPetIDs
+    //FALTA LIMPIAR LISTA DE misSolicitudes
     user.pets = user.pets.filter(item => {
         !arrayPetIDs.includes(item);
     })
