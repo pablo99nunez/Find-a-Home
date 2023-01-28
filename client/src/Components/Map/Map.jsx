@@ -19,8 +19,10 @@ export default function Map() {
   let pets = [
     {
       name: "Cachupin",
-      latitude: -34.6769717,
-      longitude: -58.413725,
+      coordinates: {
+        latitude: -34.6769717,
+        longitude: -58.413725,
+      },
     },
     { name: "Telmo", latitude: -34.679007, longitude: -58.4134203 },
     { name: "Pecu", latitude: -34.6845933, longitude: -58.4138517 },
@@ -41,7 +43,8 @@ export default function Map() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
+      /* console.log(location); */
+      console.log(allPets.payload);
 
       setPin({
         latitude: location.coords.latitude,
@@ -78,13 +81,18 @@ export default function Map() {
           </Marker>
         ))} */}
 
-        <Marker
-          coordinate={allPets.payload[allPets.payload.length - 1].latitud}
-        >
+        {/* <Marker coordinate={pets[0]}>
           <Callout>
-            <Text>{allPets.payload[allPets.payload.length - 1].name}</Text>
+            <Text>{pets[0].name}</Text>
           </Callout>
-        </Marker>
+        </Marker> */}
+        {
+          <Marker coordinate={pets[0].coordinates}>
+            <Callout>
+              <Text>{allPets.payload[allPets.payload.length - 1].name}</Text>
+            </Callout>
+          </Marker>
+        }
       </MapView>
     </View>
   );
