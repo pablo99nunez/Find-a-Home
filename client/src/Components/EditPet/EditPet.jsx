@@ -12,7 +12,7 @@ import { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import * as ImagePicker from "expo-image-picker";
 import { firebase } from "../../firebase/config";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { PetEdit } from "../../Redux/Actions/index";
 
 const EditPet = (props) => {
@@ -102,20 +102,18 @@ const EditPet = (props) => {
   };
 
   const HandleSubmit = async () => {
-    if (!error.length) {
       const DatosPetAEnviar = {
         name: edit.name,
         description: edit.description,
         profilePic: edit.profilePic,
         state: selected2,
         id: props.route.params.id,
-        email: props.route.params.owner,
-
+        email: props.route.params.email,
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
           alert("se edito");
-          navigation.goBack();
+          props.navigation.navigate("Home");
         })
         .catch((error) => {
           alert(error.message);
@@ -128,14 +126,11 @@ const EditPet = (props) => {
           });
           setSelected2("");
         });
-    } else {
-      alert("Por favor completa todos los datos");
-    }
   };
   return (
     <>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Image
             source={require("../../images/flecha.png")}
             style={{ width: 20, height: 20, marginRight: 30, marginTop: 60 }}

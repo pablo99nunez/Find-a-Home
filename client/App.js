@@ -40,7 +40,7 @@ import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
 
-axios.defaults.baseURL = "http://100.26.168.38:8080/pet";
+axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
 const Stack = createStackNavigator();
 
