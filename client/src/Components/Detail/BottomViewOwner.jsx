@@ -9,7 +9,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
   return (
     <View>
       <BottomSheetView>
-        <Text className='text-2xl mx-auto'>Solicitudes</Text>
+        <Text className='text-3xl mx-auto font-extralight'>Solicitudes</Text>
         {solicitudes.length < 1 ?
           <Text className='text-2xl mx-auto'>Aun no hay solicitudes para tu mascota!</Text>
           :
@@ -17,13 +17,13 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
             keyExtractor={(item) => item.firstName}
             data={solicitudes}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", item)} className='flex flex-row items-center justify-evenly'>
+              <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", item)} className='flex flex-row items-center justify-evenly mt-3'>
                 <Image
                   className='rounded-full '
                   style={styles.imagen}
                   source={{ uri: item.profilePic }} />
-                <View>
-                  <Text className='text-2xl font-bold'>{item.firstName}</Text>
+                <View className='w-2/5'>
+                  <Text className='text-xl font-bold'>{item.firstName} {item.lastName}</Text>
                   <Text className='text-md'>
                     {item.message?.slice(0,20).concat('...')}
                   </Text>
@@ -41,8 +41,8 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
 
 const styles = StyleSheet.create({
   imagen: {
-    width: width * 0.17,
-    height: width * 0.17,
+    width: width * 0.16,
+    height: width * 0.16,
   },
   imagen2: {
     width: width * 0.1,

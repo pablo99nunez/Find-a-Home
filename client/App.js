@@ -21,9 +21,6 @@ import Welcome from "./src/Components/WelcomePage/WelcomePage";
 import Detail from "./src/Components/Detail/Detail";
 import RegisterFirstSteps from "./src/Components/Register/Entering/Register_First_Steps";
 import RegisterLastSteps from "./src/Components/Register/Entering/Register_Last_Steps";
-import GoogleRegister from "./src/Components/Register/Adopting/Google_Register";
-import RegisterFirstStepsAdopting from "./src/Components/Register/Adopting/Register_First_Steps";
-import RegisterLastStepsAdopting from "./src/Components/Register/Adopting/Register_Last_Steps";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreatePet } from "./src/Components/CreatePet/CreatePet";
 import SolicitudPet from "./src/Components/Detail/SolicitudPet";
@@ -138,6 +135,7 @@ export default function App() {
           />
 
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          
           <Stack.Screen
             name="Registration"
             component={RegistrationScreen}
@@ -153,21 +151,6 @@ export default function App() {
 
           {/* =================================== */}
 
-          <Stack.Screen
-            name="GoogleRegister"
-            component={GoogleRegister}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="RegisterFirstStepsAdopting"
-            component={RegisterFirstStepsAdopting}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="RegisterLastStepsAdopting"
-            component={RegisterLastStepsAdopting}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen
             name="CreatePet"
             component={CreatePet}
