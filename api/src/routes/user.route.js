@@ -4,6 +4,7 @@ const { findUser, updateUser, findAllUsers, createNewUser } = require('../contro
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
 const { ratingUpdate } = require('../controllers/ratingUserController');
+const { cleanUserInexistentPets } = require('../controllers/deletePet');
 const router = express.Router();
 
 //loggeeado, todos, por body mandar "email" de a quien se quiera revisar:
@@ -74,7 +75,18 @@ router.put('/confirm', checkJwt, async (req, res) => {
   }
 });
 
-
+router.put('/cleanup', checkJwt, async (req,res)=>{
+try {
+    const {email} = req.body     
+    if(email){
+       const cleanedUser = await cleanUserInexistentPets(email) 
+    }else{
+        throw new Error("Debes enviar un email por body")
+    }
+} catch (error) {
+    res.status(501).send({ error: err.message })
+}
+})
 
 
 
