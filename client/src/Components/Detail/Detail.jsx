@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
@@ -37,8 +37,7 @@ export default function Detail({ route, navigation }) {
     state,
     owner,
     solicitudes,
-    latitud,
-    longitud,
+    coordinates,
   } = route.params;
 
   const days = calculateAdoptionDays(created_at);
@@ -73,14 +72,19 @@ export default function Detail({ route, navigation }) {
                 <HeaderDetail onPress={() => navigation.goBack()} days={days} />
               </View>
 
-              {owner === currentUser.email ?
-              <TouchableOpacity onPress={() => navigation.navigate("EditPet", route.params)}>
-           <Text>Boton de editar</Text>
-          </TouchableOpacity> : null }
+              {owner === currentUser.email ? (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("EditPet", route.params)}
+                >
+                  <Text>Boton de editar</Text>
+                </TouchableOpacity>
+              ) : null}
 
-              <View className='h-52'>
-                <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
-               </View>
+              <View className="h-52">
+                <Text className="text-[#f5c936] text-4xl text-center my-12">
+                  {name.toUpperCase()}
+                </Text>
+              </View>
 
               <View className="mx-auto">
                 {gallery ? (
@@ -111,24 +115,26 @@ export default function Detail({ route, navigation }) {
         <Characteristics size={size.toLowerCase()} age={age} />
         <View>
           <Text>
-            Coordenadas: latitud:{latitud} longitud:{longitud}
+            Coordenadas: latitud:{coordinates.latitude} longitud:
+            {coordinates.longitude}
           </Text>
         </View>
 
-
-        {['Adopted', 'NotAdoptable'].includes(state) ?
-          null
-          :
-          <View className='h-1/4 flex justify-evenly'>
-            {currentUser.email === owner ?
-            
-            
-            
-              <ButtonYellow text='Solicitudes' onPress={() => handleSolicitudes()} />
-              :
-              <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />}
-          </View>}
-
+        {["Adopted", "NotAdoptable"].includes(state) ? null : (
+          <View className="h-1/4 flex justify-evenly">
+            {currentUser.email === owner ? (
+              <ButtonYellow
+                text="Solicitudes"
+                onPress={() => handleSolicitudes()}
+              />
+            ) : (
+              <ButtonYellow
+                text="Adoptar"
+                onPress={() => HandleLoginToAdoption()}
+              />
+            )}
+          </View>
+        )}
 
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
           <View className="h-1/4 flex justify-evenly">
@@ -157,14 +163,14 @@ export default function Detail({ route, navigation }) {
           enablePanDownToClose={true}
           onClose={() => setOpen(-1)}
         >
-
-          {owner === currentUser.email ?
-          
-            <BottomViewOwner solicitudes={solicitudes} navigation={navigation} />
-            
-            :
-            <BottomView auth={auth} petId={petId} />}
-
+          {owner === currentUser.email ? (
+            <BottomViewOwner
+              solicitudes={solicitudes}
+              navigation={navigation}
+            />
+          ) : (
+            <BottomView auth={auth} petId={petId} />
+          )}
         </BottomSheet>
       ) : (
         <View className="h-1/4 flex justify-evenly">
