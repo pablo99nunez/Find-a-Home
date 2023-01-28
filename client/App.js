@@ -30,6 +30,7 @@ import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import { EditPet } from "./src/Components/EditPet/EditPet";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
@@ -154,10 +155,15 @@ export default function App() {
             component={RegisterLastStepsAdopting}
             options={{ headerShown: false }}
           />
-
-          <Stack.Screen
+                    <Stack.Screen
             name="CreatePet"
             component={CreatePet}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="EditPet"
+            component={EditPet}
             options={{ headerShown: false }}
           />
           {/* =================================== */}
