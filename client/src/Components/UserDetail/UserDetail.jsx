@@ -30,7 +30,6 @@ export default function UserDetail({ route, navigation }) {
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
 
-
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
@@ -39,6 +38,7 @@ export default function UserDetail({ route, navigation }) {
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
+
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);

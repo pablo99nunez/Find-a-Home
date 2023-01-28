@@ -13,10 +13,10 @@ import { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import * as ImagePicker from "expo-image-picker";
 import { firebase } from "../../firebase/config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PetEdit } from "../../Redux/Actions/index";
 
-const EditPet = (props) => {
+export const EditPerAuxiliar = (props) => {
   const dispatch = useDispatch();
 
   const [edit, setEdit] = useState({
@@ -107,18 +107,18 @@ const EditPet = (props) => {
   };
 
   const HandleSubmit = async () => {
+    if (true) {
       const DatosPetAEnviar = {
         name: edit.name,
         description: edit.description,
         profilePic: edit.profilePic,
         state: selected2,
         id: props.route.params.id,
-        email: props.route.params.email,
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
-            alert("Los datos de tu mascota se han editado exitosamente");
-            props.navigation.navigate("UserDetail")
+          alert("Los datos de tu mascota se han editado exitosamente");
+          props.navigation.navigate("UserDetail")
         })
         .catch((err) => {
           alert(err.message);
@@ -131,11 +131,14 @@ const EditPet = (props) => {
           });
           setSelected2("");
         });
+    } else {
+      alert("Por favor completa todos los datos");
+    }
   };
   return (
     <>
     {/* BOTON PARA VOLVER HACIA ATRAS */}
-    <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Image
             source={require("../../images/flecha.png")}
@@ -144,6 +147,7 @@ const EditPet = (props) => {
         </TouchableOpacity>
         <Text style={{ fontSize: 30, marginTop: 50 }}>Editar mascota:</Text>
       </View>
+      
       <ScrollView style={styles.container}>
         {/* BOTON PARA CAMBIAR FOTO DE PERFIL */}
         <TouchableOpacity onPress={() => pickImage()}>
@@ -158,10 +162,8 @@ const EditPet = (props) => {
           placeholderTextColor={"#fcfcfc"}
           autoCapitalize="none"
           value={edit.name}
-          maxLength={16}
-          onChangeText={
-            (text) => setEdit(/* validate( */ { ...edit, name: text }) /* ) */
-          }
+          maxLength={14}
+          onChangeText={(text) => setEdit({ ...edit, name: text })}
         />
 
         <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
@@ -172,11 +174,8 @@ const EditPet = (props) => {
           autoCapitalize="none"
           value={edit.description}
           maxLength={140}
-          onChangeText={
-            (text) =>
-              setEdit(
-                /* validate( */ { ...edit, description: text }
-              ) /* ) */
+          onChangeText={(description) =>
+            setEdit({ ...edit, description: description })
           }
         />
         <Text style={{ fontSize: 30, marginRight: 10 }}>
@@ -194,7 +193,7 @@ const EditPet = (props) => {
             HandleSubmit().catch(err=>alert(err.message))
           }}
         >
-            {Platform.OS === 'web' ? 
+          {Platform.OS === 'web' ? 
           <img
           src={require("../../images/buttoncrear.png")}
           style={styles.imagen2}
@@ -320,5 +319,3 @@ const styles = StyleSheet.create({
     marginTop: -90,
   },
 });
-
-export default EditPet;
