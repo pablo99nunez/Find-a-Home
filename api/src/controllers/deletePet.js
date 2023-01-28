@@ -27,19 +27,52 @@ const deletePet = async (petID) => {
     //-----2)     solicitudes: {'interestedEmail','FullName', 'requestMessage', 'profilePic'}
     async.each(pet.solicitudes, async (solicitud) => {
         const interestedUser = await UserModel.findOne({ email: solicitud.email });//Busca usuario 
-        const indexDeSolicitudUser = interestedUser.misSolicitudes.findIndex(el => el.petID === petID)//Busca index de solicitud
-        interestedUser.misSolicitudes.splice(indexDeSolicitudUser, 1);//borra solicitud del usuario 
-        await interestedUser.save();
-    }, (err) => { if (err) {console.error('Un errrrr: '+err.message); }});
+        if (!!interestedUser) {//target existe
+            const indexDeSolicitudUser = interestedUser.misSolicitudes.findIndex(el => el.petID === petID)//Busca index de solicitud
+            if (indexDeSolicitudUser !== -1) { //solicitud del target existe 
+                interestedUser.misSolicitudes.splice(indexDeSolicitudUser, 1);//borra solicitud del usuario 
+                await interestedUser.save();
+            }
+        }
+    }, (err) => { if (err) { console.error('Error al eliminar la solicitu a un usuario: ' + err.message); } });
     //-----3)  buscar OWNER    
     const owner = await UserModel.findOne({ email: pet.owner });
     //-----4) Del OWNER: Quitar el perro de su lista   
-     const ownerPetIndex = owner.pets.findIndex(el => el === petID)//Busca pet de solicitud
-     owner.pets.splice(ownerPetIndex, 1);//borra solicitud del usuario 
-     await owner.save(); 
+    if (!!owner) {
+        const ownerPetIndex = owner.pets.findIndex(el => el === petID)//Busca pet de solicitud
+        if (ownerPetIndex !== -1) {
+            owner.pets.splice(ownerPetIndex, 1);//borra solicitud del usuario 
+            await owner.save();
+        }
+    }
     //-----5) Borrar perro
-        const deletedPet = await PetModel.deleteOne({ _id: petID})
+    const deletedPet = await PetModel.deleteOne({ _id: petID })
     return deletedPet
 }
 
-module.exports = {deletePet}
+/*
+    * Entra email y limpia los pets q no existen en la base de datos
+    * 
+    * */
+const cleanUserInexistentPets = async (email) => {
+    //-----1) Busca usuario
+    const user = await UserModel.findOne({ email: email })
+    if (!user) throw new Error("El usuario con email " + email + " no existe")
+    //-----2)obtiene lista de PETs y escanea por si no existe alguno, si no existe lo agrega a la lista para eliminar
+    let arrayPetIDs = []
+    async.each(user.pets, async (petID) => {
+        const petExist = await PetModel.findOne({ _id: petID });//Busca usuario 
+        if (!petExist) {//target existe
+            arrayPetIDs.push(petID)
+        }
+    }, (err) => { if (err) { console.error('Error al eliminar la solicitu a un usuario: ' + err.message); } });
+    //filtra el pets del usuario por pets inexistentes dentro del arrayPetIDs
+    //FALTA LIMPIAR LISTA DE misSolicitudes
+    user.pets = user.pets.filter(item => {
+        !arrayPetIDs.includes(item);
+    })
+    //-----4) Guarda el usuario  
+    await user.save();
+    return user 
+}
+module.exports = { deletePet, cleanUserInexistentPets }

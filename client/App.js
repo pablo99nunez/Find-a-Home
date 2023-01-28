@@ -12,7 +12,7 @@ if (!global.atob) {
 }
 
 //fin dd cagadas
-import { Image } from "react-native"; 
+import { Image } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
@@ -30,24 +30,26 @@ import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
-import { EditPet } from "./src/Components/EditPet/EditPet";
+import EditPet from "./src/Components/EditPet/EditPet";
+import Map from "./src/Components/Map/Map";
+
 import axios from "axios";
 
 import { useFonts } from "expo-font";
 
-import { Roboto_300Light } from "@expo-google-fonts/roboto"
+import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
 
 axios.defaults.baseURL = "http://100.26.168.38:8080/pet";
 
 const Stack = createStackNavigator();
 
-const Logo =()=>(
+const Logo = () => (
   <Image
-    className='w-16 h-14 mx-3'
+    className="w-16 h-14 mx-3"
     source={require("../client/src/images/logo-black.png")}
   />
-)
+);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -75,6 +77,11 @@ export default function App() {
             component={Home}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="Map"
+            component={Map}
+            options={{ headerShown: false }}
+          />
 
           <Stack.Screen
             name="Detail"
@@ -93,50 +100,56 @@ export default function App() {
           <Stack.Screen
             name="RegisterFirstSteps"
             component={RegisterFirstSteps}
-            options={
-              {headerStyle: {backgroundColor:'#FFC733', },
+            options={{
+              headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
-              headerTintColor: '#000',
-              title: '',
+              headerTintColor: "#000",
+              title: "",
               headerBackTitle: null,
               headerBackTitleVisible: false,
-              headerRight:(props) => <Logo {...props} />
-              }}
+              headerRight: (props) => <Logo {...props} />,
+            }}
           />
           <Stack.Screen
             name="RegisterLastSteps"
             component={RegisterLastSteps}
-            options={
-              {headerStyle: {backgroundColor:'#FFC733', },
+            options={{
+              headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
-              headerTintColor: '#000',
-              title: '',
+              headerTintColor: "#000",
+              title: "",
               headerBackTitle: null,
               headerBackTitleVisible: false,
-              headerRight:(props) => <Logo {...props} />
-              }}
+              headerRight: (props) => <Logo {...props} />,
+            }}
           />
 
-          <Stack.Screen name="Login" component={LoginScreen} 
-            options={
-            {headerStyle: {backgroundColor:'#3A302E', },
-            headerShadowVisible: false,
-            headerTintColor: '#fff',
-            title: 'Ingresar a tu cuenta',
-            headerBackTitle: null,
-            headerBackTitleVisible: false,
-            }}/>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerStyle: { backgroundColor: "#3A302E" },
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: "Ingresar a tu cuenta",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
 
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} 
-          options={
-            {headerStyle: {backgroundColor:'#3A302E', },
-            headerShadowVisible: false,
-            headerTintColor: '#fff',
-            title: 'Registro',
-            headerBackTitle: null,
-            headerBackTitleVisible: false
-            }}/>
+          <Stack.Screen
+            name="Registration"
+            component={RegistrationScreen}
+            options={{
+              headerStyle: { backgroundColor: "#3A302E" },
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: "Registro",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
 
           {/* =================================== */}
 
@@ -155,7 +168,7 @@ export default function App() {
             component={RegisterLastStepsAdopting}
             options={{ headerShown: false }}
           />
-                    <Stack.Screen
+          <Stack.Screen
             name="CreatePet"
             component={CreatePet}
             options={{ headerShown: false }}

@@ -15,18 +15,23 @@ import { firebase } from "../../firebase/config";
 import { useDispatch, useSelector } from "react-redux";
 import { PetEdit } from "../../Redux/Actions/index";
 
-export const EditPet = (props) =>{
+const EditPet = (props) => {
   const dispatch = useDispatch();
 console.log(props.route.params.owner)
 const [edit, setEdit] = useState({
+
+  const [edit, setEdit] = useState({
     name: props.route.params.name ? props.route.params.name : "",
-    description: props.route.params.description ? props.route.params.description : "",
-    profilePic:  props.route.params.profilePic ? props.route.params.profilePic : "",
+    description: props.route.params.description
+      ? props.route.params.description
+      : "",
+    profilePic: props.route.params.profilePic
+      ? props.route.params.profilePic
+      : "",
     status: props.route.params.status ? props.route.params.status : selected2,
+  });
 
-})
-
-const data2 = [
+  const data2 = [
     { key: "1", value: "Adoptable" },
     { key: "2", value: "Lost" },
     { key: "3", value: "Found" },
@@ -35,7 +40,6 @@ const data2 = [
   ];
   const [selected2, setSelected2] = useState("");
   const [uploading, setUploading] = useState(false);
-
 
   const pickImage = async () => {
     try {
@@ -92,14 +96,12 @@ const data2 = [
           setUploading(false);
           setEdit({ ...edit, profilePic: url });
 
-
           blob.close();
           return url;
         });
       }
     );
-  }; 
-
+  };
 
   const HandleSubmit = async () => {
       const DatosPetAEnviar = {
@@ -107,11 +109,9 @@ const data2 = [
         description: edit.description,
         profilePic: edit.profilePic,
         state: selected2,
-        id: props.route.params.id,
-        email: props.route.params.owner
-      }
-      alert(DatosPetAEnviar)
-      await dispatch(PetEdit(DatosPetAEnviar))
+        id: props.route.params.id
+      };
+      await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
           alert("se edito");
           navigation.goBack();
@@ -130,42 +130,52 @@ const data2 = [
       alert("Por favor completa todos los datos");
     
   };
-    return(
-        <><View style={{ flexDirection: "row" }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    source={require("../../images/flecha.png")}
-                    style={{ width: 20, height: 20, marginRight: 30, marginTop: 60 }} />
-            </TouchableOpacity>
-            <Text style={{ fontSize: 30, marginTop: 50 }}>Editar mascota:</Text>
-        </View><ScrollView style={styles.container}>
+  return (
+    <>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image
+            source={require("../../images/flecha.png")}
+            style={{ width: 20, height: 20, marginRight: 30, marginTop: 60 }}
+          />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 30, marginTop: 50 }}>Editar mascota:</Text>
+      </View>
+      <ScrollView style={styles.container}>
+        <TouchableOpacity onPress={() => pickImage()}>
+          <Image style={styles.profilePic} source={{ uri: edit.profilePic }} />
+        </TouchableOpacity>
 
-     <TouchableOpacity
-      onPress={() =>pickImage()}>
-<Image style={styles.profilePic} source={{ uri: edit.profilePic }}/>
-</TouchableOpacity>
-            
-                <Text style={{ fontSize: 30, marginRight: 10 }}>Nombre:</Text>
+        <Text style={{ fontSize: 30, marginRight: 10 }}>Nombre:</Text>
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Nombre de tu mascota"
-                    placeholderTextColor={ "#fcfcfc"}
-                    autoCapitalize="none"
-                    value={edit.name}
-                    maxLength={10}
-                    onChangeText={(text) => setEdit(/* validate( */ { ...edit, name: text }) /* ) */} />
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre de tu mascota"
+          placeholderTextColor={"#fcfcfc"}
+          autoCapitalize="none"
+          value={edit.name}
+          maxLength={10}
+          onChangeText={
+            (text) => setEdit(/* validate( */ { ...edit, name: text }) /* ) */
+          }
+        />
 
-                <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
-                      <TextInput
-                    style={styles.input}
-                    placeholder="Descripcion de tu mascota"
-                    placeholderTextColor={ "#fcfcfc"}
-                    autoCapitalize="none"
-                    value={edit.description}
-                    maxLength={10}
-                    onChangeText={(text) => setEdit(/* validate( */ { ...edit, description: description }) /* ) */} />
-                          <Text style={{ fontSize: 30, marginRight: 10 }}>
+        <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Descripcion de tu mascota"
+          placeholderTextColor={"#fcfcfc"}
+          autoCapitalize="none"
+          value={edit.description}
+          maxLength={10}
+          onChangeText={
+            (text) =>
+              setEdit(
+                /* validate( */ { ...edit, description: description }
+              ) /* ) */
+          }
+        />
+        <Text style={{ fontSize: 30, marginRight: 10 }}>
           ¿Estado del animal?
         </Text>
         <SelectList
@@ -173,9 +183,9 @@ const data2 = [
           data={data2}
           save="value"
         />
-                          <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
+        <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
 
-<TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             HandleSubmit();
           }}
@@ -185,121 +195,120 @@ const data2 = [
             style={styles.imagen2}
           />
         </TouchableOpacity>
-
-            </ScrollView></>
-    )
-}
+      </ScrollView>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-      paddingTop: 23,
-    },
-    titleText: {
-      fontSize: 22,
-      fontWeight: "bold",
-      textAlign: "center",
-      paddingVertical: 20,
-    },
-    textStyle: {
-      padding: 10,
-      color: "black",
-      textAlign: "center",
-    },
-    imagen: {
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      marginLeft: 40,
-    },
-    imagen2: {
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      marginLeft: 40,
-    },
-    buttonStyle: {
-      alignItems: "center",
-      backgroundColor: "#DDDDDD",
-      padding: 5,
-      marginVertical: 10,
-      width: 250,
-    },
-    imageStyle: {
-      width: 200,
-      height: 200,
-      margin: 5,
-    },
-    container2: {
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "yellow",
-    },
-    perrochico: {
-      width: 60,
-      height: 60,
-      marginLeft: 10,
-      marginTop:30
-    },
-    mediano: {
-      width: 80,
-      height: 80,
-      marginLeft: 120,
-      marginTop: -70,
-      marginTop:30
+  container: {
+    paddingTop: 23,
+  },
+  titleText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 20,
+  },
+  textStyle: {
+    padding: 10,
+    color: "black",
+    textAlign: "center",
+  },
+  imagen: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 40,
+  },
+  imagen2: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 40,
+  },
+  buttonStyle: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 5,
+    marginVertical: 10,
+    width: 250,
+  },
+  imageStyle: {
+    width: 200,
+    height: 200,
+    margin: 5,
+  },
+  container2: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "yellow",
+  },
+  perrochico: {
+    width: 60,
+    height: 60,
+    marginLeft: 10,
+    marginTop: 30,
+  },
+  mediano: {
+    width: 80,
+    height: 80,
+    marginLeft: 120,
+    marginTop: -70,
+    marginTop: 30,
+  },
+  grande: {
+    width: 100,
+    height: 100,
+    marginLeft: 250,
+    marginTop: -90,
+    marginTop: 30,
+  },
 
-    },
-    grande: {
-      width: 100,
-      height: 100,
-      marginLeft: 250,
-      marginTop: -90,
-      marginTop:30
+  input: {
+    margin: 15,
+    height: 40,
+    borderWidth: 1,
+    backgroundColor: "#656568",
+    borderRadius: 5,
+  },
+  submitButton: {
+    backgroundColor: "#7a42f4",
+    padding: 10,
+    margin: 15,
+    height: 40,
+  },
+  submitButtonText: {
+    color: "white",
+  },
+  profilePic: {
+    marginTop: 20,
+    width: 200,
+    height: 200,
+    borderRadius: 50,
+    marginLeft: 90,
+  },
+  perrochico: {
+    width: 60,
+    height: 60,
+    marginLeft: 10,
+  },
+  mediano: {
+    width: 80,
+    height: 80,
+    marginLeft: 120,
+    marginTop: -70,
+  },
+  grande: {
+    width: 100,
+    height: 100,
+    marginLeft: 250,
+    marginTop: -90,
+  },
+});
 
-    },
-
-    input: {
-      margin: 15,
-      height: 40,
-      borderWidth: 1,
-      backgroundColor: "#656568",
-      borderRadius: 5,
-    },
-    submitButton: {
-      backgroundColor: "#7a42f4",
-      padding: 10,
-      margin: 15,
-      height: 40,
-    },
-    submitButtonText: {
-      color: "white",
-    },
-    profilePic: {
-        marginTop:20,
-        width: 200,
-        height: 200,
-        borderRadius: 50,
-        marginLeft: 90 
-      },
-      perrochico: {
-        width: 60,
-        height: 60,
-        marginLeft: 10,
-      },
-      mediano: {
-        width: 80,
-        height: 80,
-        marginLeft: 120,
-        marginTop: -70,
-      },
-      grande: {
-        width: 100,
-        height: 100,
-        marginLeft: 250,
-        marginTop: -90,
-      },
-  });
-  
+export default EditPet;
