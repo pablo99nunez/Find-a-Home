@@ -44,7 +44,9 @@ gradient:{
     width: width * 0.4,
     height: width * 0.4 * 0.4375, // 42% of card height
     bottom: 0,
-    borderRadius: 20
+    borderRadius: 20,
+    borderTopLeftRadius:0,
+    borderTopRightRadius:0,
 }
 })
 export default Card;
