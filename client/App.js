@@ -30,8 +30,9 @@ import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
-import { EditPet } from "./src/Components/EditPet/EditPet";
+
 import axios from "axios";
 
 import { useFonts } from "expo-font";
