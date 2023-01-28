@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getPetByOwner } from "../../Redux/Actions";
 import Card from "../Card/Card"
+import { useFocusEffect } from "@react-navigation/native";
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
@@ -29,9 +30,15 @@ export default function UserDetail({ route, navigation }) {
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
 
-  useEffect(() => {
-    dispatch(getPetByOwner());
-  }, [currentUser]);
+    //se ejecuta cuando se vé, focus=concentrar algo asi
+    useFocusEffect(
+      React.useCallback(() => {
+        async function evitaReturnDelUseEffect() {
+          dispatch(getPetByOwner());
+        }
+        evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
+      }, [])
+    );
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);

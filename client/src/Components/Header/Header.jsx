@@ -23,7 +23,6 @@ import {
   getPetsFilteredByTwoFilters,
   getUser,
 } from "../../Redux/Actions";
-import { auth } from "../../firebase/authentication";
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 
@@ -31,7 +30,7 @@ const { width, height } = Dimensions.get("screen");
 
 export const Header = ({ navigation, filterBySize }) => {
   const auth = getAuth(firebase);
-
+  const isLoggedIn = useSelector(store=>store.isLoggedIn)
   const email = auth.currentUser?.email;
 
   const pickerRef = useRef();
@@ -75,7 +74,7 @@ export const Header = ({ navigation, filterBySize }) => {
 
   return (
     <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[7%]">
-      {auth.currentUser?.uid ? (
+      {isLoggedIn ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
             className="w-12 h-12 rounded-full"

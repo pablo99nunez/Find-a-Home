@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-export const url = BASE_URL_IP;
+export const url = 'http://100.25.46.52:8080';
 
 if (!BASE_URL_IP) {
   alert(
@@ -16,6 +16,7 @@ export const GET_PETS_FILTERED_SIZE = "GET_PETS_FILTERED_SIZE";
 export const GET_PETS_FILTERED_BOTH_FILTERS = "GET_PETS_FILTERED_BOTH_FILTERS";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
+export const IS_LOGGED_IN = "IS_LOGGED_IN";
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -113,7 +114,6 @@ export const PetPost = async (bodyPayload) => {
 };
 
 export const PetEdit = async (bodyPayload) => {
-
     const config = {
         headers: {
             "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
@@ -121,7 +121,7 @@ export const PetEdit = async (bodyPayload) => {
         }
     }
     try {
-        const pet = await axios.put(url + '/pet', bodyPayload, config)
+        const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
         return pet
     } catch (error) {
         throw error
@@ -129,7 +129,7 @@ export const PetEdit = async (bodyPayload) => {
 
 }
 
-export const getUser = (email) => {
+export const getUser = () => {
   const config = {
     method: "GET",
     headers: {
@@ -146,13 +146,19 @@ export const getUser = (email) => {
           payload: result,
         });
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => alert('Error al obtener sus datos de usuario' + err.message));
   };
 };
 
 export const checked = (payload) => {
   return {
     type: "CHECKED",
+    payload,
+  };
+};
+export const setIsLoggedIn = (payload) => {
+  return {
+    type: "IS_LOGGED_IN",
     payload,
   };
 };
@@ -176,7 +182,7 @@ export const getPetByOwner = (email) => {
         });
       })
       .catch((error) => {
-        alert("Error en el fetch de getPetByOwner!");
+        alert("linea 186 Error en el fetch de getPetByOwner!"+ error.message);
       });
   };
 };

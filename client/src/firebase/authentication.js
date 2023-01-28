@@ -3,31 +3,17 @@ import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { url } from "../Redux/Actions";
-export const auth = getAuth(firebase);
 
-onAuthStateChanged(auth, (user) => {
-  // Check for user status
-  //console.log("linea 8 de authentication.js");
-});
+export const auth = getAuth(firebase);
 
 export const loginWithEmailAndPassword = async (email, password) => {
   await signInWithEmailAndPassword(auth, email, password)
-    .then((resp) => {
-      if (resp.user) {
-        resp.user.getIdToken().then(async (tkn) => {
-          await AsyncStorage.setItem("authorization", "Bearer " + auth.currentUser.stsTokenManager.accessToken);
-          console.log("authorization", "Bearer " + tkn);
-        });
-      }
-    })
-    .catch((err) => {
-      throw err
-    });
+  .catch(error=>{
+    alert(error.message)
+})
 };
 
 //firebase 3
@@ -35,8 +21,8 @@ export const createAccountWithEmailAndPassword = async (
   email,
   password,
   firstName,
-  lastName, 
-  phone, 
+  lastName,
+  phone,
   conditions
 ) => {
   await createUserWithEmailAndPassword(auth, email, password)
@@ -53,18 +39,27 @@ export const createAccountWithEmailAndPassword = async (
         );
       }
     })
-    .catch((err) => {
-      throw err
-    });
+    .catch(error=>{
+      if(error.message === 'Firebase: Error (auth/email-already-in-use).')
+      alert('El email ingresado ya está en uso!')
+      else alert(error.message)
+  })
   //CREAMOS EL USUARIO EN LA BASE DE DATOS
-  const createUserInDb = async (firstName,lastName, email, phone, conditions) => {
+  const createUserInDb = async (
+    firstName,
+    lastName,
+    email,
+    phone,
+    conditions
+  ) => {
     const data = {
       firstName,
       lastName,
-      profilePic: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532',
+      profilePic:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
       email,
       phone,
-      conditions
+      conditions,
     };
     //console.log("DATA FOR DB CREATION:", data);
     const tokenDelStore = await AsyncStorage.getItem("authorization").catch(

@@ -1,15 +1,21 @@
-import { GET_ALL_PETS, GET_PETS_FILTERED_BOTH_FILTERS, GET_USER_BY_EMAIL, GET_PETS_FILTERED_SPECIE, GET_PETS_FILTERED_SIZE, GET_PET_BY_OWNER } from "../Actions"
+import { GET_ALL_PETS, GET_PETS_FILTERED_BOTH_FILTERS, GET_USER_BY_EMAIL, GET_PETS_FILTERED_SPECIE, GET_PETS_FILTERED_SIZE, GET_PET_BY_OWNER, IS_LOGGED_IN } from "../Actions"
 
 const initialState = {
     allPets: [],
     check: "false",
     currentUser: {},
-    currentPets: {}
+    currentPets: {},
+    isLoggedIn: false
 }
 
 const rootReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case IS_LOGGED_IN:
+            return {
+                ...state,
+                isLoggedIn: action.payload,
+            }
         case GET_ALL_PETS:
             return {
                 ...state,
