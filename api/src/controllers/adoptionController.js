@@ -1,13 +1,6 @@
 const UserModel = require('../models/user.model');
 const PetModel = require('../models/pet.model');
-const { findAllPets } = require('./petController');
 //*const { default: mongoose } = require('mongoose');
-const updatePet = async (PetData, petID, ownerEmail) => {
-    const queryCondition = { _id: petID, owner: ownerEmail }
-    const updatedPet = await PetModel.updateOne(queryCondition, PetData)
-    return updatedPet
-}
-
 
 //boton donde el dueño confirma que el perro ya se adoptó
 const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
