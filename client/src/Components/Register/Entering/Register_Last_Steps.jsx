@@ -76,31 +76,31 @@ const RegisterLastSteps = ({ route, navigation }) => {
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
 				
-				<TouchableOpacity onPress={() => HandleCheck("Techo")} className={checkState.Techo ? "mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2'}>
+				<TouchableOpacity onPress={() => HandleCheck("Techo")} className={checkState.Techo ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.Techo ?
-						"text-center text-[#000000] text-2xl font-extralight"
-						:  "text-center text-[#FFF] text-2xl font-extralight"}>
+						"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Techo
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")} className={checkState.AlimentoBalanceado ? "mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2'}>
+				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")} className={checkState.AlimentoBalanceado ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.AlimentoBalanceado ?
-					"text-center text-[#000000] text-2xl font-extralight"
-					:  "text-center text-[#FFF] text-2xl font-extralight"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Alimento Balanceado
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")} className={checkState.PaseosDiarios ? "mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2'}>
+				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")} className={checkState.PaseosDiarios ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.PaseosDiarios ?
-					"text-center text-[#000000] text-2xl font-extralight"
-					:  "text-center text-[#FFF] text-2xl font-extralight"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Paseos Diarios
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("Vacunas")} className={checkState.Vacunas ? "m-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2" : 'm-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2'}>
+				<TouchableOpacity onPress={() => HandleCheck("Vacunas")} className={checkState.Vacunas ? "m-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'm-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.Vacunas ?
-					"text-center text-[#000000] text-2xl font-extralight"
-					:  "text-center text-[#FFF] text-2xl font-extralight"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Vacunas
 					</Text>
 				</TouchableOpacity>
