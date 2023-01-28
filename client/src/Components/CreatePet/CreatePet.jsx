@@ -187,8 +187,10 @@ export const CreatePet = ({ navigation }) => {
         size: crear.size,
         profilePic: crear.profilePic || "https://www.example.com/fido1.jpg",
         specie: selected,
-        latitud: pin.latitude,
-        longitud: pin.longitude,
+        coordinates: {
+          latitude: pin.latitude,
+          longitude: pin.longitude,
+        },
       };
       await PetPost(DatosPetAEnviar)
         .then((sucess) => {
