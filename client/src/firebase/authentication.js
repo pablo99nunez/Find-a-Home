@@ -3,8 +3,10 @@ import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { url } from "../Redux/Actions";
@@ -106,3 +108,39 @@ export const createAccountWithEmailAndPassword = async (
                 alert(error)
         }); */
 };
+
+//login with popup
+//extra config
+const provider = new GoogleAuthProvider();
+provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+//doLoginWithPopup
+export const loginWithGoogleWebPopup =  async () => {
+  await signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        // After user is signed in, set the state to true
+        const user = result.user;
+        if(user){
+          user.getIdToken().then((tkn)=>{
+            // set access token in session storage
+            sessionStorage.setItem("accessToken", tkn);
+            //setAuthorizedUser(true);
+            AsyncStorage.setItem("authorization", "Bearer "+tkn)
+          })
+        }
+        console.log(user);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+}

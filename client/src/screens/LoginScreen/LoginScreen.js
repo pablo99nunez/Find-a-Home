@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import { loginWithEmailAndPassword } from '../../firebase/authentication';
+import { loginWithEmailAndPassword, loginWithGoogleWebPopup } from '../../firebase/authentication';
 import { ButtonYellow } from '../../Components/Buttons/Buttons';
 
 export default function LoginScreen({ navigation }) {
@@ -45,6 +45,7 @@ export default function LoginScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <View className='my-3'>
+                
                <ButtonYellow  
                onPress={async () => {
                 await loginWithEmailAndPassword(email, password)
@@ -52,6 +53,17 @@ export default function LoginScreen({ navigation }) {
                 .catch(err=>alert(err.message))
                 }}
                 text='Acceder'
+                />
+                </View>
+                <View className='my-3'>
+                
+               <ButtonYellow  
+               onPress={async () => {
+                await loginWithGoogleWebPopup()
+                .then(ignore => {navigation.navigate('Home')})
+                .catch(err=>alert(err.message))
+                }}
+                text='Usar login google'
                 />
                 </View>
                 <View style={styles.footerView}>
