@@ -54,7 +54,6 @@ export default function Detail({ route, navigation }) {
   //if the owner press solicitudes he will see a list of adoption requests//
   function handleSolicitudes() {
     setOpen(0);
-    console.log(solicitudes);
   }
 
   const petId = route.params.id;
@@ -81,14 +80,7 @@ export default function Detail({ route, navigation }) {
 
               <View className='h-52'>
                 <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
-
-
-              <View className="h-52">
-                <Text className="text-[#f5c936] text-4xl text-center my-12">
-                  {name.toUpperCase()}
-                </Text>
-
-              </View>
+               </View>
 
               <View className="mx-auto">
                 {gallery ? (
@@ -173,14 +165,6 @@ export default function Detail({ route, navigation }) {
             :
             <BottomView auth={auth} petId={petId} />}
 
-          {owner === currentUser.email ? (
-            <BottomViewOwner
-              solicitudes={solicitudes}
-              navigation={navigation}
-            />
-          ) : (
-            <BottomView auth={auth} petId={petId} />
-          )}
         </BottomSheet>
       ) : (
         <View className="h-1/4 flex justify-evenly">
