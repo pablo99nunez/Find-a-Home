@@ -121,7 +121,7 @@ export const PetEdit = async (bodyPayload) => {
         }
     }
     try {
-        const pet = await axios.put(url + '/pet', bodyPayload, config)
+        const pet = await axios.put(url + '/pet/profile',bodyPayload, config)
         return pet
     } catch (error) {
         throw error

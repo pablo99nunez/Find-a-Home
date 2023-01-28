@@ -109,6 +109,8 @@ const EditPet = (props) => {
         profilePic: edit.profilePic,
         state: selected2,
         id: props.route.params.id,
+        email: props.route.params.owner,
+
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
