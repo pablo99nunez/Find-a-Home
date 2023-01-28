@@ -22,7 +22,6 @@ import { useEffect } from "react";
 import { getPetByOwner } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
 import Card from "../Card/Card"
-import { useFocusEffect } from "@react-navigation/native";
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
