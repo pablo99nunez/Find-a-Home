@@ -42,7 +42,8 @@ imagen: {
 },
 gradient:{
     width: width * 0.4,
-    height: width * 0.4,
+    height: width * 0.4 * 0.42, // 42% of card height
+    bottom: 0,
     borderRadius: 20
 }
 })
