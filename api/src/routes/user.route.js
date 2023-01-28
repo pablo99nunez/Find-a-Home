@@ -1,5 +1,5 @@
 const express = require('express');
-const { confirmAdoption } = require('../controllers/adoptionController');
+const { confirmAdoption, refreshStates } = require('../controllers/adoptionController');
 const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
@@ -67,6 +67,7 @@ router.put('/confirm', checkJwt, async (req, res) => {
     validateroute["/user/confirm"](...parametros)
     const petWithNewOwner = await confirmAdoption(...parametros)
     await ratingUpdate(...puntaje)
+    await refreshStates({petID: req.body.petID, newOwnerEmail: req.body.newOwnerEmail})
     res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
   } catch (err) {
     res.status(501).send({ error: err.message })

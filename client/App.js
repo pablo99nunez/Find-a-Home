@@ -12,7 +12,7 @@ if (!global.atob) {
 }
 
 //fin dd cagadas
-
+import { Image } from "react-native"; 
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
@@ -34,11 +34,20 @@ import { EditPet } from "./src/Components/EditPet/EditPet";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
-import { Roboto_300Light } from "@expo-google-fonts/roboto";
 
-axios.defaults.baseURL = "http://3.90.65.77:8080/pet";
+import { Roboto_300Light } from "@expo-google-fonts/roboto"
+import { ScreenStackHeaderRightView } from "react-native-screens";
+
+axios.defaults.baseURL = "http://100.26.168.38:8080/pet";
 
 const Stack = createStackNavigator();
+
+const Logo =()=>(
+  <Image
+    className='w-16 h-14 mx-3'
+    source={require("../client/src/images/logo-black.png")}
+  />
+)
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -84,17 +93,50 @@ export default function App() {
           <Stack.Screen
             name="RegisterFirstSteps"
             component={RegisterFirstSteps}
-            options={{ headerShown: false }}
+            options={
+              {headerStyle: {backgroundColor:'#FFC733', },
+              headerShadowVisible: false,
+              headerTintColor: '#000',
+              title: '',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+              headerRight:(props) => <Logo {...props} />
+              }}
           />
           <Stack.Screen
             name="RegisterLastSteps"
             component={RegisterLastSteps}
-            options={{ headerShown: false }}
+            options={
+              {headerStyle: {backgroundColor:'#FFC733', },
+              headerShadowVisible: false,
+              headerTintColor: '#000',
+              title: '',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+              headerRight:(props) => <Logo {...props} />
+              }}
           />
 
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} 
+            options={
+            {headerStyle: {backgroundColor:'#3A302E', },
+            headerShadowVisible: false,
+            headerTintColor: '#fff',
+            title: 'Ingresar a tu cuenta',
+            headerBackTitle: null,
+            headerBackTitleVisible: false,
+            }}/>
+
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} 
+          options={
+            {headerStyle: {backgroundColor:'#3A302E', },
+            headerShadowVisible: false,
+            headerTintColor: '#fff',
+            title: 'Registro',
+            headerBackTitle: null,
+            headerBackTitleVisible: false
+            }}/>
 
           {/* =================================== */}
 

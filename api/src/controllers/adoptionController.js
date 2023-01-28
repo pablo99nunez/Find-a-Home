@@ -31,7 +31,7 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
         //CONTROLLER:
         //Rechazados
         //Cambia estado a Rechazado de todas aquellas personas que hayan querido adoptar
-        await refreshStates(pet, newOwnerEmail)
+        // await refreshStates(pet, newOwnerEmail)
         //Adoptando
         pet.state = "Adopted" //Cambias el estado de la mascota a adoptado
         pet.owner = target.email //el pet tiene nuevo owner
@@ -61,45 +61,22 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
     }
 }
 
-const refreshStates = async (pet, newOwnerEmail) => {
+const refreshStates = async ({petID, newOwnerEmail}) => {
     try{
-    await pet.solicitudes.forEach((solicitud) => {
-        UserModel.find({email: solicitud.email}, (err, user) => {
-          user.misSolicitudes.forEach((misSolicitud) => {
-            if(misSolicitud.petID === pet.id && misSolicitud.email === newOwnerEmail) {
-              misSolicitud.status = "Aceptado";
-              user.save();
-            } else {
-                misSolicitud.status = "Rechazado";
-                user.save()
-            }
-          });
-        });
-    })
-    }
-    
-    // try{
-    // await pet.solicitudes.forEach(async (apply) => {
-    //     const user = await UserModel.findOne({ email: apply.email })
-        
-    //     for (let i = 0; i < user.misSolicitudes.length; i++) {
-    //         if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email === newOwnerEmail) {
-    //             user.misSolicitudes[i].status = "Aceptado";
-    //             break;
-    //         } else if (user.misSolicitudes[i].petID === id && user.misSolicitudes[i].email !== newOwnerEmail) {
-    //             user.misSolicitudes[i].status = "Rechazado";
-    //             break;
-    //         }
-    //     }
-    //     await user.save()
-    // })
-
-    // }
+        await UserModel.updateOne(
+            { "misSolicitudes.petID": petID, "misSolicitudes.email": newOwnerEmail },
+            { $set: { "misSolicitudes.$.status": "Aceptado" } },
+        )
+            
+        await UserModel.updateMany(
+            { "misSolicitudes.petID": petID, "misSolicitudes.email": {$ne: newOwnerEmail} },
+            { $set: { "misSolicitudes.$.status": "Rechazado" } }
+        )
+        }
      catch (error) {
         throw(error)
     }
 }
-
 
 
 const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud) => {
@@ -194,6 +171,7 @@ const solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitu
 
 module.exports = {
     confirmAdoption,
+    refreshStates,
     solicitarAdopcion,
 }
 
