@@ -63,10 +63,10 @@ const petSchema = mongoose.Schema(
     },
     coordinates: {
       latitude: {
-        type: String
+        type: Number
       },
       longitude: {
-        type: String
+        type: Number
       }
     }
   },

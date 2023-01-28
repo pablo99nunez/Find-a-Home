@@ -2,7 +2,9 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-export const url = 'http://100.25.46.52:8080';
+
+export const url = "http://100.25.46.52:8080"
+
 
 if (!BASE_URL_IP) {
   alert(
@@ -121,7 +123,9 @@ export const PetEdit = async (bodyPayload) => {
         }
     }
     try {
+
         const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
+
         return pet
     } catch (error) {
         throw error
