@@ -1,8 +1,9 @@
 const express = require('express');
 const { createPet } = require('../controllers/createPet');
-const { findPet, findAllPets, updatePet, deletePet, filterByOwner } = require('../controllers/petController');
+const { findPet, findAllPets, updatePet, filterByOwner } = require('../controllers/petController');
 const {solicitarAdopcion} = require('../controllers/adoptionController')
 const { checkJwt } = require('../utils/firebase-stuff');
+const { deletePet } = require('../controllers/deletePet');
 const router = express.Router();
 
 //todos //
@@ -80,7 +81,7 @@ router.delete('/profile/solicitud',checkJwt, async (req, res) => {
 
 
 //SOLO ADMIN PUEDE BORRAR PERROS
-router.delete('/profile',checkJwt, async (req, res) => {
+router.delete('/profile/:ID',checkJwt, async (req, res) => {
   try {
     const deletedPet = await deletePet(req.params.ID)
     res.send({ message: 'Mascota borrada', payload: deletedPet });

@@ -62,7 +62,7 @@ export const Header = ({ navigation, filterBySize }) => {
   }, []);
 
   const currentUser = useSelector((state) => state.currentUser);
-
+ 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
@@ -81,7 +81,7 @@ export const Header = ({ navigation, filterBySize }) => {
             className="w-12 h-12 rounded-full"
             resizeMode={"contain"}
             source={{
-              uri: `https://i.pravatar.cc/150?${currentUser.firstName}=thefakeuser.jpg`,
+              uri: currentUser.profilePic,
             }}
           />
         </TouchableOpacity>

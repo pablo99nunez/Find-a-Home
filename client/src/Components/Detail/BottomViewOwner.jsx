@@ -25,7 +25,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
                 <View>
                   <Text className='text-2xl font-bold'>{item.firstName}</Text>
                   <Text className='text-md'>
-                    {item.message.slice(0,20).concat('...')}
+                    {item.message?.slice(0,20).concat('...')}
                   </Text>
                 </View>
                 <Image

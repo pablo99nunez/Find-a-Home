@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	Image
 } from "react-native";
+import { createAccountWithEmailAndPassword } from '../../../firebase/authentication'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { putUserData } from "../../../Redux/Actions";
 //Again, Why?? 
@@ -14,6 +15,10 @@ import { putUserData } from "../../../Redux/Actions";
 const RegisterLastSteps = ({ route, navigation }) => {
 
 	const {
+		email,
+    password,
+    firstName,
+    lastName,
 		telefono,
 		pais,
 		departamento,
@@ -21,6 +26,10 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	} = route.params
 
 	const [userNewInput, setuserNewInput] = useState({
+		email,
+    password,
+    firstName,
+    lastName,
 		telefono,
 		pais,
 		departamento,
@@ -40,7 +49,13 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	}
 	const handleContinuar = () =>{
 		setLoading(true)
-		putUserData(userNewInput)
+		createAccountWithEmailAndPassword(email, password, firstName,
+    lastName,
+		telefono,
+		userNewInput.condiciones,
+		pais,
+		departamento,
+		provincia)
 		.then(resp=>{
 			navigation.navigate("Home")
 		})
@@ -53,49 +68,45 @@ const RegisterLastSteps = ({ route, navigation }) => {
 
 	return (
 		<ScrollView>
-			<Image
-				className="absolute top-[16px] right-[22] z-[1]"
-				source={require("../../../images/logo-black.png")}
-			/>
-			<View className="h-screen items-center justify-center bg-[#FFC733] w-screen">
+			<View className="h-screen items-center bg-[#FFC733] w-screen">
 				<Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
 					¡Bienvenido!
 				</Text>
 				<Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
-{/* El cliente pidió que se haga un componente con estos botones, asi es escalable */}
-				<TouchableOpacity onPress={() => HandleCheck("Techo")} className="mt-3">
+				
+				<TouchableOpacity onPress={() => HandleCheck("Techo")} className={checkState.Techo ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.Techo ?
-						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
-						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
+						"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Techo
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")}>
+				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")} className={checkState.AlimentoBalanceado ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.AlimentoBalanceado ?
-						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
-						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Alimento Balanceado
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")}>
+				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")} className={checkState.PaseosDiarios ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.PaseosDiarios ?
-						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
-						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Paseos Diarios
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("Vacunas")}>
+				<TouchableOpacity onPress={() => HandleCheck("Vacunas")} className={checkState.Vacunas ? "m-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'm-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
 					<Text className={checkState.Vacunas ?
-						"bg-[#AB4E68] text-center text-[#FFF] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"
-						: "bg-[#d9d9d971] text-center text-[#0000004e] text-[25px] min-w-auto h-[55px] rounded-[35px] p-[10px] px-6 m-[10px]"}>
+					"text-center text-[#FFF] text-2xl font-extralight"
+						:  "text-center text-[#000000] text-2xl font-extralight"}>
 						Vacunas
 					</Text>
 				</TouchableOpacity>
-
 				
-				<View className="flex flex-row justify-center content-center items-center">
+				
+				<View className="flex flex-row justify-center items-center">
 					<View className="w-7 h-7">
 						<TouchableOpacity onPress={() => setAccepted(!accepted)}>
 							<Text className={accepted ? 
