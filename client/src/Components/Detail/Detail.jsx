@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
@@ -58,7 +59,10 @@ export default function Detail({ route, navigation }) {
               <View >
                 <HeaderDetail onPress={() => navigation.goBack()} days={days} />
               </View>
-
+              {owner === currentUser.email ?
+              <TouchableOpacity onPress={() => navigation.navigate("EditPet", route.params)}>
+           <Text>Boton de editar</Text>
+          </TouchableOpacity> : null }
 
               <View className='h-52'>
                 <Text className='text-[#f5c936] text-4xl text-center my-12'>{name.toUpperCase()}</Text>
@@ -97,6 +101,9 @@ export default function Detail({ route, navigation }) {
           :
           <View className='h-1/4 flex justify-evenly'>
             {currentUser.email === owner ?
+            
+            
+            
               <ButtonYellow text='Solicitudes' onPress={() => handleSolicitudes()} />
               :
               <ButtonYellow text='Adoptar' onPress={() => HandleLoginToAdoption()} />}
@@ -119,7 +126,9 @@ export default function Detail({ route, navigation }) {
         >
 
           {owner === currentUser.email ?
+          
             <BottomViewOwner solicitudes={solicitudes} navigation={navigation} />
+            
             :
             <BottomView auth={auth} petId={petId} />}
 

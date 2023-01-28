@@ -36,7 +36,6 @@ export default function Home({ navigation }) {
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         dispatch(getAllPets());
-        console.log(allPets)
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
