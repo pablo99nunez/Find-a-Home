@@ -74,11 +74,11 @@ export const Header = ({ navigation, filterBySize }) => {
   };
 
   return (
-    <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[7%]">
+    <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[10%]">
       {auth.currentUser?.uid ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
-            className="w-12 h-12 rounded-full"
+            className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
             source={{
               uri: currentUser.profilePic,
@@ -88,7 +88,7 @@ export const Header = ({ navigation, filterBySize }) => {
       ) : (
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Image
-            className="w-12 h-12 rounded-full"
+            className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
             source={require("../../images/profilePic.jpg")}
           />
@@ -96,7 +96,7 @@ export const Header = ({ navigation, filterBySize }) => {
       )}
 
       <Image
-        className="w-14 h-14"
+        className="w-14 h-12"
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
