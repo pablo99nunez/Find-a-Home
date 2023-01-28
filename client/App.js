@@ -30,6 +30,7 @@ import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import Map from "./src/Components/Map/Map";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
@@ -63,6 +64,11 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Map"
+            component={Map}
             options={{ headerShown: false }}
           />
 

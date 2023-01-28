@@ -100,11 +100,14 @@ export const Header = ({ navigation, filterBySize }) => {
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
+      <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+        <Icon name="map" className="w-12 h-12" size={50} color={"#FFC733"} />
+      </TouchableOpacity>
       {Platform.OS === "web" ? <></> : <></>}
       <TouchableOpacity onPress={() => resizeBox(1)}>
         <Icon name="menu" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
-      {/* WEB BROWER ACA ----------------------- userddetlail */}
+      {/* WEB BROWSER ACA ----------------------- userddetlail */}
       {Platform.OS === "web" ? (
         <TouchableOpacity
           onPress={() => {
