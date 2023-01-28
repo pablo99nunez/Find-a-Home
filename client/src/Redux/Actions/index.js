@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-export const url = BASE_URL_IP;
+export const url = "http://100.25.46.52:8080"
 
 if (!BASE_URL_IP) {
   alert(
