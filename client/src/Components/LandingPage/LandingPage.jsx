@@ -3,16 +3,32 @@ import { View, StyleSheet } from 'react-native';
 import { LandingButton } from '../Buttons/Buttons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase/authentication';
+import { useDispatch } from 'react-redux';
+import { setIsLoggedIn } from '../../Redux/Actions';
 
 
 const LandingPage = ({ navigation }) => {
 
     const [logeado, setLogeado] = useState('');
+    const dispatch = useDispatch()
 
-    //carga datos del local StorAsh
-    //useEffect(() => {
-       
-    //}, [])
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          user.getIdToken().then(async (tkn) => {
+            await AsyncStorage.setItem(
+              "authorization",
+              "Bearer " + auth.currentUser.stsTokenManager.accessToken
+            );
+            dispatch(setIsLoggedIn(true));
+            console.log("authorization", "Bearer " + tkn);
+          });
+        } else {
+          AsyncStorage.clear();
+          dispatch(setIsLoggedIn(false));
+        }
+      });
 
     useFocusEffect(
         React.useCallback(() => {

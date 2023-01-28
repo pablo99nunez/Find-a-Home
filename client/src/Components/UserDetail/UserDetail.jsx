@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { getPetByOwner } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
 import Card from "../Card/Card"
+import { useFocusEffect } from "@react-navigation/native";
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
@@ -29,7 +30,6 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -39,6 +39,7 @@ export default function UserDetail({ route, navigation }) {
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
+
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);
