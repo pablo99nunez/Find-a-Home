@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity, //botton
   ScrollView,
+  Platform,
 } from "react-native";
 import { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -83,20 +84,24 @@ const EditPet = (props) => {
       () => {
         setUploading(true);
       },
-      (error) => {
+      (err) => {
         setUploading(false);
-        console.log(error);
+        console.log(err);
+        if(Platform.OS!=='web')
         blob.close();
         return;
       },
       () => {
-        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+        snapshot.snapshot.ref.getDownloadURL()
+        .then((url) => {
           setUploading(false);
           setEdit({ ...edit, profilePic: url });
-
+          if(Platform.OS!=='web')
           blob.close();
           return url;
-        });
+        })
+        .catch(err=>alert('Error al obtener la url de la imagen'))
+
       }
     );
   };
@@ -112,11 +117,11 @@ const EditPet = (props) => {
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
-          alert("se edito");
-          props.navigation.navigate("Home");
+            alert("Los datos de tu mascota se han editado exitosamente");
+            props.navigation.navigate("UserDetail")
         })
-        .catch((error) => {
-          alert(error.message);
+        .catch((err) => {
+          alert(err.message);
         })
         .finally((e) => {
           setEdit({
@@ -129,7 +134,8 @@ const EditPet = (props) => {
   };
   return (
     <>
-      <View style={{ flexDirection: "row" }}>
+    {/* BOTON PARA VOLVER HACIA ATRAS */}
+    <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Image
             source={require("../../images/flecha.png")}
@@ -139,6 +145,7 @@ const EditPet = (props) => {
         <Text style={{ fontSize: 30, marginTop: 50 }}>Editar mascota:</Text>
       </View>
       <ScrollView style={styles.container}>
+        {/* BOTON PARA CAMBIAR FOTO DE PERFIL */}
         <TouchableOpacity onPress={() => pickImage()}>
           <Image style={styles.profilePic} source={{ uri: edit.profilePic }} />
         </TouchableOpacity>
@@ -151,7 +158,7 @@ const EditPet = (props) => {
           placeholderTextColor={"#fcfcfc"}
           autoCapitalize="none"
           value={edit.name}
-          maxLength={10}
+          maxLength={16}
           onChangeText={
             (text) => setEdit(/* validate( */ { ...edit, name: text }) /* ) */
           }
@@ -164,11 +171,11 @@ const EditPet = (props) => {
           placeholderTextColor={"#fcfcfc"}
           autoCapitalize="none"
           value={edit.description}
-          maxLength={10}
+          maxLength={140}
           onChangeText={
             (text) =>
               setEdit(
-                /* validate( */ { ...edit, description: description }
+                /* validate( */ { ...edit, description: text }
               ) /* ) */
           }
         />
@@ -181,16 +188,22 @@ const EditPet = (props) => {
           save="value"
         />
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
-
+          {/* BOTON PARA ACEPTAR EDICION */}
         <TouchableOpacity
           onPress={() => {
-            HandleSubmit();
+            HandleSubmit().catch(err=>alert(err.message))
           }}
         >
+            {Platform.OS === 'web' ? 
+          <img
+          src={require("../../images/buttoncrear.png")}
+          style={styles.imagen2}
+        />
+          :
           <Image
             source={require("../../images/buttoncrear.png")}
             style={styles.imagen2}
-          />
+          />}
         </TouchableOpacity>
       </ScrollView>
     </>
