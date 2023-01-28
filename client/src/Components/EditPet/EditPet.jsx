@@ -17,8 +17,6 @@ import { PetEdit } from "../../Redux/Actions/index";
 
 const EditPet = (props) => {
   const dispatch = useDispatch();
-console.log(props.route.params.owner)
-const [edit, setEdit] = useState({
 
   const [edit, setEdit] = useState({
     name: props.route.params.name ? props.route.params.name : "",
@@ -104,12 +102,15 @@ const [edit, setEdit] = useState({
   };
 
   const HandleSubmit = async () => {
+    if (!error.length) {
       const DatosPetAEnviar = {
         name: edit.name,
         description: edit.description,
         profilePic: edit.profilePic,
         state: selected2,
-        id: props.route.params.id
+        id: props.route.params.id,
+        email: props.route.params.owner,
+
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
@@ -127,8 +128,9 @@ const [edit, setEdit] = useState({
           });
           setSelected2("");
         });
+    } else {
       alert("Por favor completa todos los datos");
-    
+    }
   };
   return (
     <>
