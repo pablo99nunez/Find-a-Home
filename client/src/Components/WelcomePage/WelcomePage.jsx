@@ -24,7 +24,30 @@ const Welcome = ({ navigation }) => {
     setXPos(newXPos);
   };
 
+  /*
+    funcion q maneja el desizamiento de circulitos
+    fac = factor de multiplicacion
+    side = 'top', 'right'  determina el flujo a seguir con los parametros y q retornar
+    type = 'moving' o 'static' determina si algo debe estar fijo o moviendose junto con todo el View
+  */
+  const responsiveHell = (fac,side,type) => {
+    const sign = type === 'moving' ? 1 : -1
+    if(side==='width'){
+      
+     -2 * width - height*0.22 + xPos
+
+      2*width + height*0.22 - xPos 
+
+       2 * width - width*0.41 - xPos
+      -2 * width + width*0.41 + xPos
+    }
+    if(side==='height'){
+      
+    }
+  }
+
   const onchange = (nativeEvent) => {
+    console.log(height, width);
     if (nativeEvent) {
       const slide =
         Math.round(
