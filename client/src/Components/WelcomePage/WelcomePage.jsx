@@ -347,16 +347,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     bottom: 0,
     marginBottom: 40,
+    zIndex: 14
   },
   dotActive: {
     color: "#AB4E68",
     letterSpacing: 20,
-    fontSize: 15,
+    fontSize: 24,
   },
   dot: {
     color: "#ACACAC",
     letterSpacing: 20,
-    fontSize: 15,
+    fontSize: 24,
   },
   container: {
     backgroundColor: "#3A302E",
