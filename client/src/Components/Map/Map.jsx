@@ -11,7 +11,6 @@ export default function Map() {
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         dispatch(getAllPets());
-        console.log("MAPS COMPONENT", allPets);
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
@@ -44,7 +43,7 @@ export default function Map() {
 
       let location = await Location.getCurrentPositionAsync({});
       /* console.log(location); */
-      console.log(allPets.payload);
+      /* console.log(allPets.payload); */
 
       setPin({
         latitude: location.coords.latitude,
@@ -52,6 +51,7 @@ export default function Map() {
       });
     })();
   }, []);
+
   return (
     <View style={styles.container}>
       <MapView
@@ -73,26 +73,14 @@ export default function Map() {
         }}
       >
         <Circle center={pin} radius={300} />
-        {/* {allPets.payload.map((el) => ( //falta ver tema de coordinates (parametro que recibe es en inglés, y la data structure nuestra salen en Esp)
-          <Marker coordinate={el}>
-            <Callout>
-              <Text>{el.name}</Text>
-            </Callout>
-          </Marker>
-        ))} */}
 
-        {/* <Marker coordinate={pets[0]}>
-          <Callout>
-            <Text>{pets[0].name}</Text>
-          </Callout>
-        </Marker> */}
-        {
-          <Marker coordinate={pets[0].coordinates}>
-            <Callout>
-              <Text>{allPets.payload[allPets.payload.length - 1].name}</Text>
-            </Callout>
+        {allPets?.payload.map((el) => (
+          <Marker coordinate={el?.coordinates}>
+            {/* <Callout>
+              <Text>{el.name}</Text>
+            </Callout> */}
           </Marker>
-        }
+        ))}
       </MapView>
     </View>
   );

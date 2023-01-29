@@ -48,7 +48,7 @@ export const CreatePet = ({ navigation }) => {
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
       });
-      console.log(location);
+      /* console.log(location); */
 
       setPin({
         latitude: location.coords.latitude,

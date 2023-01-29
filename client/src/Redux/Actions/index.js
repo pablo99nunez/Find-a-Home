@@ -6,7 +6,7 @@ export const url = BASE_URL_IP;
 
 if (!BASE_URL_IP) {
   alert(
-    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.26.168.38:8080/"
+    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.25.46.52:8080/"
   );
 }
 
@@ -113,21 +113,19 @@ export const PetPost = async (bodyPayload) => {
 };
 
 export const PetEdit = async (bodyPayload) => {
-
-    const config = {
-        headers: {
-            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
-    }
-    try {
-        const pet = await axios.put(url + '/pet', bodyPayload, config)
-        return pet
-    } catch (error) {
-        throw error
-    }
-
-}
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    },
+  };
+  try {
+    const pet = await axios.put(url + "/pet", bodyPayload, config);
+    return pet;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getUser = (email) => {
   const config = {

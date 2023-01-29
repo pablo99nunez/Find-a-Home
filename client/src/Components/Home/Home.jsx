@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
            dispatch(getAllPets());
          }, [allPets]);
    } */
-  /* console.log(allPets.payload[allPets.payload.length - 1]); */
+  /* console.log(allPets); */
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     auth.currentUser?.uid
