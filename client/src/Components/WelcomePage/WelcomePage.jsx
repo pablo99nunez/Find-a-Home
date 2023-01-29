@@ -77,8 +77,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide2,
-          top: -2 * width +xPos,
-          right: -2 * width +xPos,
+          top: -2 * width - height*0.22 + xPos,
+          right: -2 * width + width*0.41 + xPos,
           zIndex: 2,
           overflow: "hidden",
           borderRadius: width,
@@ -103,8 +103,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide2,
             ...styles.bg,
-            top: 2*width - xPos ,
-            right: 2*width - xPos,
+            top: 2*width + height*0.22 - xPos ,
+            right: 2*width -width*0.41 - xPos,
             zIndex: 3,
           }}
         >
@@ -129,8 +129,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide3,
-          top: -3 * width +xPos ,
-          right: -3 * width +xPos ,
+          top: -3 * width -height*0.22 +xPos ,
+          right: -3 * width +width*0.41 +xPos ,
           zIndex: 5,
           overflow: "hidden",
           borderRadius: width,
@@ -153,8 +153,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide3,
             ...styles.bg,
-            top: 3 * width - xPos,
-            right: 3 * width - xPos,
+            top: 3 * width + height*0.22 - xPos,
+            right: 3 * width - width*0.41 - xPos,
             zIndex: 7,
           }}
         >
@@ -174,8 +174,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide4,
-          top: -4 * width +xPos,
-          right: -4 * width +xPos,
+          top: -4 * width - height*0.22 +xPos,
+          right: -4 * width +width*0.41 +xPos,
           zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
@@ -198,8 +198,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide4,
             ...styles.bg,
-            top: 4 * width - xPos,
-            right: 4 * width - xPos,
+            top: 4 * width + height*0.22 - xPos,
+            right: 4 * width - width*0.41 - xPos,
             zIndex: 15,
           }}
         >
