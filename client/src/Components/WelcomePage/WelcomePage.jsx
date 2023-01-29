@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,23 @@ const Welcome = ({ navigation }) => {
     const newXPos = pos;
     setXPos(newXPos);
   };
+
+  /*
+    funcion q maneja el desizamiento de circulitos
+    fac = factor de multiplicacion
+    side = 'top', 'right'  determina el flujo a seguir con los parametros y q retornar
+    type = 'moving' o 'static' determina si algo debe estar fijo o moviendose junto con todo el View
+  */
+  const responsiveHell = (fac,side,type) => {
+    const sign = type === 'moving' ? -1 : 1
+    const proportion = height / width
+    if(side==='top'){
+      return (fac * height - height*0.46 - xPos*proportion )*sign
+    }
+    if(side==='right'){
+      return (fac * width - width*0.41 - xPos)*sign
+    }
+  }
 
   const onchange = (nativeEvent) => {
     if (nativeEvent) {
@@ -64,12 +81,12 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/icon1-icon3-welcome.png")}
           />
           
-        <Text style={styles.text}>Somos una</Text>
-        <Text style={styles.text}>organización sin</Text>
-        <Text style={styles.text}>fines de lucro que</Text>
-        <Text style={styles.text}>busca ayudar a las</Text>
-        <Text style={styles.text}>mascotas a</Text>
-        <Text style={styles.text}>encontrar un hogar.</Text>
+        <Text style={styles.text1}>Somos una</Text>
+        <Text style={styles.text1}>organización sin</Text>
+        <Text style={styles.text1}>fines de lucro que</Text>
+        <Text style={styles.text1}>busca ayudar a las</Text>
+        <Text style={styles.text1}>mascotas a</Text>
+        <Text style={styles.text1}>encontrar un hogar.</Text>
         </View>
       </View>
 
@@ -77,8 +94,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide2,
-          top: -2 * width +xPos,
-          right: -2 * width +xPos,
+          top: responsiveHell(2,'top','moving'),
+          right: responsiveHell(2,'right','moving'),
           zIndex: 2,
           overflow: "hidden",
           borderRadius: width,
@@ -103,8 +120,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide2,
             ...styles.bg,
-            top: 2*width - xPos ,
-            right: 2*width - xPos,
+            top: responsiveHell(2,'top','static'),
+            right: responsiveHell(2,'right','static'),
             zIndex: 3,
           }}
         >
@@ -117,11 +134,11 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/image-bg2-welcome.png")}
           />
 
-          <Text style={styles.text}>Podrás adoptar a tu</Text>
-          <Text style={styles.text}>mascota soñada o</Text>
-          <Text style={styles.text}>encontrarle un</Text>
-          <Text style={styles.text}>mejor hogar a un</Text>
-          <Text style={styles.text}>gatito rescatado.</Text>
+          <Text style={styles.text2}>Podrás adoptar a tu</Text>
+          <Text style={styles.text2}>mascota soñada o</Text>
+          <Text style={styles.text2}>encontrarle un</Text>
+          <Text style={styles.text2}>mejor hogar a un</Text>
+          <Text style={styles.text2}>gatito rescatado.</Text>
         </View>
       </View>
 
@@ -129,8 +146,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide3,
-          top: -3 * width +xPos ,
-          right: -3 * width +xPos ,
+          top: responsiveHell(3,'top','moving'),
+          right: responsiveHell(3,'right','moving'),
           zIndex: 5,
           overflow: "hidden",
           borderRadius: width,
@@ -153,8 +170,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide3,
             ...styles.bg,
-            top: 3 * width - xPos,
-            right: 3 * width - xPos,
+            top: responsiveHell(3,'top','static'),
+            right: responsiveHell(3,'right','static'),
             zIndex: 7,
           }}
         >
@@ -162,11 +179,11 @@ const Welcome = ({ navigation }) => {
             style={styles.icon}
             source={require("../../images/icon2-welcome.png")}
           />
-          <Text style={styles.text}>No discriminamos</Text>
-          <Text style={styles.text}>por raza y</Text>
-          <Text style={styles.text}>priorizamos a los</Text>
-          <Text style={styles.text}>que más tiempo</Text>
-          <Text style={styles.text}>lleven sin un hogar.</Text>
+          <Text style={styles.text3}>No discriminamos</Text>
+          <Text style={styles.text3}>por raza y</Text>
+          <Text style={styles.text3}>priorizamos a los</Text>
+          <Text style={styles.text3}>que más tiempo</Text>
+          <Text style={styles.text3}>lleven sin un hogar.</Text>
         </View>
       </View>
 
@@ -174,9 +191,9 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide4,
-          top: -4 * width +xPos,
-          right: -4 * width +xPos,
-          zIndex: 9,
+          top: responsiveHell(4,'top','moving'),
+          right: responsiveHell(4,'right','moving'),
+          zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
         }}
@@ -198,9 +215,9 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide4,
             ...styles.bg,
-            top: 4 * width - xPos,
-            right: 4 * width - xPos,
-            zIndex: 7,
+            top: responsiveHell(4,'top','static'),
+            right: responsiveHell(4,'right','static'),
+            zIndex: 15,
           }}
         >
           <Image
@@ -241,6 +258,7 @@ const Welcome = ({ navigation }) => {
         style={{ zIndex: 14 }}
         onScroll={({ nativeEvent }) => onchange(nativeEvent)}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         pagingEnabled
         horizontal
       >
@@ -339,6 +357,18 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text1: {
+    color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text2: {
+    color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text3: {
+    color: "#3A302E",
     fontSize: 30,
   },
   wrapDot: {
