@@ -14,7 +14,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
           <Text className='text-2xl mx-auto'>Aun no hay solicitudes para tu mascota!</Text>
           :
           <FlatList
-            keyExtractor={(item) => item.firstName}
+            keyExtractor={(item) => item.email}
             data={solicitudes}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", item)} className='flex flex-row items-center justify-evenly mt-3'>

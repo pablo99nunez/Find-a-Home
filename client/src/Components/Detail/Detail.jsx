@@ -90,7 +90,7 @@ export default function Detail({ route, navigation }) {
                 {gallery ? (
                   <FlatList
                     horizontal={true}
-                    keyExtractor={(name) => name}
+                    keyExtractor={(item, index) => name+ index}
                     data={gallery}
                     renderItem={({ item }) => (
                       <Image style={styles.gallery} source={{ uri: item }} />
