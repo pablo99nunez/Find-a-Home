@@ -122,18 +122,16 @@ export const PetEdit = async (bodyPayload) => {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
       Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-    }
-  }
+    },
+  };
   try {
+    const pet = await axios.put(url + "/pet/profile", bodyPayload, config);
 
-    const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
-
-    return pet
+    return pet;
   } catch (error) {
-    throw error
+    throw error;
   }
-
-}
+};
 
 export const getUser = () => {
   const config = {
@@ -194,29 +192,28 @@ export const getPetByOwner = (email) => {
 };
 
 ///Accept adoption pet
-export const acceptAdoption = (petId, newOwnerEmail, rating) => {
-  return async (dispatch) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
-      };
-      const bodyPayload = {
-        petID: petId,
-        emailOwner: auth?.currentUser?.email,
-        newOwnerEmail: newOwnerEmail,
-        rating: rating || 5,
-      };
-      console.log(bodyPayload);
-      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
-      dispatch({
-        type: CONFIRM_ADOPTION,
-        payload: adoptionConfirmed.message,
-      });
-    } catch (error) {
-      throw error;
+export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
     }
-  };
-};
+  }
+  const bodyPayload = {
+    petID: petId,
+    emailOwner: auth?.currentUser?.email,
+    newOwnerEmail: newOwnerEmail,
+    rating: rating || 5,
+  }
+  try {
+    console.log(bodyPayload)
+    const adoptionConfirmed = await axios.put(url + '/user/confirm', bodyPayload, config)
+    return {
+      type: CONFIRM_ADOPTION,
+      payload: adoptionConfirmed.data,
+    }
+  } catch (error) {
+    throw error
+  }
+
+}
