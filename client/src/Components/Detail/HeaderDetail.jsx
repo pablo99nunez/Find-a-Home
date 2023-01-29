@@ -4,11 +4,11 @@ import { View, TouchableOpacity, Image, Text, ImageBackground } from 'react-nati
 export const HeaderDetail = (props) => {
   const {onPress, days} = props
   return (
-    <View  className='flex flex-row justify-between mt-11'>
+    <View  className='flex flex-row justify-between pt-[10%]'>
         <TouchableOpacity onPress={onPress}>
                 <Image 
-                className = 'ml-3 w-12 h-12'
-                source={require("../../images/icon1-icon3-welcome.png")}
+                className = 'ml-3 w-12 h-11'
+                source={require("../../images/FindAHome.png")}
                 />
               </TouchableOpacity>
               <ImageBackground source={require('../../images/Banderin.png')} className = 'w-36 h-11' >

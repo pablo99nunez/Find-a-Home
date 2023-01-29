@@ -17,18 +17,19 @@ import Card from "../Card/Card";
 import { Header } from "../Header/Header";
 import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets, checked } from "../../Redux/Actions";
+import { getAllPets, checked, setIsLoggedIn } from "../../Redux/Actions";
 import firebase from "../../firebase/firebase-config";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("screen");
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-
-  const auth = getAuth(firebase); //traemos la authentication de firebase
+  const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);
+
   const check = useSelector((state) => state.check);
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
@@ -41,19 +42,9 @@ export default function Home({ navigation }) {
     }, [])
   );
 
-  /*  {
-     Platform.OS === "web"
-       ? useEffect(() => {
-         dispatch(getAllPets());
-       }, [])
-       : useEffect(() => {
-           dispatch(getAllPets());
-         }, [allPets]);
-   } */
-  /* console.log(allPets); */
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
-    auth.currentUser?.uid
+    isLoggedIn
       ? navigation.navigate("CreatePet")
       : navigation.navigate("Login");
   }

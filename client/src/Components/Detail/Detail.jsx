@@ -121,28 +121,21 @@ export default function Detail({ route, navigation }) {
         </View>
 
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
-          <View className="h-1/4 flex justify-evenly">
+          <View className="h-1/4 flex justify-evenly ">
             {currentUser.email === owner ? (
-              <ButtonYellow
-                text="Solicitudes"
-                onPress={() => handleSolicitudes()}
-              />
-            ) : (
-              <ButtonYellow
-                text="Adoptar"
-                onPress={() => HandleLoginToAdoption()}
-              />
-            )}
-          </View>
-        )}
-
-        {["Adopted", "NotAdoptable"].includes(state) ? null : (
-          <View className="h-1/4 flex justify-evenly">
-            {currentUser.email === owner ? (
-              <ButtonYellow
-                text="Solicitudes"
-                onPress={() => handleSolicitudes()}
-              />
+              <View className="flex flex-col align-center justify-center">
+                {solicitudes.length ? (
+                  <View className="bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10">
+                    <Text className="text-xl text-white">
+                      {solicitudes.length}
+                    </Text>
+                  </View>
+                ) : null}
+                <ButtonYellow
+                  text="Solicitudes"
+                  onPress={() => handleSolicitudes()}
+                />
+              </View>
             ) : (
               <ButtonYellow
                 text="Adoptar"

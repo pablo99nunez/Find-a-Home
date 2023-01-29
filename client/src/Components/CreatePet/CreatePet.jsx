@@ -54,6 +54,7 @@ export const CreatePet = ({ navigation }) => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
+      console.log("PIN EN CREATEPET", pin);
     })();
   }, []);
 
