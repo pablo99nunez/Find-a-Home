@@ -19,6 +19,8 @@ export const GET_PETS_FILTERED_BOTH_FILTERS = "GET_PETS_FILTERED_BOTH_FILTERS";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
 export const IS_LOGGED_IN = "IS_LOGGED_IN";
+export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
+
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -116,20 +118,20 @@ export const PetPost = async (bodyPayload) => {
 };
 
 export const PetEdit = async (bodyPayload) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
     }
-    try {
+  }
+  try {
 
-        const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
+    const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
 
-        return pet
-    } catch (error) {
-        throw error
-    }
+    return pet
+  } catch (error) {
+    throw error
+  }
 
 }
 
@@ -186,7 +188,35 @@ export const getPetByOwner = (email) => {
         });
       })
       .catch((error) => {
-        alert("linea 186 Error en el fetch de getPetByOwner!"+ error.message);
+        alert("linea 186 Error en el fetch de getPetByOwner!" + error.message);
       });
+  };
+};
+
+///Accept adoption pet
+export const acceptAdoption = (petId, newOwnerEmail, rating) => {
+  return async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        }
+      };
+      const bodyPayload = {
+        petID: petId,
+        emailOwner: auth?.currentUser?.email,
+        newOwnerEmail: newOwnerEmail,
+        rating: rating || 5,
+      };
+      console.log(bodyPayload);
+      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
+      dispatch({
+        type: CONFIRM_ADOPTION,
+        payload: adoptionConfirmed.message,
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 };

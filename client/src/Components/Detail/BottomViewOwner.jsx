@@ -5,7 +5,8 @@ import { FlatList } from 'react-native-gesture-handler';
 
 
 const { width } = Dimensions.get("screen");
-export const BottomViewOwner = ({ solicitudes, navigation }) => {
+export const BottomViewOwner = ({ solicitudes, navigation, petId }) => {
+
   return (
     <View>
       <BottomSheetView>
@@ -17,7 +18,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
             keyExtractor={(item) => item.email}
             data={solicitudes}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", item)} className='flex flex-row items-center justify-evenly mt-3'>
+              <TouchableOpacity onPress={() => navigation.navigate("Solicitud de Adopcion", { item, petId })} className='flex flex-row items-center justify-evenly mt-3'>
                 <Image
                   className='rounded-full '
                   style={styles.imagen}
@@ -25,7 +26,7 @@ export const BottomViewOwner = ({ solicitudes, navigation }) => {
                 <View className='w-2/5'>
                   <Text className='text-xl font-bold'>{item.firstName} {item.lastName}</Text>
                   <Text className='text-md'>
-                    {item.message?.slice(0,20).concat('...')}
+                    {item.message?.slice(0, 20).concat('...')}
                   </Text>
                 </View>
                 <Image

@@ -40,6 +40,7 @@ export default function Detail({ route, navigation }) {
     // coordinates,
   } = route.params;
 
+
   const days = calculateAdoptionDays(created_at);
   //--------- BOTTOM SHEET FUNCTIONS-----------//
   const bottomSheetRef = useRef(null);
@@ -90,7 +91,7 @@ export default function Detail({ route, navigation }) {
                 {gallery ? (
                   <FlatList
                     horizontal={true}
-                    keyExtractor={(item, index) => name+ index}
+                    keyExtractor={(item, index) => name + index}
                     data={gallery}
                     renderItem={({ item }) => (
                       <Image style={styles.gallery} source={{ uri: item }} />
@@ -123,15 +124,15 @@ export default function Detail({ route, navigation }) {
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
           <View className="h-1/4 flex justify-evenly ">
             {currentUser.email === owner ? (
-            <View className='flex flex-col align-center justify-center'>
-              {solicitudes.length?  <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
-                <Text className='text-xl text-white'>{solicitudes.length}</Text>
-              </View> : null}
-              <ButtonYellow
-                text="Solicitudes"
-                onPress={() => handleSolicitudes()}
-              />
-            </View>
+              <View className='flex flex-col align-center justify-center'>
+                {solicitudes.length ? <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
+                  <Text className='text-xl text-white'>{solicitudes.length}</Text>
+                </View> : null}
+                <ButtonYellow
+                  text="Solicitudes"
+                  onPress={() => handleSolicitudes()}
+                />
+              </View>
             ) : (
               <ButtonYellow
                 text="Adoptar"
@@ -141,7 +142,7 @@ export default function Detail({ route, navigation }) {
           </View>
         )}
 
-  
+
       </View>
 
       {Platform.OS !== "web" ? (
@@ -157,6 +158,7 @@ export default function Detail({ route, navigation }) {
           {owner === currentUser.email ? (
             <BottomViewOwner
               solicitudes={solicitudes}
+              petId={petId}
               navigation={navigation}
             />
           ) : (

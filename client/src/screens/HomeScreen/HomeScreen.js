@@ -3,9 +3,9 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAuth, signOut } from 'firebase/auth';
-import firebase  from '../../firebase/firebase-config'
+import firebase from '../../firebase/firebase-config'
 
- 
+
 
 export default function HomeScreen(props) {
 
@@ -13,19 +13,19 @@ export default function HomeScreen(props) {
 
     function logoutUser() {
         signOut(auth).then(() => {
-          // clear session storage
-          AsyncStorage.removeItem('@accessToken', () => {
-            AsyncStorage.removeItem('user', () => {
-                alert('Logged Out Successfully');
-                
-              })
-          })
-  
+            // clear session storage
+            AsyncStorage.removeItem('@accessToken', () => {
+                AsyncStorage.removeItem('user', () => {
+                    alert('Logged Out Successfully');
+
+                })
+            })
+
         }).catch((error) => {
-          // An error happened.
-          alert(error);
+            // An error happened.
+            alert(error);
         });
-      }
+    }
     const onAddButtonPress = () => {
         console.log(props);
     }
@@ -45,12 +45,12 @@ export default function HomeScreen(props) {
                 </TouchableOpacity>
             </View>
             <View style={styles.formContainer}>
-                
+
                 <TouchableOpacity style={styles.button} onPress={logoutUser}>
                     <Text style={styles.buttonText}>Logout</Text>
                 </TouchableOpacity>
             </View>
-            
+
         </View>
     )
 }
