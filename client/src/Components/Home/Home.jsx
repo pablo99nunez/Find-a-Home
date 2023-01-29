@@ -27,9 +27,9 @@ const { width, height } = Dimensions.get("screen");
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(store=>store.isLoggedIn)
+  const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);
-  
+
   const check = useSelector((state) => state.check);
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
@@ -42,11 +42,11 @@ export default function Home({ navigation }) {
     }, [])
   );
 
-
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
-    isLoggedIn ? navigation.navigate("CreatePet")
-              : navigation.navigate("Login");
+    isLoggedIn
+      ? navigation.navigate("CreatePet")
+      : navigation.navigate("Login");
   }
   return (
     <View style={styles.container}>

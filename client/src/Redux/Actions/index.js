@@ -2,13 +2,11 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-
-export const url = "http://100.25.46.52:8080"
-
+export const url = "http://100.25.46.52:8080";
 
 if (!BASE_URL_IP) {
   alert(
-    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.26.168.38:8080/"
+    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.25.46.52:8080/"
   );
 }
 
@@ -116,22 +114,20 @@ export const PetPost = async (bodyPayload) => {
 };
 
 export const PetEdit = async (bodyPayload) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-            Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        }
-    }
-    try {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    },
+  };
+  try {
+    const pet = await axios.put(url + "/pet/profile", bodyPayload, config);
 
-        const pet = await axios.put(url + '/pet/profile', bodyPayload, config)
-
-        return pet
-    } catch (error) {
-        throw error
-    }
-
-}
+    return pet;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getUser = () => {
   const config = {
@@ -150,7 +146,9 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) => alert('Error al obtener sus datos de usuario' + err.message));
+      .catch((err) =>
+        alert("Error al obtener sus datos de usuario" + err.message)
+      );
   };
 };
 
@@ -186,7 +184,7 @@ export const getPetByOwner = (email) => {
         });
       })
       .catch((error) => {
-        alert("linea 186 Error en el fetch de getPetByOwner!"+ error.message);
+        alert("linea 186 Error en el fetch de getPetByOwner!" + error.message);
       });
   };
 };

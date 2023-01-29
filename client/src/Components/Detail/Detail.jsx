@@ -37,7 +37,7 @@ export default function Detail({ route, navigation }) {
     state,
     owner,
     solicitudes,
-    // coordinates,
+    coordinates,
   } = route.params;
 
   const days = calculateAdoptionDays(created_at);
@@ -113,25 +113,29 @@ export default function Detail({ route, navigation }) {
           </Text>
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
-        {/* <View>
+        <View>
           <Text>
             Coordenadas: latitud:{coordinates.latitude} longitud:
             {coordinates.longitude}
           </Text>
-        </View> */}
+        </View>
 
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
           <View className="h-1/4 flex justify-evenly ">
             {currentUser.email === owner ? (
-            <View className='flex flex-col align-center justify-center'>
-              {solicitudes.length?  <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
-                <Text className='text-xl text-white'>{solicitudes.length}</Text>
-              </View> : null}
-              <ButtonYellow
-                text="Solicitudes"
-                onPress={() => handleSolicitudes()}
-              />
-            </View>
+              <View className="flex flex-col align-center justify-center">
+                {solicitudes.length ? (
+                  <View className="bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10">
+                    <Text className="text-xl text-white">
+                      {solicitudes.length}
+                    </Text>
+                  </View>
+                ) : null}
+                <ButtonYellow
+                  text="Solicitudes"
+                  onPress={() => handleSolicitudes()}
+                />
+              </View>
             ) : (
               <ButtonYellow
                 text="Adoptar"
@@ -140,8 +144,6 @@ export default function Detail({ route, navigation }) {
             )}
           </View>
         )}
-
-  
       </View>
 
       {Platform.OS !== "web" ? (

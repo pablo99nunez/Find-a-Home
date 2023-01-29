@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -25,12 +25,12 @@ import {
 } from "../../Redux/Actions";
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
-
+import * as Location from "expo-location";
 const { width, height } = Dimensions.get("screen");
 
 export const Header = ({ navigation, filterBySize }) => {
   const auth = getAuth(firebase);
-  const isLoggedIn = useSelector(store=>store.isLoggedIn)
+  const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const email = auth.currentUser?.email;
 
   const pickerRef = useRef();
@@ -60,8 +60,48 @@ export const Header = ({ navigation, filterBySize }) => {
     if (email) dispatch(getUser(email));
   }, []);
 
+  const [pin, setPin] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  useEffect(() => {
+    console.log(pin, "nuevo pin");
+  }, [pin]);
+
+  const asd = useCallback(() => {
+    console.log("entre 5");
+    const run = async () => {
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      });
+      console.log("entre 3", location);
+      setPin({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    };
+    run();
+  }, []);
+
+  useEffect(() => {
+    console.log("entre 4");
+    const run = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log("entre 1", status);
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+      console.log("entre 2");
+      asd();
+    };
+    run();
+  }, [asd]);
+
   const currentUser = useSelector((state) => state.currentUser);
- 
+
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
@@ -73,10 +113,8 @@ export const Header = ({ navigation, filterBySize }) => {
   };
 
   return (
-
     <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[10%]">
       {isLoggedIn ? (
-
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
             className="w-14 h-14 rounded-full"
@@ -101,7 +139,7 @@ export const Header = ({ navigation, filterBySize }) => {
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Map", pin)}>
         <Icon name="map" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
       {Platform.OS === "web" ? <></> : <></>}
