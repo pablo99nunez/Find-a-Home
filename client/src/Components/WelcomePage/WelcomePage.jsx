@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -42,7 +42,6 @@ const Welcome = ({ navigation }) => {
   }
 
   const onchange = (nativeEvent) => {
-    console.log(height, width);
     if (nativeEvent) {
       const slide =
         Math.round(
@@ -82,12 +81,12 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/icon1-icon3-welcome.png")}
           />
           
-        <Text style={styles.text}>Somos una</Text>
-        <Text style={styles.text}>organización sin</Text>
-        <Text style={styles.text}>fines de lucro que</Text>
-        <Text style={styles.text}>busca ayudar a las</Text>
-        <Text style={styles.text}>mascotas a</Text>
-        <Text style={styles.text}>encontrar un hogar.</Text>
+        <Text style={styles.text1}>Somos una</Text>
+        <Text style={styles.text1}>organización sin</Text>
+        <Text style={styles.text1}>fines de lucro que</Text>
+        <Text style={styles.text1}>busca ayudar a las</Text>
+        <Text style={styles.text1}>mascotas a</Text>
+        <Text style={styles.text1}>encontrar un hogar.</Text>
         </View>
       </View>
 
@@ -135,11 +134,11 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/image-bg2-welcome.png")}
           />
 
-          <Text style={styles.text}>Podrás adoptar a tu</Text>
-          <Text style={styles.text}>mascota soñada o</Text>
-          <Text style={styles.text}>encontrarle un</Text>
-          <Text style={styles.text}>mejor hogar a un</Text>
-          <Text style={styles.text}>gatito rescatado.</Text>
+          <Text style={styles.text2}>Podrás adoptar a tu</Text>
+          <Text style={styles.text2}>mascota soñada o</Text>
+          <Text style={styles.text2}>encontrarle un</Text>
+          <Text style={styles.text2}>mejor hogar a un</Text>
+          <Text style={styles.text2}>gatito rescatado.</Text>
         </View>
       </View>
 
@@ -180,11 +179,11 @@ const Welcome = ({ navigation }) => {
             style={styles.icon}
             source={require("../../images/icon2-welcome.png")}
           />
-          <Text style={styles.text}>No discriminamos</Text>
-          <Text style={styles.text}>por raza y</Text>
-          <Text style={styles.text}>priorizamos a los</Text>
-          <Text style={styles.text}>que más tiempo</Text>
-          <Text style={styles.text}>lleven sin un hogar.</Text>
+          <Text style={styles.text3}>No discriminamos</Text>
+          <Text style={styles.text3}>por raza y</Text>
+          <Text style={styles.text3}>priorizamos a los</Text>
+          <Text style={styles.text3}>que más tiempo</Text>
+          <Text style={styles.text3}>lleven sin un hogar.</Text>
         </View>
       </View>
 
@@ -259,6 +258,7 @@ const Welcome = ({ navigation }) => {
         style={{ zIndex: 14 }}
         onScroll={({ nativeEvent }) => onchange(nativeEvent)}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         pagingEnabled
         horizontal
       >
@@ -357,6 +357,18 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text1: {
+    color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text2: {
+    color: "#FFFFFF",
+    fontSize: 30,
+  },
+  text3: {
+    color: "#3A302E",
     fontSize: 30,
   },
   wrapDot: {
