@@ -40,13 +40,7 @@ export default function Map(props) {
           }}
           radius={50000}
         />
-        {allPets?.payload
-          ?.filter(({ coordinates }) => {
-            // Codigo que filtre las que no estan dentro del rango
-            // Coordenadas de la mascota en coordinates
-            // Coordenadas del usuario en latitude y longitude
-          })
-          .map(petRender)}
+        {allPets?.payload.map(petRender)}
       </MapView>
     </View>
   );
