@@ -176,7 +176,7 @@ const Welcome = ({ navigation }) => {
           ...styles.slide4,
           top: -4 * width +xPos,
           right: -4 * width +xPos,
-          zIndex: 9,
+          zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
         }}
@@ -200,7 +200,7 @@ const Welcome = ({ navigation }) => {
             ...styles.bg,
             top: 4 * width - xPos,
             right: 4 * width - xPos,
-            zIndex: 7,
+            zIndex: 15,
           }}
         >
           <Image
