@@ -44,8 +44,6 @@ export default function Map(props) {
       </MapView>
     </View>
   );
-
-  return null;
 }
 
 const styles = StyleSheet.create({
