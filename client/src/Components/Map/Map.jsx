@@ -73,26 +73,28 @@ export default function Map() {
         }}
       >
         <Circle center={pin} radius={300} />
-        {/* {allPets.payload.map((el) => ( //falta ver tema de coordinates (parametro que recibe es en inglés, y la data structure nuestra salen en Esp)
-          <Marker coordinate={el}>
+        {allPets?.payload?.map((el) => ( //el problema era que algunos no tenian coordenadas ahora preguntas
+         el.coordinates ?               //Existe coordenadas mapea el mapa, sino no hace nada.
+         <Marker coordinate={el.coordinates}>
             <Callout>
               <Text>{el.name}</Text>
             </Callout>
           </Marker>
-        ))} */}
+          : null
+        ))}
 
         {/* <Marker coordinate={pets[0]}>
           <Callout>
             <Text>{pets[0].name}</Text>
           </Callout>
         </Marker> */}
-        {
-          <Marker coordinate={pets[0].coordinates}>
+        {/* {
+          <Marker coordinate={allPets.payload[allPets.payload.length - 1].coordinates}>
             <Callout>
               <Text>{allPets.payload[allPets.payload.length - 1].name}</Text>
             </Callout>
           </Marker>
-        }
+        } */}
       </MapView>
     </View>
   );
