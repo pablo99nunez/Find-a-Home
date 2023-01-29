@@ -32,8 +32,9 @@ const Welcome = ({ navigation }) => {
   */
   const responsiveHell = (fac,side,type) => {
     const sign = type === 'moving' ? -1 : 1
+    const proportion = height / width
     if(side==='top'){
-      return (fac * width + width*0.6 - xPos )*sign
+      return (fac * height - height*0.46 - xPos*proportion )*sign
     }
     if(side==='right'){
       return (fac * width - width*0.41 - xPos)*sign
