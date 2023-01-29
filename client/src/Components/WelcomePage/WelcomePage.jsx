@@ -31,18 +31,12 @@ const Welcome = ({ navigation }) => {
     type = 'moving' o 'static' determina si algo debe estar fijo o moviendose junto con todo el View
   */
   const responsiveHell = (fac,side,type) => {
-    const sign = type === 'moving' ? 1 : -1
-    if(side==='width'){
-      
-     -2 * width - height*0.22 + xPos
-
-      2*width + height*0.22 - xPos 
-
-       2 * width - width*0.41 - xPos
-      -2 * width + width*0.41 + xPos
+    const sign = type === 'moving' ? -1 : 1
+    if(side==='top'){
+      return (fac * width + width*0.6 - xPos )*sign
     }
-    if(side==='height'){
-      
+    if(side==='right'){
+      return (fac * width - width*0.41 - xPos)*sign
     }
   }
 
@@ -100,8 +94,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide2,
-          top: -2 * width - height*0.22 + xPos,
-          right: -2 * width + width*0.41 + xPos,
+          top: responsiveHell(2,'top','moving'),
+          right: responsiveHell(2,'right','moving'),
           zIndex: 2,
           overflow: "hidden",
           borderRadius: width,
@@ -126,8 +120,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide2,
             ...styles.bg,
-            top: 2*width + height*0.22 - xPos ,
-            right: 2*width -width*0.41 - xPos,
+            top: responsiveHell(2,'top','static'),
+            right: responsiveHell(2,'right','static'),
             zIndex: 3,
           }}
         >
@@ -152,8 +146,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide3,
-          top: -3 * width -height*0.22 +xPos ,
-          right: -3 * width +width*0.41 +xPos ,
+          top: responsiveHell(3,'top','moving'),
+          right: responsiveHell(3,'right','moving'),
           zIndex: 5,
           overflow: "hidden",
           borderRadius: width,
@@ -176,8 +170,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide3,
             ...styles.bg,
-            top: 3 * width + height*0.22 - xPos,
-            right: 3 * width - width*0.41 - xPos,
+            top: responsiveHell(3,'top','static'),
+            right: responsiveHell(3,'right','static'),
             zIndex: 7,
           }}
         >
@@ -197,8 +191,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide4,
-          top: -4 * width - height*0.22 +xPos,
-          right: -4 * width +width*0.41 +xPos,
+          top: responsiveHell(4,'top','moving'),
+          right: responsiveHell(4,'right','moving'),
           zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
@@ -221,8 +215,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide4,
             ...styles.bg,
-            top: 4 * width + height*0.22 - xPos,
-            right: 4 * width - width*0.41 - xPos,
+            top: responsiveHell(4,'top','static'),
+            right: responsiveHell(4,'right','static'),
             zIndex: 15,
           }}
         >
