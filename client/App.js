@@ -12,6 +12,7 @@ if (!global.atob) {
 }
 
 //fin dd cagadas
+import FormPet from "./src/Components/CreatePet/FormPet";
 import { Image } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -37,6 +38,7 @@ import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
 
+
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
 const Stack = createStackNavigator();
@@ -58,6 +60,19 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+        {/* <Stack.Screen
+            name="FormPet"
+            component={FormPet}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Publicar mascota",
+              // headerBackTitle: null,
+              // headerBackTitleVisible: false,
+            }}
+          /> */}
+
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -154,7 +169,14 @@ export default function App() {
           <Stack.Screen
             name="CreatePet"
             component={CreatePet}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Publicar mascota",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           <Stack.Screen
@@ -162,6 +184,7 @@ export default function App() {
             component={EditPet}
             options={{ headerShown: false }}
           />
+
           {/* =================================== */}
         </Stack.Navigator>
       </NavigationContainer>
