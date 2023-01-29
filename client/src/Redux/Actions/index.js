@@ -2,11 +2,13 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-export const url = "http://100.25.46.52:8080";
+
+export const url = "http://100.25.46.52:8080"
+
 
 if (!BASE_URL_IP) {
   alert(
-    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.25.46.52:8080/"
+    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.26.168.38:8080/"
   );
 }
 
@@ -17,6 +19,8 @@ export const GET_PETS_FILTERED_BOTH_FILTERS = "GET_PETS_FILTERED_BOTH_FILTERS";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
 export const IS_LOGGED_IN = "IS_LOGGED_IN";
+export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
+
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -146,9 +150,7 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>
-        alert("Error al obtener sus datos de usuario" + err.message)
-      );
+      .catch((err) => alert('Error al obtener sus datos de usuario' + err.message));
   };
 };
 
@@ -188,3 +190,30 @@ export const getPetByOwner = (email) => {
       });
   };
 };
+
+///Accept adoption pet
+export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    }
+  }
+  const bodyPayload = {
+    petID: petId,
+    emailOwner: auth?.currentUser?.email,
+    newOwnerEmail: newOwnerEmail,
+    rating: rating || 5,
+  }
+  try {
+    console.log(bodyPayload)
+    const adoptionConfirmed = await axios.put(url + '/user/confirm', bodyPayload, config)
+    return {
+      type: CONFIRM_ADOPTION,
+      payload: adoptionConfirmed.data,
+    }
+  } catch (error) {
+    throw error
+  }
+
+}
