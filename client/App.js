@@ -61,19 +61,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen
-            name="FormPet"
-            component={FormPet}
-            options={{
-              headerStyle: { backgroundColor: "#d9d9d9" },
-              headerShadowVisible: false,
-              headerTintColor: "#AB4E68",
-              title: "Publicar mascota",
-              // headerBackTitle: null,
-              // headerBackTitleVisible: false,
-            }}
-          /> */}
-
+      
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -183,7 +171,14 @@ export default function App() {
           <Stack.Screen
             name="EditPet"
             component={EditPet}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Editar mascota",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
            <Stack.Screen
             name="EditProfile"
