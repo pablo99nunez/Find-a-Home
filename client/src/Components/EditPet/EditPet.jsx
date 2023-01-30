@@ -7,26 +7,26 @@ import {
   TextInput,
   TouchableOpacity, //botton
   ScrollView,
-  Platform,
 } from "react-native";
 import { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
-import * as ImagePicker from "expo-image-picker";
-import { firebase } from "../../firebase/config";
 import { useDispatch } from "react-redux";
 import { PetEdit } from "../../Redux/Actions/index";
+import { Photos } from "../CreatePet/Photos";
+import { ButtonYellow } from "../Buttons/Buttons";
+
 
 const EditPet = (props) => {
   const dispatch = useDispatch();
 
-  const [edit, setEdit] = useState({
+  const [crear, setCrear] = useState({
     name: props.route.params.name ? props.route.params.name : "",
     description: props.route.params.description
       ? props.route.params.description
       : "",
-    profilePic: props.route.params.profilePic
-      ? props.route.params.profilePic
-      : "",
+      galeria: props.route.params.gallery
+      ? props.route.params.gallery
+      : [],
     status: props.route.params.status ? props.route.params.status : selected2,
   });
 
@@ -40,80 +40,17 @@ const EditPet = (props) => {
   const [selected2, setSelected2] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  const pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      }).catch((err) => {
-        alert(err.message);
-      });
-
-      if (!result.canceled) {
-        await uploadImage(result.assets[0].uri).catch((err) => {
-          alert(err.message);
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const uploadImage = async (imageURI) => {
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", imageURI, true);
-      xhr.send(null);
-    });
-    const ref = firebase
-      .storage()
-      .ref()
-      .child(`Pictures/${Date.now()}-${edit.name}`);
-    const snapshot = ref.put(blob);
-    snapshot.on(
-      firebase.storage.TaskEvent.STATE_CHANGED,
-      () => {
-        setUploading(true);
-      },
-      (err) => {
-        setUploading(false);
-        console.log(err);
-        if(Platform.OS!=='web')
-        blob.close();
-        return;
-      },
-      () => {
-        snapshot.snapshot.ref.getDownloadURL()
-        .then((url) => {
-          setUploading(false);
-          setEdit({ ...edit, profilePic: url });
-          if(Platform.OS!=='web')
-          blob.close();
-          return url;
-        })
-        .catch(err=>alert('Error al obtener la url de la imagen'))
-
-      }
-    );
-  };
 
   const HandleSubmit = async () => {
       const DatosPetAEnviar = {
-        name: edit.name,
-        description: edit.description,
-        profilePic: edit.profilePic,
+        name: crear.name,
+        description: crear.description,
+        profilePic: crear.profilePic,
+        gallery: [...crear.galeria.slice(1)],
         state: selected2,
         id: props.route.params.id,
         email: props.route.params.email,
+
       };
       await PetEdit(DatosPetAEnviar)
         .then((sucess) => {
@@ -124,7 +61,7 @@ const EditPet = (props) => {
           alert(err.message);
         })
         .finally((e) => {
-          setEdit({
+          setCrear({
             name: "",
             description: "",
             profilePic: "",
@@ -146,65 +83,59 @@ const EditPet = (props) => {
       </View>
       <ScrollView style={styles.container}>
         {/* BOTON PARA CAMBIAR FOTO DE PERFIL */}
-        <TouchableOpacity onPress={() => pickImage()}>
+        {/* <TouchableOpacity onPress={() => pickImage()}>
           <Image style={styles.profilePic} source={{ uri: edit.profilePic }} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <Text style={{ fontSize: 30, marginRight: 10 }}>Nombre:</Text>
+<Text className='text-2xl font-extralight mb-3'>Nombre</Text>
 
+<TextInput
+            className='h-11 bg-[#717171] rounded-md px-3 font-light'
+            placeholder="Nombre de tu mascota"
+            placeholderTextColor="#fcfcfc"
+            autoCapitalize="none"
+            value={crear.name}
+            maxLength={15}
+            // onBlur={() => {
+            //   const wrongName = validateName(crear.name)
+            //   if(wrongName) setError({...error, name : 'El nombre no puede contener caracteres especiales'})
+            //   else{ setError({...error, name: ''})}
+            // }}
+            // onChangeText={
+            //   (text) => setCrear({ ...crear, name: text })
+            // }
+          />
+
+<Text className='text-2xl font-extralight mb-3'>Descripcion</Text>
         <TextInput
-          style={styles.input}
-          placeholder="Nombre de tu mascota"
-          placeholderTextColor={"#fcfcfc"}
+          className='bg-[#717171] h-24 rounded-md px-3 font-light pt-6'
+          multiline={true}
+          numberOfLines={4}
+          placeholder="Cómo es? describe a tu mascota...
+          Necesita alguna vacúna o atencion veterinaria?"
+          placeholderTextColor="#fcfcfc" 
           autoCapitalize="none"
-          value={edit.name}
-          maxLength={16}
-          onChangeText={
-            (text) => setEdit(/* validate( */ { ...edit, name: text }) /* ) */
-          }
+          value={crear.description}
+          onChangeText={(text) => setCrear({ ...crear, description: text })}
+          // onBlur={() => {
+          //   const wrongDesc = validateDesc(crear.description)
+          //   if(wrongDesc) setError({...error, description: 'Por favor agrega una descripcion'})
+          //   else{setError({...error, description: ''})}
+          
         />
+<Text className='text-2xl font-extralight mb-3'>Estado Del animal:</Text>
 
-        <Text style={{ fontSize: 30, marginRight: 10 }}>Descripcion:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Descripcion de tu mascota"
-          placeholderTextColor={"#fcfcfc"}
-          autoCapitalize="none"
-          value={edit.description}
-          maxLength={140}
-          onChangeText={
-            (text) =>
-              setEdit(
-                /* validate( */ { ...edit, description: text }
-              ) /* ) */
-          }
-        />
-        <Text style={{ fontSize: 30, marginRight: 10 }}>
-          ¿Estado del animal?
-        </Text>
         <SelectList
           setSelected={(dataSave) => setSelected2(dataSave)}
           data={data2}
           save="value"
         />
+        <Photos name={setCrear.name} setCrear={setCrear} crear={crear}/>
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
           {/* BOTON PARA ACEPTAR EDICION */}
-        <TouchableOpacity
-          onPress={() => {
-            HandleSubmit().catch(err=>alert(err.message))
-          }}
-        >
-            {Platform.OS === 'web' ? 
-          <img
-          src={require("../../images/buttoncrear.png")}
-          style={styles.imagen2}
-        />
-          :
-          <Image
-            source={require("../../images/buttoncrear.png")}
-            style={styles.imagen2}
-          />}
-        </TouchableOpacity>
+          <View className="my-[10%]">
+          <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
+        </View>
       </ScrollView>
     </>
   );

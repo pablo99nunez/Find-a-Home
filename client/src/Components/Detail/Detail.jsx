@@ -115,10 +115,10 @@ export default function Detail({ route, navigation }) {
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
         <View>
-          <Text>
+          {/* <Text>
             Coordenadas: latitud:{coordinates.latitude} longitud:
             {coordinates.longitude}
-          </Text>
+          </Text> */}
         </View>
 
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
