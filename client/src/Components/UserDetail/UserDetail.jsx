@@ -113,7 +113,9 @@ export default function UserDetail({ route, navigation }) {
         ></FlatList>
 
 
-
+<TouchableOpacity onPress={() => navigation.navigate("EditProfile", currentUser)}>
+  <Text>Editar perfil</Text>
+            </TouchableOpacity>
       <ButtonYellow text="Logout" onPress={logoutUser} />
       </View>
     </View>

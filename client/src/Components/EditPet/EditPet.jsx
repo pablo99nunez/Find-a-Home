@@ -21,15 +21,14 @@ const EditPet = (props) => {
 
   const [crear, setCrear] = useState({
     name: props.route.params.name ? props.route.params.name : "",
-    description: props.route.params.description
-      ? props.route.params.description
+    description: props.route.params.description  ? props.route.params.description
       : "",
-      galeria: props.route.params.gallery
-      ? props.route.params.gallery
-      : [],
+      profilePic: props.route.params.gallery ? props.route.params.gallery[0] : "",
+      gallery: props.route.params.gallery ? props.route.params.gallery : [],
+    galeria: props.route.params.gallery  ? props.route.params.gallery : [],
     status: props.route.params.status ? props.route.params.status : selected2,
   });
-
+console.log(crear)
   const data2 = [
     { key: "1", value: "Adoptable" },
     { key: "2", value: "Lost" },
@@ -45,11 +44,12 @@ const EditPet = (props) => {
       const DatosPetAEnviar = {
         name: crear.name,
         description: crear.description,
-        profilePic: crear.profilePic,
-        gallery: [...crear.galeria.slice(1)],
+        profilePic: crear.galeria[0] ||
+          "https://us.123rf.com/450wm/natbasil/natbasil1601/natbasil160100031/52068222-animales-siluetas-perro-gato-y-conejo-logotipo-de-la-tienda-de-animales-o-cl%C3%ADnica-veterinaria-ilustr.jpg?ver=6",
+        gallery: [...crear.galeria.slice(1)],      
         state: selected2,
-        id: props.route.params.id,
         email: props.route.params.email,
+        id: props.route.params.id,
 
       };
       await PetEdit(DatosPetAEnviar)
@@ -91,19 +91,19 @@ const EditPet = (props) => {
 
 <TextInput
             className='h-11 bg-[#717171] rounded-md px-3 font-light'
-            placeholder="Nombre de tu mascota"
+            // placeholder= {crear.name ? crear.name : "Nombre de tu mascota"}
             placeholderTextColor="#fcfcfc"
-            autoCapitalize="none"
-            value={crear.name}
+            // autoCapitalize="none"
             maxLength={15}
             // onBlur={() => {
             //   const wrongName = validateName(crear.name)
             //   if(wrongName) setError({...error, name : 'El nombre no puede contener caracteres especiales'})
             //   else{ setError({...error, name: ''})}
             // }}
-            // onChangeText={
-            //   (text) => setCrear({ ...crear, name: text })
-            // }
+            value={crear.name}
+            onChangeText={
+              (text) => setCrear({ ...crear, name: text })
+            }
           />
 
 <Text className='text-2xl font-extralight mb-3'>Descripcion</Text>
@@ -114,7 +114,7 @@ const EditPet = (props) => {
           placeholder="Cómo es? describe a tu mascota...
           Necesita alguna vacúna o atencion veterinaria?"
           placeholderTextColor="#fcfcfc" 
-          autoCapitalize="none"
+          // autoCapitalize="none"
           value={crear.description}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
           // onBlur={() => {
@@ -136,6 +136,7 @@ const EditPet = (props) => {
           <View className="my-[10%]">
           <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
         </View>
+
       </ScrollView>
     </>
   );

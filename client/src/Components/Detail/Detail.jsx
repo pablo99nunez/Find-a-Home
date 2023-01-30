@@ -80,6 +80,7 @@ export default function Detail({ route, navigation }) {
                   <Text>Boton de editar</Text>
                 </TouchableOpacity>
               ) : null}
+              
 
               <View className="h-52">
                 <Text className="text-[#f5c936] text-4xl text-center my-12">

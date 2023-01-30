@@ -3,7 +3,7 @@ import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
 
-export const url = "http://100.25.46.52:8080"
+export const url = BASE_URL_IP
 
 
 if (!BASE_URL_IP) {
@@ -217,3 +217,19 @@ export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
   }
 
 }
+
+export const EditProfiles = async (bodyPayload) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    },
+  };
+  try {
+    const profile = await axios.put(url + "user/profile", bodyPayload, config);
+
+    return profile;
+  } catch (error) {
+    throw error;
+  }
+};
