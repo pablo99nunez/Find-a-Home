@@ -30,6 +30,7 @@ import store from "./src/Redux/Store";
 import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
+import EditProfile from "./src/Components/EditProfile/EditProfile"
 
 import axios from "axios";
 
@@ -182,6 +183,11 @@ export default function App() {
           <Stack.Screen
             name="EditPet"
             component={EditPet}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
             options={{ headerShown: false }}
           />
 
