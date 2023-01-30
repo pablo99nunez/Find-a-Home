@@ -6,39 +6,40 @@ import { View, Text, TouchableOpacity, Image, TextInput} from 'react-native'
 import { ScrollView } from "react-native-gesture-handler";
 import { ButtonYellow } from "../Buttons/Buttons";
 import { EditProfiles } from "../../Redux/Actions";
-
+import { useDispatch } from "react-redux";
 
  const EditProfile = (props) =>{
-const {firstName, name, phone, profilePic, address} = props.route.params
+
+const {firstName, lastName, phone, profilePic, address} = props.route.params
 const [profile, setProfile] = useState({
-    name: name ? name : "",
     firstName: firstName ? firstName : "",
+    lastName: lastName ? lastName : "",
     phone: phone ? phone : "",
     profilePic: profilePic ? profilePic : "",
     address : address ? address : ""
 })
+// console.log(props.route.params)
 const HandleSubmit = async () => {
     const DatosPetAEnviar = {
-        name: profile.name,
         firstName: profile.firstName,
+        lastName: profile.lastName,
         profilePic: profile.profilePic,
         address: profile.address,
         phone: profile.phone,
-        email: props.route.params.email,
-
       };
-      await EditProfile(DatosPetAEnviar)
+    
+    await EditProfiles(DatosPetAEnviar)
         .then((sucess) => {
           alert("Su perfil a sido actualizado");
-          navigation.goBack();
+          props.navigation.navigate("UserDetail");
         })
         .catch((error) => {
-          alert(error.message);
+          console.log(error.message);
         })
         .finally((e) => {
           setCrear({
-            name: "",
             firstName: "",
+            lastName: "",
             phone: "",
             profilePic: "",
             address: "",
@@ -60,8 +61,8 @@ return(
             placeholder="Por favor actualiza tu nombre"
             placeholderTextColor="#fcfcfc"
             // autoCapitalize="none"
-            value={profile.name}
-            onChangeText={(text) => setProfile({ ...profile, name: text })}
+            value={profile.firstName}
+            onChangeText={(text) => setProfile({ ...profile, firstName: text })}
 
 />
 </View>
@@ -73,8 +74,8 @@ return(
             placeholder="Por favor actualiza tu Apellido"
             placeholderTextColor="#fcfcfc"
             // autoCapitalize="none"
-            value={profile.firstName}
-            onChangeText={(text) => setProfile({ ...profile, firstName: text })}
+            value={profile.lastName}
+            onChangeText={(text) => setProfile({ ...profile, lastName: text })}
           maxLength={20}
           />
 </View>
@@ -105,7 +106,8 @@ return(
           />
 </View>
 <View className="my-[10%]">
-          <ButtonYellow onPress={() => HandleSubmit()} text={"Actualizar perfil"} />
+<ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
+
         </View>
 </ScrollView>
 )

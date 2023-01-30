@@ -19,9 +19,12 @@ import { ButtonYellow } from "../Buttons/Buttons";
 import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getPetByOwner } from "../../Redux/Actions";
+import { getPetByOwner, getUser } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
+
 import Card from "../Card/Card"
+
+
 // const { width, height } = Dimensions.get("screen")
 const HEIGHT = Dimensions.get("screen").height;
 
@@ -29,16 +32,18 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
+ 
 
   useFocusEffect(
     React.useCallback(() => {
-      async function evitaReturnDelUseEffect() {
-        dispatch(getPetByOwner());
+      async function evitaReturnDelUseEffect () {
+       dispatch(getPetByOwner());
+       dispatch(getUser());
+
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
-
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);

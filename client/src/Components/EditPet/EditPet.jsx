@@ -24,8 +24,8 @@ const EditPet = (props) => {
     description: props.route.params.description  ? props.route.params.description
       : "",
       profilePic: props.route.params.gallery ? props.route.params.gallery[0] : "",
-      gallery: props.route.params.gallery ? props.route.params.gallery : [],
-    galeria: props.route.params.gallery  ? props.route.params.gallery : [],
+      gallery: props.route.params.gallery ? props.route.params.gallery.slice(1) : [],
+    galeria: props.route.params.gallery  ? props.route.params.gallery.slice(1) : [],
     status: props.route.params.status ? props.route.params.status : selected2,
   });
 console.log(crear)

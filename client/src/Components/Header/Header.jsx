@@ -57,7 +57,8 @@ export const Header = ({ navigation, filterBySize }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (email) dispatch(getUser(email));
+    if (email) 
+    dispatch(getUser(email));
   }, []);
 
   const [pin, setPin] = useState({

@@ -64,7 +64,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
   };
 };
 
-export const putUserData = async (payload) => {
+export const putUserData = async (profile) => {
   /* 
     ¿que estructura tiene el payload? Esta
     payload ={
@@ -82,9 +82,11 @@ export const putUserData = async (payload) => {
     },
   };
   const objetoAenviar = {
-    phone: payload.telefono,
-    address: [payload.pais, payload.provincia, payload.departamento],
-    conditions: payload.condiciones,
+    firstName: profile.name,
+    lastName: profile.firstName,
+    profilePic: profile.profilePic,
+    address: profile.address,
+    phone: profile.phone,
   };
   console.log(objetoAenviar);
 
@@ -226,7 +228,7 @@ export const EditProfiles = async (bodyPayload) => {
     },
   };
   try {
-    const profile = await axios.put(url + "user/profile", bodyPayload, config);
+    const profile = await axios.put(url + "/user/profile", bodyPayload, config);
 
     return profile;
   } catch (error) {
