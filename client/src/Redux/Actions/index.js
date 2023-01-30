@@ -2,11 +2,13 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-export const url = "http://100.25.46.52:8080";
+
+export const url = BASE_URL_IP
+
 
 if (!BASE_URL_IP) {
   alert(
-    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.25.46.52:8080/"
+    "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.26.168.38:8080/"
   );
 }
 
@@ -17,6 +19,8 @@ export const GET_PETS_FILTERED_BOTH_FILTERS = "GET_PETS_FILTERED_BOTH_FILTERS";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
 export const IS_LOGGED_IN = "IS_LOGGED_IN";
+export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
+
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -60,7 +64,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
   };
 };
 
-export const putUserData = async (payload) => {
+export const putUserData = async (profile) => {
   /* 
     ¿que estructura tiene el payload? Esta
     payload ={
@@ -78,9 +82,11 @@ export const putUserData = async (payload) => {
     },
   };
   const objetoAenviar = {
-    phone: payload.telefono,
-    address: [payload.pais, payload.provincia, payload.departamento],
-    conditions: payload.condiciones,
+    firstName: profile.name,
+    lastName: profile.firstName,
+    profilePic: profile.profilePic,
+    address: profile.address,
+    phone: profile.phone,
   };
   console.log(objetoAenviar);
 
@@ -146,9 +152,7 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>
-        alert("Error al obtener sus datos de usuario" + err.message)
-      );
+      .catch((err) => alert('Error al obtener sus datos de usuario' + err.message));
   };
 };
 
@@ -187,4 +191,47 @@ export const getPetByOwner = (email) => {
         alert("linea 186 Error en el fetch de getPetByOwner!" + error.message);
       });
   };
+};
+
+///Accept adoption pet
+export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    }
+  }
+  const bodyPayload = {
+    petID: petId,
+    emailOwner: auth?.currentUser?.email,
+    newOwnerEmail: newOwnerEmail,
+    rating: rating || 5,
+  }
+  try {
+
+    const adoptionConfirmed = await axios.put(url + '/user/confirm', bodyPayload, config)
+    return {
+      type: CONFIRM_ADOPTION,
+      payload: adoptionConfirmed.data,
+    }
+  } catch (error) {
+    throw error
+  }
+
+}
+
+export const EditProfiles = async (bodyPayload) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+    },
+  };
+  try {
+    const profile = await axios.put(url + "/user/profile", bodyPayload, config);
+
+    return profile;
+  } catch (error) {
+    throw error;
+  }
 };

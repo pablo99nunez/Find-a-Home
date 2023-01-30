@@ -5,7 +5,7 @@ import { firebase } from "../../firebase/config";
 import { ButtonYellow } from '../Buttons/Buttons';
 import { FlatList } from 'react-native-gesture-handler';
 
-export const Photos = ({name , crear, setCrear}) => {
+export const Photos = ({name , profile, setProfile}) => {
   
   const [uploading, setUploading] = useState(false);
   
@@ -64,7 +64,7 @@ export const Photos = ({name , crear, setCrear}) => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
           setUploading(false);
           //console.log("Download URL: ", url);
-          setCrear({ ...crear, galeria:[...crear.galeria, url]});
+          setProfile({ ...profile, profilePic: url});
           blob.close();
           return url;
         });
@@ -74,39 +74,18 @@ export const Photos = ({name , crear, setCrear}) => {
   return (
     <View>
       <View>
-        <Text className='text-2xl font-extralight mb-3'>Foto</Text>
+      <Text className='text-2xl font-extralight mb-3'></Text>
+        <Text className='text-2xl font-extralight mb-3'>Foto de perfil</Text>
       </View>
       <TouchableOpacity onPress={() => pickImage()}>
-          {!crear.galeria?.length  ? 
+
             <Image
-              source={require("../../images/camera.png")}
+              source={{ uri: profile.profilePic }}
               className='w-72 h-52 mx-auto rounded-md'
             />
-          : 
-            <Image
-              source={{ uri: crear.galeria[0] }}
-              className='w-72 h-52 mx-auto rounded-md'
-            />
-          }
+          
         </TouchableOpacity>
-        {crear.galeria?.length > 1 ?
-          <View>
-            <Text className='text-2xl font-extralight my-3'>Galeria</Text> 
-            <FlatList
-                    horizontal={true}
-                    keyExtractor={(item, index) => name + index}
-                    data={crear.galeria.slice(1)}
-                    renderItem={({ item }) => (
-                      <Image className='w-24 h-20 mb-3 mx-2 rounded-md' source={{ uri: item }} />
-                    )}
-                  ></FlatList>
-          </View>
-        : null }
-          {crear.galeria?.length > 0 && crear.galeria?.length < 7 ? <View className='mt-3'>
-          <ButtonYellow text={'Agregar otra'} onPress={()=> {
-            pickImage()
-            } }/>
-        </View>: null}
+ 
     </View>
   )
 }
