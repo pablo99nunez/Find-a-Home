@@ -57,8 +57,8 @@ export const Header = ({ navigation, filterBySize }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (email) 
-    dispatch(getUser(email));
+    if (email)
+      dispatch(getUser(email));
   }, []);
 
   const [pin, setPin] = useState({
@@ -67,17 +67,17 @@ export const Header = ({ navigation, filterBySize }) => {
   });
 
   useEffect(() => {
-    console.log(pin, "nuevo pin");
+    // console.log(pin, "nuevo pin");
   }, [pin]);
 
   const asd = useCallback(() => {
-    console.log("entre 5");
+    // console.log("entre 5");
     const run = async () => {
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
       });
-      console.log("entre 3", location);
+      // console.log("entre 3", location);
       setPin({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -87,15 +87,15 @@ export const Header = ({ navigation, filterBySize }) => {
   }, []);
 
   useEffect(() => {
-    console.log("entre 4");
+    // console.log("entre 4");
     const run = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log("entre 1", status);
+      // console.log("entre 1", status);
       if (status !== "granted") {
-        console.log("Permission to access location was denied");
+        // console.log("Permission to access location was denied");
         return;
       }
-      console.log("entre 2");
+      // console.log("entre 2");
       asd();
     };
     run();

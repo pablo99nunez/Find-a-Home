@@ -208,7 +208,7 @@ export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
     rating: rating || 5,
   }
   try {
-    console.log(bodyPayload)
+
     const adoptionConfirmed = await axios.put(url + '/user/confirm', bodyPayload, config)
     return {
       type: CONFIRM_ADOPTION,
