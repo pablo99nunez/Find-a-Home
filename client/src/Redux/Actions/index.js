@@ -63,7 +63,12 @@ export const getPetsFilteredByTwoFilters = (payload) => {
 };
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
-    const json = await axios.get(`${url}/pet/filter/zone/${radius}`, coords);
+    const json = await axios
+      .put(`${url}/pet/filter/zone/${radius}`, coords)
+      .catch(() => {
+        dispatch(getAllPets());
+      });
+
     return dispatch({
       type: GET_PETS_BY_ZONE,
       payload: json.data,

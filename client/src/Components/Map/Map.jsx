@@ -31,13 +31,13 @@ export default function Map(props) {
         }}
         showsUserLocation
       >
-        <Circle
+        {/* <Circle
           center={{
             latitude,
             longitude,
           }}
-          radius={50000}
-        />
+          radius={5000}
+        /> */}
         {allPets?.payload.map(petRender)}
       </MapView>
     </View>
