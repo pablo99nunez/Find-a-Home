@@ -6,14 +6,15 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { url } from "../Redux/Actions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const auth = getAuth(firebase);
 
 export const loginWithEmailAndPassword = async (email, password) => {
   await signInWithEmailAndPassword(auth, email, password)
-  .catch(error=>{
-    alert(error.message)
-})
+    .catch(error => {
+      alert(error.message)
+    })
 };
 
 //firebase 3
@@ -30,8 +31,10 @@ export const createAccountWithEmailAndPassword = async (
       if (resp.user) {
         resp.user.getIdToken().then(async (tkn) => {
           await AsyncStorage.setItem("authorization", "Bearer " + tkn);
+
+          console.log("ESTA ES LA DATA MI REEEI: -->", firstName, lastName, email, phone, conditions)
           await createUserInDb(firstName, lastName, email, phone, conditions);
-          console.log({ authorization: "Bearer " + tkn });
+          // console.log({ authorization: "Bearer " + tkn });
         });
       } else {
         alert(
@@ -39,11 +42,11 @@ export const createAccountWithEmailAndPassword = async (
         );
       }
     })
-    .catch(error=>{
-      if(error.message === 'Firebase: Error (auth/email-already-in-use).')
-      alert('El email ingresado ya está en uso!')
+    .catch(error => {
+      if (error.message === 'Firebase: Error (auth/email-already-in-use).')
+        alert('El email ingresado ya está en uso!')
       else alert(error.message)
-  })
+    })
   //CREAMOS EL USUARIO EN LA BASE DE DATOS
   const createUserInDb = async (
     firstName,
@@ -61,7 +64,7 @@ export const createAccountWithEmailAndPassword = async (
       phone,
       conditions,
     };
-    //console.log("DATA FOR DB CREATION:", data);
+    console.log("DATA FOR DB CREATION:", data);
     const tokenDelStore = await AsyncStorage.getItem("authorization").catch(
       (s) => alert("token no encontrado en el store local")
     );
@@ -73,7 +76,7 @@ export const createAccountWithEmailAndPassword = async (
         },
       })
       .then((response) => console.log("usuario nuevo creado en la mongodb"))
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => console.error("Error en la promesa de creacion autentikeishon:", error));
   };
 
   /* firebase
