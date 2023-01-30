@@ -13,7 +13,11 @@ export const CreatePet = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync().catch(
+        () => {
+          console.log("error, permission not granted");
+        }
+      );
       if (status !== "granted") {
         console.log("Permission to access location was denied");
         return;
@@ -22,6 +26,8 @@ export const CreatePet = ({ navigation }) => {
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
+      }).catch(() => {
+        console.log("error, location wasn't found");
       });
 
       setPin({
