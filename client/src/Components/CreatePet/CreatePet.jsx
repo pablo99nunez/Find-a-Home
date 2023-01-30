@@ -38,7 +38,8 @@ export const CreatePet = ({ navigation }) => {
     size: "",
     state: "",
     specie: "",
-    galeria: [],
+    profilePic: "",
+    gallery: [],
   });
 
   const [error, setError] = useState({});
@@ -50,11 +51,11 @@ export const CreatePet = ({ navigation }) => {
         description: crear.description,
         birthday: crear.birthday,
         size: crear.size,
-        profilePic:
-          crear.galeria[0] ||
+        profilePic:crear.profilePic ||
           "https://us.123rf.com/450wm/natbasil/natbasil1601/natbasil160100031/52068222-animales-siluetas-perro-gato-y-conejo-logotipo-de-la-tienda-de-animales-o-cl%C3%ADnica-veterinaria-ilustr.jpg?ver=6",
-        gallery: [...crear.galeria.slice(1)],
+        gallery: crear.gallery,
         specie: crear.specie,
+        state: crear.state,
         coordinates: {
           latitude: pin.latitude,
           longitude: pin.longitude,
@@ -76,7 +77,8 @@ export const CreatePet = ({ navigation }) => {
             size: "",
             state: "",
             specie: "",
-            galeria: [],
+            profilePic: "",
+            gallery:[],
           });
         });
     } else {
