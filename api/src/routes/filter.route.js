@@ -64,4 +64,14 @@ router.get('/age/', async (req, res) => {
 
 //   await Character.find({ rank: { $eq: 'Lieutenant' } });
 
+router.get('/zone/:radius', async(req,res)=>{
+  try {
+    const { latitude, longitude } = req.body.coords
+    const allPets = await getPetsByZone(req.params.radius, latitude, longitude)
+    res.status(200).send({message:"mascotas por zona" , payload: allPets})
+  } catch (error) {
+   res.status(501).send({error: error.message});
+  }
+});
+
 module.exports = router;

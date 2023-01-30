@@ -10,15 +10,13 @@ export default function Map(props) {
   const coordsDelta = useMemo(() => 0.7111, []);
 
   const petRender = useCallback(
-    ({ coordinates, name }) =>
-      /* TODO: Este ternario deberia eliminarse una vez que todos los pets tengan coordinates */
-      coordinates ? (
-        <Marker coordinate={coordinates}>
-          <Callout>
-            <Text>{name}</Text>
-          </Callout>
-        </Marker>
-      ) : null,
+    ({ coordinates, name }) => (
+      <Marker coordinate={coordinates}>
+        <Callout>
+          <Text>{name}</Text>
+        </Callout>
+      </Marker>
+    ),
     []
   );
   return (

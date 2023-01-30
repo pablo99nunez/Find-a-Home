@@ -2,9 +2,7 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 
-
-export const url = BASE_URL_IP
-
+export const url = BASE_URL_IP;
 
 if (!BASE_URL_IP) {
   alert(
@@ -20,7 +18,7 @@ export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
 export const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
-
+export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -59,6 +57,15 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     );
     return dispatch({
       type: GET_PETS_FILTERED_BOTH_FILTERS,
+      payload: json.data,
+    });
+  };
+};
+export const getPetsByZone = (radius, coords) => {
+  return async (dispatch) => {
+    const json = await axios.get(`${url}/pet/filter/zone/${radius}`, coords);
+    return dispatch({
+      type: GET_PETS_BY_ZONE,
       payload: json.data,
     });
   };
@@ -152,7 +159,9 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) => alert('Error al obtener sus datos de usuario' + err.message));
+      .catch((err) =>
+        alert("Error al obtener sus datos de usuario" + err.message)
+      );
   };
 };
 
@@ -199,26 +208,28 @@ export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-    }
-  }
+    },
+  };
   const bodyPayload = {
     petID: petId,
     emailOwner: auth?.currentUser?.email,
     newOwnerEmail: newOwnerEmail,
     rating: rating || 5,
-  }
+  };
   try {
-
-    const adoptionConfirmed = await axios.put(url + '/user/confirm', bodyPayload, config)
+    const adoptionConfirmed = await axios.put(
+      url + "/user/confirm",
+      bodyPayload,
+      config
+    );
     return {
       type: CONFIRM_ADOPTION,
       payload: adoptionConfirmed.data,
-    }
+    };
   } catch (error) {
-    throw error
+    throw error;
   }
-
-}
+};
 
 export const EditProfiles = async (bodyPayload) => {
   const config = {
