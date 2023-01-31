@@ -90,7 +90,7 @@ export const putUserData = async (profile) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   const objetoAenviar = {
@@ -120,7 +120,7 @@ export const PetPost = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {
@@ -135,7 +135,7 @@ export const PetEdit = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {
@@ -151,7 +151,7 @@ export const getUser = () => {
   const config = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
 
@@ -188,7 +188,7 @@ export const getPetByOwner = (email) => {
   const config = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
 
@@ -213,7 +213,7 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+        Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
       },
     };
     const bodyPayload = {
@@ -243,7 +243,7 @@ export const EditProfiles = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {

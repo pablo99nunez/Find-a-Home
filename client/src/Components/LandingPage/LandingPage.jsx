@@ -10,7 +10,7 @@ import { setIsLoggedIn } from "../../Redux/Actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LandingPage = ({ navigation }) => {
-  const isLoggedIn = useSelector(store=>store.isLoggedIn)
+  const isLoggedIn = useSelector(store => store.isLoggedIn)
   const dispatch = useDispatch();
 
   onAuthStateChanged(auth, (user) => {
@@ -31,7 +31,7 @@ const LandingPage = ({ navigation }) => {
       dispatch(setIsLoggedIn(false));
     }
   });
-  // VER TOKEN : ACTIVAR PARA VER EL TOKEN AL INGRESAR A LA APP
+
 
 
   return (
