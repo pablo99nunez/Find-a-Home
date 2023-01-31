@@ -4,13 +4,13 @@ import { LandingButton } from "../Buttons/Buttons";
 import { useFocusEffect } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/authentication";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn } from "../../Redux/Actions";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LandingPage = ({ navigation }) => {
-  const [logeado, setLogeado] = useState("");
+  const isLoggedIn = useSelector(store=>store.isLoggedIn)
   const dispatch = useDispatch();
 
   onAuthStateChanged(auth, (user) => {
@@ -18,37 +18,25 @@ const LandingPage = ({ navigation }) => {
       user.getIdToken().then(async (tkn) => {
         await AsyncStorage.setItem(
           "authorization",
-          "Bearer " + auth.currentUser.stsTokenManager.accessToken
-        ).catch(() => {
-          alert("RODRI PONELE CATCH!");
-        });
+          "Bearer " + tkn
+        )
         dispatch(setIsLoggedIn(true));
-      });
+        //No mover este console log de acá
+        console.log("authorization", "Bearer " + tkn);
+      }).catch((err) => {
+        console.log('ERROR LANDING PAGE: ' + err.message)
+      })
     } else {
       AsyncStorage.clear();
       dispatch(setIsLoggedIn(false));
     }
   });
   // VER TOKEN : ACTIVAR PARA VER EL TOKEN AL INGRESAR A LA APP
-  // console.log("authorization", "Bearer " + auth.currentUser.stsTokenManager.accessToken);
-  useFocusEffect(
-    React.useCallback(() => {
-      async function evitaReturnDelUseEffect() {
-        const tokenLocalStorage = await AsyncStorage.getItem(
-          "authorization"
-        ).catch(() => {
-          alert("PONELE CATCH!");
-        });
-        if (tokenLocalStorage) setLogeado(tokenLocalStorage);
-        else setLogeado(false);
-      }
-      evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
-    }, [])
-  );
+
 
   return (
     <View style={styles.container}>
-      {logeado ? (
+      {isLoggedIn ? (
         <LandingButton onPress={() => navigation.navigate("Home")} />
       ) : (
         <LandingButton onPress={() => navigation.navigate("Welcome")} />
