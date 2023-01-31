@@ -23,7 +23,7 @@ export default function HomeScreen(props) {
 
         }).catch((error) => {
             // An error happened.
-            alert(error);
+            console.error("⚠️ Error -> 🚨 HomeScreen -> 🔔logoutUser: " + error)
         });
     }
     const onAddButtonPress = () => {
