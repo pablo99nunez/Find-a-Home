@@ -50,7 +50,6 @@ export default function Home({ navigation }) {
   }
   return (
     <View style={styles.container}>
-      <PushNotification />
       <Header navigation={navigation} />
 
       <FlatList
@@ -80,6 +79,7 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      <PushNotification />
     </View>
   );
 }

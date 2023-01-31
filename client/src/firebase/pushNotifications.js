@@ -14,22 +14,26 @@ Notifications.setNotificationHandler({
 
 async function registerForPushNotificationsAsync() {
   let token;
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
+  try {
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        throw new Error(errorStatus);
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      // console.log(token);
+    } else {
+      throw new Error('Notifications not supported on this device');
     }
-    if (finalStatus !== 'granted') {
-      alert(errorStatus);
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
+  } catch (error) {
+    console.log(error);
   }
+
 
   if (Platform.OS === 'android') {
     Notifications.setNotificationChannelAsync('default', {
@@ -67,10 +71,11 @@ export default function PushNotification() {
     };
   }, []);
 
-  return (
+  return (<>
+    {/* PODÉS USAR ESTA DATA PARA VER LA INFO 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
-      {/* PODÉS USAR ESTA DATA PARA VER LA INFO 
+     
       <Text>Your expo push token: {expoPushToken}</Text>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>Title: {notification && notification.request.content.title} </Text>
@@ -82,8 +87,9 @@ export default function PushNotification() {
         onPress={async () => {
           await sendPushNotification(expoPushToken);
         }}
-      /> */}
-    </View>
+      /> 
+    </View>*/}
+  </>
   );
 }
 
