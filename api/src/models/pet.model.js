@@ -61,6 +61,9 @@ const petSchema = mongoose.Schema(
       type: Array,
       default: []
     },
+    reportes: {
+      type: Array
+    },
     coordinates: {
       latitude: {
         type: Number
