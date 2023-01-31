@@ -232,24 +232,27 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/icon1-icon3-welcome.png")}
           />
 
-          <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
             <Text style={styles.textSubTitles}>Home Screen</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.textSubTitles}>Login</Text>
+            <Text style={styles.textSubTitlesLogin}>Login</Text>
           </TouchableOpacity>
 
           <Image
             style={styles.icon}
             source={require("../../images/icon1-icon3-welcome.png")}
           />
-          <Text style={styles.textTitles}>Registrate</Text>
+          
           <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
+            <Text style={styles.textTitles}>Registrate</Text>
             <View style={styles.googleCircle}>
               {Platform.OS === "web" ? (
                 <Text>WEB REGISTER</Text>
               ) : (
+                
                 <GoogleImage width={86} height={86} />
+              
               )}
             </View>
           </TouchableOpacity>
@@ -407,7 +410,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     position: "relative",
     top: 10,
-    marginBottom: 40,
+    marginBottom: 15,
+    marginTop: 10,
     fontWeight: "normal",
     fontSize: 35,
   },
@@ -417,6 +421,13 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     textAlign: "center",
     fontSize: 25,
+  },
+  textSubTitlesLogin: {
+    top: 20,
+    color: "#AB4E68",
+    fontWeight: "normal",
+    textAlign: "center",//hola que onda? 
+    fontSize: 35,
   },
   input: {
     width: 200,
@@ -434,6 +445,7 @@ const styles = StyleSheet.create({
     top: 10,
     marginTop: 10,
     marginBottom: 30,
+    marginLeft: 38,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#ACACAC",
