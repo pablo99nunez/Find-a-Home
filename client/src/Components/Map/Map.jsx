@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function Map(props) {
   const { latitude = 0, longitude = 0 } = props.route.params;
   const allPets = useSelector((state) => state.allPets);
-  console.log(allPets.payload);
+  //console.log(allPets.payload);
 
   const coordsDelta = useMemo(() => 0.7111, []);
 
@@ -15,7 +15,8 @@ export default function Map(props) {
       <Marker
         coordinate={coordinates}
         onPress={() => {
-          props.navigation.navigate("Detail", id);
+          const item = allPets.payload.find(pet=>pet.id==id)
+          props.navigation.navigate("Detail", item);
         }}
       >
         <Callout>
