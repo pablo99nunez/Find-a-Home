@@ -118,7 +118,7 @@ export const Header = ({ navigation }) => {
   }, [number]);
 
   return (
-    <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[10%]">
+    <View className="flex flex-row justify-between items-center mt-[7%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
@@ -140,7 +140,7 @@ export const Header = ({ navigation }) => {
       )}
 
       <Image
-        className="w-14 h-12"
+        className="w-14 h-14"
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
@@ -164,7 +164,7 @@ export const Header = ({ navigation }) => {
       ) : (
         <Modal transparent visible={visible}>
           <SafeAreaView>
-            <View className="h-20 justify-end items-end mr-6 pb-3 content-center opacity-0">
+            <View className="items-end right-[5%] opacity-0">
               <Icon
                 name="menu"
                 size={50}
@@ -172,9 +172,9 @@ export const Header = ({ navigation }) => {
                 onTouchStart={() => resizeBox(0)}
               />
             </View>
-            <Animated.View className="rounded-3xl border-[#FFC733] border-2 bg-[#FFC733] w-full">
-              <View className="px-2">
-                <Text className="ml-3 mt-14 mb-5 text-4xl">Especie:</Text>
+            <Animated.View className="rounded-3xl bg-[#FFC733] w-[90%] ml-[5%] mr-[5%] mt-[3%]">
+              <View className="p-[5%]">
+                <Text className="text-2xl mb-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Especie:</Text>
 
                 <SelectList
                   data={[
@@ -188,15 +188,16 @@ export const Header = ({ navigation }) => {
                     // filterBySpecie(val)
                     setSpecie(val);
                   }}
-                  boxStyles={{ backgroundColor: "#1E1E1E" }}
-                  inputStyles={{ color: "#FFF", fontSize: 18, padding: 5 }}
-                  dropdownStyles={{ backgroundColor: "#2E2E2E" }}
-                  dropdownTextStyles={{ color: "#FFF", fontSize: 18 }}
+                  boxStyles={{ backgroundColor: "#D9D9D9", }}
+                  inputStyles={{ color: "#717171", fontSize: 18 }}
+                  dropdownStyles={{ backgroundColor: "#D9D9D9" }}
+                  dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
+                  search={false}
                 />
 
-                <Text className="ml-3 mt-14 mb-4 text-4xl">Tamaño:</Text>
+                <Text className="text-2xl mb-[3%] mt-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Tamaño:</Text>
 
-                <View className="flex flex-row  justify-around items-end w-11/12 mx-auto">
+                <View className="flex flex-row justify-around items-end w-11/12 mx-auto">
                   <TouchableOpacity
                     onPress={() => {
                       if (size !== "small") {
@@ -208,12 +209,12 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "small" ? (
                       <Image
-                        style={{ width: 90, height: 90 }}
+                        style={{ width: width * 0.15, height: width * 0.15 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        style={{ width: 90, height: 90 }}
+                        style={{ width: width * 0.15, height: width * 0.15 }}
                         source={require("../../images/perro_negro.png")}
                       />
                     )}
@@ -229,12 +230,12 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "medium" ? (
                       <Image
-                        style={{ width: 145, height: 145 }}
+                        style={{ width: width * 0.20, height: width * 0.20 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        style={{ width: 145, height: 145 }}
+                        style={{ width: width * 0.20, height: width * 0.20 }}
                         source={require("../../images/perro_negro.png")}
                       />
                     )}
@@ -250,24 +251,28 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "large" ? (
                       <Image
-                        // style={{width:145, height:145}}
+                        style={{ width: width * 0.25, height: width * 0.25 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        // style={{width:145, height:145}}
+                        style={{ width: width * 0.25, height: width * 0.25 }}
                         source={require("../../images/perro_negro.png")}
                       />
                     )}
                   </TouchableOpacity>
                 </View>
-                <Text>Filtrar por KM</Text>
+                  
+                <Text className="text-2xl mb-[3%] mt-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Kilometros:</Text>
                 <TextInput
-                  placeholder="Ingrese los kilómetros en los que desea ver mascotas"
+                  placeholder="Mascotas en tu radio de km."
+                  fontFamily="Roboto_300Light"
+                  boxStyles={{ backgroundColor: "#D9D9D9" }}
                   keyboardType="numeric"
                   value={number}
                   onChangeText={(text) => setNumber(text)}
-                  className="h-11 bg-[#717171] rounded-md px-3 font-light text-white"
+                  className="h-[14%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
+                  style={{fontFamily: 'Roboto_300Light'}}
                 />
               </View>
             </Animated.View>
