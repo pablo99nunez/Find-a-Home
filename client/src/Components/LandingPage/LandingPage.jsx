@@ -23,14 +23,14 @@ const LandingPage = ({ navigation }) => {
           alert("RODRI PONELE CATCH!");
         });
         dispatch(setIsLoggedIn(true));
-        // console.log("authorization", "Bearer " + tkn);
       });
     } else {
       AsyncStorage.clear();
       dispatch(setIsLoggedIn(false));
     }
   });
-
+  // VER TOKEN : ACTIVAR PARA VER EL TOKEN AL INGRESAR A LA APP
+  // console.log("authorization", "Bearer " + auth.currentUser.stsTokenManager.accessToken);
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {

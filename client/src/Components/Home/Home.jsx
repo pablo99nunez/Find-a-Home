@@ -36,6 +36,7 @@ export default function Home({ navigation }) {
   return (
     <View className="flex-1 bg-[#AB4E68]">
       <Header navigation={navigation} />
+
       <FlatList
         numColumns={2}
         initialNumToRender={10}
@@ -48,7 +49,7 @@ export default function Home({ navigation }) {
         )}
       ></FlatList>
       <StatusBar style="auto" />
-      <ButtonCreatePet onPress={HandleLoginToAdoption}/>
+      <ButtonCreatePet onPress={HandleLoginToAdoption} />
     </View>
   );
 }
