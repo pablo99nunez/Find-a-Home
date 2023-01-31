@@ -6,12 +6,18 @@ import { useSelector } from "react-redux";
 export default function Map(props) {
   const { latitude = 0, longitude = 0 } = props.route.params;
   const allPets = useSelector((state) => state.allPets);
+  console.log(allPets.payload);
 
   const coordsDelta = useMemo(() => 0.7111, []);
 
   const petRender = useCallback(
-    ({ coordinates, name }) => (
-      <Marker coordinate={coordinates}>
+    ({ id, coordinates, name }) => (
+      <Marker
+        coordinate={coordinates}
+        onPress={() => {
+          props.navigation.navigate("Detail", id);
+        }}
+      >
         <Callout>
           <Text>{name}</Text>
         </Callout>
@@ -31,13 +37,6 @@ export default function Map(props) {
         }}
         showsUserLocation
       >
-        {/* <Circle
-          center={{
-            latitude,
-            longitude,
-          }}
-          radius={5000}
-        /> */}
         {allPets?.payload.map(petRender)}
       </MapView>
     </View>
