@@ -7,7 +7,7 @@ const { ratingUpdate } = require('../controllers/ratingUserController');
 const { cleanUserInexistentPets } = require('../controllers/deletePet');
 const router = express.Router();
 
-//loggeeado, todos, por body mandar "email" de a quien se quiera revisar:
+//loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
 router.get('/profile', checkJwt, async (req, res) => {
     try {
         const email = req.user.email
@@ -17,12 +17,12 @@ router.get('/profile', checkJwt, async (req, res) => {
         res.status(501).send({ error: error.message })
     }
 })
-//loggeado, admin, lista todos los usuarios
+//loggeado, todos, lista todos los usuarios o encuentra al usuario por email
 router.get('/', checkJwt, async (req, res) => {
     try {
-        const filter = req.params
-        if (!filter) filter = {}
-        const users = await findAllUsers(filter)
+        const email = req.query
+        if (!email) email = {}
+        const users = await findAllUsers(email)
         res.status(200).send(users)
     } catch (error) {
         res.status(501).send({ error: error.message })

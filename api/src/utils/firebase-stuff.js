@@ -38,8 +38,8 @@ const checkJwt = (req, res, next) => { //jason web token
       req.user = decodedIdToken;
       return next();
     })
-    .catch((error) => {//                                               la IA:
-      return res.status(401).send("Tu token está mal no se decodificó, revisa burro!" + error.message);
+    .catch((error) => {//                                               
+      return res.status(401).send("Tu token está mal no se decodificó" + error.message);
     });
 };
 const messaging = firebaseAdmin.messaging();
