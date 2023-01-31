@@ -122,6 +122,15 @@ const userSchema = mongoose.Schema(
         default: 'Point' },
       coordinates: [Number],
     },
+    infracciones:{
+      type: Array,
+      default: []
+    },
+    tipo:{
+    type: String,
+    enum: ["User, Admin"],
+    default: "User"
+  } 
   },
   {
     timestamps: {
