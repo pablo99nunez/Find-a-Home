@@ -13,7 +13,7 @@ export const auth = getAuth(firebase);
 export const loginWithEmailAndPassword = async (email, password) => {
   await signInWithEmailAndPassword(auth, email, password)
     .catch(error => {
-      alert(error.message)
+      throw error
     })
 };
 
