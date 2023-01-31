@@ -208,33 +208,36 @@ export const getPetByOwner = (email) => {
 };
 
 ///Accept adoption pet
-export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-    },
-  };
-  const bodyPayload = {
-    petID: petId,
-    emailOwner: auth?.currentUser?.email,
-    newOwnerEmail: newOwnerEmail,
-    rating: rating || 5,
-  };
-  try {
-    const adoptionConfirmed = await axios.put(
-      url + "/user/confirm",
-      bodyPayload,
-      config
-    );
-    return {
-      type: CONFIRM_ADOPTION,
-      payload: adoptionConfirmed.data,
+export const acceptAdoption = (petId, newOwnerEmail, rating) => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      },
     };
-  } catch (error) {
-    throw error;
-  }
+    const bodyPayload = {
+      petID: petId,
+      emailOwner: auth?.currentUser?.email,
+      newOwnerEmail: newOwnerEmail,
+      rating: rating || 5,
+    };
+    try {
+      const adoptionConfirmed = await axios.put(
+        url + "/user/confirm",
+        bodyPayload,
+        config
+      );
+      dispatch({
+        type: CONFIRM_ADOPTION,
+        payload: adoptionConfirmed.data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
 };
+
 
 export const EditProfiles = async (bodyPayload) => {
   const config = {

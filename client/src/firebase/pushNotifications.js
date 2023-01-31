@@ -31,7 +31,7 @@ async function registerForPushNotificationsAsync() {
       throw new Error('Notifications not supported on this device');
     }
   } catch (error) {
-    console.log(error);
+    console.log("Push Notifications:", error);
   }
 
 
