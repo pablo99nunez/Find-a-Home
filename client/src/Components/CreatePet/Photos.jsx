@@ -10,7 +10,7 @@ export const Photos = ({name , crear, setCrear}) => {
   const [uploading, setUploading] = useState(false);
   
 
-  const pickImage = async () => {
+  const pickImage = async (imageType) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -22,7 +22,7 @@ export const Photos = ({name , crear, setCrear}) => {
       });
 
       if (!result.canceled) {
-        await uploadImage(result.assets[0].uri).catch((err) => {
+        await uploadImage(result.assets[0].uri, imageType).catch((err) => {
           alert(err.message);
         });
       }
@@ -31,7 +31,7 @@ export const Photos = ({name , crear, setCrear}) => {
     }
   };
 
-  const uploadImage = async (imageURI) => {
+  const uploadImage = async (imageURI, imageType) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -63,8 +63,8 @@ export const Photos = ({name , crear, setCrear}) => {
       () => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
           setUploading(false);
-          //console.log("Download URL: ", url);
-          setCrear({ ...crear, galeria:[...crear.galeria, url]});
+          if(imageType === 'profile') {setCrear({ ...crear, profilePic: url})}
+          else{ setCrear({...crear, gallery: [...crear.gallery, url]})}
           blob.close();
           return url;
         });
@@ -76,36 +76,48 @@ export const Photos = ({name , crear, setCrear}) => {
       <View>
         <Text className='text-2xl font-extralight mb-3'>Foto</Text>
       </View>
-      <TouchableOpacity onPress={() => pickImage()}>
-          {!crear.galeria?.length  ? 
+      <TouchableOpacity onPress={() => pickImage('profile')}>
+          {!crear.profilePic ? 
             <Image
               source={require("../../images/camera.png")}
               className='w-72 h-52 mx-auto rounded-md'
             />
           : 
             <Image
-              source={{ uri: crear.galeria[0] }}
+              source={{ uri: crear.profilePic }}
               className='w-72 h-52 mx-auto rounded-md'
             />
           }
         </TouchableOpacity>
-        {crear.galeria?.length > 1 ?
+        {crear.profilePic? <TouchableOpacity 
+        onPress={()=> setCrear({...crear, profilePic: ''})}
+        className='bg-[#77747470] w-6 h-6 rounded-full mx-auto mt-3'
+        >
+            <Text className='text-center'>X</Text>
+          </TouchableOpacity> : null}
+        {crear.gallery?.length > 0 ?
           <View>
             <Text className='text-2xl font-extralight my-3'>Galeria</Text> 
             <FlatList
                     horizontal={true}
                     keyExtractor={(item, index) => name + index}
-                    data={crear.galeria.slice(1)}
+                    data={crear.gallery}
                     renderItem={({ item }) => (
-                      <Image className='w-24 h-20 mb-3 mx-2 rounded-md' source={{ uri: item }} />
+                      <View>
+                        <Image className='w-24 h-20 mb-3 mx-2 rounded-md' source={{ uri: item }} />
+                        <TouchableOpacity 
+                        onPress={()=> setCrear({...crear, gallery: [...crear.gallery.filter((pic) => pic !== item)]})}
+                        className='bg-[#77747470] w-6 h-6 rounded-full mx-auto mt-3'
+                        >
+                          <Text className='text-center'>X</Text>
+                        </TouchableOpacity>
+                      </View>
                     )}
                   ></FlatList>
           </View>
         : null }
-          {crear.galeria?.length > 0 && crear.galeria?.length < 7 ? <View className='mt-3'>
-          <ButtonYellow text={'Agregar otra'} onPress={()=> {
-            pickImage()
-            } }/>
+          {crear.profilePic && crear.gallery.length < 6? <View className='mt-3'>
+          <ButtonYellow  text={'Agregar otra'} onPress={()=> { pickImage('gallery')} }/>
         </View>: null}
     </View>
   )

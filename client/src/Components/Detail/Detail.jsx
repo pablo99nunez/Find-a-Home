@@ -40,7 +40,6 @@ export default function Detail({ route, navigation }) {
     coordinates,
   } = route.params;
 
-
   const days = calculateAdoptionDays(created_at);
   //--------- BOTTOM SHEET FUNCTIONS-----------//
   const bottomSheetRef = useRef(null);
@@ -80,7 +79,6 @@ export default function Detail({ route, navigation }) {
                   <Text>Boton de editar</Text>
                 </TouchableOpacity>
               ) : null}
-              
 
               <View className="h-52">
                 <Text className="text-[#f5c936] text-4xl text-center my-12">
@@ -116,19 +114,23 @@ export default function Detail({ route, navigation }) {
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
         <View>
-          {/* <Text>
+          <Text>
             Coordenadas: latitud:{coordinates.latitude} longitud:
             {coordinates.longitude}
-          </Text> */}
+          </Text>
         </View>
 
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
           <View className="h-1/4 flex justify-evenly ">
             {currentUser.email === owner ? (
-              <View className='flex flex-col align-center justify-center'>
-                {solicitudes.length ? <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
-                  <Text className='text-xl text-white'>{solicitudes.length}</Text>
-                </View> : null}
+              <View className="flex flex-col align-center justify-center">
+                {solicitudes.length ? (
+                  <View className="bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10">
+                    <Text className="text-xl text-white">
+                      {solicitudes.length}
+                    </Text>
+                  </View>
+                ) : null}
                 <ButtonYellow
                   text="Solicitudes"
                   onPress={() => handleSolicitudes()}

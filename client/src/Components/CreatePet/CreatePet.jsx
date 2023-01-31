@@ -13,7 +13,11 @@ export const CreatePet = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync().catch(
+        () => {
+          console.log("error, permission not granted");
+        }
+      );
       if (status !== "granted") {
         console.log("Permission to access location was denied");
         return;
@@ -22,6 +26,8 @@ export const CreatePet = ({ navigation }) => {
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
+      }).catch(() => {
+        console.log("error, location wasn't found");
       });
 
       setPin({
@@ -38,7 +44,8 @@ export const CreatePet = ({ navigation }) => {
     size: "",
     state: "",
     specie: "",
-    galeria: [],
+    profilePic: "",
+    gallery: [],
   });
 
   const [error, setError] = useState({});
@@ -50,11 +57,11 @@ export const CreatePet = ({ navigation }) => {
         description: crear.description,
         birthday: crear.birthday,
         size: crear.size,
-        profilePic:
-          crear.galeria[0] ||
+        profilePic:crear.profilePic ||
           "https://us.123rf.com/450wm/natbasil/natbasil1601/natbasil160100031/52068222-animales-siluetas-perro-gato-y-conejo-logotipo-de-la-tienda-de-animales-o-cl%C3%ADnica-veterinaria-ilustr.jpg?ver=6",
-        gallery: [...crear.galeria.slice(1)],
+        gallery: crear.gallery,
         specie: crear.specie,
+        state: crear.state,
         coordinates: {
           latitude: pin.latitude,
           longitude: pin.longitude,
@@ -76,7 +83,8 @@ export const CreatePet = ({ navigation }) => {
             size: "",
             state: "",
             specie: "",
-            galeria: [],
+            profilePic: "",
+            gallery:[],
           });
         });
     } else {

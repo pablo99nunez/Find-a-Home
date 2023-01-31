@@ -1,36 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
-  StyleSheet,
-  Text,
   View,
-  Button,
-  TextInput,
-  ScrollView,
   FlatList,
-  Image,
   TouchableOpacity,
-  Dimensions,
-  Platform,
 } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
-import UserDetail from "../UserDetail/UserDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPets, checked, setIsLoggedIn } from "../../Redux/Actions";
-import firebase from "../../firebase/firebase-config";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAllPets } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import PushNotification from "../../firebase/pushNotifications";
-const { width, height } = Dimensions.get("screen");
+import { ButtonCreatePet } from "../Buttons/Buttons";
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);
-
-  const check = useSelector((state) => state.check);
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
   useFocusEffect(
@@ -49,11 +34,10 @@ export default function Home({ navigation }) {
       : navigation.navigate("Login");
   }
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-[#AB4E68]">
       <Header navigation={navigation} />
 
       <FlatList
-        style={styles.body}
         numColumns={2}
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
@@ -64,49 +48,8 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         )}
       ></FlatList>
-
       <StatusBar style="auto" />
-      <View style={styles.floatingAdoptionContainer}>
-        <View>
-          <TouchableOpacity
-            style={styles.adoptionButton}
-            onPress={HandleLoginToAdoption}
-          >
-            <Image
-              className="w-16 h-16 "
-              source={require("../../images/Trust.png")}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <PushNotification />
+      <ButtonCreatePet onPress={HandleLoginToAdoption} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffa",
-    width,
-  },
-
-  body: {
-    backgroundColor: "#AB4E68",
-    padding: 10,
-  },
-  floatingAdoptionContainer: {
-    width: 80,
-    height: 80,
-    position: "absolute",
-    bottom: 15,
-    right: 15,
-  },
-  adoptionButton: {
-    borderRadius: 100,
-    backgroundColor: "#FFC733",
-    paddingVertical: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

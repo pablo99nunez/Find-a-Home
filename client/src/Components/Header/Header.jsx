@@ -11,13 +11,14 @@ import {
   Dimensions,
   Image,
   Platform,
+  TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Picker } from "@react-native-picker/picker";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPets,
+  getPetsByZone,
   getPetsFilteredBySize,
   getPetsFilteredBySpecie,
   getPetsFilteredByTwoFilters,
@@ -26,9 +27,10 @@ import {
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import * as Location from "expo-location";
+
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation, filterBySize }) => {
+export const Header = ({ navigation }) => {
   const auth = getAuth(firebase);
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const email = auth.currentUser?.email;
@@ -57,8 +59,7 @@ export const Header = ({ navigation, filterBySize }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (email)
-      dispatch(getUser(email));
+    dispatch(getUser());
   }, []);
 
   const [pin, setPin] = useState({
@@ -67,39 +68,30 @@ export const Header = ({ navigation, filterBySize }) => {
   });
 
   useEffect(() => {
-    // console.log(pin, "nuevo pin");
-  }, [pin]);
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync().catch(
+        () => {
+          console.log("error, permission not granted");
+        }
+      );
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
 
-  const asd = useCallback(() => {
-    // console.log("entre 5");
-    const run = async () => {
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
+      }).catch(() => {
+        console.log("error, location wasn't found");
       });
-      // console.log("entre 3", location);
+
       setPin({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-    };
-    run();
+    })();
   }, []);
-
-  useEffect(() => {
-    // console.log("entre 4");
-    const run = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      // console.log("entre 1", status);
-      if (status !== "granted") {
-        // console.log("Permission to access location was denied");
-        return;
-      }
-      // console.log("entre 2");
-      asd();
-    };
-    run();
-  }, [asd]);
 
   const currentUser = useSelector((state) => state.currentUser);
 
@@ -113,8 +105,27 @@ export const Header = ({ navigation, filterBySize }) => {
     }).start(() => to === 0 && setVisible(false));
   };
 
+  const [number, setNumber] = useState("");
+
+  let coordsToSend = {
+    coords: {
+      latitude: pin.latitude,
+      longitude: pin.longitude,
+    },
+  };
+  useEffect(() => {
+    dispatch(getPetsByZone(number, coordsToSend));
+  }, [number]);
+
   return (
     <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[10%]">
+      <View className="bg-white">
+        <TextInput
+          keyboardType="numeric"
+          value={number}
+          onChangeText={(text) => setNumber(text)}
+        />
+      </View>
       {isLoggedIn ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
@@ -263,44 +274,6 @@ export const Header = ({ navigation, filterBySize }) => {
                     )}
                   </TouchableOpacity>
                 </View>
-                {/* <Picker
-                style={styles.inputPicker}
-                ref={pickerRef}
-                selectedValue={specie}
-                onValueChange={(itemValue, itemIndex) => {
-                  console.log(itemValue);
-                  filterBySpecie(itemValue);
-                  setSpecie(itemValue);
-                }}
-              >
-              <Picker.Item label="Seleccionar" value="Seleccionar" />
-                <Picker.Item label="Todos" value="All" />
-                <Picker.Item label="Perro" value="Perro" />
-                <Picker.Item label="Gato" value="Gato" />
-                
-                <Picker.Item label="Otro" value="Otro" />
-              </Picker> 
-              <TouchableOpacity
-                style={styles.option}
-                key={2}
-                onPress={() => {
-                  alert("tamaño filtro tests");
-                }}
-                >
-                <Text>Tamaño</Text>
-                </TouchableOpacity>
-                <Picker
-                style={styles.inputPicker}
-                ref={pickerRef}
-                selectedValue={userInput.especie}
-                onValueChange={(itemValue, itemIndex) =>
-                  setUserInput({ ...userInput, especie: itemValue })
-                }
-                >
-                <Picker.Item label="Small" value="Small" />
-                <Picker.Item label="Medium" value="Medium" />
-                <Picker.Item label="large" value="large" />
-              </Picker>*/}
               </View>
             </Animated.View>
           </SafeAreaView>
