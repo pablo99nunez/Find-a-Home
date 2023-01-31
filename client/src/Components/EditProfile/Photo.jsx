@@ -74,8 +74,7 @@ export const Photos = ({name , profile, setProfile}) => {
   return (
     <View>
       <View>
-      <Text className='text-2xl font-extralight mb-3'></Text>
-        <Text className='text-2xl font-extralight mb-3'>Foto de perfil</Text>
+        <Text className='text-2xl font-extralight m-3'>Foto de perfil</Text>
       </View>
       <TouchableOpacity onPress={() => pickImage()}>
 

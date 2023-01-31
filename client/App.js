@@ -184,7 +184,14 @@ export default function App() {
           <Stack.Screen
             name="EditProfile"
             component={EditProfile}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Editar Perfil",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           {/* =================================== */}
