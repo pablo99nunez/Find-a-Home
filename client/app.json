@@ -20,7 +20,6 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist"
-
     },
     "plugins": [
       [
@@ -29,21 +28,26 @@
           "android:showWhenLocked": true,
           "android:turnScreenOn": true
         }
-    
       ],
-      ["@react-native-google-signin/google-signin"]
+      [
+        "@react-native-google-signin/google-signin"
+      ]
     ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "googleServicesFile": "./google-services.json"
-
+      "googleServicesFile": "./google-services.json",
+      "package": "com.reactnativefirebas"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2095e72a-8c05-4962-bc69-545d346a676f"
+      }
     }
   }
-  
 }

@@ -42,6 +42,7 @@ import { ScreenStackHeaderRightView } from "react-native-screens";
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
+
 const Stack = createStackNavigator();
 
 const Logo = () => (
@@ -61,18 +62,6 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen
-            name="FormPet"
-            component={FormPet}
-            options={{
-              headerStyle: { backgroundColor: "#d9d9d9" },
-              headerShadowVisible: false,
-              headerTintColor: "#AB4E68",
-              title: "Publicar mascota",
-              // headerBackTitle: null,
-              // headerBackTitleVisible: false,
-            }}
-          /> */}
 
           <Stack.Screen
             name="LandigPage"
@@ -151,7 +140,7 @@ export default function App() {
           />
 
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          
+
           <Stack.Screen
             name="Registration"
             component={RegistrationScreen}
@@ -183,9 +172,16 @@ export default function App() {
           <Stack.Screen
             name="EditPet"
             component={EditPet}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Editar mascota",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="EditProfile"
             component={EditProfile}
             options={{ headerShown: false }}

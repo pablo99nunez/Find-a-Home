@@ -159,24 +159,30 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
 
       <View>
         <Text className='text-2xl font-extralight mb-3'>Estado del animal</Text>
-        <View className='flex flex-row justify-center'>
+        <View className='flex flex-row justify-center flex-wrap'>
           <TouchableOpacity onPress={()=> {setCrear({...crear, state:'Adoptable'})}}
           className={crear.state === 'Adoptable'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start rounded-full bg-[#77747470] p-3 mx-3'}>
+           "self-start rounded-full bg-[#AB4E68] p-3 m-2" :
+            'self-start rounded-full bg-[#77747470] p-3 m-2'}>
               <Text>En Adopcion</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'Lost'})}}
           className={crear.state === 'Lost'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
+           "self-start rounded-full bg-[#AB4E68] p-3 m-2" :
+            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
               <Text>Perdido</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'Found'})}}
           className={crear.state === 'Found'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
+           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
+            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
               <Text>Encontrado</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'notAdoptable'})}}
+          className={crear.state === 'NotAdoptable'?
+           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
+            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
+              <Text>Fuera de adopcion</Text>
           </TouchableOpacity>
         </View>
         <View className='h-5 mt-1'>
