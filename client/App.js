@@ -31,7 +31,7 @@ import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile"
-
+import PushNotification from "./src/firebase/pushNotifications";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
@@ -184,12 +184,20 @@ export default function App() {
           <Stack.Screen
             name="EditProfile"
             component={EditProfile}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Editar Perfil",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           {/* =================================== */}
         </Stack.Navigator>
       </NavigationContainer>
+      <PushNotification />
     </Provider>
   );
 }

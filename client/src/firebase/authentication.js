@@ -72,7 +72,7 @@ export const createAccountWithEmailAndPassword = async (
       .post(`${url}/user`, data, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+          Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
         },
       })
       .then((response) => console.log("usuario nuevo creado en la mongodb"))
