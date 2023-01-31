@@ -22,57 +22,84 @@ export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 
 export const getAllPets = () => {
   return async (dispatch) => {
-    const json = await axios.get(`${url}/pet`);
-    return dispatch({
-      type: GET_ALL_PETS,
-      payload: json.data,
-    });
+    try {
+      const json = await axios.get(`${url}/pet`);
+      return dispatch({
+        type: GET_ALL_PETS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.message);
+    }
+
   };
 };
 
 export const getPetsFilteredBySpecie = (payload) => {
   return async (dispatch) => {
-    const json = await axios.get(`${url}/pet/filter/specie/${payload}`);
-    return dispatch({
-      type: GET_PETS_FILTERED_SPECIE,
-      payload: json.data,
-    });
+    try {
+      const json = await axios.get(`${url}/pet/filter/specie/${payload}`);
+      return dispatch({
+        type: GET_PETS_FILTERED_SPECIE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.message);
+    }
+
   };
 };
 
 export const getPetsFilteredBySize = (payload) => {
   return async (dispatch) => {
-    const json = await axios.get(`${url}/pet/filter/size/${payload}`);
-    return dispatch({
-      type: GET_PETS_FILTERED_SIZE,
-      payload: json.data,
-    });
+    try {
+      const json = await axios.get(`${url}/pet/filter/size/${payload}`);
+      return dispatch({
+        type: GET_PETS_FILTERED_SIZE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.message);
+    }
+
   };
 };
 
 export const getPetsFilteredByTwoFilters = (payload) => {
   return async (dispatch) => {
-    const json = await axios.get(
-      `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
-    );
-    return dispatch({
-      type: GET_PETS_FILTERED_BOTH_FILTERS,
-      payload: json.data,
-    });
+    try {
+      const json = await axios.get(
+        `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
+      );
+      return dispatch({
+        type: GET_PETS_FILTERED_BOTH_FILTERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.message);
+    }
+
   };
 };
+
+
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
-    const json = await axios
-      .put(`${url}/pet/filter/zone/${radius}`, coords)
-      .catch(() => {
-        dispatch(getAllPets());
-      });
+    try {
+      const json = await axios
+        .put(`${url}/pet/filter/zone/${radius}`, coords)
+        .catch(() => {
+          dispatch(getAllPets());
+        });
 
-    return dispatch({
-      type: GET_PETS_BY_ZONE,
-      payload: json.data,
-    });
+      return dispatch({
+        type: GET_PETS_BY_ZONE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
+    }
+
   };
 };
 
@@ -100,11 +127,10 @@ export const putUserData = async (profile) => {
     address: profile.address,
     phone: profile.phone,
   };
-  console.log(objetoAenviar);
 
   const json = await axios
     .put(`${url}/user/profile`, objetoAenviar, config)
-    .catch((error) => alert(error.message));
+    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.message));
   return json;
 
   /*  return async (dispatch) => {
@@ -127,7 +153,7 @@ export const PetPost = async (bodyPayload) => {
     const pet = await axios.post(url + "/pet", bodyPayload, config);
     return pet;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetPost: " + error.message)
   }
 };
 
@@ -143,7 +169,7 @@ export const PetEdit = async (bodyPayload) => {
 
     return pet;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.message)
   }
 };
 
@@ -165,7 +191,7 @@ export const getUser = () => {
         });
       })
       .catch((err) =>
-        alert("Error al obtener sus datos de usuario" + err.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + error.message)
       );
   };
 };
@@ -202,7 +228,7 @@ export const getPetByOwner = (email) => {
         });
       })
       .catch((error) => {
-        alert("linea 186 Error en el fetch de getPetByOwner!" + error.message);
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.message)
       });
   };
 };
@@ -233,7 +259,7 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
         payload: adoptionConfirmed.data,
       });
     } catch (error) {
-      throw error;
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 Acept Adoption: " + error.message)
     }
   };
 };
@@ -251,6 +277,22 @@ export const EditProfiles = async (bodyPayload) => {
 
     return profile;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.message)
+  }
+};
+
+export const Notify = async (bodyPayload) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  try {
+    const status = await axios.post(url + "/user/profile", bodyPayload, config);
+
+    return status;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Push Notifications: " + error.message)
   }
 };
