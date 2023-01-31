@@ -10,12 +10,19 @@ import {
   Platform,
   Animated,
 } from "react-native";
+import { useSelector } from "react-redux";
 import GoogleImage from "../../images/Google.svg";
 
 const { width, height } = Dimensions.get("window");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
+  const isLoggedIn = useSelector(store=>store.isLoggedIn)
+
+  useEffect(() => {
+    if(isLoggedIn)
+      navigation.navigate("Home")
+  }, [isLoggedIn]);
 
   //magia circulito expandible detectand el scroll
   const [xPos, setXPos] = useState(0);
