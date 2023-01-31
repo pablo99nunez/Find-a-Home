@@ -22,7 +22,7 @@ import firebase from "../../firebase/firebase-config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import PushNotification from "../../firebase/pushNotifications";
 const { width, height } = Dimensions.get("screen");
 
 export default function Home({ navigation }) {
@@ -50,7 +50,9 @@ export default function Home({ navigation }) {
   }
   return (
     <View style={styles.container}>
+      <PushNotification />
       <Header navigation={navigation} />
+
       <FlatList
         style={styles.body}
         numColumns={2}

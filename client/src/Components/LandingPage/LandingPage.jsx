@@ -22,14 +22,14 @@ const LandingPage = ({ navigation }) => {
           "Bearer " + auth.currentUser.stsTokenManager.accessToken
         );
         dispatch(setIsLoggedIn(true));
-        // console.log("authorization", "Bearer " + tkn);
       });
     } else {
       AsyncStorage.clear();
       dispatch(setIsLoggedIn(false));
     }
   });
-
+  // VER TOKEN : ACTIVAR PARA VER EL TOKEN AL INGRESAR A LA APP
+  // console.log("authorization", "Bearer " + auth.currentUser.stsTokenManager.accessToken);
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
