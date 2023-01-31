@@ -70,7 +70,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     try {
       const json = await axios.get(
         `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
-      );
+      )
       return dispatch({
         type: GET_PETS_FILTERED_BOTH_FILTERS,
         payload: json.data,
@@ -86,16 +86,18 @@ export const getPetsFilteredByTwoFilters = (payload) => {
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
     try {
-      const json = await axios
+      await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .catch(() => {
+        .then(response=>{ //if
+          dispatch({
+            type: GET_PETS_BY_ZONE,
+            payload: response.data,
+          })
+        })
+        .catch(() => { //else
           dispatch(getAllPets());
         });
 
-      return dispatch({
-        type: GET_PETS_BY_ZONE,
-        payload: json.data,
-      });
     } catch (error) {
       console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
     }
