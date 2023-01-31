@@ -83,6 +83,7 @@ export default function UserDetail({ route, navigation }) {
           colors={["#00000000", "#ACACAC"]}
           style={{ height: "100%", width: "100%" }}
         >
+          
           <View>
             <Header
               onPress={() => navigation.navigate("Home")}
