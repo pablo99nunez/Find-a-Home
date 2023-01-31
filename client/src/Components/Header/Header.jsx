@@ -119,13 +119,6 @@ export const Header = ({ navigation }) => {
 
   return (
     <View className="bg-[#AB4E68] h-[11%] flex flex-row justify-between px-[4%] pt-[10%]">
-      <View className="bg-white">
-        <TextInput
-          keyboardType="numeric"
-          value={number}
-          onChangeText={(text) => setNumber(text)}
-        />
-      </View>
       {isLoggedIn ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
@@ -215,13 +208,11 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "small" ? (
                       <Image
-                        className="mt-8 mb-24"
                         style={{ width: 90, height: 90 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        className="mt-8 mb-24"
                         style={{ width: 90, height: 90 }}
                         source={require("../../images/perro_negro.png")}
                       />
@@ -238,13 +229,11 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "medium" ? (
                       <Image
-                        className="mt-8 mb-24"
                         style={{ width: 145, height: 145 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        className="mt-8 mb-24"
                         style={{ width: 145, height: 145 }}
                         source={require("../../images/perro_negro.png")}
                       />
@@ -261,19 +250,25 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "large" ? (
                       <Image
-                        className="mt-8 mb-24"
                         // style={{width:145, height:145}}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        className="mt-8 mb-24"
                         // style={{width:145, height:145}}
                         source={require("../../images/perro_negro.png")}
                       />
                     )}
                   </TouchableOpacity>
                 </View>
+                <Text>Filtrar por KM</Text>
+                <TextInput
+                  placeholder="Ingrese los kilómetros en los que desea ver mascotas"
+                  keyboardType="numeric"
+                  value={number}
+                  onChangeText={(text) => setNumber(text)}
+                  className="h-11 bg-[#717171] rounded-md px-3 font-light text-white"
+                />
               </View>
             </Animated.View>
           </SafeAreaView>
