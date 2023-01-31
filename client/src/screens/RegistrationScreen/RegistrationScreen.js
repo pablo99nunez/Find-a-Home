@@ -10,11 +10,11 @@ import { StyleSheet } from 'react-native';
 
 export default function RegistrationScreen({ navigation }) {
     const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] =useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('@gmail.com')
     const [password, setPassword] = useState('123456')
 
-    const user ={firstName,lastName,email,password}
+    const user = { firstName, lastName, email, password }
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
@@ -22,11 +22,11 @@ export default function RegistrationScreen({ navigation }) {
 
     return (
         <View style={styles.container}
-        className='flex w-[100%] bg-[#3A302E] items-center'>
+            className='flex w-[100%] bg-[#3A302E] items-center'>
             <KeyboardAwareScrollView
                 keyboardShouldPersistTaps="always"
                 className='w-[90%]'
-                >
+            >
                 <Image
                     style={styles.logo}
                     source={require('../../images/FindAHome.png')}
@@ -40,7 +40,7 @@ export default function RegistrationScreen({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                 <TextInput
+                <TextInput
                     className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
                     placeholder='Apellido'
                     placeholderTextColor="#aaaaaa"
@@ -50,7 +50,7 @@ export default function RegistrationScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TextInput
-                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'                    
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
                     placeholder='Email'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
@@ -84,7 +84,7 @@ export default function RegistrationScreen({ navigation }) {
                     <Text style={styles.buttonTitle}>Create account</Text>
                 </TouchableOpacity> */}
                 <View className='my-3'>
-                <ButtonYellow onPress={()=> navigation.navigate('RegisterFirstSteps', user)} text={'Continuar'}/>
+                    <ButtonYellow onPress={() => navigation.navigate('RegisterFirstSteps', user)} text={'Continuar'} />
                 </View>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
@@ -99,7 +99,7 @@ export default function RegistrationScreen({ navigation }) {
 
 StyleSheet.create({
     container: {
-       flex: 1
+        flex: 1
     },
     logo: {
         flex: 1,
@@ -107,6 +107,6 @@ StyleSheet.create({
         width: 155,
         alignSelf: "center",
         padding: 50,
-        margin:30
+        margin: 30
     }
 })

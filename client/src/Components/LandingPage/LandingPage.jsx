@@ -24,7 +24,7 @@ const LandingPage = ({ navigation }) => {
         //No mover este console log de acá
         console.log("authorization", "Bearer " + tkn);
       }).catch((err) => {
-        console.log('ERROR LANDING PAGE: ' + err.message)
+        console.error("⚠️ Error -> 🚨 LANDING PAGE -> 🔔onAuthStateChanged: " + err.message);
       })
     } else {
       AsyncStorage.clear();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { loginWithEmailAndPassword } from '../../firebase/authentication';
@@ -16,17 +16,17 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}
-        className='flex w-[100%] bg-[#3A302E] items-center'>
+            className='flex w-[100%] bg-[#3A302E] items-center'>
             <KeyboardAwareScrollView
                 keyboardShouldPersistTaps="always"
                 className='w-[90%]'
-                >
+            >
                 <Image
                     style={styles.logo}
                     source={require('../../images/FindAHome.png')}
                 />
-                  <TextInput
-                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'                    
+                <TextInput
+                    className='h-11 w-[100%] bg-white rounded-md my-3 pl-3'
                     placeholder='Email'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
@@ -45,14 +45,14 @@ export default function LoginScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <View className='my-3'>
-               <ButtonYellow  
-               onPress={async () => {
-                await loginWithEmailAndPassword(email, password)
-                .then(ignore => {navigation.navigate('Home')})
-                .catch(err=>alert(err.message))
-                }}
-                text='Acceder'
-                />
+                    <ButtonYellow
+                        onPress={async () => {
+                            await loginWithEmailAndPassword(email, password)
+                                .then(ignore => { navigation.navigate('Home') })
+                                .catch(err => console.error("⚠️ Error -> 🚨 LoginScreen -> 🔔loginWithEmailAndPassword: " + err))
+                        }}
+                        text='Acceder'
+                    />
                 </View>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>No tenes una cuenta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Registrate aca</Text></Text>

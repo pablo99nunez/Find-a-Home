@@ -32,13 +32,13 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
- 
+
 
   useFocusEffect(
     React.useCallback(() => {
-      async function evitaReturnDelUseEffect () {
-       dispatch(getPetByOwner());
-       dispatch(getUser());
+      async function evitaReturnDelUseEffect() {
+        dispatch(getPetByOwner());
+        dispatch(getUser());
 
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
@@ -58,7 +58,8 @@ export default function UserDetail({ route, navigation }) {
       })
       .catch((error) => {
         // An error happened.
-        alert(error);
+        console.error("⚠️ Error -> 🚨 UserDetail -> 🔔logoutUser: " + error)
+
       });
   }
   //-----------------------------------------------------------
@@ -94,10 +95,10 @@ export default function UserDetail({ route, navigation }) {
             />
           </View>
         </LinearGradient>
-      <View className="flex flex-row justify-between w-11/12 mx-auto">
-        <Text className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
-        <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating? currentUser.rating.rating : null}★</Text>
-      </View>
+        <View className="flex flex-row justify-between w-11/12 mx-auto">
+          <Text className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
+          <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : null}★</Text>
+        </View>
       </ImageBackground>
       <View className="mb-4">
         <View>
@@ -118,15 +119,15 @@ export default function UserDetail({ route, navigation }) {
         ></FlatList>
 
 
-<TouchableOpacity onPress={() => navigation.navigate("EditProfile", currentUser)}>
-  <Text>Editar perfil</Text>
-            </TouchableOpacity>
-      <ButtonYellow text="Logout" onPress={logoutUser} />
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile", currentUser)}>
+          <Text>Editar perfil</Text>
+        </TouchableOpacity>
+        <ButtonYellow text="Logout" onPress={logoutUser} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
- 
+
 });

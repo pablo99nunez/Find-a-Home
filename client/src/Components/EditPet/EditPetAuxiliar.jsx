@@ -48,16 +48,17 @@ export const EditPerAuxiliar = (props) => {
         aspect: [4, 3],
         quality: 1,
       }).catch((err) => {
-        alert(err.message);
+        console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 EditPerAuxiliar: " + err.message);
+
       });
 
       if (!result.canceled) {
         await uploadImage(result.assets[0].uri).catch((err) => {
-          alert(err.message);
+          console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 EditPerAuxiliar: " + err.message);
         });
       }
     } catch (err) {
-      console.log(err);
+      console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 EditPerAuxiliar.catch: " + err);
     }
   };
 
@@ -87,20 +88,20 @@ export const EditPerAuxiliar = (props) => {
       (err) => {
         setUploading(false);
         console.log(err);
-        if(Platform.OS!=='web')
-        blob.close();
+        if (Platform.OS !== 'web')
+          blob.close();
         return;
       },
       () => {
         snapshot.snapshot.ref.getDownloadURL()
-        .then((url) => {
-          setUploading(false);
-          setEdit({ ...edit, profilePic: url });
-          if(Platform.OS!=='web')
-          blob.close();
-          return url;
-        })
-        .catch(err=>alert('Error al obtener la url de la imagen'))
+          .then((url) => {
+            setUploading(false);
+            setEdit({ ...edit, profilePic: url });
+            if (Platform.OS !== 'web')
+              blob.close();
+            return url;
+          })
+          .catch(err => console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 Error al obtener la url de la imagen" + err.message))
 
       }
     );
@@ -121,7 +122,7 @@ export const EditPerAuxiliar = (props) => {
           props.navigation.navigate("UserDetail")
         })
         .catch((err) => {
-          alert(err.message);
+          console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 PetEdit: " + err.message);
         })
         .finally((e) => {
           setEdit({
@@ -137,7 +138,7 @@ export const EditPerAuxiliar = (props) => {
   };
   return (
     <>
-    {/* BOTON PARA VOLVER HACIA ATRAS */}
+      {/* BOTON PARA VOLVER HACIA ATRAS */}
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Image
@@ -147,7 +148,7 @@ export const EditPerAuxiliar = (props) => {
         </TouchableOpacity>
         <Text style={{ fontSize: 30, marginTop: 50 }}>Editar mascota:</Text>
       </View>
-      
+
       <ScrollView style={styles.container}>
         {/* BOTON PARA CAMBIAR FOTO DE PERFIL */}
         <TouchableOpacity onPress={() => pickImage()}>
@@ -187,22 +188,22 @@ export const EditPerAuxiliar = (props) => {
           save="value"
         />
         <Text style={{ fontSize: 30, marginRight: 10 }}></Text>
-          {/* BOTON PARA ACEPTAR EDICION */}
+        {/* BOTON PARA ACEPTAR EDICION */}
         <TouchableOpacity
           onPress={() => {
-            HandleSubmit().catch(err=>alert(err.message))
+            HandleSubmit().catch(err => console.error("⚠️ Error -> 🚨 EditPetAuxiliar -> 🔔 BOTON PARA ACEPTAR EDICION: " + err.message))
           }}
         >
-          {Platform.OS === 'web' ? 
-          <img
-          src={require("../../images/buttoncrear.png")}
-          style={styles.imagen2}
-        />
-          :
-          <Image
-            source={require("../../images/buttoncrear.png")}
-            style={styles.imagen2}
-          />}
+          {Platform.OS === 'web' ?
+            <img
+              src={require("../../images/buttoncrear.png")}
+              style={styles.imagen2}
+            />
+            :
+            <Image
+              source={require("../../images/buttoncrear.png")}
+              style={styles.imagen2}
+            />}
         </TouchableOpacity>
       </ScrollView>
     </>

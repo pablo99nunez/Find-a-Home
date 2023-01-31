@@ -59,8 +59,8 @@ export const Header = ({ navigation }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if(isLoggedIn)
-    dispatch(getUser());
+    if (isLoggedIn)
+      dispatch(getUser());
   }, []);
 
   const [pin, setPin] = useState({
@@ -72,11 +72,11 @@ export const Header = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync().catch(
         () => {
-          console.log("error, permission not granted");
+          console.error("⚠️ Error -> 🚨 Header -> 🔔permission not granted");
         }
       );
       if (status !== "granted") {
-        console.log("Permission to access location was denied");
+        console.error("⚠️ Error -> 🚨 Header -> 🔔Permission to access location was denied");
         return;
       }
 
@@ -84,7 +84,7 @@ export const Header = ({ navigation }) => {
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
       }).catch(() => {
-        console.log("error, location wasn't found");
+        console.error("⚠️ Error -> 🚨 Header -> 🔔Location wasn't found");
       });
 
       setPin({

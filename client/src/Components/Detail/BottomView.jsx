@@ -23,13 +23,13 @@ const BottomView = ({ petId, auth }) => {
         .then(response => console.log(response))
         .finally(setSent(true))
     } catch (error) {
-      console.log('Error', error)
+      console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error);
     }
   }
   // renders
   return (
     !sent ? <View>
-      <BottomSheetTextInput style={styles.input} multiline onChangeText={(text)=> setMessage(text)}/>
+      <BottomSheetTextInput style={styles.input} multiline onChangeText={(text) => setMessage(text)} />
       <ButtonYellow text='Enviar Solicitud' onPress={() => AdoptionRequest()} />
     </View> :
       <View>
