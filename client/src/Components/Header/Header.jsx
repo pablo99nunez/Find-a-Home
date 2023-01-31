@@ -59,6 +59,7 @@ export const Header = ({ navigation }) => {
   }, [specie, size]);
 
   useEffect(() => {
+    if(isLoggedIn)
     dispatch(getUser());
   }, []);
 
