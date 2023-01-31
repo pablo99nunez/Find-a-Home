@@ -1,53 +1,59 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 const Card = ({item}) => {
+    let estado = ""
+    switch (item.state) {
+        case (item.state === 'NotAdoptable'):{
+            estado = "No adoptable"
+        }
+        case ( item.state === 'InAdoptionProcess'):{
+            estado = "En proceso de adopción"
+        }
+        case (item.state === 'Adopted'):{
+            estado = "Adoptado"
+        }
+        case (item.state === 'Lost'):{
+            estado = "Perdido"
+        }
+        case (item.state === 'Found'):{
+            estado = "Encontrado"
+        }
+        default: {
+            estado = "En adopción"
+        }
+    }
     return (
         <View style={styles.container}>
             <Image
-                className="relative"
-                style={styles.imagen}
+                className='relative h-[100%] w-[100%] rounded-3xl'
                 source={{uri: item.profilePic}}
             />
+            <ImageBackground source={require('../../images/Banderin-r.png')} className='absolute top-[10%] w-[85%]'>
+                <Text className='left-[10%] text-start text-xm' style={{fontFamily: 'Roboto_300Light'}}>{estado}</Text>
+            </ImageBackground>
             <LinearGradient
-                    className="absolute"
-                    colors={["#00000000","rgba(0, 0, 0, 0.4)", "#000000"]}
-                    style={styles.gradient}
+                    className='absolute h-[100%] w-[100%] rounded-3xl'
+                    colors={['#00000000','rgba(0, 0, 0, 0.05)', '#000000']}
             >
             </LinearGradient>
-            <Text className="absolute bottom-1 text-start ml-2 mb-2" style={styles.dogName}>{item.name}</Text>
+            <Text className='absolute bottom-[8%] left-[10%] text-start text-2xl text-white' style={{fontFamily: 'Roboto_300Light'}}>{item.name}</Text>    
         </View>
     )
 }
 const styles = StyleSheet.create({
-container: {
-    width: width * 0.4,
-    height: width * 0.4,
-    margin: 15
-},
-dogName: {
-    fontSize: 25,
-    color: 'white',
-    fontFamily: 'Roboto_300Light'
-},
-imagen: {
-    width: width * 0.4,
-    height: width * 0.4,
-    borderRadius: 20,
-    
-},
-gradient:{
-    width: width * 0.4,
-    height: width * 0.4 * 0.4375, // 42% of card height
-    bottom: 0,
-    borderRadius: 20,
-    borderTopLeftRadius:0,
-    borderTopRightRadius:0,
-}
+    container: {
+        width: width * 0.4,
+        height: width * 0.4,
+        marginLeft: width * 0.05,
+        marginRight: width * 0.05,
+        marginBottom: width * 0.025,
+        marginTop: width * 0.025
+    },
 })
 export default Card;
 
