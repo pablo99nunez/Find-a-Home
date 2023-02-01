@@ -12,7 +12,7 @@ const createPet = async (PetData, ownerEmail) => {
         PetData.currentLocation = dueño.adress
         //
         const newPet = await PetModel.create(PetData) //lo crea
-        dueño.pets.push(newPet._id) //se lo da al nuevo owner
+       await dueño.pets.push(newPet._id) //se lo da al nuevo owner
         await dueño.save() //actualiza al usuario en la DB
         return newPet
 }
