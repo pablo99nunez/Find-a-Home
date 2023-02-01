@@ -24,6 +24,7 @@ const BottomView = ({ petId, auth }) => {
           //console.log(response);
           setSent(true)
         })
+
     } catch (error) {
       console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error.message);
     }

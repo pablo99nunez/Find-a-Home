@@ -30,6 +30,7 @@ import store from "./src/Redux/Store";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile"
+import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
 import axios from "axios";
 
@@ -100,7 +101,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
+          <Stack.Screen 
+          name="Solicitud de Adopcion" 
+          component={SolicitudPet}
+          options={{
+            headerStyle: {backgroundColor: '#d9d9d9'},
+            headerBackTitleVisible: false,
+            headerTintColor: "#000"
+          }}
+           />
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -193,6 +202,19 @@ export default function App() {
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
+          />
+
+          <Stack.Screen
+          name='Profile'
+          component={ProfileOthers}
+          options={{
+            headerTransparent:true,
+            headerShadowVisible: false,
+            headerTintColor: "#fff",
+            title: null ,
+            headerBackTitle: null,
+            headerBackTitleVisible: false,
+          }}
           />
 
           {/* =================================== */}
