@@ -15,9 +15,9 @@ export default function RegistrationScreen({ navigation }) {
     password: "123456",
   });
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: "Ingrese un nombre Válido",
+    lastName: "Ingrese un apellido válido",
+    email: "Ingrese un email válido",
     password: ""
   });
 
@@ -80,7 +80,6 @@ useEffect(()=>{
     errors.email ||
     errors.password; */
   const disable = `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
-    console.log( errors );
 
   //#endregion de validaciones
 
