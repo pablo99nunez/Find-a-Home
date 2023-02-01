@@ -65,6 +65,7 @@ router.put('/confirm', checkJwt, async (req, res) => {
     try {
         const parametros = [req.body.petID, req.user.email, req.body.newOwnerEmail]
         const puntaje = [req.body.rating, req.body.newOwnerEmail]
+        console.log(parametros, puntaje)
         validateroute["/user/confirm"](...parametros)
         const petWithNewOwner = await confirmAdoption(...parametros)
         await ratingUpdate(...puntaje)
