@@ -7,7 +7,7 @@ export const Characteristics = (props) => {
   return (
     <View className= 'flex flex-row justify-around items-end'>
       <Size size={size}/>
-      <Text className='text-2xl' >{age}</Text>
+      <Text style={{fontFamily: 'Roboto_300Light'}} className='text-2xl' >{age}</Text>
     </View>
   )
 }

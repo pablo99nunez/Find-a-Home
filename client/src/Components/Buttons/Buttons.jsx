@@ -1,5 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Image, Text} from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 
 export const LandingButton = (props) => {
     const { onPress } = props;
@@ -40,6 +42,15 @@ export const ButtonCreatePet = (props) => {
                 className="w-[70%] h-[70%] "
                 source={require("../../images/Trust.png")}
             />
+        </TouchableOpacity>
+    )
+}
+
+export const EditButton = (props) => {
+    const {onPress} = props
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <Icon name="pencil" className="w-12 h-12" size={50} color={"#FFC733"} />
         </TouchableOpacity>
     )
 }
