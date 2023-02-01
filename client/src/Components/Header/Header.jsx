@@ -119,7 +119,7 @@ export const Header = ({ navigation }) => {
   }, [number]);
 
   return (
-    <View className="flex flex-row justify-between items-center mt-[7%] pl-[5%] pr-[5%]">
+    <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
         <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
           <Image
@@ -165,7 +165,7 @@ export const Header = ({ navigation }) => {
       ) : (
         <Modal transparent visible={visible}>
           <SafeAreaView>
-            <View className="items-end right-[5%] opacity-0">
+            <View className="items-end right-[5%] top-[2%] opacity-0">
               <Icon
                 name="menu"
                 size={50}
@@ -173,7 +173,7 @@ export const Header = ({ navigation }) => {
                 onTouchStart={() => resizeBox(0)}
               />
             </View>
-            <Animated.View className="rounded-3xl bg-[#FFC733] w-[90%] ml-[5%] mr-[5%] mt-[3%]">
+            <Animated.View className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[10%]">
               <View className="p-[5%]">
                 <Text className="text-2xl mb-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Especie:</Text>
 
@@ -189,11 +189,13 @@ export const Header = ({ navigation }) => {
                     // filterBySpecie(val)
                     setSpecie(val);
                   }}
-                  boxStyles={{ backgroundColor: "#D9D9D9", }}
+                  boxStyles={{ backgroundColor: "#D9D9D9", width: width * 0.8 }}
                   inputStyles={{ color: "#717171", fontSize: 18 }}
-                  dropdownStyles={{ backgroundColor: "#D9D9D9" }}
+                  dropdownStyles={{ backgroundColor: "#D9D9D9", position: 'absolute', top: width * 0.1, zIndex: 1 }}
+                  dropdownItemStyles={{width: width * 0.8, }}
                   dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
                   search={false}
+                  fontFamily={'Roboto_300Light'}
                 />
 
                 <Text className="text-2xl mb-[3%] mt-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Tamaño:</Text>

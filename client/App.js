@@ -1,7 +1,7 @@
 
 import "react-native-gesture-handler";
 import React from "react";
-import { LoginScreen, RegistrationScreen } from "./src/screens";
+import { LoginScreen, RegistrationScreen } from "./src/Components/Register";
 import { decode, encode } from "base-64";
 
 if (!global.btoa) {
@@ -27,10 +27,10 @@ import { CreatePet } from "./src/Components/CreatePet/CreatePet";
 import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile"
+import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
 import axios from "axios";
 
@@ -101,7 +101,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
+          <Stack.Screen 
+          name="Solicitud de Adopcion" 
+          component={SolicitudPet}
+          options={{
+            headerStyle: {backgroundColor: '#d9d9d9'},
+            headerBackTitleVisible: false,
+            headerTintColor: "#000"
+          }}
+           />
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -142,8 +150,6 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
           <Stack.Screen
             name="Registration"
@@ -196,6 +202,19 @@ export default function App() {
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
+          />
+
+          <Stack.Screen
+          name='Profile'
+          component={ProfileOthers}
+          options={{
+            headerTransparent:true,
+            headerShadowVisible: false,
+            headerTintColor: "#fff",
+            title: null ,
+            headerBackTitle: null,
+            headerBackTitleVisible: false,
+          }}
           />
 
           {/* =================================== */}

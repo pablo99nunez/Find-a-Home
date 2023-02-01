@@ -193,7 +193,7 @@ export const getUser = () => {
         });
       })
       .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + error.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
       );
   };
 };
@@ -210,9 +210,8 @@ export const setIsLoggedIn = (payload) => {
     payload,
   };
 };
-//Al fetch hay  q enviarle por body el email
-//{email: email}
-export const getPetByOwner = (email) => {
+
+export const getPetByOwner = () => {
   const config = {
     method: "GET",
     headers: {
