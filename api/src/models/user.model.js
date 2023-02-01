@@ -124,12 +124,10 @@ const userSchema = mongoose.Schema(
     },
     infracciones:{
       type: Array,
-      default: []
     },
     tipo:{
     type: String,
-    enum: ["User, Admin"],
-    default: "User"
+    // enum: ["User, Admin"],
   } 
   },
   {

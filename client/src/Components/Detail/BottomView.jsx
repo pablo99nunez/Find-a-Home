@@ -20,10 +20,12 @@ const BottomView = ({ petId, auth }) => {
           'Authorization': `Bearer ${token}`
         }
       })
-        .then(response => console.log(response))
-        .finally(setSent(true))
+        .then(response => {
+          //console.log(response);
+          setSent(true)
+        })
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error);
+      console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error.message);
     }
   }
   // renders
