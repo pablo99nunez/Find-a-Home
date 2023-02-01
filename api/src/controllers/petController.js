@@ -1,4 +1,5 @@
 const PetModel = require('../models/pet.model');
+const UserModel = require('../models/user.model');
 
 function calculatePetAge(birthdate) {
   const birth = new Date(birthdate);
@@ -84,6 +85,16 @@ const filterByOwner = async(email)=>{
   return ownerPets
 }
 
+const denPet = async ({denuncia}, id, email) =>{
+
+// const search = await PetModel.find(id)
+// if(search){
+  const ingresar = await PetModel.updateOne({id}, {$push:{reportes:denuncia}})
+
+  const IngresarOwner = await UserModel.updateOne({id}, {$push:{infracciones:denuncia}})
+  return ingresar
+
+}
 
 module.exports = {
   createNewPet,
@@ -91,4 +102,5 @@ module.exports = {
   findAllPets,
   updatePet,
   filterByOwner,
+  denPet,
 }

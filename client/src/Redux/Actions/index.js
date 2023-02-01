@@ -29,72 +29,80 @@ export const getAllPets = () => {
         payload: json.data,
       });
     } catch (error) {
-      alert('error trayendo los pets', error)
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.message);
     }
-  
+
   };
 };
 
 export const getPetsFilteredBySpecie = (payload) => {
-  try {
-    return async (dispatch) => {
+  return async (dispatch) => {
+    try {
       const json = await axios.get(`${url}/pet/filter/specie/${payload}`);
       return dispatch({
         type: GET_PETS_FILTERED_SPECIE,
         payload: json.data,
       });
-    };
-  } catch (error) {
-    alert('error filtrando by specie' , error)
-  }
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.message);
+    }
+
+  };
 };
 
 export const getPetsFilteredBySize = (payload) => {
-  try {
-    return async (dispatch) => {
+  return async (dispatch) => {
+    try {
       const json = await axios.get(`${url}/pet/filter/size/${payload}`);
       return dispatch({
         type: GET_PETS_FILTERED_SIZE,
         payload: json.data,
       });
-    };
-  } catch (error) {
-    alert('error filtrando by size', error)
-  }
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.message);
+    }
+
+  };
 };
 
 export const getPetsFilteredByTwoFilters = (payload) => {
-  try {
-    return async (dispatch) => {
+  return async (dispatch) => {
+    try {
       const json = await axios.get(
         `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
-      );
+      )
       return dispatch({
         type: GET_PETS_FILTERED_BOTH_FILTERS,
         payload: json.data,
       });
-    };
-  } catch (error) {
-    alert('error filtrado combinado' , error)
-  }
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.message);
+    }
+
+  };
 };
+
+
 export const getPetsByZone = (radius, coords) => {
-  try {
-    return async (dispatch) => {
-      const json = await axios
+  return async (dispatch) => {
+    try {
+      await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .catch(() => {
+        .then(response=>{ //if
+          dispatch({
+            type: GET_PETS_BY_ZONE,
+            payload: response.data,
+          })
+        })
+        .catch(() => { //else
           dispatch(getAllPets());
         });
-  
-      return dispatch({
-        type: GET_PETS_BY_ZONE,
-        payload: json.data,
-      });
-    };
-  } catch (error) {
-    alert('error filtrando by zone', error)
-  }
+
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
+    }
+
+  };
 };
 
 export const putUserData = async (profile) => {
@@ -111,7 +119,7 @@ export const putUserData = async (profile) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   const objetoAenviar = {
@@ -121,11 +129,10 @@ export const putUserData = async (profile) => {
     address: profile.address,
     phone: profile.phone,
   };
-  console.log(objetoAenviar);
 
   const json = await axios
     .put(`${url}/user/profile`, objetoAenviar, config)
-    .catch((error) => alert(error.message));
+    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.message));
   return json;
 
   /*  return async (dispatch) => {
@@ -141,14 +148,14 @@ export const PetPost = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {
     const pet = await axios.post(url + "/pet", bodyPayload, config);
     return pet;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetPost: " + error.message)
   }
 };
 
@@ -156,7 +163,7 @@ export const PetEdit = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {
@@ -164,7 +171,7 @@ export const PetEdit = async (bodyPayload) => {
 
     return pet;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.message)
   }
 };
 
@@ -172,7 +179,7 @@ export const getUser = () => {
   const config = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
 
@@ -186,7 +193,7 @@ export const getUser = () => {
         });
       })
       .catch((err) =>
-        alert("Error al obtener sus datos de usuario" + err.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + error.message)
       );
   };
 };
@@ -208,7 +215,7 @@ export const getPetByOwner = () => {
   const config = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
 
@@ -222,45 +229,48 @@ export const getPetByOwner = () => {
         });
       })
       .catch((error) => {
-        alert("linea 225 Error en el fetch de getPetByOwner!" + error.message);
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.message)
       });
   };
 };
 
 ///Accept adoption pet
-export const AcceptAdoption = async (petId, newOwnerEmail, rating) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-    },
-  };
-  const bodyPayload = {
-    petID: petId,
-    emailOwner: auth?.currentUser?.email,
-    newOwnerEmail: newOwnerEmail,
-    rating: rating || 5,
-  };
-  try {
-    const adoptionConfirmed = await axios.put(
-      url + "/user/confirm",
-      bodyPayload,
-      config
-    );
-    return {
-      type: CONFIRM_ADOPTION,
-      payload: adoptionConfirmed.data,
+export const acceptAdoption = (petId, newOwnerEmail, rating) => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+      },
     };
-  } catch (error) {
-    throw error;
-  }
+    const bodyPayload = {
+      petID: petId,
+      emailOwner: auth?.currentUser?.email,
+      newOwnerEmail: newOwnerEmail,
+      rating: rating || 5,
+    };
+    try {
+      const adoptionConfirmed = await axios.put(
+        url + "/user/confirm",
+        bodyPayload,
+        config
+      );
+      dispatch({
+        type: CONFIRM_ADOPTION,
+        payload: adoptionConfirmed.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 Acept Adoption: " + error.message)
+    }
+  };
 };
+
 
 export const EditProfiles = async (bodyPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
   try {
@@ -268,6 +278,22 @@ export const EditProfiles = async (bodyPayload) => {
 
     return profile;
   } catch (error) {
-    throw error;
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.message)
+  }
+};
+
+export const Notify = async (bodyPayload) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  try {
+    const status = await axios.post(url + "/user/profile", bodyPayload, config);
+
+    return status;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Push Notifications: " + error.message)
   }
 };

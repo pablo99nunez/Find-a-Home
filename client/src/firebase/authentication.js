@@ -13,7 +13,7 @@ export const auth = getAuth(firebase);
 export const loginWithEmailAndPassword = async (email, password) => {
   await signInWithEmailAndPassword(auth, email, password)
     .catch(error => {
-      alert(error.message)
+      throw error
     })
 };
 
@@ -72,7 +72,7 @@ export const createAccountWithEmailAndPassword = async (
       .post(`${url}/user`, data, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
+          Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
         },
       })
       .then((response) => console.log("usuario nuevo creado en la mongodb"))
