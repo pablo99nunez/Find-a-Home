@@ -124,7 +124,6 @@ const userSchema = mongoose.Schema(
     },
     infracciones:{
       type: Array,
-      default: []
     },
     tipo:{
     type: String,

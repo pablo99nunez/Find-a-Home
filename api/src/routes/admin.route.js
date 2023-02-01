@@ -46,7 +46,22 @@ router.delete("/deletePet", checkJwt, async (req, res) =>{
     }
     }
 )
+router.get("/reportPets", checkJwt, async (req, res) =>{
+  try{
+const checkUser = await UserModel.findOne({ _email: req.user.email, tipo: "Admin" });
+if (checkUser) {
+  const allPetsReports = await PetModel.find({ reportes: { $exists: true, $not: {$size: 0} } });
+  res.status(200).send(allPetsReports);
+} else {
+  // El usuario no es un administrador, devuelve un mensaje de error
+  res.status(401).send("No tienes autorización para ver la lista de reportados");       
+}
+}
+catch(err){
+  res.status(501).send({ error: err.message })
 
+}
+})   
 
 
   module.exports = router;
