@@ -29,7 +29,7 @@ export const getAllPets = () => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.message);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error);
     }
 
   };
@@ -88,7 +88,7 @@ export const getPetsByZone = (radius, coords) => {
     try {
       await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .then(response=>{ //if
+        .then(response => { //if
           dispatch({
             type: GET_PETS_BY_ZONE,
             payload: response.data,
@@ -99,7 +99,7 @@ export const getPetsByZone = (radius, coords) => {
         });
 
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
+      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
     }
 
   };
@@ -250,11 +250,8 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       rating: rating || 5,
     };
     try {
-      const adoptionConfirmed = await axios.put(
-        url + "/user/confirm",
-        bodyPayload,
-        config
-      );
+      console.log(bodyPayload)
+      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
       dispatch({
         type: CONFIRM_ADOPTION,
         payload: adoptionConfirmed.data,
@@ -282,18 +279,19 @@ export const EditProfiles = async (bodyPayload) => {
   }
 };
 
-export const Notify = async (bodyPayload) => {
+export const PushNotifications = async (token, title, body) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
       Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
+  const bodyPayload = { "token": token, "title": title, "body": body }
   try {
-    const status = await axios.post(url + "/user/profile", bodyPayload, config);
+    const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
 
     return status;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Push Notifications: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
   }
 };

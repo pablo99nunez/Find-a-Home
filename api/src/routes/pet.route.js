@@ -34,8 +34,10 @@ router.post('/',checkJwt, async (req, res) => {
 //Pet por id en body pasar id
 router.get('/profile/', async (req, res) => {
   try {
+  
     const pet = await findPet(req.body.id)
     res.send({ message: 'Mascota encontrada', payload: pet})
+  
   } catch (error) {
     res.status(501).send({ error: error.message })
   }
@@ -92,11 +94,16 @@ router.delete('/profile/:ID',checkJwt, async (req, res) => {
 
 router.get('/byowner',checkJwt, async (req, res) => {
   try {
+    if(req.query.email){
+      const pets = await filterByOwner(req.query.email)
+      res.status(200).send(pets);
+    }else{
    const email = req.user.email
 
     const allPets = await filterByOwner(email);
 
     res.send(allPets);
+  }
   } catch (error) {
     res.status(501).send({ error: error.message });
   }

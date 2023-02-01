@@ -15,11 +15,11 @@ export const CreatePet = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync().catch(
         () => {
-          console.error("⚠️ Error -> 🚨 CreatePet -> 🔔 error, permission not granted");
+          console.error("CreatePet.jsx: permission not granted");
         }
       );
       if (status !== "granted") {
-        console.error("⚠️ Error -> 🚨 CreatePet -> 🔔 error, Permission to access location was denied");
+        console.error("CreatePet.jsx: Permission to access location was denied");
 
         return;
       }
@@ -28,7 +28,7 @@ export const CreatePet = ({ navigation }) => {
         accuracy: Location.Accuracy.Highest,
         maximumAge: 10000,
       }).catch(() => {
-        console.error("⚠️ Error -> 🚨 CreatePet -> 🔔 error, location wasn't found");
+        console.error("CreatePet.jsx: location wasn't found");
       });
 
       setPin({

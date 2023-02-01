@@ -1,7 +1,7 @@
 //aca hago cagadas
 import "react-native-gesture-handler";
 import React from "react";
-import { LoginScreen, RegistrationScreen } from "./src/screens";
+import { LoginScreen, RegistrationScreen } from "./src/Components/Register";
 import { decode, encode } from "base-64";
 
 if (!global.btoa) {
@@ -27,7 +27,6 @@ import { CreatePet } from "./src/Components/CreatePet/CreatePet";
 import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile"
@@ -39,6 +38,7 @@ import { useFonts } from "expo-font";
 
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
+import PersistentLogin from "./src/PersistentLogin.jsx";
 
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
@@ -53,6 +53,8 @@ const Logo = () => (
   />
 );
 
+
+//Inicio componente App:
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
@@ -61,6 +63,7 @@ export default function App() {
   if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
+      <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
 
@@ -147,8 +150,6 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
           <Stack.Screen
             name="Registration"
