@@ -88,7 +88,7 @@ export const getPetsByZone = (radius, coords) => {
     try {
       await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .then(response=>{ //if
+        .then(response => { //if
           dispatch({
             type: GET_PETS_BY_ZONE,
             payload: response.data,
@@ -251,11 +251,8 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       rating: rating || 5,
     };
     try {
-      const adoptionConfirmed = await axios.put(
-        url + "/user/confirm",
-        bodyPayload,
-        config
-      );
+      console.log(bodyPayload)
+      const adoptionConfirmed = await axios.put("http://localhost:8080/user/confirm", bodyPayload, config);
       dispatch({
         type: CONFIRM_ADOPTION,
         payload: adoptionConfirmed.data,
