@@ -29,7 +29,7 @@ export const getAllPets = () => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.message);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error);
     }
 
   };
@@ -252,7 +252,7 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
     };
     try {
       console.log(bodyPayload)
-      const adoptionConfirmed = await axios.put("http://localhost:8080/user/confirm", bodyPayload, config);
+      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
       dispatch({
         type: CONFIRM_ADOPTION,
         payload: adoptionConfirmed.data,
