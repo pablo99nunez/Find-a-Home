@@ -7,10 +7,11 @@ import {
   ImageBackground,
   Platform,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
-import { ButtonYellow } from "../Buttons/Buttons";
+import { ButtonYellow, EditButton } from "../Buttons/Buttons";
 import { calculateAdoptionDays } from "../Funciones/DiasAdopcion";
 import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
@@ -21,6 +22,9 @@ import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { BottomViewOwner } from "./BottomViewOwner";
+  
+
+const {width} = Dimensions.get("screen")
 
 export default function Detail({ route, navigation }) {
   //FIREBASE ZONE - DO NOT CHANGE
@@ -39,6 +43,7 @@ export default function Detail({ route, navigation }) {
     solicitudes,
     coordinates,
   } = route.params;
+
 
 
   const days = calculateAdoptionDays(created_at);
@@ -65,25 +70,20 @@ export default function Detail({ route, navigation }) {
       <View className="bg-[#acacac] h-full">
         <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
           <LinearGradient
-            colors={["#00000000", "#acacac"]}
+            colors={["#00000000","rgba(172, 172, 172, 0)", "#acacac"]}
             style={{ height: "100%", width: "100%" }}
           >
+            
             <View className="h-1/3">
               <View>
-                <HeaderDetail onPress={() => navigation.goBack()} days={days} />
+                <HeaderDetail onPress={() => navigation.goBack()} days={days} owner={owner} currentUser={currentUser} />
               </View>
 
-              {owner === currentUser.email ? (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("EditPet", route.params)}
-                >
-                  <Text>Boton de editar</Text>
-                </TouchableOpacity>
-              ) : null}
+              
               
 
               <View className="h-52">
-                <Text className="text-[#f5c936] text-4xl text-center my-12">
+                <Text style={{fontFamily: 'Roboto_300Light'}} className="text-[#f5c936] text-5xl text-center my-12">
                   {name.toUpperCase()}
                 </Text>
               </View>
@@ -105,12 +105,17 @@ export default function Detail({ route, navigation }) {
             </View>
           </LinearGradient>
         </ImageBackground>
-
+        
         <View className="h-1/4">
-          <Text className="text-2xl text-center w-11/12 mx-auto font-semibold">
-            {state}
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-2xl text-center w-10/12 mx-auto font-semibold bg-[#f5c936] rounded-xl my-[5%]">{
+            state === "Lost" ? "Perdido" : 
+            state === 'Adopted'? "Adoptado":
+            state === 'Found'? "Encontrado":
+            state === "NotAdoptable"? "No adoptable":
+            state === 'InAdoptionProcess'? "En proceso de adopción":
+            "En adopción" }
           </Text>
-          <Text className="text-2xl text-center w-11/12 mx-auto">
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-2xl text-center w-11/12 mx-auto">
             {description}
           </Text>
         </View>
@@ -121,18 +126,23 @@ export default function Detail({ route, navigation }) {
             {coordinates.longitude}
           </Text> */}
         </View>
-
         {["Adopted", "NotAdoptable"].includes(state) ? null : (
-          <View className="h-1/4 flex justify-evenly ">
+          <View className="h-1/4 justify-center">
             {currentUser.email === owner ? (
-              <View className='flex flex-col align-center justify-center'>
-                {solicitudes.length ? <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
-                  <Text className='text-xl text-white'>{solicitudes.length}</Text>
-                </View> : null}
-                <ButtonYellow
-                  text="Solicitudes"
-                  onPress={() => handleSolicitudes()}
-                />
+              <View className="flex flex-row justify-start">
+                <View className='w-[80%]'>
+                  {solicitudes.length ? 
+                  <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
+                    <Text className='text-xl text-white'>{solicitudes.length}</Text>
+                  </View> : null}
+                  <ButtonYellow
+                    text="Solicitudes"
+                    onPress={() => handleSolicitudes()}
+                  />
+                </View>
+                <View className="flex justify-center">
+                  <EditButton onPress={() => navigation.navigate("EditPet", route.params)}/>
+                </View>
               </View>
             ) : (
               <ButtonYellow
@@ -182,9 +192,9 @@ const styles = StyleSheet.create({
     height: 400,
   },
   gallery: {
+    marginHorizontal: width * 0.01,
     width: 90,
     height: 90,
-    marginLeft: 25,
     borderRadius: 5,
   },
   containerInput: {

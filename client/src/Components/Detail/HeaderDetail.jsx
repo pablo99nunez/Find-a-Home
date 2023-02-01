@@ -12,8 +12,8 @@ export const HeaderDetail = (props) => {
                 />
               </TouchableOpacity>
               <ImageBackground source={require('../../images/Banderin.png')} className = 'w-36 h-11' >
-                <Text style={{fontWeight: 'bold', textAlign:'right', marginRight: 15, marginTop: 5 }}>{days} dias</Text>
-                <Text style={{textAlign:'right', marginRight: 12}}>buscando hogar</Text>
+                <Text style={{fontFamily: 'Roboto_300Light', fontWeight: 'bold', textAlign:'right', marginRight: 15, marginTop: 5 }}>{days} dias</Text>
+                <Text style={{fontFamily: 'Roboto_300Light', textAlign:'right', marginRight: 12}}>buscando hogar</Text>
               </ImageBackground>
     </View>
   )
