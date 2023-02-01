@@ -97,7 +97,7 @@ export const getPetsByZone = (radius, coords) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
+      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
     }
 
   };
@@ -281,18 +281,19 @@ export const EditProfiles = async (bodyPayload) => {
   }
 };
 
-export const Notify = async (bodyPayload) => {
+export const PushNotifications = async (token, title, body) => {
   const config = {
     headers: {
       "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
       Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
+  const bodyPayload = { "token": token, "title": title, "body": body }
   try {
-    const status = await axios.post(url + "/user/profile", bodyPayload, config);
+    const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
 
     return status;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Push Notifications: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
   }
 };
