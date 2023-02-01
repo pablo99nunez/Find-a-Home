@@ -98,7 +98,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
+          <Stack.Screen 
+          name="Solicitud de Adopcion" 
+          component={SolicitudPet}
+          options={{
+            headerStyle: {backgroundColor: '#d9d9d9'},
+            headerBackTitleVisible: false,
+            headerTintColor: "#000"
+          }}
+           />
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -199,9 +207,9 @@ export default function App() {
           name='Profile'
           component={ProfileOthers}
           options={{
-            headerStyle: { backgroundColor: "transparent" },
+            headerTransparent:true,
             headerShadowVisible: false,
-            headerTintColor: "#AB4E68",
+            headerTintColor: "#fff",
             title: null ,
             headerBackTitle: null,
             headerBackTitleVisible: false,

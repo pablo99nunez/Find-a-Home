@@ -193,7 +193,7 @@ export const getUser = () => {
         });
       })
       .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + error.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
       );
   };
 };
