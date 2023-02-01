@@ -58,9 +58,10 @@ export const Header = ({ navigation }) => {
     }
   }, [specie, size]);
 
-  useEffect(() => {
+ email? useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, []):
+  null
 
   const [pin, setPin] = useState({
     latitude: 0,

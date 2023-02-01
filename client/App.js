@@ -31,7 +31,7 @@ import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile"
-
+import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import axios from "axios";
 
 import { useFonts } from "expo-font";
@@ -192,6 +192,19 @@ export default function App() {
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
+          />
+
+          <Stack.Screen
+          name='Profile'
+          component={ProfileOthers}
+          options={{
+            headerStyle: { backgroundColor: "transparent" },
+            headerShadowVisible: false,
+            headerTintColor: "#AB4E68",
+            title: null ,
+            headerBackTitle: null,
+            headerBackTitleVisible: false,
+          }}
           />
 
           {/* =================================== */}
