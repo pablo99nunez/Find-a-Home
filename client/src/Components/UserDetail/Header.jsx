@@ -18,7 +18,7 @@ const Header = ({onPress, navigation}) => {
         <TouchableOpacity onPress={navigation}>
             <Image
                 className="w-12 h-12"
-                source={require("../../images/Trust.png")}
+                source={require("../../images/Trust-profile.png")}
             />
         </TouchableOpacity>
     </View>
