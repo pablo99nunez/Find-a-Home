@@ -18,9 +18,9 @@ export const LandingButton = (props) => {
 }
 
 export const ButtonYellow = (props) => {
-    const {onPress, text} = props
+    const {onPress, text, deshabilitar} = props
     return (
-        <TouchableOpacity 
+        <TouchableOpacity disabled={deshabilitar}
             className='bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md' 
             onPress={onPress} 
         >
