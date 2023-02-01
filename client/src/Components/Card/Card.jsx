@@ -1,32 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
+import { useDispatch } from "react-redux";
 
 const { width } = Dimensions.get("screen");
 
 const Card = ({item}) => {
-    let estado = ""
-    switch (item.state) {
-        case (item.state === 'NotAdoptable'):{
-            estado = "No adoptable"
-        }
-        case ( item.state === 'InAdoptionProcess'):{
-            estado = "En proceso de adopción"
-        }
-        case (item.state === 'Adopted'):{
-            estado = "Adoptado"
-        }
-        case (item.state === 'Lost'):{
-            estado = "Perdido"
-        }
-        case (item.state === 'Found'):{
-            estado = "Encontrado"
-        }
-        default: {
-            estado = "En adopción"
-        }
-    }
     return (
         <View style={styles.container}>
             <Image
@@ -34,7 +13,14 @@ const Card = ({item}) => {
                 source={{uri: item.profilePic}}
             />
             <ImageBackground source={require('../../images/Banderin-r.png')} className='absolute top-[10%] w-[85%]'>
-                <Text className='left-[10%] text-start text-xm' style={{fontFamily: 'Roboto_300Light'}}>{estado}</Text>
+                <Text className='left-[10%] text-start text-xm' style={{fontFamily: 'Roboto_300Light'}}>{
+                    item.state === "Lost" ? "Perdido" : 
+                    item.state === 'Adopted'? "Adoptado":
+                    item.state === 'Found'? "Encontrado":
+                    item.state === "NotAdoptable"? "No adoptable":
+                    item.state === 'InAdoptionProcess'? "En proceso de adopción":
+                    "En adopción" 
+                }</Text>
             </ImageBackground>
             <LinearGradient
                     className='absolute h-[100%] w-[100%] rounded-3xl'
