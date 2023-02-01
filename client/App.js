@@ -38,6 +38,7 @@ import { useFonts } from "expo-font";
 
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
+import PersistentLogin from "./src/PersistentLogin.jsx";
 
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
@@ -52,6 +53,8 @@ const Logo = () => (
   />
 );
 
+
+//Inicio componente App:
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
@@ -60,6 +63,7 @@ export default function App() {
   if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
+      <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
 

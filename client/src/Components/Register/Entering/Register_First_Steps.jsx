@@ -39,7 +39,7 @@ const handleContinuar = () =>{
     <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733] ">
         <Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-          ¡Bienvenido!
+          ¡Bienvenida Florencia!
         </Text>
         <Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
