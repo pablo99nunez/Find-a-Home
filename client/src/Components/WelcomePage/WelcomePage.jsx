@@ -232,9 +232,6 @@ const Welcome = ({ navigation }) => {
             source={require("../../images/icon1-icon3-welcome.png")}
           />
 
-          {/* <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
-            <Text style={styles.textSubTitles}>Home Screen</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={styles.textSubTitlesLogin}>Login</Text>
           </TouchableOpacity>

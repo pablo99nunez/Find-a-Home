@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import { loginWithEmailAndPassword } from "../../firebase/authentication";
-import { ButtonYellow } from "../../Components/Buttons/Buttons";
+import { loginWithEmailAndPassword } from "../../../firebase/authentication";
+import { ButtonYellow } from "../../Buttons/Buttons";
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("@gmail.com");
@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }) {
             >
                 <Image
                     style={styles.logo}
-                    source={require("../../images/FindAHome.png")}
+                    source={require("../../../images/FindAHome.png")}
                 />
                 <TextInput
                     className="h-11 w-[100%] bg-white rounded-md my-3 pl-3"
