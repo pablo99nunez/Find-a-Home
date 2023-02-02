@@ -74,7 +74,6 @@ useFocusEffect(
         <Text className=" text-4xl text-[#ffc733]">{rating?.rating? rating.rating : null}★</Text>
       </View>
       </ImageBackground>
-<<<<<<< Updated upstream
       
       <View className='flex items-center mt-3 w-11/12 mx-auto'>
         <Text className="text-center text-2xl text-[#2A2B20] font-light">

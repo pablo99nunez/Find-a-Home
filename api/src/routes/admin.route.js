@@ -93,14 +93,14 @@ router.get('/userban', checkJwt, async (req, res) => {
 });
 router.put('/ban', checkJwt, async (req, res) => {
   try {
-    const { id } = req.body;
+    const { OwenerEmail } = req.body;
     const checkUser = await UserModel.findOne({
       _email: req.user.email,
       tipo: 'Admin',
     });
     if (checkUser) {
       const userABanear = await UserModel.updateOne(
-        { id },
+        { OwenerEmail },
         { tipo: 'inhabilitado' }
       );
     } else {

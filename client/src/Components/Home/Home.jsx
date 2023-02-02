@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
       {currentUser?.tipo == "Admin" ? (
         <ButtonAdminDashboard
           onPress={() => {
-            navigation.navigate("AdminPanel", currentUser);
+            navigation.navigate("AdminPanel");
           }}
         />
       ) : null}

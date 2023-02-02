@@ -19,7 +19,7 @@ export default function AdminHeader({ navigation }) {
           source={require("../../images/buttonDonation.png")}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={navigation.navigate("Reports")}>
+      <TouchableOpacity onPress={() =>navigation.navigate("Reports")}>
         <Image
           className="w-14 h-14 rounded-full"
           resizeMode={"contain"}
