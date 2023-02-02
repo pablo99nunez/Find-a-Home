@@ -15,7 +15,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
 import Localities from "../Localities.json";
-import { render } from "react-dom";
+
+import validate from "../validate";
 
 export default function RegisterFirstSteps({ navigation , route}) {
   const {password, email, firstName, lastName} = route.params
@@ -30,11 +31,28 @@ export default function RegisterFirstSteps({ navigation , route}) {
     provincia: "",
     departamento: "",
   });
+
+  const [errors, setErrors] = useState({
+    telefono: "Ingrese un telefono Válido",
+  });
+  const handleChange = (clave, valor) => {
+    console.log(clave, valor);
+   setUserInput({
+      ...userInput,
+      [clave]: valor,
+    }); 
+     setErrors({
+        ...errors,
+        [clave]: validate.Register_First_Steps(clave,valor)
+     }); 
+    const len = Object.entries(errors).length;
+  };
 const handleContinuar = () =>{
   setLoading(true)
   navigation.navigate("RegisterLastSteps", userInput)
   setLoading(false)
 }
+const disable = `${errors.telefono}`.length > 0
   return (
     <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733] ">
@@ -48,14 +66,16 @@ const handleContinuar = () =>{
         <View className="w-11/12">
           <Text className="">Teléfono:</Text>
           <TextInput
+
             className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%] pl-4 mx-auto h-11"
             value={userInput.telefono}
             placeholder={"011 555-5555"}
             placeholderTextColor="#ffffff50"
-            onChangeText={(text) =>
-              setUserInput({ ...userInput, telefono: text })
-            }
+            onChangeText={(valor)=>{handleChange("telefono",valor)}}
           />
+          <View className='h-5 mt-1'>
+            <Text className='text-[#ed3232]'>{errors.telefono}</Text>
+          </View>
         </View>
 
         <View className="w-11/12">
@@ -113,13 +133,13 @@ const handleContinuar = () =>{
         </Text>
       </TouchableOpacity>
     :  
-    <TouchableOpacity className='flex flex-row justify-end w-11/12 mt-5'
+    <TouchableOpacity disabled={disable} className='flex flex-row justify-end w-11/12 mt-5'
         onPress={() => {
           handleContinuar()
         }}
       >
         <Text className="text-3xl font-light ">
-          Continuar
+          {disable ? "Rellene los Datos" : "Continuar" }
         </Text>
       </TouchableOpacity>
     }

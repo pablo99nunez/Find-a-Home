@@ -56,29 +56,7 @@ useEffect(()=>{
      }); 
     const len = Object.entries(errors).length;
   };
-//   //#region  Busqueda por si esta repetido:
-//   const activities = useSelector((state) => state.activities);
-//   const [paisesDisponibles, setpaisesDisponibles] = useState([]);
-//   let booleanoCambiante = false;
-//   useEffect(() => {
-//     //buscador funciona
-//     booleanoCambiante = activities.some(
-//       (activity) => activity.name === inputs.name
-//     );
-//     if (booleanoCambiante)
-//       setErrors({ ...errors, alreadyExist: "¡Esa activdad Ya Existe!" });
-//   }, [inputs.name]);
 
-//   //#endregion
-
-  //esta constante se cambia sola al detectar que no haya errores
-  //si deshabilitar es true, no te deja hacer click en continuar
-
-  //JAVA CANNOT CAST TO BOOLEAN string>>TRUE o FALSE
-  /* const deshabilitar = errors.firstName ||
-    errors.lastName ||
-    errors.email ||
-    errors.password; */
   const disable = `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
 
   //#endregion de validaciones
