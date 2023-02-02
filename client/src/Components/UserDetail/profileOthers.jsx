@@ -1,3 +1,7 @@
+
+//este archivo nos rompe todo, pero creo que era porq habia 2 archivos con el mismo nompre
+//ProfileOthers.jsx
+//profileOthers.jsx
 import React, { useState } from 'react'
 import { View, ImageBackground, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";

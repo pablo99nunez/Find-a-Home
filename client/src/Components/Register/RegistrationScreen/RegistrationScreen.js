@@ -57,7 +57,7 @@ useEffect(()=>{
     const len = Object.entries(errors).length;
   };
 
-  const disable = `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
+  const disable = `${userInputs.name}`.length===0 && `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
 
   //#endregion de validaciones
 
