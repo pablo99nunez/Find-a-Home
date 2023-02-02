@@ -62,13 +62,13 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="LandigPage"
-            component={Welcome}
+            component={LandingPage}
             initialParams={{ fromChild: "Initial" }}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Welcome"
-            component={RegistrationScreen}
+            component={Welcome}
             options={{ headerShown: false }}
           />
           <Stack.Screen
