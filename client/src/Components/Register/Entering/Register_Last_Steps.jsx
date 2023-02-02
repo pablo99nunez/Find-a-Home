@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
 	View,
 	Text,
@@ -6,12 +8,12 @@ import {
 	TouchableOpacity,
 	Image
 } from "react-native";
+
 import { createAccountWithEmailAndPassword } from '../../../firebase/authentication'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { putUserData } from "../../../Redux/Actions";
+import { registerForPushNotificationsAsync as setPushToken } from "../../../firebase/pushNotifications";
 import Condition from "./Condition";
-//Again, Why?? 
-
 
 const RegisterLastSteps = ({ route, navigation }) => {
 
@@ -36,7 +38,27 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		departamento,
 		provincia,
 		condiciones: {},
+		pushToken: [],
 	})
+
+
+	useFocusEffect(
+		React.useCallback(() => {
+			async function getPushToken() {
+				try {
+					const pushToken = await setPushToken();
+
+					setuserNewInput({ ...userNewInput, pushToken: [pushToken] })
+				} catch (error) {
+					console.log(error.message)
+				}
+			}
+			getPushToken()
+		}, [])
+	);
+
+
+
 
 	const [checkState, setCheckState] = useState({})
 
@@ -45,7 +67,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	const [loading, setLoading] = useState(false);
 
 	const HandleCheck = (option) => {
-        console.log(userNewInput)
+		console.log(userNewInput)
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, condiciones: { ...userNewInput.condiciones, [option]: !checkState[option] } })
 	}
@@ -55,6 +77,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 			lastName,
 			telefono,
 			userNewInput.condiciones,
+			userNewInput.pushToken,
 			pais,
 			departamento,
 			provincia)
@@ -77,11 +100,11 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				<Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
-                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"}/> 
-                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"}/> 
-                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"}/> 
-                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"}/> 
-                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"}/> 
+				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"} />
+				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"} />
+				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
+				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
+				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"} />
 
 
 				<View className="flex flex-row justify-center items-center">
