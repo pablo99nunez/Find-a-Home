@@ -76,7 +76,7 @@ export const createAccountWithEmailAndPassword = async (
         },
       })
       .then((response) => console.log("usuario nuevo creado en la mongodb"))
-      .catch((error) => console.error("Error en la promesa de creacion autentikeishon:", error));
+      .catch((error) => console.error("Error en la promesa de creacion authentication:", error));
   };
 
   /* firebase
