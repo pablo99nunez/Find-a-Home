@@ -14,8 +14,6 @@ const createNewUser = async (user) => {
     await newUser.save()
     return newUser
   }
-
-
 }
 
 
