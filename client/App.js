@@ -39,7 +39,7 @@ import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import { ScreenStackHeaderRightView } from "react-native-screens";
 import PersistentLogin from "./src/PersistentLogin.jsx";
-
+import AdminPanel from "./src/Components/AdminPanel"
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
@@ -215,6 +215,12 @@ export default function App() {
             headerBackTitle: null,
             headerBackTitleVisible: false,
           }}
+          />
+
+        <Stack.Screen
+            name="AdminPanel"
+            component={AdminPanel}
+            options={{ headerShown: false }}
           />
 
           {/* =================================== */}
