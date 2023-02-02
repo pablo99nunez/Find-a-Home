@@ -59,8 +59,7 @@ export const Header = ({ navigation }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (isLoggedIn)
-      dispatch(getUser());
+    if (isLoggedIn) dispatch(getUser());
   }, []);
 
   const [pin, setPin] = useState({
@@ -76,7 +75,9 @@ export const Header = ({ navigation }) => {
         }
       );
       if (status !== "granted") {
-        console.error("⚠️ Error -> 🚨 Header -> 🔔Permission to access location was denied");
+        console.error(
+          "⚠️ Error -> 🚨 Header -> 🔔Permission to access location was denied"
+        );
         return;
       }
 
@@ -175,7 +176,12 @@ export const Header = ({ navigation }) => {
             </View>
             <Animated.View className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[10%]">
               <View className="p-[5%]">
-                <Text className="text-2xl mb-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Especie:</Text>
+                <Text
+                  className="text-2xl mb-[3%]"
+                  style={{ fontFamily: "Roboto_300Light" }}
+                >
+                  Especie:
+                </Text>
 
                 <SelectList
                   data={[
@@ -191,14 +197,24 @@ export const Header = ({ navigation }) => {
                   }}
                   boxStyles={{ backgroundColor: "#D9D9D9", width: width * 0.8 }}
                   inputStyles={{ color: "#717171", fontSize: 18 }}
-                  dropdownStyles={{ backgroundColor: "#D9D9D9", position: 'absolute', top: width * 0.1, zIndex: 1 }}
-                  dropdownItemStyles={{width: width * 0.8, }}
+                  dropdownStyles={{
+                    backgroundColor: "#D9D9D9",
+                    position: "absolute",
+                    top: width * 0.1,
+                    zIndex: 1,
+                  }}
+                  dropdownItemStyles={{ width: width * 0.8 }}
                   dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
                   search={false}
-                  fontFamily={'Roboto_300Light'}
+                  fontFamily={"Roboto_300Light"}
                 />
 
-                <Text className="text-2xl mb-[3%] mt-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Tamaño:</Text>
+                <Text
+                  className="text-2xl mb-[3%] mt-[3%]"
+                  style={{ fontFamily: "Roboto_300Light" }}
+                >
+                  Tamaño:
+                </Text>
 
                 <View className="flex flex-row justify-around items-end w-11/12 mx-auto">
                   <TouchableOpacity
@@ -233,12 +249,12 @@ export const Header = ({ navigation }) => {
                   >
                     {size == "medium" ? (
                       <Image
-                        style={{ width: width * 0.20, height: width * 0.20 }}
+                        style={{ width: width * 0.2, height: width * 0.2 }}
                         source={require("../../images/perro_rosa.png")}
                       />
                     ) : (
                       <Image
-                        style={{ width: width * 0.20, height: width * 0.20 }}
+                        style={{ width: width * 0.2, height: width * 0.2 }}
                         source={require("../../images/perro_negro.png")}
                       />
                     )}
@@ -265,8 +281,13 @@ export const Header = ({ navigation }) => {
                     )}
                   </TouchableOpacity>
                 </View>
-                  
-                <Text className="text-2xl mb-[3%] mt-[3%]" style={{fontFamily: 'Roboto_300Light'}}>Kilometros:</Text>
+
+                <Text
+                  className="text-2xl mb-[3%] mt-[3%]"
+                  style={{ fontFamily: "Roboto_300Light" }}
+                >
+                  Kilometros:
+                </Text>
                 <TextInput
                   placeholder="Mascotas en tu radio de km."
                   fontFamily="Roboto_300Light"
@@ -275,7 +296,7 @@ export const Header = ({ navigation }) => {
                   value={number}
                   onChangeText={(text) => setNumber(text)}
                   className="h-[14%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
-                  style={{fontFamily: 'Roboto_300Light'}}
+                  style={{ fontFamily: "Roboto_300Light" }}
                 />
               </View>
             </Animated.View>
@@ -285,44 +306,3 @@ export const Header = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width,
-    height: 80,
-    backgroundColor: "#AB4E68",
-  },
-  icon: {
-    position: "absolute",
-    margin: 15,
-    width: 50,
-    height: 50,
-    top: 20,
-    left: 340,
-  },
-  popUp: {
-    borderRadius: 10,
-    borderColor: "#333",
-    borderWidth: 1,
-    backgroundColor: "#FFC733",
-    paddingHorizontal: 130,
-    paddingVertical: 150,
-    position: "absolute",
-    top: 75,
-    right: 20,
-  },
-  option: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderColor: "#ccc",
-  },
-  inputPicker: {
-    backgroundColor: "#1E1E1E",
-    color: "#FFF",
-    fontSize: 25,
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 1,
-  },
-});
