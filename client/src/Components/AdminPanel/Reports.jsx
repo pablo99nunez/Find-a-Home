@@ -1,9 +1,12 @@
-import { View, Text, FlatList } from "react-native";
-import React, { useState } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import { useFocusEffect } from "@react-navigation/native";
+import AdminHeader from "./AdminHeader";
+import { ScrollView } from "react-native-gesture-handler";
+import ReportCard from "./ReportCard";
 
 export default function Reports() {
   const token = auth.currentUser?.stsTokenManager.accessToken;
@@ -20,7 +23,7 @@ export default function Reports() {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setReports({ ...response.data[0] }));
+            .then((response) => setReports(response.data));
         } catch (error) {
           console.error(
             "⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message
@@ -30,16 +33,24 @@ export default function Reports() {
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
-  console.log(reports);
+
+  console.log(reports)
   return (
+    <ScrollView>
+      <View>
+        <AdminHeader/>
+      </View>
     <View>
       <FlatList
         numColumns={2}
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={reports}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => (
+            <ReportCard name={item.name} imagen={item.profilePic} reportes={item.reportes} propietario={item.owner} id={item.id}/>
+        )}
       ></FlatList>
     </View>
+    </ScrollView>
   );
 }

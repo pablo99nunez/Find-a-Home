@@ -308,3 +308,42 @@ export const PushNotifications = (token, title, body) => {
     }
   };
 };
+
+
+export const DeletePet = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "id": id
+  };
+  try {
+    const Delete = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
+
+    return Delete;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+  }
+};
+
+export const UserBan = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "OwenerEmail": owner
+  };
+  try {
+    const Delete = await axios.delete(url + "/admin/ban", bodyPayload, config);
+
+    return Delete;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+  }
+};
