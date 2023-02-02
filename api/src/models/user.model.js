@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
-     // unique: true,
+      // unique: true,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -102,6 +102,10 @@ const userSchema = mongoose.Schema(
     pets: {
       type: Array, //ids de mascotas
     },
+    pushToken: {
+      type: Array, // Token de verificacion para notificaciones push
+      default: []
+    },
     address: {
       type: String,
       minlength: 2,
@@ -116,19 +120,20 @@ const userSchema = mongoose.Schema(
       default: []
     },
     geolocation: {
-      type: { 
+      type: {
         type: String,
         enum: ['Point', 'Polygon'],
-        default: 'Point' },
+        default: 'Point'
+      },
       coordinates: [Number],
     },
-    infracciones:{
+    infracciones: {
       type: Array,
     },
-    tipo:{
-    type: String,
-    // enum: ["User, Admin"],
-  } 
+    tipo: {
+      type: String,
+      // enum: ["User, Admin"],
+    }
   },
   {
     timestamps: {

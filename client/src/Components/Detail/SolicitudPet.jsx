@@ -32,7 +32,7 @@ const SolicitudPet = ({ navigation, route }) => {
     try {
       // Usamos firebase para obtener el token de android o ios
       // console.log("This is the Push Token:", getPushToken)
-      const PushToken = await setPushToken();
+      const pushToken = await setPushToken();
 
       const titleNotification = `¡Felicidades ${firstName}! Te han aceptado en la solicitud de adopción de mascota.`;
       const bodyNotification = `${currentUser.firstName} cree que eres la mejor opción para darle un nuevo hogar a ${name}.`
@@ -40,7 +40,7 @@ const SolicitudPet = ({ navigation, route }) => {
 
       // Esta action hace dispatch del token, el mensaje, y el titulo
       // de la notificacion que enviaremos al backend
-      dispatch(PushNotifications(PushToken, titleNotification, bodyNotification))
+      dispatch(PushNotifications(pushToken, titleNotification, bodyNotification))
     } catch (error) {
       console.log("⚠️ Error -> 🚨 SolicitudPet -> 🔔 sendPushNotification " + error.message)
     }
@@ -54,7 +54,7 @@ const SolicitudPet = ({ navigation, route }) => {
 
   return (
     <ScrollView className="flex bg-[#d9d9d9]">
-      <TouchableOpacity onPress={()=> navigation.navigate('Profile', userRequsting)}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile', userRequsting)}>
         <Image
           style={{ width: 100, height: 100 }}
           className="rounded-full mx-auto mt-6"
