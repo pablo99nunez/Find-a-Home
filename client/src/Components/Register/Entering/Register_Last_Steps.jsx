@@ -77,6 +77,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 			lastName,
 			telefono,
 			userNewInput.condiciones,
+			userNewInput.pushToken,
 			pais,
 			departamento,
 			provincia)
