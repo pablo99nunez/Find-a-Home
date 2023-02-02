@@ -9,15 +9,15 @@ import validate from "../validate";
 export default function RegistrationScreen({ navigation }) {
   //crea estado local
   const [userInputs, setUserInputs] = useState({
-    firstName: "",
-    lastName: "",
-    email: "@gmail.com",
+    firstName: "asd",
+    lastName: "asd",
+    email: "asd@gmail.com",
     password: "123456",
   });
   const [errors, setErrors] = useState({
-    firstName: "Ingrese un nombre Válido",
-    lastName: "Ingrese un apellido válido",
-    email: "Ingrese un email válido",
+    firstName: "",
+    lastName: "",
+    email: "",
     password: ""
   });
 

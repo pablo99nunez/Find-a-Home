@@ -35,6 +35,7 @@ import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
 import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
+import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
@@ -67,7 +68,7 @@ export default function App() {
           />
           <Stack.Screen
             name="Welcome"
-            component={Welcome}
+            component={RegistrationScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -115,6 +116,11 @@ export default function App() {
               headerBackTitleVisible: false,
               headerRight: (props) => <Logo {...props} />,
             }}
+          />
+          <Stack.Screen
+            name="RegisterMap"
+            component={RegisterMap}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="RegisterLastSteps"
