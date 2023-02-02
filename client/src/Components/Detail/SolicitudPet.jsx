@@ -48,7 +48,7 @@ const SolicitudPet = ({ navigation, route }) => {
   }
   async function confirmAdoption() {
     const newOwnerEmail = email;
-    // dispatch(acceptAdoption(petId, newOwnerEmail));
+    dispatch(acceptAdoption(petId, newOwnerEmail));
     sendPushNotification()
   }
 
