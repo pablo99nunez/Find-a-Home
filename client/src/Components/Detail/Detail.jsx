@@ -22,9 +22,9 @@ import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { BottomViewOwner } from "./BottomViewOwner";
-  
 
-const {width} = Dimensions.get("screen")
+
+const { width } = Dimensions.get("screen")
 
 export default function Detail({ route, navigation }) {
   //FIREBASE ZONE - DO NOT CHANGE
@@ -70,20 +70,20 @@ export default function Detail({ route, navigation }) {
       <View className="bg-[#acacac] h-full">
         <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
           <LinearGradient
-            colors={["#00000000","rgba(172, 172, 172, 0)", "#acacac"]}
+            colors={["#00000000", "rgba(172, 172, 172, 0)", "#acacac"]}
             style={{ height: "100%", width: "100%" }}
           >
-            
+
             <View className="h-1/3">
               <View>
                 <HeaderDetail onPress={() => navigation.goBack()} days={days} owner={owner} currentUser={currentUser} />
               </View>
 
-              
-              
+
+
 
               <View className="h-52">
-                <Text style={{fontFamily: 'Roboto_300Light'}} className="text-[#f5c936] text-5xl text-center my-12">
+                <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-[#f5c936] text-5xl text-center my-12">
                   {name.toUpperCase()}
                 </Text>
               </View>
@@ -105,17 +105,17 @@ export default function Detail({ route, navigation }) {
             </View>
           </LinearGradient>
         </ImageBackground>
-        
+
         <View className="h-1/4">
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-2xl text-center w-10/12 mx-auto font-semibold bg-[#f5c936] rounded-xl my-[5%]">{
-            state === "Lost" ? "Perdido" : 
-            state === 'Adopted'? "Adoptado":
-            state === 'Found'? "Encontrado":
-            state === "NotAdoptable"? "No adoptable":
-            state === 'InAdoptionProcess'? "En proceso de adopción":
-            "En adopción" }
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-10/12 mx-auto font-semibold bg-[#f5c936] rounded-xl my-[5%]">{
+            state === "Lost" ? "Perdido" :
+              state === 'Adopted' ? "Adoptado" :
+                state === 'Found' ? "Encontrado" :
+                  state === "NotAdoptable" ? "No adoptable" :
+                    state === 'InAdoptionProcess' ? "En proceso de adopción" :
+                      "En adopción"}
           </Text>
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-2xl text-center w-11/12 mx-auto">
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-11/12 mx-auto">
             {description}
           </Text>
         </View>
@@ -131,17 +131,17 @@ export default function Detail({ route, navigation }) {
             {currentUser.email === owner ? (
               <View className="flex flex-row justify-start">
                 <View className='w-[80%]'>
-                  {solicitudes.length ? 
-                  <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
-                    <Text className='text-xl text-white'>{solicitudes.length}</Text>
-                  </View> : null}
+                  {solicitudes.length ?
+                    <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
+                      <Text className='text-xl text-white'>{solicitudes.length}</Text>
+                    </View> : null}
                   <ButtonYellow
                     text="Solicitudes"
                     onPress={() => handleSolicitudes()}
                   />
                 </View>
                 <View className="flex justify-center">
-                  <EditButton onPress={() => navigation.navigate("EditPet", route.params)}/>
+                  <EditButton onPress={() => navigation.navigate("EditPet", route.params)} />
                 </View>
               </View>
             ) : (
@@ -168,6 +168,7 @@ export default function Detail({ route, navigation }) {
             <BottomViewOwner
               solicitudes={solicitudes}
               petId={petId}
+              name={name}
               navigation={navigation}
             />
           ) : (
