@@ -1,16 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
-import { ButtonCreatePet } from "../Buttons/Buttons";
+import { ButtonCreatePet, ButtonAdminDashboard } from "../Buttons/Buttons";
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
@@ -33,10 +29,10 @@ export default function Home({ navigation }) {
       ? navigation.navigate("CreatePet")
       : navigation.navigate("Login");
   }
+
   return (
     <View className="flex-1 bg-[#AB4E68]">
       <Header navigation={navigation} />
-
       <FlatList
         numColumns={2}
         initialNumToRender={10}
@@ -50,6 +46,8 @@ export default function Home({ navigation }) {
       ></FlatList>
       <StatusBar style="auto" />
       <ButtonCreatePet onPress={HandleLoginToAdoption} />
+      {/* {checkUser ? <ButtonAdminDashboard onPress={() => {}} /> : null} */}
+      {/* Aquí va la condición para ver si el user es Admin y mostrar el botón Admin */}
     </View>
   );
 }

@@ -15,7 +15,7 @@ export default function Map(props) {
       <Marker
         coordinate={coordinates}
         onPress={() => {
-          const item = allPets.payload.find(pet=>pet.id==id)
+          const item = allPets.payload.find((pet) => pet.id == id);
           props.navigation.navigate("Detail", item);
         }}
       >
