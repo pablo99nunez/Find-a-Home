@@ -12,7 +12,7 @@ Notifications.setNotificationHandler({
 });
 
 
-async function registerForPushNotificationsAsync() {
+export async function registerForPushNotificationsAsync() {
   let token;
   try {
     if (Device.isDevice) {
@@ -26,7 +26,7 @@ async function registerForPushNotificationsAsync() {
         throw new Error(errorStatus);
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
+      // console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
     } else {
       throw new Error('Notifications not supported on this device');
     }

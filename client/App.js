@@ -1,4 +1,4 @@
-//aca hago cagadas
+
 import "react-native-gesture-handler";
 import React from "react";
 import { LoginScreen, RegistrationScreen } from "./src/Components/Register";
@@ -11,7 +11,7 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-//fin dd cagadas
+
 import FormPet from "./src/Components/CreatePet/FormPet";
 import { Image } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
