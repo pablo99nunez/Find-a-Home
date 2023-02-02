@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -30,7 +30,7 @@ import * as Location from "expo-location";
 
 const { width, height } = Dimensions.get("screen");
 
-export const Header = ({ navigation }) => {
+export const AdminHeader = ({ navigation }) => {
   const auth = getAuth(firebase);
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const email = auth.currentUser?.email;
