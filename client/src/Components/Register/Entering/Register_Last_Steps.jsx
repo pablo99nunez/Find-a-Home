@@ -9,6 +9,7 @@ import {
 import { createAccountWithEmailAndPassword } from '../../../firebase/authentication'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { putUserData } from "../../../Redux/Actions";
+import Condition from "./Condition";
 //Again, Why?? 
 
 
@@ -44,6 +45,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	const [loading, setLoading] = useState(false);
 
 	const HandleCheck = (option) => {
+        console.log(userNewInput)
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, condiciones: { ...userNewInput.condiciones, [option]: !checkState[option] } })
 	}
@@ -75,35 +77,11 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				<Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
-
-				<TouchableOpacity onPress={() => HandleCheck("Techo")} className={checkState.Techo ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
-					<Text className={checkState.Techo ?
-						"text-center text-[#FFF] text-2xl font-extralight"
-						: "text-center text-[#000000] text-2xl font-extralight"}>
-						Techo
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("AlimentoBalanceado")} className={checkState.AlimentoBalanceado ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
-					<Text className={checkState.AlimentoBalanceado ?
-						"text-center text-[#FFF] text-2xl font-extralight"
-						: "text-center text-[#000000] text-2xl font-extralight"}>
-						Alimento Balanceado
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("PaseosDiarios")} className={checkState.PaseosDiarios ? "mt-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'mt-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
-					<Text className={checkState.PaseosDiarios ?
-						"text-center text-[#FFF] text-2xl font-extralight"
-						: "text-center text-[#000000] text-2xl font-extralight"}>
-						Paseos Diarios
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => HandleCheck("Vacunas")} className={checkState.Vacunas ? "m-3 self-start mx-14 rounded-full bg-[#AB4E68] p-2" : 'm-3 self-start mx-14 rounded-full bg-[#d9d9d971] p-2'}>
-					<Text className={checkState.Vacunas ?
-						"text-center text-[#FFF] text-2xl font-extralight"
-						: "text-center text-[#000000] text-2xl font-extralight"}>
-						Vacunas
-					</Text>
-				</TouchableOpacity>
+                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"}/> 
+                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"}/> 
+                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"}/> 
+                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"}/> 
+                <Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"}/> 
 
 
 				<View className="flex flex-row justify-center items-center">
