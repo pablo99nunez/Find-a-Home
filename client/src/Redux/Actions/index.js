@@ -19,6 +19,8 @@ export const GET_PET_BY_OWNER = "GET_PET_BY_OWNER";
 export const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
 export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
+export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
+
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -193,7 +195,7 @@ export const getUser = () => {
         });
       })
       .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + error.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
       );
   };
 };
@@ -210,9 +212,8 @@ export const setIsLoggedIn = (payload) => {
     payload,
   };
 };
-//Al fetch hay  q enviarle por body el email
-//{email: email}
-export const getPetByOwner = (email) => {
+
+export const getPetByOwner = () => {
   const config = {
     method: "GET",
     headers: {
@@ -280,19 +281,30 @@ export const EditProfiles = async (bodyPayload) => {
   }
 };
 
-export const PushNotifications = async (token, title, body) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
-    },
-  };
-  const bodyPayload = { "token": token, "title": title, "body": body }
-  try {
-    const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
 
-    return status;
-  } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
-  }
+
+///Send Push Notifications
+export const PushNotifications = (token, title, body) => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+      },
+    };
+    const bodyPayload = {
+      "token": token, "title": title, "body": body
+    };
+    try {
+      console.log(bodyPayload)
+      const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
+      // console.log(status.data)
+      dispatch({
+        type: SEND_NOTIFICATION,
+        payload: status.data,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
+    }
+  };
 };

@@ -15,7 +15,7 @@ import {
   ScrollView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { ButtonYellow } from "../Buttons/Buttons";
+import { ButtonYellow, EditButton } from "../Buttons/Buttons";
 import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -96,7 +96,7 @@ export default function UserDetail({ route, navigation }) {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto">
-          <Text className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
+          <Text  style={{fontFamily: 'Roboto_300Light'}} className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
           <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : null}★</Text>
         </View>
       </ImageBackground>
@@ -108,7 +108,7 @@ export default function UserDetail({ route, navigation }) {
         </View>
         <FlatList
           className='my-auto'
-          horizontal={true}
+          numColumns={2}
           keyExtractor={(item) => item.id}
           data={currentPets}
           renderItem={({ item }) => (
@@ -118,11 +118,10 @@ export default function UserDetail({ route, navigation }) {
           )}
         ></FlatList>
 
-
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile", currentUser)}>
-          <Text>Editar perfil</Text>
-        </TouchableOpacity>
-        <ButtonYellow text="Logout" onPress={logoutUser} />
+        <View className="flex flex-row justify-evenly my-[5%] items-center">
+          <ButtonYellow text="Logout" onPress={logoutUser} />
+          <EditButton/>
+        </View>
       </View>
     </View>
   );

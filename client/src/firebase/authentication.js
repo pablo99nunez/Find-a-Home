@@ -24,7 +24,8 @@ export const createAccountWithEmailAndPassword = async (
   firstName,
   lastName,
   phone,
-  conditions
+  conditions,
+  pushToken
 ) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then((resp) => {
@@ -32,8 +33,8 @@ export const createAccountWithEmailAndPassword = async (
         resp.user.getIdToken().then(async (tkn) => {
           await AsyncStorage.setItem("authorization", "Bearer " + tkn);
 
-          console.log("ESTA ES LA DATA MI REEEI: -->", firstName, lastName, email, phone, conditions)
-          await createUserInDb(firstName, lastName, email, phone, conditions);
+
+          await createUserInDb(firstName, lastName, email, phone, conditions, pushToken);
           // console.log({ authorization: "Bearer " + tkn });
         });
       } else {
@@ -53,7 +54,8 @@ export const createAccountWithEmailAndPassword = async (
     lastName,
     email,
     phone,
-    conditions
+    conditions,
+    pushToken
   ) => {
     const data = {
       firstName,
@@ -63,6 +65,7 @@ export const createAccountWithEmailAndPassword = async (
       email,
       phone,
       conditions,
+      pushToken
     };
     console.log("DATA FOR DB CREATION:", data);
     const tokenDelStore = await AsyncStorage.getItem("authorization").catch(
@@ -76,7 +79,7 @@ export const createAccountWithEmailAndPassword = async (
         },
       })
       .then((response) => console.log("usuario nuevo creado en la mongodb"))
-      .catch((error) => console.error("Error en la promesa de creacion autentikeishon:", error));
+      .catch((error) => console.error("⚠️ Error -> 🚨 Firebase -> 🔔 Authentication: createUserInDb" + error.message));
   };
 
   /* firebase

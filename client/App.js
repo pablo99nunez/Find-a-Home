@@ -1,7 +1,6 @@
-//aca hago cagadas
 import "react-native-gesture-handler";
 import React from "react";
-import { LoginScreen, RegistrationScreen } from "./src/screens";
+import { LoginScreen, RegistrationScreen } from "./src/Components/Register";
 import { decode, encode } from "base-64";
 
 if (!global.btoa) {
@@ -11,8 +10,6 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-//fin dd cagadas
-import FormPet from "./src/Components/CreatePet/FormPet";
 import { Image } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -27,22 +24,19 @@ import { CreatePet } from "./src/Components/CreatePet/CreatePet";
 import SolicitudPet from "./src/Components/Detail/SolicitudPet";
 import { Provider } from "react-redux";
 import store from "./src/Redux/Store";
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
-import EditProfile from "./src/Components/EditProfile/EditProfile"
+import EditProfile from "./src/Components/EditProfile/EditProfile";
+import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
 import axios from "axios";
-
 import { useFonts } from "expo-font";
-
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
-import { ScreenStackHeaderRightView } from "react-native-screens";
 import PersistentLogin from "./src/PersistentLogin.jsx";
-
+import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
+import Reports from "./src/Components/AdminPanel/Reports";
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
-
 
 const Stack = createStackNavigator();
 
@@ -52,7 +46,6 @@ const Logo = () => (
     source={require("../client/src/images/logo-black.png")}
   />
 );
-
 
 //Inicio componente App:
 export default function App() {
@@ -66,7 +59,6 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
-
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -101,7 +93,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          <Stack.Screen name="Solicitud de Adopcion" component={SolicitudPet} />
+          <Stack.Screen
+            name="Solicitud de Adopcion"
+            component={SolicitudPet}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerBackTitleVisible: false,
+              headerTintColor: "#000",
+            }}
+          />
 
           <Stack.Screen
             name="RegisterFirstSteps"
@@ -142,8 +142,6 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
           <Stack.Screen
             name="Registration"
@@ -196,6 +194,30 @@ export default function App() {
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
+          />
+
+          <Stack.Screen
+            name="Profile"
+            component={ProfileOthers}
+            options={{
+              headerTransparent: true,
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: null,
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="AdminPanel"
+            component={AdminPanel}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Reports"
+            component={Reports}
+            options={{ headerShown: false }}
           />
 
           {/* =================================== */}
