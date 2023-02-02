@@ -53,8 +53,8 @@ const SolicitudPet = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView className="flex">
-      <TouchableOpacity onPress={() => navigation.navigate('Profile', userRequsting)}>
+    <ScrollView className="flex bg-[#d9d9d9]">
+      <TouchableOpacity onPress={()=> navigation.navigate('Profile', userRequsting)}>
         <Image
           style={{ width: 100, height: 100 }}
           className="rounded-full mx-auto mt-6"

@@ -23,7 +23,7 @@ export const BottomViewOwner = ({ solicitudes, navigation, petId, name }) => {
                   className='rounded-full '
                   style={styles.imagen}
                   source={{ uri: item.profilePic }} />
-                <View className='w-2/5'>
+                <View className='w-3/6'>
                   <Text className='text-xl font-bold'>{item.firstName} {item.lastName}</Text>
                   <Text className='text-md'>
                     {item.message?.slice(0, 20).concat('...')}
