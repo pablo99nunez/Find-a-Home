@@ -58,6 +58,7 @@ router.get('/reportUsers', checkJwt, async (req, res) => {
     });
     if (checkUser) {
       const allPetsReports = await UserModel.find({
+        //a
         infracciones: { $exists: true, $not: { $size: 0 } },
       });
       res.status(200).send(allPetsReports);
