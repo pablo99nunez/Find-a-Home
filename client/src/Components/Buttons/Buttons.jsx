@@ -64,6 +64,20 @@ export const ButtonAdminDashboard = (props) => {
     </TouchableOpacity>
   );
 };
+export const ButtonAdminToReports = (props) => {
+  const { onPress } = props;
+  return (
+    <TouchableOpacity
+      className="bg-[#FFC733] items-center justify-center border rounded-full w-[19%] h-[9%] absolute left-[5%] bottom-[5%]"
+      onPress={onPress}
+    >
+      <Image
+        className="w-[70%] h-[70%] "
+        source={require("../../images/adminbutton.png")}
+      />
+    </TouchableOpacity>
+  );
+};
 
 export const EditButton = (props) => {
   const { onPress } = props;
