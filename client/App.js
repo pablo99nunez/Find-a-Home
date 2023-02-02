@@ -34,6 +34,7 @@ import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
 import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
+import Reports from "./src/Components/AdminPanel/Reports";
 
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
@@ -211,6 +212,11 @@ export default function App() {
           <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Reports"
+            component={Reports}
             options={{ headerShown: false }}
           />
 

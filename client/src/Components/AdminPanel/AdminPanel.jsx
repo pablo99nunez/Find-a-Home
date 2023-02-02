@@ -1,17 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { ButtonAdminToReports } from "../Buttons/Buttons";
+import AdminHeader from "./AdminHeader";
 
-const AdminPanel = (props) => {
-  console.log(props);
+const AdminPanel = ({ navigation, route }) => {
+  console.log(route.profilePic);
   return (
     <View>
+      <AdminHeader navigation={navigation} />
       <View>
-        <Text>Admin Panel!</Text>
-      </View>
-      <View>
-        <Text>BOTONES</Text>
-        <ButtonAdminToReports />
+        <Text>ADMIN</Text>
       </View>
     </View>
   );
