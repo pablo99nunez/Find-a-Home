@@ -87,7 +87,7 @@ useFocusEffect(
                   Paseos Diarios 
                 </Text>
               </View> : null}
-            {userProfile.conditions?.vacunas?   
+            {userProfile.conditions?.Vacunas?   
             <View className='mt-3 self-start mx-4 rounded-full bg-[#AB4E68] p-2 '>
               <Text className= 'text-[#fff]'> 
                 Vacunas
