@@ -12,6 +12,7 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);
+  const currentUser = useSelector((state) => state.currentUser);
 
   //se ejecuta cuando se vé, focus=concentrar algo asi
   useFocusEffect(
@@ -46,8 +47,13 @@ export default function Home({ navigation }) {
       ></FlatList>
       <StatusBar style="auto" />
       <ButtonCreatePet onPress={HandleLoginToAdoption} />
-      {/* {checkUser ? <ButtonAdminDashboard onPress={() => {}} /> : null} */}
-      {/* Aquí va la condición para ver si el user es Admin y mostrar el botón Admin */}
+      {currentUser?.tipo == "Admin" ? (
+        <ButtonAdminDashboard
+          onPress={() => {
+            navigation.navigate("AdminPanel", currentUser);
+          }}
+        />
+      ) : null}
     </View>
   );
 }
