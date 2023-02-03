@@ -28,6 +28,9 @@ import {
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import * as Location from "expo-location";
+import axios from 'axios'
+import { BASE_URL_IP } from "@env";
+export const url = BASE_URL_IP;
 
 import { registerForPushNotificationsAsync as getPushToken } from '../../firebase/pushNotifications'
 
@@ -97,6 +100,7 @@ export const Header = ({ navigation }) => {
     };
     currentUser.pushToken && checkToken()
   }, [currentUser])
+  console.log(currentUser.pushToken)
 
   const [pin, setPin] = useState({
     latitude: 0,
