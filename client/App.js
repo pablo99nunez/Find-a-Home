@@ -10,7 +10,7 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-import { Image } from "react-native";
+import { Image, LogBox } from "react-native";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
@@ -37,7 +37,9 @@ import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 
-axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
+
+LogBox.ignoreLogs([`AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`]);
+LogBox.ignoreLogs([`Require cycle: src/firebase/authentication.js -> src/Redux/Actions/index.js -> src/firebase/authentication.js`]);
 
 const Stack = createStackNavigator();
 
