@@ -19,7 +19,7 @@ const validate = {
     
   },
   Register_First_Steps: (clave,valor) => {
-    if(clave==='telefono'){
+    if(clave==='phone'){
       return whatsappRegex.test(valor) ? "": "Complete como el ejemplo: +54 9 11 5334-4567";
     }}
 
