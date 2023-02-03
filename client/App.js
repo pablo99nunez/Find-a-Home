@@ -36,10 +36,13 @@ import PersistentLogin from "./src/PersistentLogin.jsx";
 import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
+import ReportsUsers from "./src/Components/AdminPanel/ReportsUsers";
 
 
 LogBox.ignoreLogs([`AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`]);
 LogBox.ignoreLogs([`Require cycle: src/firebase/authentication.js -> src/Redux/Actions/index.js -> src/firebase/authentication.js`]);
+
+
 
 const Stack = createStackNavigator();
 
@@ -220,12 +223,38 @@ export default function App() {
           <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: "Admin",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
           <Stack.Screen
             name="Reports"
             component={Reports}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: 'Reports',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
+                    <Stack.Screen
+            name="ReportsUsers"
+            component={ReportsUsers}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: 'Reports',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           {/* =================================== */}
