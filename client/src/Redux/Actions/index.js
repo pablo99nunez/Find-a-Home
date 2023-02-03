@@ -213,8 +213,12 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
+      .catch((err) =>{
+        if (typeof err.response !== "undefined" && err.response.data.error)
+				alert(err.response.data.error)	
+        else
+        alert(err.message)
+      }
       );
   };
 };
@@ -365,4 +369,37 @@ export const UserBan = async (owner) => {
   } catch (error) {
     console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
   }
+};
+
+
+export const createUserInDb = async (
+  { firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken },tokenn
+) => {
+  const data = {
+    firstName,
+    lastName,
+    profilePic:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken
+  };
+  console.log("DATA FOR DB CREATION:", data);
+
+  return await axios
+    .post(`${url}/user`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenn}`,
+      },
+    })
+
 };
