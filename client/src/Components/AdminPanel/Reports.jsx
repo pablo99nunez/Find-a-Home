@@ -10,7 +10,7 @@ import ReportCard from "./ReportCard";
 
 export default function Reports() {
   const token = auth.currentUser?.stsTokenManager.accessToken;
-  const [reports, setReports] = useState([]);
+  const [reports, setReports] = useState();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -23,10 +23,11 @@ export default function Reports() {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setReports(response.data));
+            .then((response) => setReports(response.data))
+            // .then((response) => setReports([...reports, response.data]));
         } catch (error) {
           console.error(
-            "⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message
+             error.message
           );
         }
       }
@@ -34,9 +35,9 @@ export default function Reports() {
     }, [])
   );
 
-  console.log(reports)
+  // console.log("reportes", reports )
   return (
-    <ScrollView>
+    <View>
       <View>
         <AdminHeader/>
       </View>
@@ -47,10 +48,10 @@ export default function Reports() {
         keyExtractor={(item) => item.id}
         data={reports}
         renderItem={({ item }) => (
-            <ReportCard name={item.name} imagen={item.profilePic} reportes={item.reportes} propietario={item.owner} id={item.id}/>
+            <ReportCard item={item}/>
         )}
       ></FlatList>
     </View>
-    </ScrollView>
+    </View>
   );
 }

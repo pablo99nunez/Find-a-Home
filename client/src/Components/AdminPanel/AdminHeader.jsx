@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 
 export default function AdminHeader({ navigation }) {
-  console.log(navigation);
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
