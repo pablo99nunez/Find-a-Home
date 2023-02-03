@@ -328,19 +328,12 @@ export const PushNotifications = (token, title, body) => {
       body: body,
     };
     try {
-<<<<<<< HEAD
-      /*  console.log(bodyPayload); */
       const status = await axios.post(
         url + "/send/push-notify",
         bodyPayload,
         config
       );
-
-=======
-      
-      const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
-      console.log(status.data)
->>>>>>> 59160f041111b048b96427bda8a94faa30ed0e55
+      console.log(status.data);
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,

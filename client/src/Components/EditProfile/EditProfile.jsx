@@ -7,16 +7,16 @@ import { ButtonYellow } from "../Buttons/Buttons";
 import { EditProfiles } from "../../Redux/Actions";
 
 const EditProfile = (props) => {
-
-  const { firstName, lastName, phone, profilePic, address, description } = props.route.params
+  const { firstName, lastName, phone, profilePic, address, description } =
+    props.route.params;
   const [profile, setProfile] = useState({
     firstName: firstName ? firstName : "",
     lastName: lastName ? lastName : "",
     phone: phone ? phone : "",
     profilePic: profilePic ? profilePic : "",
     address: address ? address : "",
-    description: description ? description : ""
-  })
+    description: description ? description : "",
+  });
   // console.log(props.route.params)
   const HandleSubmit = async () => {
     const DatosPetAEnviar = {
@@ -112,14 +112,10 @@ const EditProfile = (props) => {
             placeholder="Describete para tener mas posibilidades de adopcion"
             placeholderTextColor="#fcfcfc"
             value={profile.description}
-<<<<<<< HEAD
             onChangeText={(text) =>
               setProfile({ ...profile, description: text })
             }
-=======
-            onChangeText={(text) => setProfile({ ...profile, description: text })}
             maxLength={140}
->>>>>>> 59160f041111b048b96427bda8a94faa30ed0e55
           />
         </View>
 
