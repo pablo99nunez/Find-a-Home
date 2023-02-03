@@ -9,7 +9,7 @@ import {
 	Image
 } from "react-native";
 
-import { createAccountWithEmailAndPassword } from '../../../firebase/authentication'
+import { crearYrellenarDB } from '../../../firebase/authentication'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { putUserData } from "../../../Redux/Actions";
 import { registerForPushNotificationsAsync as setPushToken } from "../../../firebase/pushNotifications";
@@ -73,20 +73,24 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	}
 	const handleContinuar = () => {
 		setLoading(true)
-		createAccountWithEmailAndPassword(email, password, firstName,
+		crearYrellenarDB({
+			email,
+			password,
+			firstName,
 			lastName,
 			phone,
-			userNewInput.condiciones,
-			userNewInput.pushToken,
-			pais,
-			departamento,
-			provincia)
+			conditions:userNewInput.condiciones,
+			pushToken:userNewInput.pushToken,
+			address:`${pais},${departamento},${provincia}`,
+			})
 			.then(resp => {
 				navigation.navigate("Home")
 			})
-			.catch(err => console.error("⚠️ Error -> 🚨 Register - Entering -> 🔔Register Last Steps: " + err.message))
-			.finally(e => {
+			.catch(err => {
+				if (typeof err.response !== "undefined" && err.response.data.error)
+				console.error(err.response.data.error)	  
 				setLoading(false)
+				console.error(err.message)
 			})
 
 	}

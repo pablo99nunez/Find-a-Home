@@ -5,7 +5,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { url } from "../Redux/Actions";
+import { createUserInDb, url } from "../Redux/Actions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const auth = getAuth(firebase);
@@ -17,93 +17,20 @@ export const loginWithEmailAndPassword = async (email, password) => {
     })
 };
 
+
 //firebase 3
-export const createAccountWithEmailAndPassword = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  phone,
-  conditions,
-  pushToken
-) => {
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((resp) => {
-      if (resp.user) {
-        resp.user.getIdToken().then(async (tkn) => {
-          await AsyncStorage.setItem("authorization", "Bearer " + tkn);
-
-
-          await createUserInDb(firstName, lastName, email, phone, conditions, pushToken);
-          // console.log({ authorization: "Bearer " + tkn });
-        });
-      } else {
-        alert(
-          "Hubo un error al registrarse, no se obtubo el token en linea 37 de RegistrationScreen.js!"
-        );
-      }
-    })
-    .catch(error => {
-      if (error.message === 'Firebase: Error (auth/email-already-in-use).')
-        alert('El email ingresado ya está en uso!')
-      else alert(error.message)
-    })
-  //CREAMOS EL USUARIO EN LA BASE DE DATOS
-  const createUserInDb = async (
-    firstName,
-    lastName,
-    email,
-    phone,
-    conditions,
-    pushToken
-  ) => {
-    const data = {
-      firstName,
-      lastName,
-      profilePic:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
-      email,
-      phone,
-      conditions,
-      pushToken
-    };
-    console.log("DATA FOR DB CREATION:", data);
-    const tokenDelStore = await AsyncStorage.getItem("authorization").catch(
-      (s) => alert("token no encontrado en el store local")
-    );
-    await axios
-      .post(`${url}/user`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
-        },
-      })
-      .then((response) => console.log("usuario nuevo creado en la mongodb"))
-      .catch((error) => console.error("⚠️ Error -> 🚨 Firebase -> 🔔 Authentication: createUserInDb" + error.message));
-  };
-
-  /* firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const data = {
-                    id: uid,
-                    email,
-                    fullName,
-                };
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .set(data)
-                    .then(() => {
-                        navigation.navigate('Home', {user: data})
-                    })
-                    .catch((error) => {
-                        alert(error)
-                    });
-            })
-            .catch((error) => {
-                alert(error)
-        }); */
+export const crearYrellenarDB = async (objetoConDatos) => {
+  const { email, password } = objetoConDatos
+  //cadena de returns para obtener al respuesta
+  const response1 = await createUserWithEmailAndPassword(auth, email, password)
+  if (response1.user) {
+    const tokenn = await response1.user.getIdToken()
+    await AsyncStorage.setItem("authorization", "Bearer " + tokenn);
+    objetoConDatos.password = "" //para evitar recibir la contraseña de los usuarios
+    const responseFinal = await createUserInDb(objetoConDatos, tokenn) //lo retorna
+    return responseFinal
+  } else {
+    throw new Error('Error al obtener los datos del usuario')
+  }
 };
+

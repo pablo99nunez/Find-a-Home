@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  checkToken,
   getAllPets,
   getPetsByZone,
   getPetsFilteredBySize,
@@ -119,10 +120,26 @@ export const Header = ({ navigation }) => {
     dispatch(getPetsByZone(number, coordsToSend));
   }, [number]);
 
+
+  
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
-        <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
+        <TouchableOpacity onPress={() => {
+          //talvez se tenga que hacer lo siguiente
+          /*
+          const auth = getAuth()
+          auth.currentUser?
+          A lo mejor haciendo una instancia de getAuth() se refresca el token solo.
+          */
+          checkToken().then(resp=>{
+            //resp=true si token es valido
+            //resp=false si token expiró o es inválido
+            resp? navigation.navigate("UserDetail") : navigation.navigate("Login");
+          }).catch(resp=>{
+            //solo ocurre si el server esta offline
+          })
+          }}>
           <Image
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
