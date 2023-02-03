@@ -1,11 +1,9 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import { useFocusEffect } from "@react-navigation/native";
-import AdminHeader from "./AdminHeader";
-import { ScrollView } from "react-native-gesture-handler";
 import ReportCard from "./ReportCard";
 
 export default function Reports() {
@@ -35,15 +33,11 @@ export default function Reports() {
     }, [])
   );
 
-  // console.log("reportes", reports )
+ 
   return (
     <View>
-      <View>
-        <AdminHeader/>
-      </View>
     <View>
       <FlatList
-        numColumns={2}
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={reports}

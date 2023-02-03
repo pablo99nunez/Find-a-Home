@@ -3,8 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DeletePet, UserBan } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
 const ReportCard = (props) => {
-// console.log("route", props.item)
-const {id, imagen, } = props
+const {profilePic, name, id, reportes, owner} = props.item
 const dispatch = useDispatch()
 
 const deletePets = (id) =>{
@@ -19,33 +18,33 @@ const banUser = (owneremail) =>{
   <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       <View style={{
           width: "40%",
-          height: 350,
+          height: 100,
           backgroundImage: "linear-gradient",
         }}>
     <Image
-      className="relative h-[40%] w-[90%] rounded-3xl float-left"
-      source={{ uri: props.item.profilePic }}
+      className="relative h-[100%] w-[90%] rounded-3xl float-left"
+      source={{ uri: profilePic }}
     />
     </View>
     <View style={{
           width: "60%",
-          height: 350,
+          height: 100,
           backgroundImage: "linear-gradient",
         }}>
-      <Text className="text-2xl font-semibold">{props?.item.name}</Text>
+      <Text className="text-2xl font-semibold">{name}</Text>
       <Text className="text-gray-600">
-       {/* Ultimo reporte: {props?.reportes[props.reportes?.length-1]} */}
+       {/* Ultimo reporte: {reportes[reportes.length-1].denuncia} */}
       </Text>
       <Text className="text-gray-600">
-       Cantidad de reportes: {props.reportes?.length}
+       Cantidad de reportes: {reportes.length}
       </Text>
       <Text className="text-gray-600">
-       Propietario: {props?.propietario}
+       Propietario: {owner}
       </Text>
       <TouchableOpacity onPress={() => deletePets(props?.id)}>
 <Text>Eliminar</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => banUser(props.item.email)}>
+      <TouchableOpacity onPress={() => banUser(owner)}>
 <Text>Bloquear usuario</Text>
       </TouchableOpacity>
       

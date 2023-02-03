@@ -218,12 +218,26 @@ export default function App() {
           <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: "Admin",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
           <Stack.Screen
             name="Reports"
             component={Reports}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: 'Reports',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           {/* =================================== */}
