@@ -1,16 +1,19 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { DeletePet, UserBan } from "../../Redux/Actions";
+import { DesbanUser, UserBan } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
-const ReportCard = (props) => {
-const {profilePic, name, id, reportes, owner } = props.item
+
+
+
+const UserCard = (props) => {
 const dispatch = useDispatch()
-const deletePets = (id) =>{
-    dispatch(DeletePet(id))
-    alert("Mascota eliminada")
-}
+
 const banUser = (owneremail) =>{
     dispatch(UserBan(owneremail))
+    alert("Usuario bloqueado")
+}
+const Desban = (id) =>{
+    dispatch(DesbanUser(id))
     alert("Usuario bloqueado")
 }
     return (
@@ -22,7 +25,7 @@ const banUser = (owneremail) =>{
         }}>
     <Image
       className="relative h-[100%] w-[90%] rounded-3xl float-left"
-      source={{ uri: profilePic ? profilePic : props.item.profilePic}}
+      source={{ uri: props.item.profilePic}}
     />
     </View>
     <View style={{
@@ -30,26 +33,27 @@ const banUser = (owneremail) =>{
           height: 100,
           backgroundImage: "linear-gradient",
         }}>
-      <Text className="text-2xl font-semibold">{name ? name : props.item.firstName + " " + props.item.lastName}</Text>
+      <Text className="text-2xl font-semibold">{props.item.firstName + " " + props.item.lastName}</Text>
+
       <Text className="text-gray-600">
-       {/* Ultimo reporte: {reportes[reportes.length-1].denuncia} */}
+       {/* Cantidad de reportes: {props.item.infracciones.length} */}
+      </Text>
+    
+      <Text className="text-gray-600">
+      Description: {props.item.description}
       </Text>
       <Text className="text-gray-600">
-       Cantidad de reportes: {reportes ? reportes.length : props.item.infracciones.length}
+      Cantidad de animales: {props.item.pets.length}
       </Text>
-      {!props.item.address ? 
-      <Text className="text-gray-600">
-       Propietario: {owner ? owner : null}
-      </Text>
-      : 
-      null
-      }
-      <TouchableOpacity onPress={() => deletePets(props?.id)}>
-<Text>Eliminar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => banUser(owner ? owner : props.item.email)}>
+{props.item.tipo !== "inhabilitado" ?
+      <TouchableOpacity onPress={() => banUser(props.item.email)}>
 <Text>Bloquear usuario</Text>
       </TouchableOpacity>
+      : 
+      <TouchableOpacity onPress={() => Desban(props.item.id)}>
+<Text>Desbloquear usuario</Text>
+      </TouchableOpacity>
+      }
       
       </View>
 
@@ -58,4 +62,4 @@ const banUser = (owneremail) =>{
   
     }
 
-export default ReportCard;
+export default UserCard;
