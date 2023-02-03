@@ -4,7 +4,6 @@ import { StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function RegisterMap(props) {
-  console.log('asdadsasddsadasdsadsadassaadsdsa',props.route.params);
   const { latitude = -35.0, longitude = -60.0 } = props.route.params.userInput.coordinate;
   const [mapReady, setMapReady] = useState(false);
   const [lati, setLati] = useState(latitude);
@@ -23,10 +22,8 @@ export default function RegisterMap(props) {
         showsUserLocation={true}
         onPress={(obj) => {
 
-          console.log(obj.nativeEvent.coordinate);
           setLati(obj.nativeEvent.coordinate.latitude);
           setLongi(obj.nativeEvent.coordinate.longitude);
-          console.log("ACA ESTAN TUS COORDENADAS ---->", lati, longi);
           //nunca usar estados locales para setear otros estados
           //en decir: no se puede usar lati y longi dentro de setUserInput!!!!
           props.route.params.setUserInput({
