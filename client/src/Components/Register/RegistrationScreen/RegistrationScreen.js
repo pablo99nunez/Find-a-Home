@@ -9,15 +9,15 @@ import validate from "../validate";
 export default function RegistrationScreen({ navigation }) {
   //crea estado local
   const [userInputs, setUserInputs] = useState({
-    firstName: "asd",
-    lastName: "asd",
-    email: "asd@gmail.com",
+    firstName: "",
+    lastName: "",
+    email: "@gmail.com",
     password: "123456",
   });
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: "Escribe un nombre válido",
+    lastName: "Escribe un apellido válido",
+    email: "Escribe un email válido",
     password: ""
   });
 
@@ -25,24 +25,6 @@ export default function RegistrationScreen({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
   };
-
-  //#region validaciones
-  const handleContinuar = (evento) => {
-    evento.preventDefault();
-    const len = Object.entries(errors).length;
-
-    //si todo bien, salta a la siguiente pantalla
-    if (len === 0) {
-        navigation.navigate("RegisterFirstSteps", userInputs)
-    }else{
-
-    }
-    //sino, no te deja hacer click en continuar
-    
-  };
-useEffect(()=>{
-    
-}, userInputs)
 
   const handleChange = (clave, valor) => {
     console.log(clave, valor);
@@ -57,7 +39,7 @@ useEffect(()=>{
     const len = Object.entries(errors).length;
   };
 
-  const disable = `${userInputs.name}`.length===0 && `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
+  const disable = `${userInputs.name}`.length===0 || `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
 
   //#endregion de validaciones
 

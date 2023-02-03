@@ -29,7 +29,7 @@ import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile";
 import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
-import axios from "axios";
+
 import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
@@ -240,10 +240,18 @@ export default function App() {
               title: 'Reports',
               headerBackTitle: null,
               headerBackTitleVisible: false,
+<<<<<<< HEAD
+            }}
+          />
+          <Stack.Screen
+            name="ReportsUsers"
+            component={ReportsUsers}
+=======
             }}/>
             <Stack.Screen
             name="Usuarios"
             component={Usuarios}
+>>>>>>> 0d015295c65e05648c9d0ab6030b0608bd48bdee
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
