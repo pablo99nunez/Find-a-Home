@@ -16,7 +16,7 @@ import { auth } from "../../firebase/authentication";
 import { FlatList } from "react-native-gesture-handler";
 
 export const ProfileOthers = ({ route, navigation }) => {
-  const { email, profilePic, firstName, lastName } = route.params;
+  const { email, profilePic, firstName, lastName, rating } = route.params;
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [userProfile, setUserProfile] = useState({});
   const [pets, setPets] = useState([]);
@@ -67,10 +67,14 @@ export const ProfileOthers = ({ route, navigation }) => {
           style={{ height: "100%", width: "100%" }}
         >
           <View>
-            <Header
-              onPress={() => navigation.navigate("Home")}
-              navigation={() => navigation.navigate("CreatePet")}
-            />
+            <View className="flex flex-row justify-between mx-[4%] w-auto pt-[10%]">
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                  <Image
+                      className="w-12 h-11"
+                      source={require("../../images/FindAHome.png")}
+                  />
+              </TouchableOpacity>
+            </View>
             <Image
               className="w-64 h-64 bottom-6 mx-auto rounded-full"
               source={{ uri: profilePic }}
@@ -82,7 +86,7 @@ export const ProfileOthers = ({ route, navigation }) => {
             {firstName} {lastName}
           </Text>
           <Text className=" text-4xl text-[#ffc733]">
-            {rating?.rating ? rating.rating : null}★
+            {rating?.rating ? rating.rating : 5}★
           </Text>
         </View>
       </ImageBackground>
