@@ -6,11 +6,12 @@ const ReportCard = (props) => {
 const {profilePic, name, id, reportes, owner } = props.item
 const dispatch = useDispatch()
 const deletePets = (id) =>{
+
     dispatch(DeletePet(id))
     alert("Mascota eliminada")
 }
 const banUser = (owneremail) =>{
-    dispatch(UserBan(owneremail))
+    UserBan(owneremail)
     alert("Usuario bloqueado")
 }
     return (

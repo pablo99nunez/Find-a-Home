@@ -9,11 +9,11 @@ const UserCard = (props) => {
 const dispatch = useDispatch()
 
 const banUser = (owneremail) =>{
-    dispatch(UserBan(owneremail))
+    UserBan(owneremail)
     alert("Usuario bloqueado")
 }
-const Desban = (id) =>{
-    dispatch(DesbanUser(id))
+const Desban = (owneremail) =>{
+    DesbanUser(owneremail)
     alert("Usuario bloqueado")
 }
     return (
@@ -50,7 +50,7 @@ const Desban = (id) =>{
 <Text>Bloquear usuario</Text>
       </TouchableOpacity>
       : 
-      <TouchableOpacity onPress={() => Desban(props.item.id)}>
+      <TouchableOpacity onPress={() => Desban(props.item.email)}>
 <Text>Desbloquear usuario</Text>
       </TouchableOpacity>
       }
