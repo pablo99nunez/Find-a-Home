@@ -100,7 +100,7 @@ router.put('/ban', checkJwt, async (req, res) => {
     });
     if (checkUser) {
       const userABanear = await UserModel.updateOne(
-        { OwenerEmail },
+        {email:OwenerEmail},
         { tipo: 'inhabilitado' }
       );
     } else {
