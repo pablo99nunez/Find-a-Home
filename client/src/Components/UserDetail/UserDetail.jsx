@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState, useMemo, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth, signOut } from "firebase/auth";
 import firebase from "../../firebase/firebase-config";
-
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -12,21 +10,19 @@ import {
   TouchableOpacity,
   Dimensions,
   FlatList,
-  ScrollView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { ButtonYellow, EditButton } from "../Buttons/Buttons";
 import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { getPetByOwner, getUser } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
-
+import BottomSheet from "@gorhom/bottom-sheet";
 import Card from "../Card/Card"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-// const { width, height } = Dimensions.get("screen")
-const HEIGHT = Dimensions.get("screen").height;
+
+const { width, height } = Dimensions.get("screen")
 
 export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
@@ -62,13 +58,18 @@ export default function UserDetail({ route, navigation }) {
 
       });
   }
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ["55%"], []);
+  const [open, setOpen] = useState(-1);
+
+  function handleButtons() {
+    setOpen(0);
+  }
   //-----------------------------------------------------------
-
-
 
   return (
     <View
-      style={{ height: HEIGHT }}
+      style={{ height: height }}
       className="bg-[#ACACAC]"
     >
       <ImageBackground
@@ -76,7 +77,6 @@ export default function UserDetail({ route, navigation }) {
           width: "100%",
           height: 350,
           backgroundImage: "linear-gradient",
-         
         }}
         source={{ uri: currentUser.profilePic }}
         blurRadius={10}
@@ -86,9 +86,9 @@ export default function UserDetail({ route, navigation }) {
           style={{ height: "100%", width: "100%" }}
         >
           <View>
-            <Header
+            <Header 
               onPress={() => navigation.navigate("Home")}
-              navigation={() => navigation.navigate("CreatePet")}
+              handleButtons={handleButtons}
             />
             <Image
               className="w-64 h-64 bottom-10 mx-auto rounded-full"
@@ -97,37 +97,78 @@ export default function UserDetail({ route, navigation }) {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
-          <Text  style={{fontFamily: 'Roboto_300Light'}} className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
-          <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : null}★</Text>
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{currentUser.firstName} {currentUser.lastName}</Text>
+          <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : 5 }★</Text>
         </View>
       </ImageBackground>
-        <FlatList
-          className=''
-          numColumns={2}
-          keyExtractor={(item) => item.id}
-          data={currentPets}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
-              <Card style={{ width: 120, height: 120 }} item={item} />
-            </TouchableOpacity>
-          )}
-        ></FlatList>
-         <View className="">
-        <View>
-          <Text className="text-center text-2xl text-[#2A2B20]">
-            {currentUser.description}
-          </Text>
-        </View>
-
-        <View className="flex flex-row justify-evenly my-[5%] items-center">
-          <ButtonYellow text="Logout" onPress={logoutUser} />
-          <EditButton onPress={()=> navigation.navigate('EditProfile', currentUser)}/>
-        </View>
+      <View>
+        <Text className="text-center text-2xl text-[#2A2B20] m-[5%]" style={{fontFamily: 'Roboto_300Light'}}>
+          {currentUser.description}
+        </Text>
       </View>
+      <ImageBackground source={require('../../images/Banderin-r.png')} className='w-[70%]'>
+        <Text className="text-start text-2xl text-[#2A2B20] ml-[10%]" style={{fontFamily: 'Roboto_300Light'}}>Mascotas:</Text>
+      </ImageBackground>
+      <FlatList
+        style={{width: width, height: width, marginBottom: height * 0.02}}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        data={currentPets}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
+            <Card item={item}/>
+          </TouchableOpacity>
+        )}>
+      </FlatList>
+
+      <BottomSheet
+        backgroundStyle={{backgroundColor: "#d9d9d9"}}
+        ref={bottomSheetRef}
+        index={open}
+        snapPoints={snapPoints}
+        keyboardBehavior="extend"
+        enablePanDownToClose={true}
+        onClose={() => setOpen(-1)}
+      >
+        <Text className="flex text-center text-3xl" style={{fontFamily: 'Roboto_300Light'}}>Opciones</Text>
+
+        <TouchableOpacity 
+          onPress={()=> navigation.navigate('EditProfile', currentUser)} 
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon name="pencil" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Editar Perfil</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('CreatePet')} 
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Image
+            className="w-12 h-12 mr-[20%]"
+            source={require("../../images/Trust-profile.png")}
+          />
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Publicar Mascota</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          // onPress={()=> navigation.navigate('Aca va el componente de MP')} 
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon name="hand-coin" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Donar</Text>
+        </TouchableOpacity>
+            
+        <TouchableOpacity 
+          onPress={logoutUser} 
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon name="logout" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Cerrar Sesión</Text>
+        </TouchableOpacity>
+
+      </BottomSheet>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-
-});

@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-const errorStatus = 'Failed to get push token for push notification! Please try again later or contact an administrator for assistance.';
+import { useState, useEffect, useRef } from "react";
+import { Text, View, Button, Platform } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+const errorStatus =
+  "Failed to get push token for push notification! Please try again later or contact an administrator for assistance.";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -11,36 +12,35 @@ Notifications.setNotificationHandler({
   }),
 });
 
-
 export async function registerForPushNotificationsAsync() {
   let token;
   try {
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
+      if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== 'granted') {
+      if (finalStatus !== "granted") {
         throw new Error(errorStatus);
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       // console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
     } else {
-      throw new Error('Notifications not supported on this device');
+      throw new Error("Notifications not supported on this device");
     }
   } catch (error) {
     console.log("Push Notifications:", error);
   }
 
-
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#ff1f757b',
+      lightColor: "#ff1f757b",
     });
   }
 
@@ -48,31 +48,38 @@ export async function registerForPushNotificationsAsync() {
 }
 
 export default function PushNotification() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-      alert(`${notification.request.content.title}`)
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+        alert(`${notification.request.content.title}`);
+      });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        /* console.log(response); */
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
-  return (<>
-    {/* PODÉS USAR ESTA DATA PARA VER LA INFO 
+  return (
+    <>
+      {/* PODÉS USAR ESTA DATA PARA VER LA INFO 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
      
@@ -89,10 +96,9 @@ export default function PushNotification() {
         }}
       /> 
     </View>*/}
-  </>
+    </>
   );
 }
-
 
 // return (
 //   <ButtonYellow onPress={} text={}/>

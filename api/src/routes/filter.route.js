@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
 //filtra por edad
 router.get('/age/', async (req, res) => {
   try {
-    // console.log(req.body.edad);
+   
     const allPets = await filtroAge(req.body.edad);
     res.send({ message: 'todas las edades', payload: allPets });
   } catch (error) {

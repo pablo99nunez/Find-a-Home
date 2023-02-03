@@ -1,22 +1,22 @@
 import React from "react";
 import { Photos } from "./Photo";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { ButtonYellow } from "../Buttons/Buttons";
 import { EditProfiles } from "../../Redux/Actions";
 
 const EditProfile = (props) => {
-
-  const { firstName, lastName, phone, profilePic, address } = props.route.params
+  const { firstName, lastName, phone, profilePic, address, description } =
+    props.route.params;
   const [profile, setProfile] = useState({
     firstName: firstName ? firstName : "",
     lastName: lastName ? lastName : "",
     phone: phone ? phone : "",
     profilePic: profilePic ? profilePic : "",
     address: address ? address : "",
-    description: ""
-  })
+    description: description ? description : "",
+  });
   // console.log(props.route.params)
   const HandleSubmit = async () => {
     const DatosPetAEnviar = {
@@ -25,7 +25,7 @@ const EditProfile = (props) => {
       profilePic: profile.profilePic,
       address: profile.address,
       phone: profile.phone,
-      description: profile.description
+      description: profile.description,
     };
 
     await EditProfiles(DatosPetAEnviar)
@@ -34,7 +34,9 @@ const EditProfile = (props) => {
         props.navigation.navigate("UserDetail");
       })
       .catch((error) => {
-        console.error("⚠️ Error -> 🚨 EditProfile -> 🔔 EditProfiles: " + error.message)
+        console.error(
+          "⚠️ Error -> 🚨 EditProfile -> 🔔 EditProfiles: " + error.message
+        );
       })
       .finally((e) => {
         setProfile({
@@ -43,35 +45,32 @@ const EditProfile = (props) => {
           phone: "",
           profilePic: "",
           address: "",
-          description:"",
+          description: "",
         });
       });
-  }
-
+  };
 
   return (
-    <ScrollView className='bg-[#d9d9d9]'>
-
-      <View className='w-10/12 mx-auto'>
+    <ScrollView className="bg-[#d9d9d9]">
+      <View className="w-10/12 mx-auto">
         <Photos profile={profile} setProfile={setProfile} name={profile.name} />
 
         <View>
-          <Text className='text-2xl font-extralight m-2'>Nombre</Text>
+          <Text className="text-2xl font-extralight m-2">Nombre</Text>
 
           <TextInput
-            className='h-11 bg-[#717171] rounded-md px-3 font-light'
+            className="h-11 bg-[#717171] rounded-md px-3 font-light"
             placeholder="Por favor actualiza tu nombre"
             placeholderTextColor="#fcfcfc"
             value={profile.firstName}
             onChangeText={(text) => setProfile({ ...profile, firstName: text })}
-
           />
         </View>
         <View>
-          <Text className='text-2xl font-extralight m-2'>Apellido</Text>
+          <Text className="text-2xl font-extralight m-2">Apellido</Text>
 
           <TextInput
-            className='h-11 bg-[#717171] rounded-md px-3 font-light'
+            className="h-11 bg-[#717171] rounded-md px-3 font-light"
             placeholder="Por favor actualiza tu Apellido"
             placeholderTextColor="#fcfcfc"
             value={profile.lastName}
@@ -80,10 +79,10 @@ const EditProfile = (props) => {
           />
         </View>
         <View>
-          <Text className='text-2xl font-extralight m-2'>Telefono</Text>
+          <Text className="text-2xl font-extralight m-2">Telefono</Text>
 
           <TextInput
-            className='h-11 bg-[#717171] rounded-md px-3 font-light'
+            className="h-11 bg-[#717171] rounded-md px-3 font-light"
             placeholder="Por favor actualiza tu telefono"
             placeholderTextColor="#fcfcfc"
             value={profile.phone}
@@ -92,10 +91,10 @@ const EditProfile = (props) => {
           />
         </View>
         <View>
-          <Text className='text-2xl font-extralight m-2'>Direccion</Text>
+          <Text className="text-2xl font-extralight m-2">Direccion</Text>
 
           <TextInput
-            className='h-11 bg-[#717171] rounded-md px-3 font-light'
+            className="h-11 bg-[#717171] rounded-md px-3 font-light"
             placeholder="Por favor actualiza tu direccion"
             placeholderTextColor="#fcfcfc"
             value={profile.address}
@@ -105,26 +104,27 @@ const EditProfile = (props) => {
         </View>
 
         <View>
-          <Text className='text-2xl font-extralight m-2'>Acerca de mi</Text>
+          <Text className="text-2xl font-extralight m-2">Acerca de mi</Text>
 
           <TextInput
             multiline={true}
-            className='h-20 bg-[#717171] rounded-md px-3 font-light'
+            className="h-20 bg-[#717171] rounded-md px-3 font-light"
             placeholder="Describete para tener mas posibilidades de adopcion"
             placeholderTextColor="#fcfcfc"
             value={profile.description}
-            onChangeText={(text) => setProfile({ ...profile, description: text })}
-            
+            onChangeText={(text) =>
+              setProfile({ ...profile, description: text })
+            }
+            maxLength={140}
           />
         </View>
 
         <View className="my-[10%]">
           <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
-
         </View>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;

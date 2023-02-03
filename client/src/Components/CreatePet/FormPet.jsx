@@ -6,7 +6,6 @@ import { Photos } from './Photos';
 
 export default FormPet = ({setCrear, crear, error, setError}) => {
 
-
   return (
     
     <ScrollView className='bg-[#d9d9d9] flex px-[7%]'>
@@ -36,7 +35,7 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
       <View>
         <Text className='text-2xl font-extralight mb-3'>Descripcion</Text>
         <TextInput
-          className='bg-[#717171] h-24 rounded-md px-3 font-light pt-6'
+          className='h-20 bg-[#717171] rounded-md px-3 font-light'
           multiline={true}
           numberOfLines={4}
           placeholder="Cómo es? describe a tu mascota...
@@ -44,6 +43,7 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
           placeholderTextColor="#fcfcfc" 
           autoCapitalize="none"
           value={crear.description}
+          maxLength={140}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
           onBlur={() => {
             const wrongDesc = validateDesc(crear.description)
@@ -178,11 +178,17 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
             'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
               <Text>Encontrado</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'notAdoptable'})}}
+          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'NotAdoptable'})}}
           className={crear.state === 'NotAdoptable'?
            "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
             'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
               <Text>Fuera de adopcion</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'InAdoptionProcess'})}}
+          className={crear.state === 'InAdoptionProcess'?
+           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
+            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
+              <Text>En proceso de adopcion</Text>
           </TouchableOpacity>
         </View>
         <View className='h-5 mt-1'>
