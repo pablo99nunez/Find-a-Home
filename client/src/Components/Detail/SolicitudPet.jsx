@@ -22,6 +22,7 @@ const SolicitudPet = ({ navigation, route }) => {
   const petId = route.params.petId;
   const name = route.params.name;
 
+ 
 
 
   const handleContact = async () => {
