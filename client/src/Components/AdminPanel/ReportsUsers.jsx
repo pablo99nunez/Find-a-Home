@@ -6,7 +6,7 @@ import { auth } from "../../firebase/authentication";
 import { useFocusEffect } from "@react-navigation/native";
 import ReportCard from "./ReportCard";
 
-export default function Reports() {
+export default function ReportsUsers() {
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [reports, setReports] = useState();
 
@@ -15,13 +15,13 @@ export default function Reports() {
       async function evitaReturnDelUseEffect() {
         try {
           await axios
-            .get(`${BASE_URL_IP}/admin/reportPets`, {
+            .get(`${BASE_URL_IP}/admin/reportUsers`, {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setReports(response.data))
+            .then((response) => setReports(...response.data))
             // .then((response) => setReports([...reports, response.data]));
         } catch (error) {
           console.error(
@@ -32,6 +32,7 @@ export default function Reports() {
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
+  console.log(reports)
 
  
   return (

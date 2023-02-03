@@ -1,16 +1,26 @@
 import React from "react";
-import { View, Text } from "react-native";
-import AdminHeader from "./AdminHeader";
+import { View, Text, TouchableOpacity, Image, ScrollView} from "react-native";
+
 
 const AdminPanel = ({ navigation, route }) => {
-  console.log(route.profilePic);
+  
   return (
-    <View>
-      <AdminHeader navigation={navigation} />
-      <View>
-        <Text>ADMIN</Text>
+    <ScrollView>
+      <View className='mx-auto'>
+
+        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>navigation.navigate("Reports")}>
+          <Text className='text-xl font-thin mx-auto'>Mascotas reportadas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>navigation.navigate("ReportsUsers")}>
+          <Text className='text-xl font-thin mx-auto'>Usuarios reportados</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() => {alert('Donaciones')}}>
+          <Text className='text-xl font-thin'>Donaciones</Text>
+        </TouchableOpacity>
+
       </View>
-    </View>
+      
+    </ScrollView>
   );
 };
 

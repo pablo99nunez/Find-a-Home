@@ -69,13 +69,14 @@ export default function UserDetail({ route, navigation }) {
   return (
     <View
       style={{ height: HEIGHT }}
-      className="bg-[#ACACAC] flex justify-between"
+      className="bg-[#ACACAC]"
     >
       <ImageBackground
         style={{
           width: "100%",
           height: 350,
           backgroundImage: "linear-gradient",
+         
         }}
         source={{ uri: currentUser.profilePic }}
         blurRadius={10}
@@ -90,24 +91,18 @@ export default function UserDetail({ route, navigation }) {
               navigation={() => navigation.navigate("CreatePet")}
             />
             <Image
-              className="w-64 h-64 bottom-6 mx-auto rounded-full"
+              className="w-64 h-64 bottom-10 mx-auto rounded-full"
               source={{ uri: currentUser.profilePic }}
             />
           </View>
         </LinearGradient>
-        <View className="flex flex-row justify-between w-11/12 mx-auto">
+        <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
           <Text  style={{fontFamily: 'Roboto_300Light'}} className=" text-4xl">{currentUser.firstName} {currentUser.lastName}</Text>
           <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : null}★</Text>
         </View>
       </ImageBackground>
-      <View className="mb-4">
-        <View>
-          <Text className="text-center text-2xl text-[#2A2B20]">
-            {currentUser.description}
-          </Text>
-        </View>
         <FlatList
-          className='my-auto'
+          className=''
           numColumns={2}
           keyExtractor={(item) => item.id}
           data={currentPets}
@@ -117,10 +112,16 @@ export default function UserDetail({ route, navigation }) {
             </TouchableOpacity>
           )}
         ></FlatList>
+         <View className="">
+        <View>
+          <Text className="text-center text-2xl text-[#2A2B20]">
+            {currentUser.description}
+          </Text>
+        </View>
 
         <View className="flex flex-row justify-evenly my-[5%] items-center">
           <ButtonYellow text="Logout" onPress={logoutUser} />
-          <EditButton/>
+          <EditButton onPress={()=> navigation.navigate('EditProfile', currentUser)}/>
         </View>
       </View>
     </View>
