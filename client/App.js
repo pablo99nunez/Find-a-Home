@@ -36,7 +36,7 @@ import PersistentLogin from "./src/PersistentLogin.jsx";
 import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
-
+import ReportsUsers from "./src/Components/AdminPanel/ReportsUsers";
 axios.defaults.baseURL = "http://100.25.46.52:8080/pet";
 
 const Stack = createStackNavigator();
@@ -230,6 +230,18 @@ export default function App() {
           <Stack.Screen
             name="Reports"
             component={Reports}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: 'Reports',
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
+                    <Stack.Screen
+            name="ReportsUsers"
+            component={ReportsUsers}
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
