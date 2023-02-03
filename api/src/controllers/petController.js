@@ -85,15 +85,17 @@ const filterByOwner = async(email)=>{
   return ownerPets
 }
 
-const denPet = async ({denuncia}, id) =>{
-  // Busca el documento en PetModel
+const denPet = async (denuncia, id) =>{
   const pet = await PetModel.findOne({_id: id})
   if(pet){
     const { owner } = pet
+    // Actualiza el documento en PetModel
     const ingresar = await PetModel.updateOne({_id: id}, {$push:{reportes:denuncia}})
+    // Busca el documento en UserModel
     const user = await UserModel.findOne({email: owner})
     if(user){
-      const IngresarOwner = await UserModel.updateOne({_email: owner}, {$push:{infracciones:denuncia}})
+      // Si se encuentra el documento, actualiza el campo infracciones
+      const IngresarOwner = await UserModel.updateOne({email: owner}, {$push:{infracciones:denuncia}})
     }
     return ingresar
   }
