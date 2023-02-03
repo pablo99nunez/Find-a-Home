@@ -22,7 +22,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		password,
 		firstName,
 		lastName,
-		telefono,
+		phone,
 		pais,
 		departamento,
 		provincia
@@ -33,7 +33,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		password,
 		firstName,
 		lastName,
-		telefono,
+		phone,
 		pais,
 		departamento,
 		provincia,
@@ -75,7 +75,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		setLoading(true)
 		createAccountWithEmailAndPassword(email, password, firstName,
 			lastName,
-			telefono,
+			phone,
 			userNewInput.condiciones,
 			userNewInput.pushToken,
 			pais,
