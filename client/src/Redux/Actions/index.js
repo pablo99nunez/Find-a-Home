@@ -22,6 +22,25 @@ export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
 
 
+//devuelve verdadero si el token se decodifico, falso otherrwise
+export const checkToken = async () => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const response = await axios.get(`${url}/check`, config)
+  .then(resp=>{
+    return true
+  })
+  .catch(err => {
+    return false
+
+  })
+  return response
+}
+
 export const getAllPets = () => {
   return async (dispatch) => {
     try {
@@ -194,8 +213,12 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
+      .catch((err) =>{
+        if (typeof err.response !== "undefined" && err.response.data.error)
+				alert(err.response.data.error)	
+        else
+        alert(err.message)
+      }
       );
   };
 };
@@ -307,4 +330,76 @@ export const PushNotifications = (token, title, body) => {
       console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
     }
   };
+};
+
+
+export const DeletePet = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "id": id
+  };
+  try {
+    const Delete = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
+
+    return Delete;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+  }
+};
+
+export const UserBan = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "OwenerEmail": owner
+  };
+  try {
+    const Delete = await axios.delete(url + "/admin/ban", bodyPayload, config);
+
+    return Delete;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+  }
+};
+
+
+export const createUserInDb = async (
+  { firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken },tokenn
+) => {
+  const data = {
+    firstName,
+    lastName,
+    profilePic:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken
+  };
+  console.log("DATA FOR DB CREATION:", data);
+
+  return await axios
+    .post(`${url}/user`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenn}`,
+      },
+    })
+
 };

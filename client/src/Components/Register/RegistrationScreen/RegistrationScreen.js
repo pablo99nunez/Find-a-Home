@@ -15,9 +15,9 @@ export default function RegistrationScreen({ navigation }) {
     password: "123456",
   });
   const [errors, setErrors] = useState({
-    firstName: "Ingrese un nombre Válido",
-    lastName: "Ingrese un apellido válido",
-    email: "Ingrese un email válido",
+    firstName: "Escribe un nombre válido",
+    lastName: "Escribe un apellido válido",
+    email: "Escribe un email válido",
     password: ""
   });
 
@@ -25,24 +25,6 @@ export default function RegistrationScreen({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
   };
-
-  //#region validaciones
-  const handleContinuar = (evento) => {
-    evento.preventDefault();
-    const len = Object.entries(errors).length;
-
-    //si todo bien, salta a la siguiente pantalla
-    if (len === 0) {
-        navigation.navigate("RegisterFirstSteps", userInputs)
-    }else{
-
-    }
-    //sino, no te deja hacer click en continuar
-    
-  };
-useEffect(()=>{
-    
-}, userInputs)
 
   const handleChange = (clave, valor) => {
     console.log(clave, valor);
@@ -57,7 +39,7 @@ useEffect(()=>{
     const len = Object.entries(errors).length;
   };
 
-  const disable = `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
+  const disable = `${userInputs.name}`.length===0 || `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
 
   //#endregion de validaciones
 

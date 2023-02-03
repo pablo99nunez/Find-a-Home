@@ -26,14 +26,14 @@ export default function RegisterFirstSteps({ navigation , route}) {
     password,
     firstName,
     lastName,
-    telefono: "",
+    phone: "",
     pais: "",
     provincia: "",
     departamento: "",
   });
 
   const [errors, setErrors] = useState({
-    telefono: "Ingrese un telefono Válido",
+    phone: "Ingrese un telefono Válido",
   });
   const handleChange = (clave, valor) => {
     console.log(clave, valor);
@@ -52,7 +52,7 @@ const handleContinuar = () =>{
   navigation.navigate("RegisterLastSteps", userInput)
   setLoading(false)
 }
-const disable = `${errors.telefono}`.length > 0
+const disable = `${errors.phone}`.length > 0
   return (
     <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733] ">
@@ -66,15 +66,15 @@ const disable = `${errors.telefono}`.length > 0
         <View className="w-11/12">
           <Text className="">Teléfono:</Text>
           <TextInput
-
+            maxLength={15}
             className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%] pl-4 mx-auto h-11"
-            value={userInput.telefono}
+            value={userInput.phone}
             placeholder={"011 555-5555"}
             placeholderTextColor="#ffffff50"
-            onChangeText={(valor)=>{handleChange("telefono",valor)}}
+            onChangeText={(valor)=>{handleChange("phone",valor)}}
           />
           <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{errors.telefono}</Text>
+            <Text className='text-[#ed3232]'>{errors.phone}</Text>
           </View>
         </View>
 
