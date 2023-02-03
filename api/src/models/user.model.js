@@ -47,14 +47,17 @@ const userSchema = mongoose.Schema(
     email_verified: {
       type: Boolean
     },
+    adress: {
+      type: String,
+    },
     phone: {
       type: String,
       required: true,
-      validate(value) {
+     /*  validate(value) { GENERA PROBLEMASSSSSSSSSSSSSSSSSSSSSSSS
         if (!validator.isMobilePhone(value)) {
           throw new Error('Invalid phone number');
         }
-      },
+      }, */
     },
     profilePic: {
       type: String,
@@ -101,31 +104,29 @@ const userSchema = mongoose.Schema(
     }],
     pets: {
       type: Array, //ids de mascotas
+      default: [] //no borrar
     },
     pushToken: {
       type: Array, // Token de verificacion para notificaciones push
       default: []
     },
-    address: {
-      type: String,
-      minlength: 2,
-      maxlength: 100,
-      default: "Desconocida"
-    },
     conditions: {
       type: Object,
+      default: {}
     },
     misSolicitudes: {
       type: Array,
-      default: []
+      default: [] //no borrar
     },
-    geolocation: {
-      type: {
-        type: String,
-        enum: ['Point', 'Polygon'],
-        default: 'Point'
+    coordinates: {
+      latitude: {
+        type: Number,
+        default: -34.3000,  //no borrar
       },
-      coordinates: [Number],
+      longitude: {
+        type: Number,
+        default: -59.0000,  //no borrar
+      }
     },
     infracciones: {
       type: Array,
