@@ -27,9 +27,7 @@ import store from "./src/Redux/Store";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile";
-import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
-
 import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
@@ -38,9 +36,12 @@ import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 import Usuarios from "./src/Components/AdminPanel/Usuarios";
 
-LogBox.ignoreLogs([`AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`]);
-LogBox.ignoreLogs([`Require cycle: src/firebase/authentication.js -> src/Redux/Actions/index.js -> src/firebase/authentication.js`]);
-
+LogBox.ignoreLogs([
+  `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
+]);
+LogBox.ignoreLogs([
+  `Require cycle: src/firebase/authentication.js -> src/Redux/Actions/index.js -> src/firebase/authentication.js`,
+]);
 
 const Stack = createStackNavigator();
 
@@ -206,19 +207,6 @@ export default function App() {
           />
 
           <Stack.Screen
-            name="Profile"
-            component={ProfileOthers}
-            options={{
-              headerTransparent: true,
-              headerShadowVisible: false,
-              headerTintColor: "#fff",
-              title: null,
-              headerBackTitle: null,
-              headerBackTitleVisible: false,
-            }}
-          />
-
-          <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
             options={{
@@ -237,7 +225,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: 'Reports',
+              title: "Reports",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
@@ -249,12 +237,11 @@ export default function App() {
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: 'Usuarios',
+              title: "Usuarios",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
           />
- 
 
           {/* =================================== */}
         </Stack.Navigator>
