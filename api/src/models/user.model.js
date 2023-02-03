@@ -47,9 +47,6 @@ const userSchema = mongoose.Schema(
     email_verified: {
       type: Boolean
     },
-    adress: {
-      type: String,
-    },
     phone: {
       type: String,
       required: true,
@@ -109,6 +106,10 @@ const userSchema = mongoose.Schema(
     pushToken: {
       type: Array, // Token de verificacion para notificaciones push
       default: []
+    },
+    address: {
+      type: String,
+      default: "Sin direccion especificada"
     },
     conditions: {
       type: Object,
