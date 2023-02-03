@@ -1,4 +1,7 @@
 
+//este archivo nos rompe todo, pero creo que era porq habia 2 archivos con el mismo nompre
+//ProfileOthers.jsx
+//profileOthers.jsx
 import React, { useState } from 'react'
 import { View, ImageBackground, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,7 +12,7 @@ import { BASE_URL_IP } from "@env"
 import { auth } from '../../firebase/authentication';
 import { FlatList } from 'react-native-gesture-handler';
 
-export const ProfileOthers = ({route, navigation}) => {
+export const profileOthers = ({route, navigation}) => {
   const { email, profilePic, firstName, lastName} = route.params
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [userProfile, setUserProfile] = useState({})
@@ -100,12 +103,6 @@ useFocusEffect(
           <View className='mt-3 self-start mx-4 rounded-full bg-[#AB4E68] p-2 '>
             <Text className= 'text-[#fff]'> 
               Vacunas
-            </Text>
-          </View> : null}
-          {userProfile.conditions?.Castración?   
-          <View className='mt-3 self-start mx-4 rounded-full bg-[#AB4E68] p-2 '>
-            <Text className= 'text-[#fff]'> 
-            Castración
             </Text>
           </View> : null}
         </View>
