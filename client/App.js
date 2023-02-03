@@ -29,7 +29,7 @@ import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile";
 import { ProfileOthers } from "./src/Components/UserDetail/profileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
-import axios from "axios";
+
 import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
@@ -243,7 +243,7 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-                    <Stack.Screen
+          <Stack.Screen
             name="ReportsUsers"
             component={ReportsUsers}
             options={{

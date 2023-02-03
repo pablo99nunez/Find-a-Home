@@ -29,6 +29,9 @@ import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import * as Location from "expo-location";
 
+import { registerForPushNotificationsAsync as getPushToken } from '../../firebase/pushNotifications'
+
+
 const { width, height } = Dimensions.get("screen");
 
 export const Header = ({ navigation }) => {
@@ -40,6 +43,8 @@ export const Header = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const allPets = useSelector((state) => state.allPets);
+
+  const currentUser = useSelector((state) => state.currentUser);
 
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
@@ -60,8 +65,38 @@ export const Header = ({ navigation }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (isLoggedIn) dispatch(getUser());
+    if (isLoggedIn) {
+      dispatch(getUser())
+    }
   }, []);
+
+  useEffect(() => {
+    ///Accept adoption pet
+    const checkToken = async () => {
+      let newToken = [...currentUser.pushToken];
+      const pushToken = await getPushToken()
+      //Si el token existe en el user, no hacemos nada
+      const verifyToken = newToken?.some(token => token === pushToken)
+
+      if (!verifyToken) {
+        newToken = [...newToken, pushToken]
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+          },
+        };
+        const newUserInfo = { ...currentUser, pushToken: newToken }
+
+        try {
+          const verifyTokenInBackend = await axios.put(url + "/user/profile", newUserInfo, config);
+        } catch (error) {
+          console.error("⚠️ Error -> 🚨 Header -> 🔔 checkToken: " + error.message)
+        }
+      }
+    };
+    currentUser.pushToken && checkToken()
+  }, [currentUser])
 
   const [pin, setPin] = useState({
     latitude: 0,
@@ -96,7 +131,7 @@ export const Header = ({ navigation }) => {
     })();
   }, []);
 
-  const currentUser = useSelector((state) => state.currentUser);
+
 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
