@@ -247,8 +247,9 @@ const Welcome = ({ navigation }) => {
               {Platform.OS === "web" ? (
                 <Text>WEB REGISTER</Text>
               ) : (
-                
-                <GoogleImage width={86} height={86} />
+                <>
+                <GoogleImage width={90} height={90} />
+                </>
               
               )}
             </View>
@@ -435,20 +436,17 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   googleLogo: {
+
     width: 50,
     height: 50,
   },
   googleCircle: {
-    top: 10,
-    marginTop: 10,
-    marginBottom: 30,
-    marginLeft: 38,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#ACACAC",
-    width: 86,
-    height: 86,
     borderRadius: 100,
+    width: 90,
+    height: 90,
+    right:'-10%', //XDXDXDXD
+    marginTop:0
   },
   divisionLine: {
     marginTop: 20,
