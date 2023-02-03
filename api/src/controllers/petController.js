@@ -85,16 +85,33 @@ const filterByOwner = async(email)=>{
   return ownerPets
 }
 
-const denPet = async ({denuncia}, id, email) =>{
+const denPet = async ({ denuncia }, id, email) => {
+  try {
+    const pet = await PetModel.findOne({ id });
+    if (!pet) {
+      return { error: "Pet not found" };
+    }
 
-// const search = await PetModel.find(id)
-// if(search){
-  const ingresar = await PetModel.updateOne({id}, {$push:{reportes:denuncia}})
+    const updatedPet = await PetModel.updateOne(
+      { id },
+      { $push: { reportes: denuncia } }
+    );
 
-  const IngresarOwner = await UserModel.updateOne({id}, {$push:{infracciones:denuncia}})
-  return ingresar
+    const owner = await UserModel.findOne({ email: pet.owner });
+    if (!owner) {
+      return { error: "Owner not found" };
+    }
 
-}
+    const updatedOwner = await UserModel.updateOne(
+      { email: pet.owner },
+      { $push: { infracciones: denuncia } }
+    );
+
+    return { pet: updatedPet, owner: updatedOwner };
+  } catch (error) {
+    return { error: error.message };
+  }
+};
 
 module.exports = {
   createNewPet,
