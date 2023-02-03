@@ -14,7 +14,8 @@ const EditProfile = (props) => {
     lastName: lastName ? lastName : "",
     phone: phone ? phone : "",
     profilePic: profilePic ? profilePic : "",
-    address: address ? address : ""
+    address: address ? address : "",
+    description: ""
   })
   // console.log(props.route.params)
   const HandleSubmit = async () => {
@@ -24,6 +25,7 @@ const EditProfile = (props) => {
       profilePic: profile.profilePic,
       address: profile.address,
       phone: profile.phone,
+      description: profile.description
     };
 
     await EditProfiles(DatosPetAEnviar)
@@ -41,6 +43,7 @@ const EditProfile = (props) => {
           phone: "",
           profilePic: "",
           address: "",
+          description:"",
         });
       });
   }
@@ -100,6 +103,21 @@ const EditProfile = (props) => {
             maxLength={20}
           />
         </View>
+
+        <View>
+          <Text className='text-2xl font-extralight m-2'>Acerca de mi</Text>
+
+          <TextInput
+            multiline={true}
+            className='h-20 bg-[#717171] rounded-md px-3 font-light'
+            placeholder="Describete para tener mas posibilidades de adopcion"
+            placeholderTextColor="#fcfcfc"
+            value={profile.description}
+            onChangeText={(text) => setProfile({ ...profile, description: text })}
+            
+          />
+        </View>
+
         <View className="my-[10%]">
           <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
 
