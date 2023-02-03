@@ -9,7 +9,7 @@ router.post("/push-notify", async (req, res) => {
 
 	try {
 		const response = await axios.post("https://exp.host/--/api/v2/push/send", {
-			to: `${token}`,
+			to: token,
 			title,
 			body
 		}, {

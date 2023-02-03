@@ -22,6 +22,7 @@ const SolicitudPet = ({ navigation, route }) => {
   const petId = route.params.petId;
   const name = route.params.name;
 
+ 
 
 
   const handleContact = async () => {
@@ -48,7 +49,7 @@ const SolicitudPet = ({ navigation, route }) => {
               'Authorization': `Bearer ${token}`
             }
           })
-            .then(response => console.log(response.data))
+            .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
           console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
@@ -63,7 +64,7 @@ const SolicitudPet = ({ navigation, route }) => {
     try {
       // Usamos firebase para obtener el token de android o ios
       // console.log("This is the Push Token:", getPushToken)
-      const pushToken = "";
+      // console.log(pushToken)
 
       const titleNotification = `¡Felicidades ${firstName}! Te han aceptado en la solicitud de adopción de mascota.`;
       const bodyNotification = `${currentUser.firstName} cree que eres la mejor opción para darle un nuevo hogar a ${name}.`
@@ -79,7 +80,7 @@ const SolicitudPet = ({ navigation, route }) => {
   }
   async function confirmAdoption() {
     const newOwnerEmail = email;
-    // dispatch(acceptAdoption(petId, newOwnerEmail));
+    dispatch(acceptAdoption(petId, newOwnerEmail));
     sendPushNotification()
   }
 

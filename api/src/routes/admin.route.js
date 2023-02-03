@@ -100,7 +100,7 @@ router.put('/ban', checkJwt, async (req, res) => {
     });
     if (checkUser) {
       const userABanear = await UserModel.updateOne(
-        { OwenerEmail },
+        {email:OwenerEmail},
         { tipo: 'inhabilitado' }
       );
     } else {
@@ -112,14 +112,16 @@ router.put('/ban', checkJwt, async (req, res) => {
 });
 router.put('/desbanear', checkJwt, async (req, res) => {
   try {
-    const { id } = req.body;
+    const { OwenerEmail } = req.body;
     const checkUser = await UserModel.findOne({
       _email: req.user.email,
       tipo: 'Admin',
     });
     if (checkUser) {
-      const userABanear = await UserModel.updateOne({ id }, { tipo: 'User' });
-    } else {
+      const userAdesBanear = await UserModel.updateOne(
+        {email:OwenerEmail},
+        { tipo: 'User' }
+      );    } else {
       res.status(401).send('No tienes autorización para desbloquear usuarios');
     }
   } catch (err) {

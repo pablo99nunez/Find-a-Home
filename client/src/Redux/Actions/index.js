@@ -213,8 +213,12 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 getUser: " + err.message)
+      .catch((err) =>{
+        if (typeof err.response !== "undefined" && err.response.data.error)
+				alert(err.response.data.error)	
+        else
+        alert(err.message)
+      }
       );
   };
 };
@@ -315,9 +319,9 @@ export const PushNotifications = (token, title, body) => {
       "token": token, "title": title, "body": body
     };
     try {
-      console.log(bodyPayload)
+      
       const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
-      // console.log(status.data)
+      console.log(status.data)
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,
@@ -340,11 +344,11 @@ export const DeletePet = async (id) => {
     "id": id
   };
   try {
-    const Delete = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
+    const desbanear = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
 
-    return Delete;
+    return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.message)
   }
 };
 
@@ -359,10 +363,62 @@ export const UserBan = async (owner) => {
     "OwenerEmail": owner
   };
   try {
-    const Delete = await axios.delete(url + "/admin/ban", bodyPayload, config);
+    const banear = await axios.put(url + "/admin/ban", bodyPayload, config);
 
-    return Delete;
+    return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
   }
+};
+
+export const DesbanUser = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "OwenerEmail": owner
+  };
+  try {
+    const banear = await axios.put(url + "/admin/desbanear", bodyPayload, config);
+
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
+  }
+};
+
+
+export const createUserInDb = async (
+  { firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken },tokenn
+) => {
+  const data = {
+    firstName,
+    lastName,
+    profilePic:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken
+  };
+  console.log("DATA FOR DB CREATION:", data);
+
+  return await axios
+    .post(`${url}/user`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenn}`,
+      },
+    })
+
 };

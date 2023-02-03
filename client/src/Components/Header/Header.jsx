@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SelectList } from "react-native-dropdown-select-list";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  checkToken,
   getAllPets,
   getPetsByZone,
   getPetsFilteredBySize,
@@ -27,6 +28,12 @@ import {
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import * as Location from "expo-location";
+import axios from 'axios'
+import { BASE_URL_IP } from "@env";
+export const url = BASE_URL_IP;
+
+import { registerForPushNotificationsAsync as getPushToken } from '../../firebase/pushNotifications'
+
 
 const { width, height } = Dimensions.get("screen");
 
@@ -39,6 +46,8 @@ export const Header = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const allPets = useSelector((state) => state.allPets);
+
+  const currentUser = useSelector((state) => state.currentUser);
 
   const [visible, setVisible] = useState(false);
   const scale = useRef(new Animated.Value(0)).current;
@@ -59,8 +68,39 @@ export const Header = ({ navigation }) => {
   }, [specie, size]);
 
   useEffect(() => {
-    if (isLoggedIn) dispatch(getUser());
+    if (isLoggedIn) {
+      dispatch(getUser())
+    }
   }, []);
+
+  useEffect(() => {
+    ///Accept adoption pet
+    const checkToken = async () => {
+      let newToken = [...currentUser.pushToken];
+      const pushToken = await getPushToken()
+      //Si el token existe en el user, no hacemos nada
+      const verifyToken = newToken?.some(token => token === pushToken)
+
+      if (!verifyToken) {
+        newToken = [...newToken, pushToken]
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+          },
+        };
+        const newUserInfo = { ...currentUser, pushToken: newToken }
+
+        try {
+          const verifyTokenInBackend = await axios.put(url + "/user/profile", newUserInfo, config);
+        } catch (error) {
+          console.error("⚠️ Error -> 🚨 Header -> 🔔 checkToken: " + error.message)
+        }
+      }
+    };
+    currentUser.pushToken && checkToken()
+  }, [currentUser])
+  console.log(currentUser.pushToken)
 
   const [pin, setPin] = useState({
     latitude: 0,
@@ -95,7 +135,7 @@ export const Header = ({ navigation }) => {
     })();
   }, []);
 
-  const currentUser = useSelector((state) => state.currentUser);
+
 
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
@@ -119,10 +159,26 @@ export const Header = ({ navigation }) => {
     dispatch(getPetsByZone(number, coordsToSend));
   }, [number]);
 
+
+  
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
-        <TouchableOpacity onPress={() => navigation.navigate("UserDetail")}>
+        <TouchableOpacity onPress={() => {
+          //talvez se tenga que hacer lo siguiente
+          /*
+          const auth = getAuth()
+          auth.currentUser?
+          A lo mejor haciendo una instancia de getAuth() se refresca el token solo.
+          */
+          checkToken().then(resp=>{
+            //resp=true si token es valido
+            //resp=false si token expiró o es inválido
+            resp? navigation.navigate("UserDetail") : navigation.navigate("Login");
+          }).catch(resp=>{
+            //solo ocurre si el server esta offline
+          })
+          }}>
           <Image
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
