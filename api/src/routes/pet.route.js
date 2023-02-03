@@ -108,17 +108,13 @@ router.get('/byowner',checkJwt, async (req, res) => {
     res.status(501).send({ error: error.message });
   }
 });
-router.put("/denunciar", checkJwt, async (req, res) => {
-  try {
-    const { denuncia, id } = req.body;
-    const updatedPet = await deletePet(denuncia, id, req.user.email);
-    if (updatedPet.error) {
-      res.status(400).send({ error: updatedPet.error });
-    } else {
-      res.send({ message: "Denuncia agregada", payload: updatedPet });
-    }
-  } catch (error) {
-    res.status(500).send({ error: error.message });
+router.put('/denunciar', checkJwt, async (req, res) => {
+  try {//prohibir modificar el owner y la history
+    const denuncia = req.body
+    const updatedPet = await denPet(denuncia, req.body.id, req.user.email)
+    res.send({ message: 'mascota denunciada', payload: updatedPet });
+  } catch (err) {
+    res.status(501).send({ error: err.message })
   }
 });
 module.exports = router;
