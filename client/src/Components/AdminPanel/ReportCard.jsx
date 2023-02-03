@@ -13,7 +13,7 @@ const deletePets = (id) =>{
 }
 const banUser = (owneremail) =>{
     dispatch(UserBan(owneremail))
-    alert("Mascota eliminada")
+    alert("Usuario bloqueado")
 }
     return (
   <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
