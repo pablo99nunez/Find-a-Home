@@ -22,6 +22,25 @@ export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
 
 
+//devuelve verdadero si el token se decodifico, falso otherrwise
+export const checkToken = async () => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const response = await axios.get(`${url}/check`, config)
+  .then(resp=>{
+    return true
+  })
+  .catch(err => {
+    return false
+
+  })
+  return response
+}
+
 export const getAllPets = () => {
   return async (dispatch) => {
     try {
