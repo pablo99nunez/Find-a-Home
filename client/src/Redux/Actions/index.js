@@ -344,11 +344,11 @@ export const DeletePet = async (id) => {
     "id": id
   };
   try {
-    const Delete = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
+    const desbanear = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
 
-    return Delete;
+    return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.message)
   }
 };
 
@@ -363,14 +363,32 @@ export const UserBan = async (owner) => {
     "OwenerEmail": owner
   };
   try {
-    const Delete = await axios.delete(url + "/admin/ban", bodyPayload, config);
+    const banear = await axios.put(url + "/admin/ban", bodyPayload, config);
 
-    return Delete;
+    return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
   }
 };
-<<<<<<< HEAD
+
+export const DesbanUser = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "OwenerEmail": owner
+  };
+  try {
+    const banear = await axios.put(url + "/admin/desbanear", bodyPayload, config);
+
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
+  }
+};
 
 
 export const createUserInDb = async (
@@ -404,23 +422,3 @@ export const createUserInDb = async (
     })
 
 };
-=======
-export const DesbanUser = async (id) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
-      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
-    },
-  };
-  const bodyPayload = {
-    "id": id
-  };
-  try {
-    const Delete = await axios.delete(url + "/admin/desbanear", bodyPayload, config);
-
-    return Delete;
-  } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
-  }
-};
->>>>>>> 0d015295c65e05648c9d0ab6030b0608bd48bdee

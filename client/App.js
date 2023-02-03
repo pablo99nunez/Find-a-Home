@@ -240,18 +240,11 @@ export default function App() {
               title: 'Reports',
               headerBackTitle: null,
               headerBackTitleVisible: false,
-<<<<<<< HEAD
             }}
           />
           <Stack.Screen
-            name="ReportsUsers"
-            component={ReportsUsers}
-=======
-            }}/>
-            <Stack.Screen
             name="Usuarios"
             component={Usuarios}
->>>>>>> 0d015295c65e05648c9d0ab6030b0608bd48bdee
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
