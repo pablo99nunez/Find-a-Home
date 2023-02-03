@@ -370,6 +370,7 @@ export const UserBan = async (owner) => {
     console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
   }
 };
+<<<<<<< HEAD
 
 
 export const createUserInDb = async (
@@ -403,3 +404,23 @@ export const createUserInDb = async (
     })
 
 };
+=======
+export const DesbanUser = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "id": id
+  };
+  try {
+    const Delete = await axios.delete(url + "/admin/desbanear", bodyPayload, config);
+
+    return Delete;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Delete: " + error.message)
+  }
+};
+>>>>>>> 0d015295c65e05648c9d0ab6030b0608bd48bdee
