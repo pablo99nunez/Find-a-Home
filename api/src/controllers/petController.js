@@ -89,14 +89,10 @@ const denPet = async ({denuncia}, id) =>{
   // Busca el documento en PetModel
   const pet = await PetModel.findOne({_id: id})
   if(pet){
-    // Si se encuentra el documento, obtiene el valor de owner
     const { owner } = pet
-    // Actualiza el documento en PetModel
     const ingresar = await PetModel.updateOne({_id: id}, {$push:{reportes:denuncia}})
-    // Busca el documento en UserModel
     const user = await UserModel.findOne({email: owner})
     if(user){
-      // Si se encuentra el documento, actualiza el campo infracciones
       const IngresarOwner = await UserModel.updateOne({_email: owner}, {$push:{infracciones:denuncia}})
     }
     return ingresar
