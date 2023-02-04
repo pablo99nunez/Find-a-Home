@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist"
@@ -29,8 +27,12 @@
           "android:turnScreenOn": true
         }
       ],
+      ["@react-native-google-signin/google-signin"],
       [
-        "@react-native-google-signin/google-signin"
+        "expo-notifications",
+        {
+          "notification.icon": ["./src/images/bg1-welcome.png"]
+        }
       ]
     ],
     "android": {

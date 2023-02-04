@@ -22,7 +22,7 @@ const SolicitudPet = ({ navigation, route }) => {
   const petId = route.params.petId;
   const name = route.params.name;
 
- 
+
 
 
   const handleContact = async () => {
@@ -72,7 +72,7 @@ const SolicitudPet = ({ navigation, route }) => {
 
       // Esta action hace dispatch del token, el mensaje, y el titulo
       // de la notificacion que enviaremos al backend
-      dispatch(PushNotifications(pushToken, titleNotification, bodyNotification))
+      dispatch(PushNotifications(pushToken, titleNotification, bodyNotification, email))
     } catch (error) {
       console.log("⚠️ Error -> 🚨 SolicitudPet -> 🔔 sendPushNotification " + error.message)
     }

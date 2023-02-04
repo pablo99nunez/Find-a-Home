@@ -31,13 +31,13 @@ export const checkToken = async () => {
     },
   };
   const response = await axios.get(`${url}/check`, config)
-  .then(resp=>{
-    return true
-  })
-  .catch(err => {
-    return false
+    .then(resp => {
+      return true
+    })
+    .catch(err => {
+      return false
 
-  })
+    })
   return response
 }
 
@@ -213,11 +213,11 @@ export const getUser = () => {
           payload: result,
         });
       })
-      .catch((err) =>{
+      .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
-				alert(err.response.data.error)	
+          alert(err.response.data.error)
         else
-        alert(err.message)
+          alert(err.message)
       }
       );
   };
@@ -307,7 +307,7 @@ export const EditProfiles = async (bodyPayload) => {
 
 
 ///Send Push Notifications
-export const PushNotifications = (token, title, body) => {
+export const PushNotifications = (token, title, body, email) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -316,10 +316,10 @@ export const PushNotifications = (token, title, body) => {
       },
     };
     const bodyPayload = {
-      "token": token, "title": title, "body": body
+      "token": token, "title": title, "body": body, email: email
     };
     try {
-      
+
       const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
       console.log(status.data)
       dispatch({
@@ -327,7 +327,7 @@ export const PushNotifications = (token, title, body) => {
         payload: status.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message)
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error)
     }
   };
 };
@@ -398,7 +398,7 @@ export const createUserInDb = async (
     phone,
     address,
     conditions,
-    pushToken },tokenn
+    pushToken }, tokenn
 ) => {
   const data = {
     firstName,

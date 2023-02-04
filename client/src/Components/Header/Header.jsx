@@ -74,7 +74,7 @@ export const Header = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    ///Accept adoption pet
+    ///Check Push Token
     const checkToken = async () => {
       let newToken = [...currentUser.pushToken];
       const pushToken = await getPushToken()
@@ -160,7 +160,7 @@ export const Header = ({ navigation }) => {
   }, [number]);
 
 
-  
+
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
@@ -171,14 +171,14 @@ export const Header = ({ navigation }) => {
           auth.currentUser?
           A lo mejor haciendo una instancia de getAuth() se refresca el token solo.
           */
-          checkToken().then(resp=>{
+          checkToken().then(resp => {
             //resp=true si token es valido
             //resp=false si token expiró o es inválido
-            resp? navigation.navigate("UserDetail") : navigation.navigate("Login");
-          }).catch(resp=>{
+            resp ? navigation.navigate("UserDetail") : navigation.navigate("Login");
+          }).catch(resp => {
             //solo ocurre si el server esta offline
           })
-          }}>
+        }}>
           <Image
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
