@@ -123,7 +123,7 @@ export default function Detail({ route, navigation }) {
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-11/12 mx-auto">
             {description}
           </Text>
-          <ReportPet id={id}/>
+          <ReportPet id={id} />
 
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
@@ -180,7 +180,7 @@ export default function Detail({ route, navigation }) {
               navigation={navigation}
             />
           ) : (
-            <BottomView auth={auth} petId={petId} />
+            <BottomView email={owner} auth={auth} petName={name} petId={petId} />
           )}
         </BottomSheet>
       ) : (

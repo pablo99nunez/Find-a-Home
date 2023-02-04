@@ -319,7 +319,6 @@ export const PushNotifications = (token, title, body, email) => {
       "token": token, "title": title, "body": body, email: email
     };
     try {
-
       const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
       console.log(status.data)
       dispatch({
