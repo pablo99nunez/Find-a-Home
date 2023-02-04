@@ -9,7 +9,7 @@ router.post("/push-notify", async (req, res) => {
 		const { title, body, token } = req.body;
 		const sendNotifications = token.map(eachToken => {
 			if (eachToken) {
-				return result = {
+				return {
 					to: token,
 					title,
 					body
@@ -29,8 +29,7 @@ router.post("/push-notify", async (req, res) => {
 		console.log(response.data);
 		res.status(200).json({ message: "Push notification sent", response: response.data });
 	} catch (error) {
-		console.error("⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message);
-		res.status(500).json({ error: "Internal server error" });
+		res.status(500).json({ error: "⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message });
 	}
 });
 
