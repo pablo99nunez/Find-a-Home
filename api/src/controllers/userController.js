@@ -35,9 +35,17 @@ const updateUser = async (newUserData, userEmail) => {
   return updatedUser
 }
 
+const updateUserNotifications = async (Notifications, userEmail) => {
+  await UserModel.updateOne(
+    { email: userEmail },
+    { $set: { Notifications: Notifications } }
+  )
+}
+
 module.exports = {
   createNewUser,
   findUser,
   findAllUsers,
-  updateUser
+  updateUser,
+  updateUserNotifications
 }
