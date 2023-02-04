@@ -18,15 +18,15 @@ export async function registerForPushNotificationsAsync() {
     if (Device.isDevice) {
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
+      const { status } = await Notifications.requestPermissionsAsync();
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
         throw new Error(errorStatus);
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      // console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
+      console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
     } else {
       throw new Error('Notifications not supported on this device');
     }
