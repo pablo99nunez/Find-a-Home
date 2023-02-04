@@ -36,7 +36,11 @@ import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 import Usuarios from "./src/Components/AdminPanel/Usuarios";
+
 import { Notifications } from "./src/Components/UserDetail/Notifications";
+
+import LoginTest from "./src/Components/LoginTest";
+
 
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
@@ -66,6 +70,7 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
+
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -254,7 +259,12 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
+        <Stack.Screen
+            name="LoginTest"
+            component={LoginTest}
+            initialParams={{ fromChild: "Initial" }}
+            options={{ headerShown: false }}
+          />
           {/* =================================== */}
         </Stack.Navigator>
       </NavigationContainer>

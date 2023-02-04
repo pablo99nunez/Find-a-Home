@@ -29,6 +29,7 @@ const AdminPanel = ({ navigation, route }) => {
   const CantidadDeReportes = mascotas.payload.filter(
     (m) => m.reportes.length
   );
+
   return (
     <ScrollView>
       <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
