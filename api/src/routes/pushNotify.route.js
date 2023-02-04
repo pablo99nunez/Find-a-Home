@@ -19,35 +19,39 @@ router.post("/push-notify", async (req, res) => {
 		//  y guardamos todo como un array de objetos en sendNotifications
 		// Sospecho que el principal problema está en los null que se guardan en el array
 		//Los null aparecen cuando se usa el emulador, por que expo no detecta un dispositivo real 
-		const sendNotifications = token.map(eachToken => {
+		const sendNotifications = await token.map(eachToken => {
+
 			if (eachToken) {
 				currentNotificationData.push({ title, body })
-				return {
-					to: token,
+				let currentNotificationMessage = {
+					to: eachToken,
 					title,
 					body,
 				}
+
+
+
+				const response = axios.post("https://exp.host/--/api/v2/push/send", currentNotificationMessage, {
+					headers: {
+						'host': 'exp.host',
+						'accept': 'application/json',
+						'accept-encoding': 'gzip, deflate',
+						'content-type': 'application/json'
+					}
+				});
+
+				return response;
 			}
+
+			// return response;
 		})
-
-
-		// Enviamos la notificacion a la api de expo para que la re-envie a las direcciones que le pasamos con los tokens
-
-		const response = await axios.post("https://exp.host/--/api/v2/push/send", sendNotifications, {
-			headers: {
-				'host': 'exp.host',
-				'accept': 'application/json',
-				'accept-encoding': 'gzip, deflate',
-				'content-type': 'application/json'
-			}
-		});
-
-
+		const sentNotifications = await Promise.all(sendNotifications);
 
 		// Guardamos las solicitudes en el user que las recibe
 
 		const oldUserData = await findUser(email)
-		const newUserData = { ...oldUserData, Notifications: [...oldUserData.Notifications, ...currentNotificationData] }
+		const newUserData = { ...oldUserData, _doc: { ..._doc, Notifications: [..._doc.Notifications, ...currentNotificationData] } };
+
 		console.log("newUserData: ", newUserData);
 		//                                ↑↑↑↑↑
 		//                   Los datos no se están guardando como deberían

@@ -100,7 +100,7 @@ export const Header = ({ navigation }) => {
     };
     currentUser.pushToken && checkToken()
   }, [currentUser])
-  console.log(currentUser.pushToken)
+  // console.log(currentUser.pushToken)
 
   const [pin, setPin] = useState({
     latitude: 0,
