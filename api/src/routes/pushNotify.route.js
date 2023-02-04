@@ -57,10 +57,10 @@ router.post("/push-notify", async (req, res) => {
 		console.log("newUser: ", newUserData);
 
 
-		res.status(200).json({ message: "Push notification sent and Notification data saved on the db", response: response.data });
+		res.status(200).json({ message: "Push notification sent and Notification data saved on the db"});
 
 	} catch (error) {
-		res.status(500).json({ error: "⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message });
+		res.status(400).json({ error: "⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message });
 	}
 });
 
