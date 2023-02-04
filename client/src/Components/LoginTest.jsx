@@ -19,7 +19,6 @@ export default function LoginTest() {
     expoClientId:
       "328480437483-ui4cd46sm4u1cug87tglkctvaejd4m0u.apps.googleusercontent.com",
   });
-
   React.useEffect(() => {
     setMessage(JSON.stringify(response));
     if (response?.type === "success") {
@@ -27,7 +26,7 @@ export default function LoginTest() {
     }
   }, [response]);
   async function getUserData() {
-    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+    let userInfoResponse = await fetch("https://oauth2.googleapis.com/token", {
       headers: { Authorization: `Bearer ${accessToken}`}
     });
 

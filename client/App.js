@@ -66,12 +66,7 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            name="LoginTest"
-            component={LoginTest}
-            initialParams={{ fromChild: "Initial" }}
-            options={{ headerShown: false }}
-          />
+
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -250,7 +245,12 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
+        <Stack.Screen
+            name="LoginTest"
+            component={LoginTest}
+            initialParams={{ fromChild: "Initial" }}
+            options={{ headerShown: false }}
+          />
           {/* =================================== */}
         </Stack.Navigator>
       </NavigationContainer>
