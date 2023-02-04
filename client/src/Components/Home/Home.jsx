@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
@@ -20,11 +20,17 @@ export default function Home({ navigation }) {
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         dispatch(getAllPets());
+  
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
-
+  useEffect(() =>{
+    if(currentUser.tipo === "inhabilitado"){
+      alert("Tu cuenta se encuentra inhabilitada para mas detalles envia un email a hola@findahome.com.ar")
+      navigation.navigate("Login")
+    }
+  }, [])
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     isLoggedIn

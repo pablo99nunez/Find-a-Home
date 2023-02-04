@@ -390,6 +390,25 @@ export const DesbanUser = async (owner) => {
   }
 };
 
+export const ReportPets = async (id, denuncia) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    "id": id,
+    "denuncia": denuncia
+  };
+  try {
+    const banear = await axios.put(url + "/pet/denunciar", bodyPayload, config);
+
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 denunciar: " + error.message)
+  }
+};
 
 export const createUserInDb = async (
   { firstName,

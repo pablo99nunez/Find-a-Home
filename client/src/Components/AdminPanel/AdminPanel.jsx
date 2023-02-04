@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 
+
 const AdminPanel = ({ navigation, route }) => {
   const mascotas = useSelector((state) => state.allPets);
   console.log(mascotas.payload);
@@ -18,6 +19,15 @@ const AdminPanel = ({ navigation, route }) => {
   );
   const mascotasNoAdoptables = mascotas.payload.filter(
     (m) => m.state !== "Adoptable"
+  );
+  const perrosEnAdopcion = mascotas.payload.filter(
+    (m) => m.specie === "Perro"
+  );
+  const gatosEnAdopcion = mascotas.payload.filter(
+    (m) => m.specie === "Gato"
+  );
+  const CantidadDeReportes = mascotas.payload.filter(
+    (m) => m.reportes.length
   );
   return (
     <ScrollView>
@@ -43,12 +53,17 @@ const AdminPanel = ({ navigation, route }) => {
           <Text className="text-xl font-thin">Donaciones</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <Text>ESTADISTICAS</Text>
+      <View className="	text-align: center">
+        <Text className="bg-[#d9d9d9] p-3 rounded-xl m-2 h-10 flex-start align-items: center; 	text-align: center" >ESTADISTICAS</Text>
         <Text>TOTAL MASCOTAS: {mascotas.payload.length}</Text>
         <Text>TOTAL MASCOTAS ADOPTABLES: {mascotasAdoptables.length}</Text>
         <Text>TOTAL MASCOTAS NO ADOPTABLES: {mascotasNoAdoptables.length}</Text>
+        <Text>PERROS EN ADOPCION {perrosEnAdopcion.length}</Text>
+        <Text>GATOS EN ADOPCION {gatosEnAdopcion.length}</Text>
+        <Text>REPORTES {CantidadDeReportes.length}</Text>
+
       </View>
+
     </ScrollView>
   );
 };
