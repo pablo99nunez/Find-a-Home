@@ -4,6 +4,8 @@ import { useState } from "react";
 import { PetPost } from "../../Redux/Actions/index";
 import * as Location from "expo-location";
 import { ButtonYellow } from "../Buttons/Buttons";
+import FormPet from "./FormPet";
+import FormPets from "./FormPets";
 
 export const CreatePet = ({ navigation }) => {
   const [pin, setPin] = useState({
@@ -92,18 +94,41 @@ export const CreatePet = ({ navigation }) => {
       alert("Por favor completa todos los datos");
     }
   };
+  const [paginas, setPaginas] = useState(1)
+ 
+
 
   return (
     <>
+
       <ScrollView className="bg-[#d9d9d9]">
-        <FormPet
-          setCrear={setCrear}
-          crear={crear}
-          error={error}
-          setError={setError}
-        />
+        {paginas === 1  ?
+       <FormPet
+       setCrear={setCrear}
+       crear={crear}
+       error={error}
+       setError={setError}
+     />
+      
+        :
+        <FormPets
+        setCrear={setCrear}
+        crear={crear}
+        error={error}
+        paginas={paginas}
+        setPaginas={setPaginas}
+        setError={setError}
+      /> 
+          }
         <View className="my-[10%]">
+          {paginas === 1 && !error.size && !error.state && !error.specie ?
+
+        <ButtonYellow onPress={() => setPaginas(2) } text={"Siguiente"}/>
+
+:          
+        
           <ButtonYellow onPress={() => HandleSubmit()} text={"Publicar"} />
+        }
         </View>
       </ScrollView>
     </>
