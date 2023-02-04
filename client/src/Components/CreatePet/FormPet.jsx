@@ -4,7 +4,7 @@ import { ScrollView} from 'react-native-gesture-handler'
 import { validateBirthday, validateDesc, validateName } from './validations';
 import { Photos } from './Photos';
 
-export default FormPet = ({setCrear, crear, error, setError}) => {
+export default FormPet = ({setCrear, crear, error, setError, paginas, setPaginas}) => {
 
   return (
     
@@ -51,6 +51,7 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
             else{setError({...error, description: ''})}
           }}
         />
+        
         <View className='h-5 mt-1'>
             <Text className='text-[#ed3232]'>{error.description}</Text>
           </View>
@@ -75,8 +76,34 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
             <Text className='text-[#ed3232]'>{error.birthday}</Text>
           </View>
       </View>
-
       <View>
+        <Text className='text-2xl font-extralight mb-3'>Especie</Text>
+        <View className='flex flex-row justify-center'>
+          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Perro'})}}
+          className={crear.specie === 'Perro'?
+           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
+            'self-start rounded-full bg-[#77747470] p-3 mx-3'}>
+              <Text>Perro</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Gato'})}}
+          className={crear.specie === 'Gato'?
+           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
+            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
+              <Text>Gato</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Otro'})}}
+          className={crear.specie === 'Otro'?
+           "self-start  rounded-full bg-[#AB4E68] p-3 mx-3" :
+            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
+              <Text>Otro</Text>
+          </TouchableOpacity>
+        </View>
+        <View className='h-5 mt-1'>
+            <Text className='text-[#ed3232]'>{error.specie}</Text>
+          </View>
+      </View>
+      <View>
+        
         <Text className='text-2xl font-extralight'>Tamaño</Text>
         <View className='flex flex-row items-end justify-center'>
           <TouchableOpacity
@@ -129,74 +156,6 @@ export default FormPet = ({setCrear, crear, error, setError}) => {
             <Text className='text-[#ed3232]'>{error.size}</Text>
           </View>
       </View>
-
-      <View>
-        <Text className='text-2xl font-extralight mb-3'>Especie</Text>
-        <View className='flex flex-row justify-center'>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Perro'})}}
-          className={crear.specie === 'Perro'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Perro</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Gato'})}}
-          className={crear.specie === 'Gato'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Gato</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Otro'})}}
-          className={crear.specie === 'Otro'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Otro</Text>
-          </TouchableOpacity>
-        </View>
-        <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.specie}</Text>
-          </View>
-      </View>
-
-      <View>
-        <Text className='text-2xl font-extralight mb-3'>Estado del animal</Text>
-        <View className='flex flex-row justify-center flex-wrap'>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state:'Adoptable'})}}
-          className={crear.state === 'Adoptable'?
-           "self-start rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>En Adopcion</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'Lost'})}}
-          className={crear.state === 'Lost'?
-           "self-start rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>Perdido</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'Found'})}}
-          className={crear.state === 'Found'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>Encontrado</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'NotAdoptable'})}}
-          className={crear.state === 'NotAdoptable'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>Fuera de adopcion</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'InAdoptionProcess'})}}
-          className={crear.state === 'InAdoptionProcess'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>En proceso de adopcion</Text>
-          </TouchableOpacity>
-        </View>
-        <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.state}</Text>
-          </View>
-      </View>
-
-      <Photos name={crear.name} setCrear={setCrear} crear={crear}/>
 
     </ScrollView>
    
