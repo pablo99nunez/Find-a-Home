@@ -51,10 +51,10 @@ router.post("/push-notify", async (req, res) => {
 		const oldUserData = await findUser(email)
 		// console.log("oldUser: ", oldUserData);
 		const newUserData = [...oldUserData.Notifications, ...currentNotificationData];
-		console.log("newUser: ", newUserData);
 
 		const updatedUserData = await updateUserNotifications(newUserData, email)
 
+		console.log("newUser: ", newUserData);
 
 
 		res.status(200).json({ message: "Push notification sent and Notification data saved on the db"});

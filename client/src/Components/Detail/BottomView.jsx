@@ -6,10 +6,62 @@ import { ButtonYellow } from '../Buttons/Buttons';
 import axios from 'axios';
 import { BASE_URL_IP } from "@env"
 
-const BottomView = ({ petId, auth }) => {
+
+import { useFocusEffect } from "@react-navigation/native";
+import { PushNotifications } from "../../Redux/Actions/index";
+import { useDispatch, useSelector } from "react-redux";
+
+const BottomView = ({ petId, auth, email, petName }) => {
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
   const [message, setMessage] = useState('')
+  const [pushToken, setPushToken] = useState("")
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.currentUser);
+  //Push Notifications
+  useFocusEffect(
+    React.useCallback(() => {
+      async function evitaReturnDelUseEffect() {
+        try {
+          await axios.get(`${BASE_URL_IP}/user?email=${email}`, {
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`
+            }
+          })
+            .then(response => setPushToken(response.data[0].pushToken))
+
+        } catch (error) {
+          console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
+        }
+      }
+      evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
+    }, [])
+  )
+
+
+  async function sendPushNotification(message) {
+    try {
+      // Usamos firebase para obtener el token de android o ios
+      // console.log("This is the Push Token:", getPushToken)
+      // console.log(pushToken)
+
+      const titleNotification = `¡Felicidades! ${petName} Ha recibido una solicitud de adopción de ${currentUser.firstName} `;
+      const bodyNotification = `${message}`
+
+
+      // Esta action hace dispatch del token, el mensaje, y el titulo
+      // de la notificacion que enviaremos al backend
+      dispatch(PushNotifications(pushToken, titleNotification, bodyNotification, email))
+    } catch (error) {
+      console.log("⚠️ Error -> 🚨 SolicitudPet -> 🔔 sendPushNotification " + error.message)
+    }
+
+  }
+  //Ends Push Notifications
+
+
+
 
   async function AdoptionRequest() {
     const data = { message, petID: petId };
@@ -20,6 +72,9 @@ const BottomView = ({ petId, auth }) => {
           'Authorization': `Bearer ${token}`
         }
       })
+        .then(response => {
+          sendPushNotification(message)
+        })
         .then(response => {
           //console.log(response);
           setSent(true)
