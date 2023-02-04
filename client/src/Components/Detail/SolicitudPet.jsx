@@ -95,17 +95,25 @@ const SolicitudPet = ({ navigation, route }) => {
       </TouchableOpacity>
 
       <View>
-        <Text className="my-5 mx-auto text-3xl">{firstName} {lastName}</Text>
-        <Text className="my-5 mx-auto text-xl">{message}</Text>
+        <Text className="my-5 mx-auto text-3xl" style={{ fontFamily: "Roboto_300Light" }}>{firstName} {lastName}</Text>
+        <Text className="my-5 mx-auto text-xl" style={{ fontFamily: "Roboto_300Light" }}>{message}</Text>
       </View>
-      <ButtonYellow
-        text={"Contacto"}
+      <TouchableOpacity
+        className="bg-[#25D366] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md flex flex-row justify-center"
         onPress={() =>
           handleContact().catch(() => {
             alert('Ha ocurrido un error');
           })
         }
-      />
+      >
+        <Image
+          className="h-[100%] w-[20%]"
+          resizeMode="contain"
+          source={require("../../images/whatsapp.png")}
+
+        />
+        <Text className="text-center text-2xl" style={{ fontFamily: "Roboto_300Light" }}>Contacto</Text>
+      </TouchableOpacity>
 
       <ButtonYellow
         text={"Aceptar Solicitud"}

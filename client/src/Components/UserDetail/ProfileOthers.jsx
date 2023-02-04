@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Card from "../Card/Card";
@@ -15,8 +16,10 @@ import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import { FlatList } from "react-native-gesture-handler";
 
+const {width, height } = Dimensions.get("screen")
+
 export const ProfileOthers = ({ route, navigation }) => {
-  const { email, profilePic, firstName, lastName, rating } = route.params;
+  const { email, profilePic, firstName, lastName, rating, description } = route.params;
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [userProfile, setUserProfile] = useState({});
   const [pets, setPets] = useState([]);
@@ -52,7 +55,10 @@ export const ProfileOthers = ({ route, navigation }) => {
   );
 
   return (
-    <View>
+    <View
+      style={{ height: height }}
+      className="bg-[#ACACAC]"
+    >
       <ImageBackground
         style={{
           width: "100%",
@@ -67,35 +73,25 @@ export const ProfileOthers = ({ route, navigation }) => {
           style={{ height: "100%", width: "100%" }}
         >
           <View>
-            <View className="flex flex-row justify-between mx-[4%] w-auto pt-[10%]">
-              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                  <Image
-                      className="w-12 h-11"
-                      source={require("../../images/FindAHome.png")}
-                  />
-              </TouchableOpacity>
-            </View>
             <Image
-              className="w-64 h-64 bottom-6 mx-auto rounded-full"
+              className="w-64 h-64 bottom-6 mx-auto rounded-full mt-[20%]"
               source={{ uri: profilePic }}
             />
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto">
-          <Text className=" text-4xl">
-            {firstName} {lastName}
-          </Text>
+        <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{firstName} {lastName}</Text>
           <Text className=" text-4xl text-[#ffc733]">
-            {rating?.rating ? rating.rating : null}★
+            {rating?.rating ? rating.rating : 5}★
           </Text>
         </View>
       </ImageBackground>
 
-      <View className="flex items-center mt-3 w-11/12 mx-auto">
+      <View className="flex items-center mt-[10%] w-11/12 mx-auto">
         <Text className="text-center text-2xl text-[#2A2B20] font-light">
           Las condiciones que le puedo brindar a mi mascota son:
         </Text>
-        <View className="flex flex-row flex-wrap w-10/12">
+        <View className="flex flex-row flex-wrap w-10/12 justify-center">
           {userProfile.conditions?.Techo ? (
             <View className="mt-3 self-start mx-4 rounded-full bg-[#AB4E68] p-2 ">
               <Text className="text-[#fff]">Techo</Text>
@@ -125,12 +121,12 @@ export const ProfileOthers = ({ route, navigation }) => {
       </View>
 
       <View>
-        <Text>{userProfile.description ? userProfile.description : null}</Text>
+        <Text>{description ? description : null}</Text>
       </View>
 
-      <View>
+      {/* <View>
         <FlatList
-          className="my-auto"
+          style={{width: width, height: width, marginBottom: height * 0.02}}
           numColumns={2}
           keyExtractor={(item) => item.id}
           data={pets}
@@ -142,7 +138,7 @@ export const ProfileOthers = ({ route, navigation }) => {
             </TouchableOpacity>
           )}
         ></FlatList>
-      </View>
+      </View> */}
     </View>
   );
 };

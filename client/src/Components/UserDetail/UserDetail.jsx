@@ -122,7 +122,7 @@ export default function UserDetail({ route, navigation }) {
       </FlatList>
 
       <BottomSheet
-        backgroundStyle={{backgroundColor: "#515050"}}
+        backgroundStyle={{backgroundColor: "rgba(134, 134, 134,0.9)"}}
         ref={bottomSheetRef}
         index={open}
         snapPoints={snapPoints}
@@ -135,7 +135,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon name="bell" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Notificaciones</Text>
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Notificaciones</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
@@ -143,7 +143,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon name="pencil" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Editar Perfil</Text>
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Editar Perfil</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -154,7 +154,7 @@ export default function UserDetail({ route, navigation }) {
             className="w-12 h-12 mr-[20%]"
             source={require("../../images/Trust-profile.png")}
           />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Publicar Mascota</Text>
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Publicar Mascota</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -162,7 +162,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon name="hand-coin" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Donar</Text>
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Donar</Text>
         </TouchableOpacity>
             
         <TouchableOpacity 
@@ -170,7 +170,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon name="logout" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Cerrar Sesión</Text>
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Cerrar Sesión</Text>
         </TouchableOpacity>
 
       </BottomSheet>

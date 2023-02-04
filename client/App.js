@@ -224,6 +224,19 @@ export default function App() {
           />
 
           <Stack.Screen
+            name="Profile"
+            component={ProfileOthers}
+            options={{
+              headerTransparent: true,
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: null,
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
+
+          <Stack.Screen
             name="AdminPanel"
             component={AdminPanel}
             options={{
