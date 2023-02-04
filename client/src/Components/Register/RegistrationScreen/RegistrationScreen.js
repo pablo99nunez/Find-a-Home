@@ -11,13 +11,13 @@ export default function RegistrationScreen({ navigation }) {
   const [userInputs, setUserInputs] = useState({
     firstName: "",
     lastName: "",
-    email: "@gmail.com",
-    password: "123456",
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({
-    firstName: "Escribe un nombre válido",
-    lastName: "Escribe un apellido válido",
-    email: "Escribe un email válido",
+    firstName: "",
+    lastName: "",
+    email: "",
     password: ""
   });
 
@@ -39,7 +39,11 @@ export default function RegistrationScreen({ navigation }) {
     const len = Object.entries(errors).length;
   };
 
-  const disable = `${userInputs.name}`.length===0 || `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
+  const disable = `${userInputs.firstName}`.length===0 ||
+  `${userInputs.lastName}`.length===0 ||
+  `${userInputs.email}`.length===0 ||
+  `${userInputs.password}`.length===0 ||
+  `${errors.firstName}${errors.lastName}${errors.email}${errors.password}`.length > 0
 
   //#endregion de validaciones
 
