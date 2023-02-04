@@ -3,14 +3,14 @@ const express = require('express');
 const router = express.Router();
 
 const axios = require('axios');
-const { findUser, updateUser } = require('../controllers/userController');
+const { findUser, updateUserNotifications } = require('../controllers/userController');
 router.post("/push-notify", async (req, res) => {
-	let currentNotificationData = []
 	try {
 		//Declaramos los datos que deben llegar por body
 		// Si falta algo lanzamos un error
 		const { title, body, token, email } = req.body;
 		if (!email || !title || !body || !token) throw error;
+		let currentNotificationData = [{ title, body }]
 
 
 
@@ -22,7 +22,6 @@ router.post("/push-notify", async (req, res) => {
 		const sendNotifications = await token.map(eachToken => {
 
 			if (eachToken) {
-				currentNotificationData.push({ title, body })
 				let currentNotificationMessage = {
 					to: eachToken,
 					title,
@@ -50,14 +49,11 @@ router.post("/push-notify", async (req, res) => {
 		// Guardamos las solicitudes en el user que las recibe
 
 		const oldUserData = await findUser(email)
-		const newUserData = { ...oldUserData, _doc: { ..._doc, Notifications: [..._doc.Notifications, ...currentNotificationData] } };
+		// console.log("oldUser: ", oldUserData);
+		const newUserData = [...oldUserData.Notifications, ...currentNotificationData];
+		console.log("newUser: ", newUserData);
 
-		console.log("newUserData: ", newUserData);
-		//                                ↑↑↑↑↑
-		//                   Los datos no se están guardando como deberían
-		//                   se crea notifications por fuera del modelo
-		//                   en vez de modificarse la propiedad ya existente
-		const updatedUserData = await updateUser(newUserData, email)
+		const updatedUserData = await updateUserNotifications(newUserData, email)
 
 
 
