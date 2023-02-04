@@ -122,7 +122,7 @@ export default function UserDetail({ route, navigation }) {
       </FlatList>
 
       <BottomSheet
-        backgroundStyle={{backgroundColor: "#d9d9d9"}}
+        backgroundStyle={{backgroundColor: "#515050"}}
         ref={bottomSheetRef}
         index={open}
         snapPoints={snapPoints}
@@ -130,8 +130,14 @@ export default function UserDetail({ route, navigation }) {
         enablePanDownToClose={true}
         onClose={() => setOpen(-1)}
       >
-        <Text className="flex text-center text-3xl" style={{fontFamily: 'Roboto_300Light'}}>Opciones</Text>
-
+        <TouchableOpacity 
+          onPress={()=> navigation.navigate('Notificaciones')} 
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon name="bell" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
+          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light'}}>Notificaciones</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity 
           onPress={()=> navigation.navigate('EditProfile', currentUser)} 
           className="flex flex-row items-center my-[5%] mx-[10%]"
