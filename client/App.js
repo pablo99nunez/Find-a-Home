@@ -36,7 +36,11 @@ import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 import Usuarios from "./src/Components/AdminPanel/Usuarios";
+
+import { Notifications } from "./src/Components/UserDetail/Notifications";
+
 import LoginTest from "./src/Components/LoginTest";
+
 
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
@@ -104,6 +108,16 @@ export default function App() {
           <Stack.Screen
             name="Solicitud de Adopcion"
             component={SolicitudPet}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerBackTitleVisible: false,
+              headerTintColor: "#000",
+            }}
+          />
+
+          <Stack.Screen
+            name="Notificaciones"
+            component={Notifications}
             options={{
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerBackTitleVisible: false,
