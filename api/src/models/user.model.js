@@ -50,11 +50,11 @@ const userSchema = mongoose.Schema(
     phone: {
       type: String,
       required: true,
-     /*  validate(value) { GENERA PROBLEMASSSSSSSSSSSSSSSSSSSSSSSS
-        if (!validator.isMobilePhone(value)) {
-          throw new Error('Invalid phone number');
-        }
-      }, */
+      /*  validate(value) { GENERA PROBLEMASSSSSSSSSSSSSSSSSSSSSSSS
+         if (!validator.isMobilePhone(value)) {
+           throw new Error('Invalid phone number');
+         }
+       }, */
     },
     profilePic: {
       type: String,
@@ -105,6 +105,10 @@ const userSchema = mongoose.Schema(
     },
     pushToken: {
       type: Array, // Token de verificacion para notificaciones push
+      default: []
+    },
+    Notifications: {
+      type: Array, // Array de notificaciones que llegan al usuario
       default: []
     },
     address: {

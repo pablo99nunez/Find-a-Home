@@ -21,6 +21,7 @@ export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
 export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
 
+
 //devuelve verdadero si el token se decodifico, falso otherrwise
 export const checkToken = async () => {
   const config = {
@@ -29,16 +30,16 @@ export const checkToken = async () => {
       Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
-  const response = await axios
-    .get(`${url}/check`, config)
-    .then((resp) => {
-      return true;
+  const response = await axios.get(`${url}/check`, config)
+    .then(resp => {
+      return true
     })
-    .catch((err) => {
-      return false;
-    });
-  return response;
-};
+    .catch(err => {
+      return false
+
+    })
+  return response
+}
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -51,6 +52,7 @@ export const getAllPets = () => {
     } catch (error) {
       console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error);
     }
+
   };
 };
 
@@ -63,10 +65,9 @@ export const getPetsFilteredBySpecie = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error(
-        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.message
-      );
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.message);
     }
+
   };
 };
 
@@ -79,10 +80,9 @@ export const getPetsFilteredBySize = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error(
-        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.message
-      );
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.message);
     }
+
   };
 };
 
@@ -91,41 +91,38 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     try {
       const json = await axios.get(
         `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
-      );
+      )
       return dispatch({
         type: GET_PETS_FILTERED_BOTH_FILTERS,
         payload: json.data,
       });
     } catch (error) {
-      console.error(
-        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " +
-          error.message
-      );
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.message);
     }
+
   };
 };
+
 
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
     try {
       await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .then((response) => {
-          //if
+        .then(response => { //if
           dispatch({
             type: GET_PETS_BY_ZONE,
             payload: response.data,
-          });
+          })
         })
-        .catch(() => {
-          //else
+        .catch(() => { //else
           dispatch(getAllPets());
         });
+
     } catch (error) {
-      console.error(
-        "⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message
-      );
+      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
     }
+
   };
 };
 
@@ -156,9 +153,7 @@ export const putUserData = async (profile) => {
 
   const json = await axios
     .put(`${url}/user/profile`, objetoAenviar, config)
-    .catch((error) =>
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.message)
-    );
+    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.message));
   return json;
 
   /*  return async (dispatch) => {
@@ -181,7 +176,7 @@ export const PetPost = async (bodyPayload) => {
     const pet = await axios.post(url + "/pet", bodyPayload, config);
     return pet;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetPost: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetPost: " + error.message)
   }
 };
 
@@ -197,7 +192,7 @@ export const PetEdit = async (bodyPayload) => {
 
     return pet;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.message)
   }
 };
 
@@ -220,9 +215,11 @@ export const getUser = () => {
       })
       .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
-          alert(err.response.data.error);
-        else alert(err.message);
-      });
+          alert(err.response.data.error)
+        else
+          alert(err.message)
+      }
+      );
   };
 };
 
@@ -257,9 +254,7 @@ export const getPetByOwner = () => {
         });
       })
       .catch((error) => {
-        console.error(
-          "⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.message
-        );
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.message)
       });
   };
 };
@@ -280,22 +275,18 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       rating: rating || 5,
     };
     try {
-      const adoptionConfirmed = await axios.put(
-        url + "/user/confirm",
-        bodyPayload,
-        config
-      );
+      console.log(bodyPayload)
+      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
       dispatch({
         type: CONFIRM_ADOPTION,
         payload: adoptionConfirmed.data,
       });
     } catch (error) {
-      console.error(
-        "⚠️ Error -> 🚨 Action -> 🔔 Acept Adoption: " + error.message
-      );
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 Acept Adoption: " + error.message)
     }
   };
 };
+
 
 export const EditProfiles = async (bodyPayload) => {
   const config = {
@@ -309,12 +300,14 @@ export const EditProfiles = async (bodyPayload) => {
 
     return profile;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.message)
   }
 };
 
+
+
 ///Send Push Notifications
-export const PushNotifications = (token, title, body) => {
+export const PushNotifications = (token, title, body, email) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -323,28 +316,22 @@ export const PushNotifications = (token, title, body) => {
       },
     };
     const bodyPayload = {
-      token: token,
-      title: title,
-      body: body,
+      "token": token, "title": title, "body": body, email: email
     };
     try {
-      const status = await axios.post(
-        url + "/send/push-notify",
-        bodyPayload,
-        config
-      );
-      console.log(status.data);
+
+      const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
+      console.log(status.data)
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,
       });
     } catch (error) {
-      console.error(
-        "⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.message
-      );
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error)
     }
   };
 };
+
 
 export const DeletePet = async (id) => {
   const config = {
@@ -354,18 +341,14 @@ export const DeletePet = async (id) => {
     },
   };
   const bodyPayload = {
-    id: id,
+    "id": id
   };
   try {
-    const desbanear = await axios.delete(
-      url + "/admin/deletePet",
-      bodyPayload,
-      config
-    );
+    const desbanear = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
 
     return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.message)
   }
 };
 
@@ -377,14 +360,14 @@ export const UserBan = async (owner) => {
     },
   };
   const bodyPayload = {
-    OwenerEmail: owner,
+    "OwenerEmail": owner
   };
   try {
     const banear = await axios.put(url + "/admin/ban", bodyPayload, config);
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
   }
 };
 
@@ -396,24 +379,26 @@ export const DesbanUser = async (owner) => {
     },
   };
   const bodyPayload = {
-    OwenerEmail: owner,
+    "OwenerEmail": owner
   };
   try {
-    const banear = await axios.put(
-      url + "/admin/desbanear",
-      bodyPayload,
-      config
-    );
+    const banear = await axios.put(url + "/admin/desbanear", bodyPayload, config);
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message);
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
   }
 };
 
+
 export const createUserInDb = async (
-  { firstName, lastName, email, phone, address, conditions, pushToken },
-  tokenn
+  { firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    conditions,
+    pushToken }, tokenn
 ) => {
   const data = {
     firstName,
@@ -424,14 +409,16 @@ export const createUserInDb = async (
     phone,
     address,
     conditions,
-    pushToken,
+    pushToken
   };
   console.log("DATA FOR DB CREATION:", data);
 
-  return await axios.post(`${url}/user`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${tokenn}`,
-    },
-  });
+  return await axios
+    .post(`${url}/user`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenn}`,
+      },
+    })
+
 };

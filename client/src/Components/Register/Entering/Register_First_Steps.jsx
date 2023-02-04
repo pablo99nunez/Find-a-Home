@@ -18,9 +18,9 @@ import Localities from "../Localities.json";
 
 import validate from "../validate";
 
-export default function RegisterFirstSteps({ navigation, route }) {
-  const { password, email, firstName, lastName } = route.params;
-  const [loading, setLoading] = useState(false);
+export default function RegisterFirstSteps({ navigation , route}) {
+  const {password, email, firstName, lastName} = route.params
+  const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
     email,
     password,
@@ -36,23 +36,23 @@ export default function RegisterFirstSteps({ navigation, route }) {
     phone: "Ingrese un telefono Válido",
   });
   const handleChange = (clave, valor) => {
-    /* console.log(clave, valor); */
-    setUserInput({
+    console.log(clave, valor);
+   setUserInput({
       ...userInput,
       [clave]: valor,
-    });
-    setErrors({
-      ...errors,
-      [clave]: validate.Register_First_Steps(clave, valor),
-    });
+    }); 
+     setErrors({
+        ...errors,
+        [clave]: validate.Register_First_Steps(clave,valor)
+     }); 
     const len = Object.entries(errors).length;
   };
-  const handleContinuar = () => {
-    setLoading(true);
-    navigation.navigate("RegisterLastSteps", userInput);
-    setLoading(false);
-  };
-  const disable = `${errors.phone}`.length > 0;
+const handleContinuar = () =>{
+  setLoading(true)
+  navigation.navigate("RegisterLastSteps", userInput)
+  setLoading(false)
+}
+const disable = `${errors.phone}`.length > 0
   return (
     <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733] ">
@@ -71,12 +71,10 @@ export default function RegisterFirstSteps({ navigation, route }) {
             value={userInput.phone}
             placeholder={"011 555-5555"}
             placeholderTextColor="#ffffff50"
-            onChangeText={(valor) => {
-              handleChange("phone", valor);
-            }}
+            onChangeText={(valor)=>{handleChange("phone",valor)}}
           />
-          <View className="h-5 mt-1">
-            <Text className="text-[#ed3232]">{errors.phone}</Text>
+          <View className='h-5 mt-1'>
+            <Text className='text-[#ed3232]'>{errors.phone}</Text>
           </View>
         </View>
 
@@ -87,7 +85,7 @@ export default function RegisterFirstSteps({ navigation, route }) {
             setSelected={(val) => setUserInput({ ...userInput, pais: val })}
             placeholder="Pais"
             search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E", width: "100%" }}
+            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
@@ -103,7 +101,7 @@ export default function RegisterFirstSteps({ navigation, route }) {
             }
             placeholder="Provincia"
             search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E", width: "100%" }}
+            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
@@ -111,7 +109,9 @@ export default function RegisterFirstSteps({ navigation, route }) {
         </View>
 
         <View className="w-11/12">
-          <Text className="">Departamento:</Text>
+          <Text className="">
+            Departamento:
+          </Text>
           <SelectList
             data={Localities.filter((ele) => ele.key == userInput.provincia)}
             setSelected={(value) =>
@@ -119,33 +119,36 @@ export default function RegisterFirstSteps({ navigation, route }) {
             }
             placeholder="Departamento"
             // search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E", width: "100%" }}
+            boxStyles={{ backgroundColor: "#1E1E1E",width: '100%'}}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
-        {loading ? (
-          <TouchableOpacity onPress={() => {}}>
-            <Text className="text-3xl">Loading</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            disabled={disable}
-            className="flex flex-row justify-end w-11/12 mt-5"
-            onPress={() => {
-              handleContinuar();
-            }}
-          >
-            <Text className="text-3xl font-light ">
-              {disable ? "Rellene los Datos" : "Continuar"}
-            </Text>
-          </TouchableOpacity>
-        )}
+     {loading ? <TouchableOpacity
+        onPress={() => {}}
+      >
+        <Text className="text-3xl">
+          Loading
+        </Text>
+      </TouchableOpacity>
+    :  
+    <TouchableOpacity disabled={disable} className='flex flex-row justify-end w-11/12 mt-5'
+        onPress={() => {
+          handleContinuar()
+        }}
+      >
+        <Text className="text-3xl font-light ">
+          {disable ? "Rellene los Datos" : "Continuar" }
+        </Text>
+      </TouchableOpacity>
+    }
       </View>
     </ScrollView>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

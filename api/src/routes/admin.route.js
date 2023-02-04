@@ -29,7 +29,6 @@ router.delete('/deletePet', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
-
 router.get('/reportPets', checkJwt, async (req, res) => {
   try {
     const checkUser = await UserModel.findOne({
@@ -51,7 +50,6 @@ router.get('/reportPets', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
-
 router.get('/reportUsers', checkJwt, async (req, res) => {
   try {
     const checkUser = await UserModel.findOne({
@@ -60,6 +58,7 @@ router.get('/reportUsers', checkJwt, async (req, res) => {
     });
     if (checkUser) {
       const allPetsReports = await UserModel.find({
+        //a
         infracciones: { $exists: true, $not: { $size: 0 } },
       });
       res.status(200).send(allPetsReports);
@@ -73,7 +72,6 @@ router.get('/reportUsers', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
-
 router.get('/userban', checkJwt, async (req, res) => {
   try {
     const checkUser = await UserModel.findOne({
@@ -93,7 +91,6 @@ router.get('/userban', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
-
 router.put('/ban', checkJwt, async (req, res) => {
   try {
     const { OwenerEmail } = req.body;
@@ -113,7 +110,6 @@ router.put('/ban', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
-
 router.put('/desbanear', checkJwt, async (req, res) => {
   try {
     const { OwenerEmail } = req.body;

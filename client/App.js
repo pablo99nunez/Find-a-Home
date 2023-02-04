@@ -27,6 +27,7 @@ import store from "./src/Redux/Store";
 import EditPet from "./src/Components/EditPet/EditPet";
 import Map from "./src/Components/Map/Map";
 import EditProfile from "./src/Components/EditProfile/EditProfile";
+import { ProfileOthers } from "./src/Components/UserDetail/ProfileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
 import { useFonts } from "expo-font";
 import { Roboto_300Light } from "@expo-google-fonts/roboto";
