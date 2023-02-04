@@ -22,6 +22,7 @@ import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { BottomViewOwner } from "./BottomViewOwner";
+import { ReportPet } from "./ReportPet";
 
 
 const { width } = Dimensions.get("screen")
@@ -42,6 +43,7 @@ export default function Detail({ route, navigation }) {
     owner,
     solicitudes,
     coordinates,
+    id
   } = route.params;
 
 
@@ -67,6 +69,7 @@ export default function Detail({ route, navigation }) {
 
   return (
     <View>
+
       <View className="bg-[#acacac] h-full">
         <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
           <LinearGradient
@@ -86,6 +89,7 @@ export default function Detail({ route, navigation }) {
                 <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-[#f5c936] text-5xl text-center my-12">
                   {name.toUpperCase()}
                 </Text>
+
               </View>
 
               <View className="mx-auto">
@@ -107,6 +111,7 @@ export default function Detail({ route, navigation }) {
         </ImageBackground>
 
         <View className="h-1/4">
+
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-10/12 mx-auto font-semibold bg-[#f5c936] rounded-xl my-[5%]">{
             state === "Lost" ? "Perdido" :
               state === 'Adopted' ? "Adoptado" :
@@ -118,6 +123,8 @@ export default function Detail({ route, navigation }) {
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-11/12 mx-auto">
             {description}
           </Text>
+          <ReportPet id={id}/>
+
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
         <View>
@@ -131,6 +138,7 @@ export default function Detail({ route, navigation }) {
             {currentUser.email === owner ? (
               <View className="flex flex-row justify-start">
                 <View className='w-[80%]'>
+
                   {solicitudes.length ?
                     <View className='bg-[#fa1d1d] w-8 h-8 rounded-full items-center justify-center self-end mr-[15%] mb-[-5%] z-10'>
                       <Text className='text-xl text-white'>{solicitudes.length}</Text>
@@ -177,10 +185,12 @@ export default function Detail({ route, navigation }) {
         </BottomSheet>
       ) : (
         <View className="h-1/4 flex justify-evenly">
+
           <ButtonYellow
             text="Adoptar"
             onPress={() => HandleLoginToAdoption()}
           />
+
         </View>
       )}
     </View>

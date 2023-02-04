@@ -81,7 +81,7 @@ export const Header = ({ navigation }) => {
       //Si el token existe en el user, no hacemos nada
       const verifyToken = newToken?.some(token => token === pushToken)
 
-      if (!verifyToken) {
+      if (!verifyToken && pushToken) {
         newToken = [...newToken, pushToken]
         const config = {
           headers: {
