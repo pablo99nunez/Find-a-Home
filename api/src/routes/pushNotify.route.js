@@ -60,7 +60,7 @@ router.post("/push-notify", async (req, res) => {
 		res.status(200).json({ message: "Push notification sent and Notification data saved on the db", response: response.data });
 
 	} catch (error) {
-		res.status(500).json({ error: "⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message });
+		res.status(400).json({ error: "⚠️ Error -> 🚨 Routes -> 🔔/push-notify: " + error.message });
 	}
 });
 
