@@ -5,14 +5,19 @@ const router = express.Router();
 const axios = require('axios');
 
 router.post("/push-notify", async (req, res) => {
-	const { title, body, token } = req.body;
-
 	try {
-		const response = await axios.post("https://exp.host/--/api/v2/push/send", {
-			to: token,
-			title,
-			body
-		}, {
+		const { title, body, token } = req.body;
+		const sendNotifications = token.map(eachToken => {
+			if (eachToken) {
+				return result = {
+					to: token,
+					title,
+					body
+				}
+			}
+		})
+		console.log(sendNotifications)
+		const response = await axios.post("https://exp.host/--/api/v2/push/send", sendNotifications, {
 			headers: {
 				'host': 'exp.host',
 				'accept': 'application/json',
