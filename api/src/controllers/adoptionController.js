@@ -27,6 +27,7 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
         // await refreshStates(pet, newOwnerEmail)
         //Adoptando
         pet.state = "Adopted" //Cambias el estado de la mascota a adoptado
+        pet.lastAdoptionDate = new Date()
         pet.owner = target.email //el pet tiene nuevo owner
         pet.ownerHistory.push(newOwnerEmail) //el pet tiene nueva historia de dueño
         pet.currentLocation = target.address //Le das una nueva dirección
