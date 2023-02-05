@@ -17,6 +17,19 @@ router.get('/profile', checkJwt, async (req, res) => {
         res.status(501).send({ error: error.message })
     }
 })
+
+router.get('/checkemail',  async (req, res) => {
+    try {
+        const {email} = req.query
+        const user = await findUser(email)
+        if(user)
+        res.send({message: 'checked', payload: true})
+        else
+        res.send({message: 'checked', payload: false})
+    } catch (error) {
+        res.status(501).send({ error: error.message })
+    }
+})
 //loggeado, todos, lista todos los usuarios o encuentra al usuario por email
 router.get('/', checkJwt, async (req, res) => {
     try {

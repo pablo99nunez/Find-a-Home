@@ -18,7 +18,7 @@ const setAdmin = (uid) => {
 //rellena el req con una nueva clave "user" ahora se puede hacer req.user al decodificar correcamente el token
 const checkJwt = (req, res, next) => { //jason web token
   if (!req.headers.authorization) {
-    return res.status(401).send("Te olvidaste de enviar por header el token! Authorization: Bearer TOKEN_DE_FIREBASE");
+    return res.status(401).send({error: "Te olvidaste de enviar por header el token! Authorization: Bearer TOKEN_DE_FIREBASE"});
   }
   let idToken;
   if (
@@ -27,7 +27,7 @@ const checkJwt = (req, res, next) => { //jason web token
   ) {
     idToken = req.headers.authorization.split("Bearer ")[1];
   } else {
-    return res.status(401).send("Te olvidaste el authorization del header incie en Bearer, ejemplo 'Bearer TOKEN_ID'");
+    return res.status(401).send({error: "Te olvidaste el authorization del header incie en Bearer, ejemplo 'Bearer TOKEN_ID'"});
   }
   firebaseAdmin
     .auth()
@@ -39,7 +39,7 @@ const checkJwt = (req, res, next) => { //jason web token
       return next();
     })
     .catch((error) => {//                                               
-      return res.status(401).send("Tu token está mal no se decodificó" + error.message);
+      return res.status(401).send({error: "Tu token está mal no se decodificó" + error.message});
     });
 };
 const messaging = firebaseAdmin.messaging();
