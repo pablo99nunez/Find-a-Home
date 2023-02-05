@@ -27,7 +27,9 @@ const Card = ({item}) => {
                     colors={['#00000000','rgba(0, 0, 0, 0.05)', '#000000']}
             >
             </LinearGradient>
-            <Text className='absolute bottom-[8%] left-[10%] text-start text-2xl text-white' style={{fontFamily: 'Roboto_300Light'}}>{item.name}</Text>    
+            <Text className='absolute bottom-[8%] left-[10%] text-start text-2xl text-white w-[85%]' style={{fontFamily: 'Roboto_300Light'}}>
+                {item.name[0].toUpperCase().concat(item.name.toLowerCase().substring(1))}
+            </Text>    
         </View>
     )
 }
