@@ -71,7 +71,10 @@ const petSchema = mongoose.Schema(
       longitude: {
         type: Number
       }
-    }
+    },
+    lastAdoptionDate: {
+      type: Date,
+    },
   },
   {
     timestamps: {
