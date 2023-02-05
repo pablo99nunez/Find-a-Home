@@ -54,17 +54,17 @@ const handleContinuar = () =>{
 }
 const disable = `${errors.phone}`.length > 0
   return (
-    <ScrollView>
-      <View className="h-screen flex items-center bg-[#FFC733] ">
-        <Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-          ¡Bienvenida Florencia!
+    <View>
+      <View className="h-screen flex items-center bg-[#FFC733]">
+        <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
+          ¡Bienvenido/a {userInput.firstName[0].toUpperCase().concat(userInput.firstName.toLowerCase().substring(1))}
         </Text>
-        <Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
+        <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
         </Text>
 
-        <View className="w-11/12">
-          <Text className="">Teléfono:</Text>
+        <View className="w-11/12 mt-[5%]">
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Teléfono:</Text>
           <TextInput
             maxLength={15}
             className="bg-[#1E1E1E] text-[#7E7E7E] text-[18px] rounded-[11px] w-[100%] pl-4 mx-auto h-11"
@@ -73,13 +73,13 @@ const disable = `${errors.phone}`.length > 0
             placeholderTextColor="#ffffff50"
             onChangeText={(valor)=>{handleChange("phone",valor)}}
           />
-          <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{errors.phone}</Text>
+          <View className='h-5'>
+            <Text style={{ fontFamily: 'Roboto_300Light' }} className='text-[#ed3232]'>{errors.phone}</Text>
           </View>
         </View>
 
-        <View className="w-11/12">
-          <Text className="">Pais:</Text>
+        <View className="w-11/12 mt-[5%]">
+          <Text style={{ fontFamily: 'Roboto_300Light' }}  className="">Pais:</Text>
           <SelectList
             data={[{ key: "Argentina", value: "Argentina" }]}
             setSelected={(val) => setUserInput({ ...userInput, pais: val })}
@@ -92,8 +92,8 @@ const disable = `${errors.phone}`.length > 0
           />
         </View>
 
-        <View className="w-11/12">
-          <Text className="">Provincia:</Text>
+        <View className="w-11/12 mt-[5%]">
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Provincia:</Text>
           <SelectList
             data={States}
             setSelected={(val) =>
@@ -108,8 +108,8 @@ const disable = `${errors.phone}`.length > 0
           />
         </View>
 
-        <View className="w-11/12">
-          <Text className="">
+        <View className="w-11/12 my-[5%]">
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="">
             Departamento:
           </Text>
           <SelectList
@@ -128,7 +128,7 @@ const disable = `${errors.phone}`.length > 0
      {loading ? <TouchableOpacity
         onPress={() => {}}
       >
-        <Text className="text-3xl">
+        <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-3xl">
           Loading
         </Text>
       </TouchableOpacity>
@@ -138,13 +138,13 @@ const disable = `${errors.phone}`.length > 0
           handleContinuar()
         }}
       >
-        <Text className="text-3xl font-light ">
+        <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-3xl font-light ">
           {disable ? "Rellene los Datos" : "Continuar" }
         </Text>
       </TouchableOpacity>
     }
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

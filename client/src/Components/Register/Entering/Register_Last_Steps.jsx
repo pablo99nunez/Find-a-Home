@@ -96,25 +96,27 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	}
 
 	return (
-		<ScrollView>
+		<View>
 			<View className="h-screen items-center bg-[#FFC733] w-screen">
-				<Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-					¡Bienvenida Florencia!
+				<Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
+				¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))}
 				</Text>
-				<Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
+				<Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
 				</Text>
-				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"} />
-				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"} />
-				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
-				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
-				<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"} />
+				<View className="flex flex-row flex-wrap items-center justify-center mx-auto">
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"} />
+				</View>
 
 
-				<View className="flex flex-row justify-center items-center">
+				<View className="flex flex-row justify-center items-center mt-[10%]">
 					<View className="w-7 h-7">
 						<TouchableOpacity onPress={() => setAccepted(!accepted)}>
-							<Text className={accepted ?
+							<Text style={{ fontFamily: 'Roboto_300Light' }} className={accepted ?
 								"bg-[#AB4E68] text-[#FFF] border-2 border-[#AB4E68] text-center text-md rounded-[5px] m-0.5 overflow-visible"
 								: "bg-[#d9d9d971] text-[#0000004e] border-2 border-[#AB4E68] text-center text-md rounded-[5px] m-0.5 "}>
 								{accepted && "✔"}
@@ -122,23 +124,23 @@ const RegisterLastSteps = ({ route, navigation }) => {
 						</TouchableOpacity>
 					</View>
 
-					<View className="flex flex-row  ">
-						<Text>
+					<View className="flex flex-row ">
+						<Text style={{ fontFamily: 'Roboto_300Light' }}>
 							Acepto
 						</Text>
 						<TouchableOpacity onPress={() => console.log('terms link here')}>
-							<Text className="text-[#AB4E68]"> Terminos y condiciones</Text>
+							<Text style={{ fontFamily: 'Roboto_300Light' }} className="text-[#AB4E68]"> Terminos y condiciones</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
-				{accepted ? null : <Text className="text-[12px]">
+				{accepted ? null : <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-[12px]">
 					Debe aceptar los términos y Condiciones para continuar.
 				</Text>}
 
 
 				{accepted ?
 					loading ?
-						<Text className="text-3xl font-light">
+						<Text style={{ fontFamily: 'Roboto_300Light' }} className="text-3xl font-light">
 							Cargando...
 						</Text>
 						: <TouchableOpacity className='absolute bottom-28 flex flex-row justify-end w-11/12 mb-5'
@@ -146,7 +148,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 								handleContinuar()
 							}}
 						>
-							<Text className="text-3xl font-light">
+							<Text style={{ fontFamily: 'Roboto_300Light' }} className="text-3xl font-light">
 								Continuar
 							</Text>
 						</TouchableOpacity>
@@ -156,7 +158,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 				}
 			</View>
 
-		</ScrollView>
+		</View>
 	)
 }
 
