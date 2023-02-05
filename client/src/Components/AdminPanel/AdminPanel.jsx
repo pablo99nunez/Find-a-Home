@@ -3,16 +3,59 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   ScrollView,
-  Button,
 } from "react-native";
+import axios from "axios";
+import { BASE_URL_IP } from "@env";
+import { auth } from "../../firebase/authentication";
+import { useFocusEffect } from "@react-navigation/native";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 
 const AdminPanel = ({ navigation, route }) => {
+
+  const token = auth.currentUser?.stsTokenManager.accessToken;
+  const [hoy, setHoy] = useState();
+  const [semana, setSemana] = useState()
+  const [mes, setMes] = useState()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function evitaReturnDelUseEffect() {
+        try {
+          await axios.get(`${BASE_URL_IP}/admin/analytics/day`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => setHoy(response.data))
+            await axios.get(`${BASE_URL_IP}/admin/analytics/week`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => setSemana(response.data))
+            await axios.get(`${BASE_URL_IP}/admin/analytics/month`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => setMes(response.data))  
+        } catch (error) {
+          console.error(
+             error.message
+          );
+        }
+      }
+      evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
+    }, [])
+  );
+console.log(semana)
   const mascotas = useSelector((state) => state.allPets);
-  console.log(mascotas.payload);
 
   const mascotasAdoptables = mascotas.payload.filter(
     (m) => m.state === "Adoptable"
@@ -29,7 +72,7 @@ const AdminPanel = ({ navigation, route }) => {
   const CantidadDeReportes = mascotas.payload.filter(
     (m) => m.reportes.length
   );
-
+console.log(hoy)
   return (
     <ScrollView>
       <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
@@ -51,6 +94,7 @@ const AdminPanel = ({ navigation, route }) => {
             alert("Donaciones");
           }}
         >
+          
           <Text className="text-xl font-thin">Donaciones</Text>
         </TouchableOpacity>
       </View>
@@ -62,6 +106,9 @@ const AdminPanel = ({ navigation, route }) => {
         <Text>PERROS EN ADOPCION {perrosEnAdopcion.length}</Text>
         <Text>GATOS EN ADOPCION {gatosEnAdopcion.length}</Text>
         <Text>REPORTES {CantidadDeReportes.length}</Text>
+        <Text>PERROS ADOPTADOS HOY {hoy?.length}</Text>
+        <Text>PERROS ADOPTADOS ESTA SEMANA {semana?.length}</Text>
+        <Text>PERROS ADOPTADOS ESTE MES {mes?.length}</Text>
 
       </View>
 
