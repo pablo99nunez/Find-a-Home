@@ -1,7 +1,8 @@
 const axios = require('axios');
 
+
 class PaymentService {
-    async createPayment() {
+    async createPayment(cuanto) {
         const url = 'https://api.mercadopago.com/checkout/preferences';
 
         const body = {
@@ -15,7 +16,7 @@ class PaymentService {
                     description: "Descripción del Item",
                     // category_id: "art",
                     quantity: 1,
-                    unit_price: 50
+                    unit_price: cuanto
                 }
             ],
             back_urls: {
