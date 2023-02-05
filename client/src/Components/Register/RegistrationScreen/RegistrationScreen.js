@@ -44,7 +44,6 @@ export default function RegistrationScreen({ navigation }) {
     setLoading(true)
     await checkEmail(userInputs.email)
     .then(resp=>{
-      console.log(resp); 
       if(resp)
       alert('El email ingresado ya está en uso.')
       else
