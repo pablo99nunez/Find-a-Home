@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import { loginWithEmailAndPassword } from "../../../firebase/authentication";
 import { ButtonYellow } from "../../Buttons/Buttons";
+import { useSelector } from "react-redux";
+
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("@gmail.com");
     const [password, setPassword] = useState("123456");
+
+    const isLoggedIn = useSelector(store => store.isLoggedIn)
 
     const onFooterLinkPress = () => {
         navigation.navigate("Registration");
