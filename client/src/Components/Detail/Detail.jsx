@@ -123,7 +123,7 @@ export default function Detail({ route, navigation }) {
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-2xl text-center w-11/12 mx-auto">
             {description}
           </Text>
-          <ReportPet id={id} />
+          
 
         </View>
         <Characteristics size={size.toLowerCase()} age={age} />
@@ -153,10 +153,13 @@ export default function Detail({ route, navigation }) {
                 </View>
               </View>
             ) : (
+              <View className="flex flex-row justify-center items-center">
               <ButtonYellow
                 text="Adoptar"
                 onPress={() => HandleLoginToAdoption()}
               />
+              <ReportPet id={id} />
+              </View>
             )}
           </View>
         )}
