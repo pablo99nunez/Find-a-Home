@@ -20,7 +20,7 @@ export const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
 export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
-
+export const PAYMENT_LINK = "PAYMENT_LINK"
 
 //devuelve verdadero si el token se decodifico, falso otherrwise
 export const checkToken = async () => {
@@ -456,4 +456,19 @@ export const createUserInDb = async (
       },
     })
 
+};
+
+export const amountDonate = (payload) => {
+  return async (dispatch) => {
+    try {
+      const json = await axios.get(`${url}/donation?cantidad=${payload}`);
+      return dispatch({
+        type: PAYMENT_LINK,
+        payload: json.data.init_point,
+      });
+    } catch (error) {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 amountDonate: " + error)
+    }
+
+  };
 };

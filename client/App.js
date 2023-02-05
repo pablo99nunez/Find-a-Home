@@ -37,6 +37,8 @@ import Reports from "./src/Components/AdminPanel/Reports";
 import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 import Usuarios from "./src/Components/AdminPanel/Usuarios";
 import FormPets from "./src/Components/CreatePet/FormPetsTwo";
+import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
+import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
 
 import LoginTest from "./src/Components/LoginTest";
@@ -278,11 +280,24 @@ export default function App() {
             }}
           />
 
-<Stack.Screen
+          <Stack.Screen
             name="FormPets"
             component={FormPets}
             options={{ headerShown: false }}
           />
+
+          <Stack.Screen
+            name="Prices"
+            component={Prices}
+            // options={{ headerShown: false }}
+          />
+          
+          <Stack.Screen
+            name="MercadoPago"
+            component={MercadoPago}
+          />
+
+
           {/* =================================== */}
         </Stack.Navigator>
       </NavigationContainer>
