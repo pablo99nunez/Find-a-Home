@@ -24,7 +24,9 @@ export const BottomViewOwner = ({ solicitudes, navigation, petId, name }) => {
                   style={styles.imagen}
                   source={{ uri: item.profilePic }} />
                 <View className='w-3/6'>
-                  <Text className='text-xl font-bold'>{item.firstName} {item.lastName}</Text>
+                  <Text className='text-xl font-bold'>
+                    {item.firstName[0].toUpperCase().concat(item.firstName.toLowerCase().substring(1))} {item.lastName[0].toUpperCase().concat(item.lastName.toLowerCase().substring(1))}
+                    </Text>
                   <Text className='text-md'>
                     {item.message?.slice(0, 20).concat('...')}
                   </Text>

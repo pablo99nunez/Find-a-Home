@@ -53,6 +53,9 @@ const SolicitudPet = ({ navigation, route }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
+          if (typeof error.response !== "undefined")
+          console.error("SolicitudPet.jsx: " + error.response.data.error)
+          else
           console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
         }
       }
@@ -97,7 +100,9 @@ const SolicitudPet = ({ navigation, route }) => {
       </TouchableOpacity>
 
       <View>
-        <Text className="my-5 mx-auto text-3xl" style={{ fontFamily: "Roboto_300Light" }}>{firstName} {lastName}</Text>
+        <Text className="my-5 mx-auto text-3xl" style={{ fontFamily: "Roboto_300Light" }}>
+          {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} {lastName[0].toUpperCase().concat(lastName.toLowerCase().substring(1))}
+        </Text>
         <Text className="my-5 mx-auto text-xl" style={{ fontFamily: "Roboto_300Light" }}>{message}</Text>
       </View>
       <TouchableOpacity

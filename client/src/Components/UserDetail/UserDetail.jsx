@@ -97,7 +97,9 @@ export default function UserDetail({ route, navigation }) {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{currentUser.firstName} {currentUser.lastName}</Text>
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">
+            {currentUser.firstName[0].toUpperCase().concat(currentUser.firstName.toLowerCase().substring(1))} {currentUser.lastName[0].toUpperCase().concat(currentUser.lastName.toLowerCase().substring(1))}
+          </Text>
           <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : 5 }★</Text>
         </View>
       </ImageBackground>
