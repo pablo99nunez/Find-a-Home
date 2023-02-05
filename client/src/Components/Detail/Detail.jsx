@@ -38,6 +38,7 @@ export default function Detail({ route, navigation }) {
     gallery,
     description,
     size,
+    birthday,
     age,
     state,
     owner,
@@ -46,8 +47,23 @@ export default function Detail({ route, navigation }) {
     id
   } = route.params;
 
-
-
+console.log(birthday)
+console.log(age)
+  const calcAge = () => {
+    const birth = new Date(birthday);
+    const now = new Date();
+    const diff = now - birth;
+    const ageInMilliseconds = diff;
+    const ageInSeconds = ageInMilliseconds / 1000;
+    const ageInMinutes = ageInSeconds / 60;
+    const ageInHours = ageInMinutes / 60;
+    const ageInDays = ageInHours / 24;
+    const ageInMonths = ageInDays / 30.44;
+    const ageInYears = ageInMonths / 12;
+    const years = Math.floor(ageInYears);
+    const months = Math.floor(ageInMonths - (years * 12));
+    return `${years} años ${months} meses`;
+  }
   const days = calculateAdoptionDays(created_at);
   //--------- BOTTOM SHEET FUNCTIONS-----------//
   const bottomSheetRef = useRef(null);
@@ -126,14 +142,14 @@ export default function Detail({ route, navigation }) {
           
 
         </View>
-        <Characteristics size={size.toLowerCase()} age={age} />
+        <Characteristics size={size.toLowerCase()} age={age ? age : calcAge()} />
         <View>
           {/* <Text>
             Coordenadas: latitud:{coordinates.latitude} longitud:
             {coordinates.longitude}
           </Text> */}
         </View>
-        {["Adopted", "NotAdoptable"].includes(state) ? null : (
+        {["Adopted" ].includes(state) ? null : (
           <View className="h-1/4 justify-center">
             {currentUser.email === owner ? (
               <View className="flex flex-row justify-start">
