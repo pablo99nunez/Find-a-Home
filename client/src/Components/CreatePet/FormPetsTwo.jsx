@@ -4,7 +4,7 @@ import { ScrollView} from 'react-native-gesture-handler'
 import { validateBirthday, validateDesc, validateName } from './validations';
 import { Photos } from './Photos';
 
-export default FormPets = ({setCrear, crear, error, setError}) => {
+export default FormPetsTwo = ({setCrear, crear, error, setError}) => {
 
   return (
     

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { PetEdit } from "../../Redux/Actions/index";
 import { ButtonYellow } from "../Buttons/Buttons";
 import FormPet from "../CreatePet/FormPet";
+import FormPetsTwo from "../CreatePet/FormPetsTwo";
 
 
 const EditPet = (props) => {
@@ -45,19 +46,37 @@ const EditPet = (props) => {
       })
 
   };
+  
+  const [paginas, setPaginas] = useState(1)
+  
   return (
     <ScrollView className="bg-[#d9d9d9]">
-      <FormPet
+        {paginas === 1  ?
+       <FormPet
+       setCrear={setCrear}
+       crear={crear}
+       error={error}
+       setError={setError}
+     />
+        :
+        <FormPetsTwo
         setCrear={setCrear}
         crear={crear}
         error={error}
         setError={setError}
-      />
+      />  
+          }
+    <View className="my-[10%]">
+      {paginas === 1 && !error.size && !error.state && !error.specie ?
 
-      <View className="my-[10%]">
-        <ButtonYellow onPress={() => HandleSubmit()} text={"editar"} />
-      </View>
-    </ScrollView>
+    <ButtonYellow onPress={() => setPaginas(2) } text="Siguiente"/>
+
+:          
+    
+      <ButtonYellow onPress={() => HandleSubmit()} text="Editar" />
+    }
+    </View>
+  </ScrollView>
   )
 }
 
