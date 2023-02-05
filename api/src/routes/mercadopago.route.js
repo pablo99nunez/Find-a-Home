@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
     console.log(cantidad);
     cantidad = parseInt(cantidad)
     console.log('luego de parseint',cantidad);
-    if (isNaN(cantidad) || cantidad <= 50) {
-        res.status(501).send({ error: 'Debe ingresar un valor numérico mayor a 50 pe' })
+    if (isNaN(cantidad) || cantidad < 50) {
+        res.status(501).send({ error: 'Debe ingresar un valor numérico mayor a 50 pesos' })
     } else {
         await PaymentInstance.getPaymentLink(req, res, parseInt(cantidad));
     }
