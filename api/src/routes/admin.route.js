@@ -30,6 +30,25 @@ router.delete('/deletePet', checkJwt, async (req, res) => {
   }
 });
 
+router.get('/getAllPets', checkJwt, async (req, res) => {
+  try {
+    const checkUser = await UserModel.findOne({
+      _email: req.user.email,
+      tipo: 'Admin',
+    });
+    if (checkUser) {
+      const allPets = await PetModel.find().sort([['created_at', 1]]);
+      res.status(200).send(allPets);
+    } else {
+      res
+        .status(501)
+        .send({error: 'Necesitas ser admin para obtener toda la lista de mascotas'});
+    }
+  } catch (err) {
+    res.status(501).send({ error: err.message });
+  }
+});
+
 //
 const aDay = (24*60*60*1000)
 const aWeek = (24*60*60*1000)*7

@@ -59,7 +59,7 @@ export default function UserDetail({ route, navigation }) {
       });
   }
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["85%"], []);
+  const snapPoints = useMemo(() => ["55%", "77%"], []);
   const [open, setOpen] = useState(-1);
 
   function handleButtons() {
