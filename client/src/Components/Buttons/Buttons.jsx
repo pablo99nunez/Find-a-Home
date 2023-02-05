@@ -89,18 +89,23 @@ export const EditButton = (props) => {
 };
 
 export const DonateButton = (props) => {
-  const { onPress } = props;
+  const { onPress, text } = props;
   return (
     <TouchableOpacity
-      className="bg-[#ffc730] w-1/3 self-center rounded-2xl py-2 mb-2.5 shadow-lg"
+      className="bg-[#4FC3F7] w-3/4 self-center rounded-2xl py-6 mb-2.5 shadow-md flex flex-row justify-center items-center"
       onPress={onPress}
       // onPress={()=> navigation.navigate('MercadoPago')} 
     >
+      <Image
+          className="w-[30%] h-[200%]"
+          resizeMode="contain"
+          source={require("../../images/MP.png")}
+
+        />
       <Text
-        className="text-center text-2xl"
-        style={{ fontFamily: "Roboto_300Light" }}
+        className="text-center text-2xl " style={{ fontFamily: "Roboto_300Light" }}
       >
-        Donar UwU
+        {text}
       </Text>
     </TouchableOpacity>
   );

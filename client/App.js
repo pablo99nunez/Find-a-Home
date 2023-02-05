@@ -300,6 +300,14 @@ export default function App() {
           <Stack.Screen
             name="Prices"
             component={Prices}
+            options={{
+              headerTransparent: true,
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: null,
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
             // options={{ headerShown: false }}
           />
 
