@@ -38,6 +38,10 @@ export default function RegistrationScreen({ navigation }) {
      }); 
     const len = Object.entries(errors).length;
   };
+  const handleContinuar = () =>{
+    
+    navigation.navigate("RegisterFirstSteps", userInputs)
+  }
 
   const disable = `${userInputs.firstName}`.length===0 ||
   `${userInputs.lastName}`.length===0 ||
@@ -111,7 +115,7 @@ export default function RegistrationScreen({ navigation }) {
           </View>
         <View className="my-3">
           <ButtonYellow 
-            onPress={() => navigation.navigate("RegisterFirstSteps", userInputs)}
+            onPress={() => handleContinuar()}
             text={disable ? "Rellene los datos":"Continuar"}
             deshabilitar={disable}
           />

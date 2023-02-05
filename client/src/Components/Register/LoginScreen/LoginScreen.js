@@ -12,6 +12,10 @@ export default function LoginScreen({ navigation }) {
     const onFooterLinkPress = () => {
         navigation.navigate("Registration");
     };
+    useEffect(() => {
+        if(isLoggedIn)
+          navigation.navigate("Home")
+      }, [isLoggedIn]);
 
     return (
         <View
