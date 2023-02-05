@@ -45,9 +45,10 @@ export const ProfileOthers = ({ route, navigation }) => {
             })
             .then((response) => setPets([...response.data]));
         } catch (error) {
-          console.error(
-            "⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message
-          );
+          if (typeof error.response !== "undefined")
+            console.error("ProfileOthers.jsx" + error.response.data.error)
+          else
+            console.error("⚠️ Error -> 🚨 ProfileOthers -> 🔔 gettingUser: " + error.message);
         }
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
