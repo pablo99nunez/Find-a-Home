@@ -7,6 +7,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { BASE_URL_IP } from "@env"
 import axios from "axios";
 import { auth } from '../../firebase/authentication';
+import DialogInput from 'react-native-dialog-input';
 // import * as Linking from 'expo-linking'
 const SolicitudPet = ({ navigation, route }) => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -20,7 +21,8 @@ const SolicitudPet = ({ navigation, route }) => {
 
   const petId = route.params.petId;
   const name = route.params.name;
-
+  const [visible, setVisible] = React.useState(false);
+  const [input, setInput] = React.useState('');
 
 
 
@@ -79,8 +81,9 @@ const SolicitudPet = ({ navigation, route }) => {
   }
   async function confirmAdoption() {
     const newOwnerEmail = email;
-    // dispatch(acceptAdoption(petId, newOwnerEmail));
+    dispatch(acceptAdoption(petId, newOwnerEmail));
     sendPushNotification()
+    setVisible(true)
   }
 
   return (
@@ -118,6 +121,20 @@ const SolicitudPet = ({ navigation, route }) => {
         text={"Aceptar Solicitud"}
         onPress={() => confirmAdoption()}
       />
+      <DialogInput 
+                isDialogVisible={visible}
+                title={`Has aceptado la solicitud de ${firstName}`}
+                message={"Puedes puntuarlo del 1-5?"}
+                hintInput ={"1-5"}
+                textInputProps={{maxLength: 1}}
+                submitInput={ (inputText) => {
+                    setInput(inputText),
+                    setVisible(false);
+                    alert('linea 130 agregar dispatch de rating')
+                    navigation.navigate('UserDetail')
+                }}
+                closeDialog={() => setVisible(false)}>
+            </DialogInput>
     </ScrollView>
   );
 };
