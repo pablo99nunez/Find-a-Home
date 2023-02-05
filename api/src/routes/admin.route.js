@@ -23,7 +23,7 @@ router.delete('/deletePet', checkJwt, async (req, res) => {
     } else {
       res
         .status(501)
-        .send('Necesitas ser admin para eliminar cualquier mascota');
+        .send({error: 'Necesitas ser admin para eliminar cualquier mascota'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
@@ -81,7 +81,7 @@ router.get('/reportPets', checkJwt, async (req, res) => {
       // El usuario no es un administrador, devuelve un mensaje de error
       res
         .status(401)
-        .send('No tienes autorización para ver la lista de reportados');
+        .send({error: 'No tienes autorización para ver la lista de reportados'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
@@ -103,7 +103,7 @@ router.get('/reportUsers', checkJwt, async (req, res) => {
       // El usuario no es un administrador, devuelve un mensaje de error
       res
         .status(401)
-        .send('No tienes autorización para ver la lista de reportados');
+        .send({error: 'No tienes autorización para ver la lista de reportados'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
@@ -122,7 +122,7 @@ router.get('/userban', checkJwt, async (req, res) => {
       // El usuario no es un administrador, devuelve un mensaje de error
       res
         .status(401)
-        .send('No tienes autorización para ver la lista de reportados');
+        .send({error: 'No tienes autorización para ver la lista de reportados'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
@@ -141,7 +141,7 @@ router.put('/ban', checkJwt, async (req, res) => {
         { tipo: 'inhabilitado' }
       );
     } else {
-      res.status(401).send('No tienes autorización para bloquear usuarios');
+      res.status(401).send({error: 'No tienes autorización para bloquear usuarios'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
@@ -160,7 +160,7 @@ router.put('/desbanear', checkJwt, async (req, res) => {
         {email:OwenerEmail},
         { tipo: 'User' }
       );    } else {
-      res.status(401).send('No tienes autorización para desbloquear usuarios');
+      res.status(401).send({error:'No tienes autorización para desbloquear usuarios'});
     }
   } catch (err) {
     res.status(501).send({ error: err.message });
