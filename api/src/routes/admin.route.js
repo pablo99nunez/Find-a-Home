@@ -49,10 +49,11 @@ router.get('/getAllPets', checkJwt, async (req, res) => {
   }
 });
 
-//
+
 const aDay = (24*60*60*1000)
 const aWeek = (24*60*60*1000)*7
 const aMonth = (24*60*60*1000)*30.44
+
 router.get('/analytics/:theParam' , checkJwt, async (req, res) => {
   try {
     const isAllowedUser = await UserModel.findOne({
