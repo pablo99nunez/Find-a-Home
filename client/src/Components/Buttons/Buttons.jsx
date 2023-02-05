@@ -87,3 +87,21 @@ export const EditButton = (props) => {
     </TouchableOpacity>
   );
 };
+
+export const DonateButton = (props) => {
+  const { onPress } = props;
+  return (
+    <TouchableOpacity
+      className="bg-[#ffc730] w-1/3 self-center rounded-2xl py-2 mb-2.5 shadow-lg"
+      onPress={onPress}
+      // onPress={()=> navigation.navigate('MercadoPago')} 
+    >
+      <Text
+        className="text-center text-2xl"
+        style={{ fontFamily: "Roboto_300Light" }}
+      >
+        Donar UwU
+      </Text>
+    </TouchableOpacity>
+  );
+};
