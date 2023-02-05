@@ -100,7 +100,7 @@ export default function RegistrationScreen({ navigation }) {
           className="h-11 w-[100%] bg-white rounded-md my-3 pl-3"
           placeholderTextColor="#aaaaaa"
           secureTextEntry
-          placeholder="Password: 123456"
+          placeholder="Contraseña"
           onChangeText={(valor)=>{handleChange("password",valor)}}
           value={userInputs.password}
           underlineColorAndroid="transparent"
@@ -109,21 +109,6 @@ export default function RegistrationScreen({ navigation }) {
         <View className='h-5 mt-1'>
             <Text className='text-[#ed3232]'>{errors.password}</Text>
           </View>
-        {/* <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        createAccountWithEmailAndPassword(email, password, fullName)
-                        .then(ignore => {
-                            navigation.navigate('RegisterFirstSteps')
-                        })
-                        .catch(error=>{
-                            if(error.message === 'Firebase: Error (auth/email-already-in-use).')
-                            alert('El email ingresado ya está en uso!')
-                            else alert(error.message)
-                        })
-                    }}>
-                    <Text style={styles.buttonTitle}>Create account</Text>
-                </TouchableOpacity> */}
         <View className="my-3">
           <ButtonYellow 
             onPress={() => navigation.navigate("RegisterFirstSteps", userInputs)}
@@ -133,9 +118,9 @@ export default function RegistrationScreen({ navigation }) {
         </View>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already got an account?{" "}
+            Ya tiene una cuenta?{" "}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Log in
+              Logearme
             </Text>
           </Text>
         </View>

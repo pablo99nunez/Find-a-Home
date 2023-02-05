@@ -29,6 +29,43 @@ router.delete('/deletePet', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
+
+//
+const aDay = (24*60*60*1000)
+const aWeek = (24*60*60*1000)*7
+const aMonth = (24*60*60*1000)*30.44
+router.get('/analytics/:theParam' , checkJwt, async (req, res) => {
+  try {
+    const isAllowedUser = await UserModel.findOne({
+      _email: req.user.email,
+      tipo: 'Admin',
+    });
+    if (!isAllowedUser) throw new Error('No eres admin o voluntario')
+    const now = new Date();
+
+    let allAdoptedPets = await PetModel.find({state: 'Adopted',lastAdoptionDate: { $exists: true }});
+    switch (req.params.theParam) {
+      case 'day':
+        allAdoptedPets = allAdoptedPets.filter(pet => (now - pet.lastAdoptionDate) <= aDay)
+        break;
+      case 'week':
+        allAdoptedPets = allAdoptedPets.filter(pet => (now - pet.lastAdoptionDate) <= aWeek)
+        break;
+      case 'month':
+        allAdoptedPets = allAdoptedPets.filter(pet => (now - pet.lastAdoptionDate) <= aMonth)
+        break;
+      default:
+        break;
+    }
+
+      res.status(200).send(allAdoptedPets);
+   
+  } catch (err) {
+    res.status(501).send({ error: err.message });
+  }
+});
+
+
 router.get('/reportPets', checkJwt, async (req, res) => {
   try {
     const checkUser = await UserModel.findOne({
@@ -110,6 +147,7 @@ router.put('/ban', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
+
 router.put('/desbanear', checkJwt, async (req, res) => {
   try {
     const { OwenerEmail } = req.body;
