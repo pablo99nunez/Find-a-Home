@@ -5,7 +5,7 @@ import { PetPost } from "../../Redux/Actions/index";
 import * as Location from "expo-location";
 import { ButtonYellow } from "../Buttons/Buttons";
 import FormPet from "./FormPet";
-import FormPets from "./FormPets";
+import FormPetsTwo from "./FormPetsTwo";
 
 export const CreatePet = ({ navigation }) => {
   const [pin, setPin] = useState({
@@ -120,7 +120,7 @@ export const CreatePet = ({ navigation }) => {
      />
       
         :
-        <FormPets
+        <FormPetsTwo
         setCrear={setCrear}
         crear={crear}
         error={error}
