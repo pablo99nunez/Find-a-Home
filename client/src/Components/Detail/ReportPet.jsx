@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import DialogInput from 'react-native-dialog-input';
 import { ReportPets } from '../../Redux/Actions';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const ReportPet = (props) => {
     const [visible, setVisible] = React.useState(false);
@@ -12,7 +13,7 @@ const report = () =>{
 }
 
     return (
-        <View style={styles.container}>
+        <View>
           
             <DialogInput 
                 isDialogVisible={visible}
@@ -26,26 +27,9 @@ const report = () =>{
                 }}
                 closeDialog={() => setVisible(false)}>
             </DialogInput>
-            <Button 
-                title='!'
-                onPress={() => setVisible(true)}
-            />
+            <TouchableOpacity onPress={() => setVisible(true)}>
+                <Icon name="alert-box" size={60} color={"#AB4E68"}/>
+            </TouchableOpacity>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-    },
-    title: {
-        fontSize:20, 
-        marginBottom:20,
-        backgroundColor:'red',
-        color:'white',
-        padding:15,
-        borderRadius:30,
-    },
-});
