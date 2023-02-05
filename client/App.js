@@ -38,8 +38,8 @@ import RegisterMap from "./src/Components/Register/Entering/RegisterMap";
 import Usuarios from "./src/Components/AdminPanel/Usuarios";
 import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
-
 import LoginTest from "./src/Components/LoginTest";
+import UserPets from "./src/Components/AdminPanel/UserPets";
 
 
 LogBox.ignoreLogs([
@@ -281,6 +281,11 @@ export default function App() {
 <Stack.Screen
             name="FormPets"
             component={FormPets}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="UserPets"
+            component={UserPets}
             options={{ headerShown: false }}
           />
           {/* =================================== */}
