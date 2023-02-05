@@ -18,7 +18,6 @@ const SolicitudPet = ({ navigation, route }) => {
   const userRequsting = { email, profilePic, message, phone, firstName, lastName }
   const [pushToken, setPushToken] = useState("")
 
-
   const petId = route.params.petId;
   const name = route.params.name;
 

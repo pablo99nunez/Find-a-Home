@@ -19,7 +19,7 @@ import { FlatList } from "react-native-gesture-handler";
 const {width, height } = Dimensions.get("screen")
 
 export const ProfileOthers = ({ route, navigation }) => {
-  const { email, profilePic, firstName, lastName, rating, description } = route.params;
+  const { email, profilePic, firstName, lastName, rating } = route.params;
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [userProfile, setUserProfile] = useState({});
   const [pets, setPets] = useState([]);
@@ -80,14 +80,20 @@ export const ProfileOthers = ({ route, navigation }) => {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto">
-        <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{firstName} {lastName}</Text>
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{firstName} {lastName}</Text>
           <Text className=" text-4xl text-[#ffc733]">
             {rating?.rating ? rating.rating : 5}★
           </Text>
         </View>
       </ImageBackground>
 
-      <View className="flex items-center mt-[10%] w-11/12 mx-auto">
+      <View>
+        <Text className="text-center text-2xl text-[#2A2B20] my-[15%]" style={{fontFamily: 'Roboto_300Light'}}>
+        {userProfile.description ? userProfile.description : null}
+        </Text>
+      </View>
+
+      <View className="flex items-center w-11/12 mx-auto">
         <Text className="text-center text-2xl text-[#2A2B20] font-light">
           Las condiciones que le puedo brindar a mi mascota son:
         </Text>
@@ -118,10 +124,6 @@ export const ProfileOthers = ({ route, navigation }) => {
             </View>
           ) : null}
         </View>
-      </View>
-
-      <View>
-        <Text>{description ? description : null}</Text>
       </View>
 
       {/* <View>

@@ -54,16 +54,16 @@ const handleContinuar = () =>{
 }
 const disable = `${errors.phone}`.length > 0
   return (
-    <ScrollView>
-      <View className="h-screen flex items-center bg-[#FFC733] ">
+    <View>
+      <View className="h-screen flex items-center bg-[#FFC733]">
         <Text className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-          ¡Bienvenida Florencia!
+          ¡Bienvenido/a {userInput.firstName[0].toUpperCase().concat(userInput.firstName.toLowerCase().substring(1))}
         </Text>
         <Text className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
         </Text>
 
-        <View className="w-11/12">
+        <View className="w-11/12 mt-[5%]">
           <Text className="">Teléfono:</Text>
           <TextInput
             maxLength={15}
@@ -73,12 +73,12 @@ const disable = `${errors.phone}`.length > 0
             placeholderTextColor="#ffffff50"
             onChangeText={(valor)=>{handleChange("phone",valor)}}
           />
-          <View className='h-5 mt-1'>
+          <View className='h-5'>
             <Text className='text-[#ed3232]'>{errors.phone}</Text>
           </View>
         </View>
 
-        <View className="w-11/12">
+        <View className="w-11/12 mt-[5%]">
           <Text className="">Pais:</Text>
           <SelectList
             data={[{ key: "Argentina", value: "Argentina" }]}
@@ -92,7 +92,7 @@ const disable = `${errors.phone}`.length > 0
           />
         </View>
 
-        <View className="w-11/12">
+        <View className="w-11/12 mt-[5%]">
           <Text className="">Provincia:</Text>
           <SelectList
             data={States}
@@ -108,7 +108,7 @@ const disable = `${errors.phone}`.length > 0
           />
         </View>
 
-        <View className="w-11/12">
+        <View className="w-11/12 my-[5%]">
           <Text className="">
             Departamento:
           </Text>
@@ -144,7 +144,7 @@ const disable = `${errors.phone}`.length > 0
       </TouchableOpacity>
     }
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
