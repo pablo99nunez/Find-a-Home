@@ -5,9 +5,12 @@ import styles from "./styles";
 import { ButtonYellow } from "../../Buttons/Buttons";
 import { StyleSheet } from "react-native";
 import validate from "../validate";
+import { checkEmail } from "../../../Redux/Actions";
+import { useDispatch } from "react-redux";
 
 export default function RegistrationScreen({ navigation }) {
   //crea estado local
+  const [loading, setLoading] = useState(false)
   const [userInputs, setUserInputs] = useState({
     firstName: "",
     lastName: "",
@@ -27,7 +30,6 @@ export default function RegistrationScreen({ navigation }) {
   };
 
   const handleChange = (clave, valor) => {
-    console.log(clave, valor);
    setUserInputs({
       ...userInputs,
       [clave]: valor,
@@ -36,11 +38,25 @@ export default function RegistrationScreen({ navigation }) {
         ...errors,
         [clave]: validate.registrationScreen(clave,valor)
      }); 
-    const len = Object.entries(errors).length;
+
   };
-  const handleContinuar = () =>{
-    
-    navigation.navigate("RegisterFirstSteps", userInputs)
+  const handleContinuar = async () =>{
+    setLoading(true)
+    await checkEmail(userInputs.email)
+    .then(resp=>{
+      console.log(resp); 
+      if(resp)
+      alert('El email ingresado ya está en uso.')
+      else
+      navigation.navigate("RegisterFirstSteps", userInputs)
+    })
+    .catch(resp=>{
+
+    })
+    .finally(()=>{
+      setLoading(false)
+    })
+
   }
 
   const disable = `${userInputs.firstName}`.length===0 ||
@@ -114,11 +130,15 @@ export default function RegistrationScreen({ navigation }) {
             <Text className='text-[#ed3232]'>{errors.password}</Text>
           </View>
         <View className="my-3">
+          {loading ? <ButtonYellow 
+            text={"Cargando..."}
+            deshabilitar={disable}
+          />:
           <ButtonYellow 
             onPress={() => handleContinuar()}
             text={disable ? "Rellene los datos":"Continuar"}
             deshabilitar={disable}
-          />
+          />}
         </View>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
