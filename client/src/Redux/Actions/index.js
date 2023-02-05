@@ -40,6 +40,19 @@ export const checkToken = async () => {
     })
   return response
 }
+//devuelve verdadero si el usuario existe en la base de datos
+export const checkEmail = async (email) => {
+  const response = await axios.get(`${url}/user/checkemail?email=${email}`)
+    .then(resp => {
+      console.log(resp.data);
+      return resp.data.payload
+    })
+    .catch(err => {
+      return false
+
+    })
+  return response
+}
 
 export const getAllPets = () => {
   return async (dispatch) => {

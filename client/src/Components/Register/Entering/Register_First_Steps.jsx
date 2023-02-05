@@ -36,7 +36,7 @@ export default function RegisterFirstSteps({ navigation , route}) {
     phone: "Ingrese un telefono Válido",
   });
   const handleChange = (clave, valor) => {
-    console.log(clave, valor);
+
    setUserInput({
       ...userInput,
       [clave]: valor,
