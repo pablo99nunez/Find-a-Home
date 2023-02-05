@@ -97,7 +97,9 @@ const SolicitudPet = ({ navigation, route }) => {
       </TouchableOpacity>
 
       <View>
-        <Text className="my-5 mx-auto text-3xl" style={{ fontFamily: "Roboto_300Light" }}>{firstName} {lastName}</Text>
+        <Text className="my-5 mx-auto text-3xl" style={{ fontFamily: "Roboto_300Light" }}>
+          {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} {lastName[0].toUpperCase().concat(lastName.toLowerCase().substring(1))}
+        </Text>
         <Text className="my-5 mx-auto text-xl" style={{ fontFamily: "Roboto_300Light" }}>{message}</Text>
       </View>
       <TouchableOpacity

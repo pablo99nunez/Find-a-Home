@@ -80,7 +80,9 @@ export const ProfileOthers = ({ route, navigation }) => {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto">
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">{firstName} {lastName}</Text>
+          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">
+          {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} {lastName[0].toUpperCase().concat(lastName.toLowerCase().substring(1))}
+            </Text>
           <Text className=" text-4xl text-[#ffc733]">
             {rating?.rating ? rating.rating : 5}★
           </Text>
