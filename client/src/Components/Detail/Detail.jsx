@@ -47,8 +47,6 @@ export default function Detail({ route, navigation }) {
     id
   } = route.params;
 
-console.log(birthday)
-console.log(age)
   const calcAge = () => {
     const birth = new Date(birthday);
     const now = new Date();
