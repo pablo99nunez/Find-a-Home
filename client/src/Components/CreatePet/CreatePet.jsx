@@ -96,7 +96,16 @@ export const CreatePet = ({ navigation }) => {
   };
   const [paginas, setPaginas] = useState(1)
  
+  //verbo singular, el useState altera el valor de esta variable en cada renderizado
+  //disable=true si UNA de las condiciones de abajo se cumple
+  const disable = `${crear.name}`.length===0 ||
+  `${crear.description}`.length===0 ||
+  `${crear.birthday}`.length===0 ||
+  `${crear.size}`.length===0 ||
+  `${crear.specie}`.length===0 ||
+  `${error.name}${error.description}${error.birthday}`.length > 0
 
+  const disable2 = `${crear.state}`.length===0 
 
   return (
     <>
@@ -118,16 +127,16 @@ export const CreatePet = ({ navigation }) => {
         paginas={paginas}
         setPaginas={setPaginas}
         setError={setError}
-      /> 
+      />  
           }
         <View className="my-[10%]">
           {paginas === 1 && !error.size && !error.state && !error.specie ?
 
-        <ButtonYellow onPress={() => setPaginas(2) } text={"Siguiente"}/>
+        <ButtonYellow deshabilitar={disable} onPress={() => setPaginas(2) } text={disable? "Complete los datos":"Siguiente"}/>
 
 :          
         
-          <ButtonYellow onPress={() => HandleSubmit()} text={"Publicar"} />
+          <ButtonYellow deshabilitar={disable2} onPress={() => HandleSubmit()} text={disable2?"Complete los datos":"Publicar"} />
         }
         </View>
       </ScrollView>
