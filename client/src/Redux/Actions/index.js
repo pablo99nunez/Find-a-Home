@@ -42,6 +42,7 @@ export const checkToken = async () => {
 }
 //devuelve verdadero si el usuario existe en la base de datos
 export const checkEmail = async (email) => {
+  console.log(email);
   const response = await axios.get(`${url}/user/checkemail?email=${email}`)
     .then(resp => {
       console.log(resp.data);
@@ -233,7 +234,7 @@ export const getUser = () => {
         if (typeof err.response !== "undefined" && err.response.data.error)
           alert(err.response.data.error)
         else
-          alert(err.message)
+          alert('index.js '+err.message)
       }
       );
   };

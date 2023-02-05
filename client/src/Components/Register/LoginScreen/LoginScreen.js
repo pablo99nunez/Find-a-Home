@@ -5,11 +5,12 @@ import styles from "./styles";
 import { loginWithEmailAndPassword } from "../../../firebase/authentication";
 import { ButtonYellow } from "../../Buttons/Buttons";
 import { useSelector } from "react-redux";
+import { checkEmail } from "../../../Redux/Actions";
 
 
 export default function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState("@gmail.com");
-    const [password, setPassword] = useState("123456");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const isLoggedIn = useSelector(store => store.isLoggedIn)
 
@@ -17,8 +18,15 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate("Registration");
     };
     useEffect(() => {
-        if(isLoggedIn)
-          navigation.navigate("Home")
+        if(isLoggedIn){
+        checkEmail(email).then(resp=>{
+            const firstName = '', lastName = '', phone = '', profilePic = '', address= '', description= ''
+            if(resp)
+                navigation.navigate("Home");
+            else
+                navigation.navigate("EditProfile",{firstName, lastName, phone, profilePic, address, description})
+        })  
+        }
       }, [isLoggedIn]);
 
     return (
@@ -57,8 +65,8 @@ export default function LoginScreen({ navigation }) {
                     <ButtonYellow
                         onPress={async () => {
                             await loginWithEmailAndPassword(email, password)
-                                .then((ignore) => {
-                                    navigation.navigate("Home");
+                                .then(() => {
+                                    
                                 })
                                 .catch((err) => {
                                     if (
@@ -67,7 +75,7 @@ export default function LoginScreen({ navigation }) {
                                         alert(
                                             "Esta cuenta no se encuentra registrada, porfavor revise sus datos o de click al boton Registrate"
                                         );
-                                    } else alert(err.message);
+                                    } else alert('LoginScreen.js'+err.message);
                                 });
                         }}
                         text="Acceder"

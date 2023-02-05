@@ -67,7 +67,6 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	const [loading, setLoading] = useState(false);
 
 	const HandleCheck = (option) => {
-		console.log(userNewInput)
 		setCheckState({ ...checkState, [option]: !checkState[option] })
 		setuserNewInput({ ...userNewInput, condiciones: { ...userNewInput.condiciones, [option]: !checkState[option] } })
 	}
