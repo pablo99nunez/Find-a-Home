@@ -160,7 +160,7 @@ export default function UserDetail({ route, navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity 
-          // onPress={()=> navigation.navigate('Aca va el componente de MP')} 
+          onPress={()=> navigation.navigate('Prices')} 
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon name="hand-coin" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
