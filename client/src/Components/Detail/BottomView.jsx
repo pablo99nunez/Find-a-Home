@@ -12,6 +12,7 @@ import { PushNotifications } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 const BottomView = ({ petId, auth, email, petName }) => {
+  const isLoggedIn = useSelector(store=>store.isLoggedIn)
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
   const [message, setMessage] = useState('')
@@ -32,7 +33,10 @@ const BottomView = ({ petId, auth, email, petName }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
-          console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
+          if(isLoggedIn){ if (typeof error.response !== "undefined")
+          console.error("BottomView.jsx: " + error.response.data.error)
+          else
+          console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)}
         }
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro

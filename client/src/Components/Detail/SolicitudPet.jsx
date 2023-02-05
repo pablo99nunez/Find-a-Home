@@ -53,6 +53,9 @@ const SolicitudPet = ({ navigation, route }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
+          if (typeof error.response !== "undefined")
+          console.error("SolicitudPet.jsx: " + error.response.data.error)
+          else
           console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
         }
       }

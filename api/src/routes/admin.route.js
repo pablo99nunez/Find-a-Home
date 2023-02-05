@@ -187,4 +187,27 @@ router.put('/desbanear', checkJwt, async (req, res) => {
   }
 });
 
+router.get('/checkPetsByEmail', checkJwt, async (req, res) => {
+  try {
+    const { OwnerEmail } = req.body;
+    const checkUser = await UserModel.findOne({
+      _email: req.user.email,
+      tipo: 'Admin',
+    });
+    if (checkUser) {
+      
+      const findPets = await PetModel.find({ owner: OwnerEmail });
+    if(findPets){
+    res.status(200).send(findPets)
+  }else{
+    res.status(401).send({error:'No tenemos mascotas con ese email'});
+  }
+    } else {
+      res.status(401).send({error:'No tienes autorización para desbloquear usuarios'});
+    }
+  } catch (err) {
+    res.status(501).send({ error: err.message });
+  }
+});
+
 module.exports = router;
