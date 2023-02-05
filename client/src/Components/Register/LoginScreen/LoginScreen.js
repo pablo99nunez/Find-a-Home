@@ -75,7 +75,7 @@ export default function LoginScreen({ navigation }) {
                                         alert(
                                             "Esta cuenta no se encuentra registrada, porfavor revise sus datos o de click al boton Registrate"
                                         );
-                                    } else alert('LoginScreen.js'+err.message);
+                                    } else alert('LoginScreen.js '+err.message);
                                 });
                         }}
                         text="Acceder"
