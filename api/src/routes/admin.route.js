@@ -43,8 +43,7 @@ router.get('/analytics/:theParam' , checkJwt, async (req, res) => {
     if (!isAllowedUser) throw new Error('No eres admin o voluntario')
     const now = new Date();
 
-    let allAdoptedPets = await PetModel.find({state: 'Adopted',lastAdoptionDate: { $exists: true, $not: { $size: 0 } },
-      });
+    let allAdoptedPets = await PetModel.find({state: 'Adopted',lastAdoptionDate: { $exists: true }});
     switch (req.params.theParam) {
       case 'day':
         allAdoptedPets = allAdoptedPets.filter(pet => (now - pet.lastAdoptionDate) <= aDay)
