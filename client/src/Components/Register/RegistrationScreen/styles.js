@@ -34,11 +34,13 @@ export default StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Roboto_300Light',
     },
     footerLink: {
         color: "#AB4E68",
         fontWeight: "bold",
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'Roboto_300Light',
     }
 })

@@ -227,13 +227,17 @@ const Welcome = ({ navigation }) => {
             zIndex: 15,
           }}
         >
+
+          
+          {/* 
+          ANTIGUA PANTALLA PRINCIPAL
           <Image
             style={styles.icon}
             source={require("../../images/icon1-icon3-welcome.png")}
           />
 
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.textSubTitlesLogin}>Login</Text>
+            <Text style={styles.textSubTitlesLogin}>Iniciá sesión</Text>
           </TouchableOpacity>
 
           <Image
@@ -253,10 +257,25 @@ const Welcome = ({ navigation }) => {
               
               )}
             </View>
+          </TouchableOpacity> */}
+
+
+          <Image
+            style={styles.iconoLogin}
+            className="mb-[15%]"
+            source={require("../../images/ButtonLanding.png")}
+          />
+          <TouchableOpacity onPress={() => navigation.navigate("Login")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+            <Text style={{fontFamily: 'Roboto_300Light'}} className="text-center text-2xl text-[#AB4E68]">Iniciá sesión</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+            <Text style={{fontFamily: 'Roboto_300Light'}} className="text-center text-2xl text-white">Regístrate</Text>
+          </TouchableOpacity>
+
+
           <View style={styles.divisionLine}></View>
           <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-            <Text style={styles.textSubTitles}>Ingresar como invitado</Text>
+            <Text style={styles.textSubTitles}>Ingresá como invitado</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -366,18 +385,22 @@ const styles = StyleSheet.create({
   text: {
     color: "#FFFFFF",
     fontSize: 30,
+    fontFamily: 'Roboto_300Light'
   },
   text1: {
     color: "#FFFFFF",
     fontSize: 30,
+    fontFamily: 'Roboto_300Light'
   },
   text2: {
     color: "#FFFFFF",
     fontSize: 30,
+    fontFamily: 'Roboto_300Light'
   },
   text3: {
     color: "#3A302E",
     fontSize: 30,
+    fontFamily: 'Roboto_300Light'
   },
   wrapDot: {
     position: "absolute",
@@ -412,6 +435,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: "normal",
     fontSize: 35,
+    fontFamily: 'Roboto_300Light'
   },
   textSubTitles: {
     top: 20,
@@ -419,6 +443,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     textAlign: "center",
     fontSize: 25,
+    fontFamily: 'Roboto_300Light'
   },
   textSubTitlesLogin: {
     top: 20,
@@ -426,6 +451,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     textAlign: "center",//hola que onda? 
     fontSize: 35,
+    fontFamily: 'Roboto_300Light'
   },
   input: {
     width: 200,
@@ -455,6 +481,11 @@ const styles = StyleSheet.create({
     width: "80%",
     backgroundColor: "#ACACAC",
   },
+  iconoLogin: {
+    height: height * 0.3,
+    width: width * 0.7,
+    resizeMode: 'contain'
+  }
 });
 
 export default Welcome;

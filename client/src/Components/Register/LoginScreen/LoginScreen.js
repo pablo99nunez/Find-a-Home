@@ -71,9 +71,9 @@ export default function LoginScreen({ navigation }) {
                 </View>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>
-                        No tenes una cuenta?{" "}
+                        No tenés una cuenta?{" "}
                         <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-                            Registrate aca
+                            Regístrate acá
                         </Text>
                     </Text>
                 </View>
