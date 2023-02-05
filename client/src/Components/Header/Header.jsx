@@ -202,11 +202,8 @@ export const Header = ({ navigation }) => {
         source={require("../../images/FindAHome.png")}
         resizeMode={"contain"}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("Map", pin)}>
-        <Icon name="map" className="w-12 h-12" size={50} color={"#FFC733"} />
-      </TouchableOpacity>
       {Platform.OS === "web" ? <></> : <></>}
-      <TouchableOpacity onPress={() => resizeBox(1)}>
+      <TouchableOpacity onPress={() => resizeBox(1)} >
         <Icon name="menu" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
       {/* WEB BROWSER ACA ----------------------- userddetlail */}
@@ -220,24 +217,21 @@ export const Header = ({ navigation }) => {
           <Text>USER PROFILE WEB BROWSER</Text>
         </TouchableOpacity>
       ) : (
-        <Modal transparent visible={visible}>
-          <SafeAreaView>
-            <View className="items-end right-[5%] top-[2%] opacity-0">
-              <Icon
-                name="menu"
-                size={50}
-                color={"#FFC733"}
-                onTouchStart={() => resizeBox(0)}
-              />
-            </View>
-            <Animated.View className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[10%]">
+        <Modal transparent visible={visible} onRequestClose={()=>resizeBox(0)} onShow={() => resizeBox(1)} animationType="fade">
+          <SafeAreaView className="h-[100%]" style={{backgroundColor: 'rgba(171, 78, 104, 0.7)'}}>
+            <Animated.View className="rounded-3xl bg-[#FFC733] h-[55%] w-[90%] mx-[5%] mt-[23%]">
               <View className="p-[5%]">
-                <Text
-                  className="text-2xl mb-[3%]"
-                  style={{ fontFamily: "Roboto_300Light" }}
-                >
-                  Especie:
-                </Text>
+                <View className="flex flex-row justify-between">
+                  <Text
+                    className="text-2xl mb-[3%]"
+                    style={{ fontFamily: "Roboto_300Light" }}
+                    >
+                    Especie:
+                  </Text>
+                  <TouchableOpacity className="flex flex-row justify-center items-center rounded-2xl" onPress={() => resizeBox(0)}>
+                    <Icon name="close-box" className="w-12 h-12" size={40} color={"#AB4E68"} />
+                  </TouchableOpacity>
+                </View>
 
                 <SelectList
                   data={[
@@ -344,6 +338,10 @@ export const Header = ({ navigation }) => {
                 >
                   Kilometros:
                 </Text>
+                <TouchableOpacity className="flex flex-row justify-center items-center mb-[3%] bg-[#D9D9D9] h-[14%] rounded-2xl" onPress={() => {navigation.navigate("Map", pin), resizeBox(0)}}>
+                  <Icon name="map" className="w-12 h-12" size={50} color={"#AB4E68"} />
+                  <Text className="text-xl text-[#AB4E68]" style={{ fontFamily: "Roboto_300Light" }}>Ver mascotas en el mapa</Text>
+                </TouchableOpacity>
                 <TextInput
                   placeholder="Mascotas en tu radio de km."
                   fontFamily="Roboto_300Light"
@@ -351,9 +349,10 @@ export const Header = ({ navigation }) => {
                   keyboardType="numeric"
                   value={number}
                   onChangeText={(text) => setNumber(text)}
-                  className="h-[14%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
+                  className="h-[12%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
                   style={{ fontFamily: "Roboto_300Light" }}
                 />
+                
               </View>
             </Animated.View>
           </SafeAreaView>

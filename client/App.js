@@ -97,7 +97,14 @@ export default function App() {
           <Stack.Screen
             name="Map"
             component={Map}
-            options={{ headerShown: false }}
+            options={{
+              headerTransparent: true,
+              headerShadowVisible: false,
+              headerTintColor: "#fff",
+              title: null,
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           <Stack.Screen
