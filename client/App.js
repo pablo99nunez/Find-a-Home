@@ -41,8 +41,7 @@ import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
 
-import LoginTest from "./src/Components/LoginTest";
-
+import UserPets from "./src/Components/AdminPanel/UserPets";
 
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
@@ -72,7 +71,7 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen
+          {/* <Stack.Screen
             name="LoginTest"
             component={LoginTest}
             initialParams={{ fromChild: "Initial" }}
@@ -292,6 +291,11 @@ export default function App() {
             component={FormPets}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="UserPets"
+            component={UserPets}
+            options={{ headerShown: false }}
+          />
 
           <Stack.Screen
             name="Prices"
@@ -306,12 +310,8 @@ export default function App() {
             }}
             // options={{ headerShown: false }}
           />
-          
-          <Stack.Screen
-            name="MercadoPago"
-            component={MercadoPago}
-          />
 
+          <Stack.Screen name="MercadoPago" component={MercadoPago} />
 
           {/* =================================== */}
         </Stack.Navigator>
