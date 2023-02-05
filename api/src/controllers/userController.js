@@ -31,7 +31,9 @@ const findAllUsers = async (filter) => {
 
 const updateUser = async (newUserData, userEmail) => {
   const queryConditions = { email: userEmail }
-  const updatedUser = await UserModel.updateOne(queryConditions, newUserData)
+    newUserData.email = userEmail
+
+  const updatedUser = await UserModel.updateOne(queryConditions, newUserData,{upsert: true, setDefaultsOnInsert: true})
   return updatedUser
 }
 
