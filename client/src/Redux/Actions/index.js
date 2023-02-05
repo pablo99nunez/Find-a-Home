@@ -176,7 +176,10 @@ export const PetPost = async (bodyPayload) => {
     const pet = await axios.post(url + "/pet", bodyPayload, config);
     return pet;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetPost: " + error.message)
+    if (typeof err.response !== "undefined" && err.response.data.error)
+      throw new Error(err.response.data.error)
+    else
+      throw error
   }
 };
 

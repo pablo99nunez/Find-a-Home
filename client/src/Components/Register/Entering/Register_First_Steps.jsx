@@ -52,7 +52,11 @@ const handleContinuar = () =>{
   navigation.navigate("RegisterLastSteps", userInput)
   setLoading(false)
 }
-const disable = `${errors.phone}`.length > 0
+const disable = `${userInput.phone}`.length === 0 ||
+`${userInput.pais}`.length === 0 ||
+`${userInput.provincia}`.length === 0 ||
+`${userInput.departamento}`.length === 0 ||
+`${errors.phone}`.length > 0
   return (
     <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733] ">
