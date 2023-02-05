@@ -118,9 +118,9 @@ export default function RegistrationScreen({ navigation }) {
         </View>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Ya tiene una cuenta?{" "}
+            Ya tenés una cuenta?{" "}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Logearme
+              Iniciá sesión acá
             </Text>
           </Text>
         </View>
