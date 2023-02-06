@@ -267,8 +267,8 @@ export default function App() {
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
-              headerTintColor: "#000",
-              title: "Reports",
+              headerTintColor: "#AB4E68",
+              title: "Reportes",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
@@ -279,7 +279,7 @@ export default function App() {
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
-              headerTintColor: "#000",
+              headerTintColor: "#AB4E68",
               title: "Usuarios",
               headerBackTitle: null,
               headerBackTitleVisible: false,
@@ -294,7 +294,14 @@ export default function App() {
           <Stack.Screen
             name="UserPets"
             component={UserPets}
-            options={{ headerShown: false }}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Mascotas del usuario",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
           />
 
           <Stack.Screen
