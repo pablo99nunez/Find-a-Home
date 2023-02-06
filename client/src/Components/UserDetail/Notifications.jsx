@@ -9,20 +9,21 @@ const { width, height } = Dimensions.get("screen")
 
   return (
     <View 
-    style={{ height: height , width: width}}
+    style={{ height: height * 0.98, width: width}}
     className='bg-[#d9d9d9] '>
       <FlatList
         keyExtractor={(item) => item.title}
         data={currentUser.Notifications}
         renderItem={({ item }) => (
-          <View className='flex flex-row m-3 w-9/12'>
+          <View className='bg-[#AB4E68] flex flex-row mx-[3%] my-[2%] p-[3%] rounded-xl items-center'>
             <Image
-            className='h-12 w-14 m-2'
+            className='h-[100%] w-[15%] m-2'
+            resizeMode='contain'
             source={require('../../images/FindAHome.png')}
             />
             <View>
-            <Text className='font-light '>{item.title}</Text>
-            <Text className='font-extralight text-sm'> {item.body}</Text>
+              <Text className='text-[#d9d9d9] font-light w-[60%]'>{item.title}</Text>
+              <Text className='text-[#d9d9d9] font-extralight text-sm w-[60%]'>{item.body}</Text>
             </View>
           </View>
         )}></FlatList>
