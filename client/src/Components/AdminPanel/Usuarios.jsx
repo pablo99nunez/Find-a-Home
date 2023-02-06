@@ -48,18 +48,18 @@ const petBoton = () =>{
   return (
     <View>
       {diferent  !== "usuarios" ? 
-        <TouchableOpacity className='bg-[AB4E68] p-5 rounded-xl m-2' onPress={() =>userBoton()}>
+        <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>userBoton()}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos los usuarios</Text>
         </TouchableOpacity>
         : 
         <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>petBoton()}>
-        <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos las mascotas</Text>
-      </TouchableOpacity>
+          <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos las mascotas</Text>
+        </TouchableOpacity>
         }
         <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>setFilter("admin/userban")}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Usuarios inhabilitados</Text>
         </TouchableOpacity>
-{diferent === "usuarios"?
+        {diferent === "usuarios"?
         <Text style={{ fontFamily: "Roboto_300Light" }} className='bg-[#FFC733] text-xl font-thin text-center m-2 p-[2%] rounded-xl'>Cantidad de usuarios: {usuarios?.length}</Text>
         :        
         <Text style={{ fontFamily: "Roboto_300Light" }} className='bg-[#FFC733] text-xl font-thin text-center m-2 p-[2%] rounded-xl'>Cantidad de mascotas: {usuarios?.length}</Text>
