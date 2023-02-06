@@ -4,6 +4,7 @@ const { findPet, findAllPets, updatePet, filterByOwner,denPet } = require('../co
 const {solicitarAdopcion} = require('../controllers/adoptionController')
 const { checkJwt } = require('../utils/firebase-stuff');
 const { deletePet } = require('../controllers/deletePet');
+const { limit5cada12horas } = require('../utils/rate-limiters');
 const router = express.Router();
 
 //todos //
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
 //CREAR PET
 //logeado, user, checkJwt te deja pasar si el token esta bien, y ademas
 //mete adentro del req una propiedad user con los datos del usuario
-router.post('/',checkJwt, async (req, res) => {
+router.post('/',limit5cada12horas,checkJwt, async (req, res) => {
   try {
     const PetData = req.body
     const newPet = await createPet(PetData, req.user.email)
@@ -56,7 +57,7 @@ router.put('/profile', checkJwt, async (req, res) => {
 
 
 //solicitar perro
-router.put('/profile/solicitud', checkJwt, async (req, res) => {
+router.put('/profile/solicitud',limit5cada12horas, checkJwt, async (req, res) => {
   try {
     //solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud)
     const message = req.body.message

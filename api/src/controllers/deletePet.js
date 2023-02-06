@@ -40,14 +40,11 @@ const deletePet = async (petID) => {
         }
     }, (err) => { if (err) { console.error('Error al eliminar la solicitu a un usuario: ' + err.message); } });
     //-----3)  buscar OWNER    
-    const owner = await UserModel.findOne({ email: pet.owner });
+    const theDuenioDelPet = await UserModel.findOne({ email: pet.owner });
     //-----4) Del OWNER: Quitar el perro de su lista   
-    if (!!owner) {
-        const ownerPetIndex = owner.pets.findIndex(el => el === petID)//Busca pet de solicitud
-        if (ownerPetIndex !== -1) {
-            owner.pets.splice(ownerPetIndex, 1);//borra solicitud del usuario 
-            await owner.save();
-        }
+    if (theDuenioDelPet) {
+        theDuenioDelPet.pets = theDuenioDelPet.pets.filter(el=> el !== petID)
+        await theDuenioDelPet.save();
     }
     //-----5) Borrar perro
     const deletedPet = await PetModel.deleteOne({ _id: petID })

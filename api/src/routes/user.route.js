@@ -5,6 +5,7 @@ const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
 const { ratingUpdate } = require('../controllers/ratingUserController');
 const { cleanUserInexistentPets } = require('../controllers/deletePet');
+const { limit5cada30minutos } = require('../utils/rate-limiters');
 const router = express.Router();
 
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
@@ -12,13 +13,16 @@ router.get('/profile', checkJwt, async (req, res) => {
     try {
         const email = req.user.email
         const user = await findUser(email)
+        if(user)
         res.send(user)
+        else
+        throw new Error('Usuario no se encontró en la base de datos')
     } catch (error) {
         res.status(501).send({ error: error.message })
     }
 })
 
-router.get('/checkemail',  async (req, res) => {
+router.get('/checkemail', limit5cada30minutos, async (req, res) => {
     try {
         const {email} = req.query
         const user = await findUser(email)
