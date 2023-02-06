@@ -37,8 +37,8 @@ const create = async () => {
     app.use(routes)
 
     app.get('/check', checkJwt, async (req, res) => {
-        setAdmin(req.user.uid)
-        res.send({message: 'Token asdasd, has accedido a esta ruta privilegiada pequeño saltamontes reached', user: req.user})
+        //setAdmin(req.user.uid)
+        res.send({message: 'Token decodificado exitosamente!', user: req.user})
     });
 
     return app
