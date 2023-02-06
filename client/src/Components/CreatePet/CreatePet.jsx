@@ -72,7 +72,7 @@ export const CreatePet = ({ navigation }) => {
       };
       await PetPost(DatosPetAEnviar)
         .then((sucess) => {
-          alert("se creo");
+          alert("se ha creado correctamente");
           navigation.goBack();
         })
         .catch((error) => {

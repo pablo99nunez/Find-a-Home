@@ -58,7 +58,7 @@ export default function PushNotification() {
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
-      alert(`${notification.request.content.title}`)
+      // alert(`${notification.request.content.title}`)
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {

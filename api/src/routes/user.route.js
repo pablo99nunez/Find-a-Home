@@ -1,5 +1,5 @@
 const express = require('express');
-const { confirmAdoption, refreshStates } = require('../controllers/adoptionController');
+const { confirmAdoption, refreshStates, rejectedCandidateNofication } = require('../controllers/adoptionController');
 const { findUser, updateUser, findAllUsers, createNewUser } = require('../controllers/userController');
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
@@ -78,12 +78,13 @@ router.put('/confirm', checkJwt, async (req, res) => {
     try {
         const parametros = [req.body.petID, req.user.email, req.body.newOwnerEmail]
         const puntaje = [req.body.rating, req.body.newOwnerEmail]
-        console.log(parametros, puntaje)
+        // console.log(parametros, puntaje)
         validateroute["/user/confirm"](...parametros)
         const petWithNewOwner = await confirmAdoption(...parametros)
         await ratingUpdate(...puntaje)
         await refreshStates({ petID: req.body.petID, newOwnerEmail: req.body.newOwnerEmail })
-        res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
+        await rejectedCandidateNofication({petID: req.body.petID, newOwnerEmail: req.body.newOwnerEmail})
+        return res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
     } catch (err) {
         res.status(501).send({ error: err.message })
     }
@@ -95,7 +96,7 @@ router.put('/cleanup', checkJwt, async (req, res) => {
         if (email) {
             const cleanedUser = await cleanUserInexistentPets(email)
 
-            res.status(200).send({ message: 'Lista de pets de usuario limpiada', payload: cleanedUser });
+            res.status(200).send({ message: 'Lista de pets de usuario limpia', payload: cleanedUser });
         } else {
             throw new Error("Debes enviar un email por body")
         }
