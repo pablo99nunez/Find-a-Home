@@ -18,7 +18,7 @@ router.get('/profile', checkJwt, async (req, res) => {
         else
         throw new Error('Usuario no se encontró en la base de datos')
     } catch (error) {
-        res.status(501).send({ error: error.message })
+        res.status(501).send( error.message )
     }
 })
 
@@ -31,7 +31,7 @@ router.get('/checkemail', limit5cada30minutos, async (req, res) => {
         else
         res.send({message: 'checked', payload: false})
     } catch (error) {
-        res.status(501).send({ error: error.message })
+        res.status(501).send( error.message )
     }
 })
 //loggeado, todos, lista todos los usuarios o encuentra al usuario por email
@@ -42,7 +42,7 @@ router.get('/', checkJwt, async (req, res) => {
         const users = await findAllUsers(email)
         res.status(200).send(users)
     } catch (error) {
-        res.status(501).send({ error: error.message })
+        res.status(501).send( error.message )
     }
 })
 // checkJwt,
@@ -58,7 +58,7 @@ router.post('/', checkJwt, async (req, res) => {
         const createdUser = await createNewUser(newUser)
         res.status(200).send(createdUser)
     } catch (error) {
-        res.status(501).send({ error: error.message })
+        res.status(501).send( error.message )
     }
 })
 
@@ -70,7 +70,7 @@ router.put('/profile', checkJwt, async (req, res) => {
         const updatedUser = await updateUser(newUserData, req.user.email)
         res.status(200).send({ message: 'usuario editado', payload: updatedUser });
     } catch (err) {
-        res.status(501).send({ error: err.message })
+        res.status(501).send( err.message )
     }
 });
 
@@ -90,7 +90,7 @@ router.put('/confirm', checkJwt, async (req, res) => {
         await rejectedCandidateNofication({petID: req.body.petID, newOwnerEmail: req.body.newOwnerEmail})
         return res.status(200).send({ message: 'Mascota cambió de dueño:', payload: petWithNewOwner });
     } catch (err) {
-        res.status(501).send({ error: err.message })
+        res.status(501).send( err.message )
     }
 });
 
@@ -105,7 +105,7 @@ router.put('/cleanup', checkJwt, async (req, res) => {
             throw new Error("Debes enviar un email por body")
         }
     } catch (error) {
-        res.status(501).send({ error: err.message })
+        res.status(501).send( err.message )
     }
 })
 
