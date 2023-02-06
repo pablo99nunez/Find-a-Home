@@ -218,12 +218,12 @@ export const Header = ({ navigation }) => {
         </TouchableOpacity>
       ) : (
         <Modal transparent visible={visible} onRequestClose={()=>resizeBox(0)} onShow={() => resizeBox(1)} animationType="fade">
-          <SafeAreaView className="h-[100%]" style={{backgroundColor: 'rgba(171, 78, 104, 0.7)'}}>
-            <Animated.View className="rounded-3xl bg-[#FFC733] h-[55%] w-[90%] mx-[5%] mt-[23%]">
+          <SafeAreaView style={{backgroundColor: 'rgba(171, 78, 104, 0.7)', height: height}}>
+            <Animated.View style={{height: height * 0.50}} className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[23%]">
               <View className="p-[5%]">
                 <View className="flex flex-row justify-between">
                   <Text
-                    className="text-2xl mb-[3%]"
+                    className="text-2xl"
                     style={{ fontFamily: "Roboto_300Light" }}
                     >
                     Especie:

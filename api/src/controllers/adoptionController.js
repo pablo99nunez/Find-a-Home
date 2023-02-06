@@ -1,5 +1,6 @@
 const UserModel = require('../models/user.model');
 const PetModel = require('../models/pet.model');
+const { saveNotificationsInDB, sendNotifications } = require('./pushController');
 //*const { default: mongoose } = require('mongoose');
 
 //boton donde el dueño confirma que el perro ya se adoptó
@@ -20,7 +21,7 @@ const confirmAdoption = async (petID, ownerEmail, newOwnerEmail) => {
 
         const owner = await UserModel.findOne({ email: ownerEmail })//*.session(session)
         
-        if (!owner.pets.includes(petID)) throw new Error('La mascota no es tuya! hijo de puta!');
+        if (!owner.pets.includes(petID)) throw new Error('La mascota no es tuya!');
         //CONTROLLER:
         //Rechazados
         //Cambia estado a Rechazado de todas aquellas personas que hayan querido adoptar
@@ -70,6 +71,25 @@ const refreshStates = async ({petID, newOwnerEmail}) => {
      catch (error) {
         throw(error)
     }
+}
+
+const rejectedCandidateNofication = async ({petID, newOwnerEmail}) => {
+  try {
+      const users = await UserModel.find(
+          { "misSolicitudes.petID": petID, "misSolicitudes.email": {$ne: newOwnerEmail}}, 'email pushToken -_id'
+      )
+      const mascota = await PetModel.findOne({_id : petID})
+      console.log("mascota.name" ,mascota.name , "mascota" , mascota)
+     const sentRejections = users.map(({pushToken, email})=> {
+        const title = 'Lo sentimos tu solicitud no ha sido aceptada'
+        const body = `Queriamos contarte que ${mascota.name} ya tiene hogar, puedes elegir otra mascota que este en adopcion` 
+        saveNotificationsInDB(title, body, email)
+        sendNotifications(pushToken, body, title)
+      })
+    
+  } catch (error) {
+    throw error
+  }
 }
 
 
@@ -167,6 +187,7 @@ module.exports = {
     confirmAdoption,
     refreshStates,
     solicitarAdopcion,
+    rejectedCandidateNofication,
 }
 
 
