@@ -1,11 +1,11 @@
 import firebase from "./firebase-config";
-import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
-import { createUserInDb, url } from "../Redux/Actions";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const auth = getAuth(firebase);
@@ -17,6 +17,12 @@ export const loginWithEmailAndPassword = async (email, password) => {
     })
 };
 
+export const enviarReseteoPasswordPorMail = (email) =>{
+  sendPasswordResetEmail(auth, email)
+}
+export const enviarEmailVerificacion = () =>{
+  sendEmailVerification(auth.currentUser)
+}
 
 //firebase 3
 export const crearYrellenarDB = async (objetoConDatos) => {
@@ -27,8 +33,8 @@ export const crearYrellenarDB = async (objetoConDatos) => {
     const tokenn = await response1.user.getIdToken()
     await AsyncStorage.setItem("authorization", "Bearer " + tokenn);
     objetoConDatos.password = "" //para evitar recibir la contraseña de los usuarios
-    const responseFinal = await createUserInDb(objetoConDatos, tokenn) //lo retorna
-    return responseFinal
+    return {objetoConDatos,tokenn}
+
   } else {
     throw new Error('Error al obtener los datos del usuario')
   }
