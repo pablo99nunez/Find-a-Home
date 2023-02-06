@@ -64,7 +64,7 @@ export const getAllPets = () => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.response.data);
     }
 
   };
@@ -79,7 +79,7 @@ export const getPetsFilteredBySpecie = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.message);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.response.data);
     }
 
   };
@@ -94,7 +94,7 @@ export const getPetsFilteredBySize = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.message);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.response.data);
     }
 
   };
@@ -111,7 +111,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.message);
+      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.response.data);
     }
 
   };
@@ -134,7 +134,7 @@ export const getPetsByZone = (radius, coords) => {
         });
 
     } catch (error) {
-      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.message);
+      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.response.data);
     }
 
   };
@@ -165,9 +165,8 @@ export const putUserData = async (profile) => {
     phone: profile.phone,
   };
 
-  const json = await axios
-    .put(`${url}/user/profile`, objetoAenviar, config)
-    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.message));
+  const json = await axios.put(`${url}/user/profile`, objetoAenviar, config)
+    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.response.data));
   return json;
 
   /*  return async (dispatch) => {
@@ -189,11 +188,11 @@ export const PetPost = async (bodyPayload) => {
   try {
     const pet = await axios.post(url + "/pet", bodyPayload, config);
     return pet;
-  } catch (error) {
+  } catch (err) {
     if (typeof err.response !== "undefined" && err.response.data.error)
       throw new Error(err.response.data.error)
     else
-      throw error
+      throw err
   }
 };
 
@@ -209,7 +208,7 @@ export const PetEdit = async (bodyPayload) => {
 
     return pet;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.response.data)
   }
 };
 
@@ -271,7 +270,7 @@ export const getPetByOwner = () => {
         });
       })
       .catch((error) => {
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.message)
+        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.response.data)
       });
   };
 };
@@ -299,7 +298,7 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
         payload: adoptionConfirmed.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 Acept Adoption: " + error.message)
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 acceptAdoption: " + error.message)
     }
   };
 };
@@ -317,7 +316,7 @@ export const EditProfiles = async (bodyPayload) => {
 
     return profile;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.response.data)
   }
 };
 
@@ -343,7 +342,7 @@ export const PushNotifications = (token, title, body, email) => {
         payload: status.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error)
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.response.data)
     }
   };
 };
@@ -364,7 +363,7 @@ export const DeletePet = async (id) => {
 
     return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data )
   }
 };
 
@@ -383,7 +382,7 @@ export const UserBan = async (owner) => {
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data)
   }
 };
 
@@ -402,7 +401,7 @@ export const DesbanUser = async (owner) => {
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data)
   }
 };
 
@@ -422,7 +421,7 @@ export const ReportPets = async (id, denuncia) => {
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 denunciar: " + error.message)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 denunciar: " + error.response.data)
   }
 };
 
@@ -467,7 +466,7 @@ export const amountDonate = (payload) => {
         payload: json.data.init_point,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 amountDonate: " + error)
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 amountDonate: " + error.response.data)
     }
 
   };
