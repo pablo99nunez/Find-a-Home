@@ -40,9 +40,8 @@ import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
-
 import UserPets from "./src/Components/AdminPanel/UserPets";
-
+import LoginTest from "./src/LoginTest"
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
 ]);
