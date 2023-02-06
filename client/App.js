@@ -308,14 +308,13 @@ export default function App() {
             name="Prices"
             component={Prices}
             options={{
-              headerTransparent: true,
+              headerStyle: { backgroundColor: "#009ee3" },
               headerShadowVisible: false,
-              headerTintColor: "#fff",
-              title: null,
+              headerTintColor: "#ffffff",
+              title: "Donar",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
-            // options={{ headerShown: false }}
           />
 
           <Stack.Screen name="MercadoPago" component={MercadoPago} />
