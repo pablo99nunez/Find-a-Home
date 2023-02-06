@@ -48,20 +48,21 @@ const petBoton = () =>{
   return (
     <View>
       {diferent  !== "usuarios" ? 
-              <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>userBoton()}>
-          <Text className='text-xl font-thin mx-auto'>Todos los usuarios</Text>
+        <TouchableOpacity className='bg-[AB4E68] p-5 rounded-xl m-2' onPress={() =>userBoton()}>
+          <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos los usuarios</Text>
         </TouchableOpacity>
         : 
-        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>petBoton()}>
-        <Text className='text-xl font-thin mx-auto'>Todos las mascotas</Text>
+        <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>petBoton()}>
+        <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos las mascotas</Text>
       </TouchableOpacity>
         }
-        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>setFilter("admin/userban")}>
-          <Text className='text-xl font-thin mx-auto'>Usuarios inhabilitados</Text>
+        <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>setFilter("admin/userban")}>
+          <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Usuarios inhabilitados</Text>
         </TouchableOpacity>
 {diferent === "usuarios"?
-        <Text className='text-xl font-thin mx-auto'>Cantidad de usuarios: {usuarios?.length}</Text>
-        :        <Text className='text-xl font-thin mx-auto'>Cantidad de mascotas: {usuarios?.length}</Text>
+        <Text style={{ fontFamily: "Roboto_300Light" }} className='bg-[#FFC733] text-xl font-thin text-center m-2 p-[2%] rounded-xl'>Cantidad de usuarios: {usuarios?.length}</Text>
+        :        
+        <Text style={{ fontFamily: "Roboto_300Light" }} className='bg-[#FFC733] text-xl font-thin text-center m-2 p-[2%] rounded-xl'>Cantidad de mascotas: {usuarios?.length}</Text>
 
       }
     <View>
@@ -69,6 +70,7 @@ const petBoton = () =>{
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={usuarios}
+        className="h-[76%]"
         renderItem={({ item }) => (
             <UserCard item={item} navigation={navigation}/>
         )}
