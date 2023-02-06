@@ -10,10 +10,10 @@ class PaymentService {
             items: [
                 {
                     // id: "item-ID-1234",
-                    title: "Mi producto",
+                    title: "Donación",
                     currency_id: "ARS",
                     picture_url: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
-                    description: "Descripción del Item",
+                    description: "ONG Find A Home",
                     // category_id: "art",
                     quantity: 1,
                     unit_price: cuanto
