@@ -11,7 +11,7 @@ import {
 
 import { crearYrellenarDB } from '../../../firebase/authentication'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { putUserData } from "../../../Redux/Actions";
+import { createUserInDb, putUserData } from "../../../Redux/Actions";
 import { registerForPushNotificationsAsync as setPushToken } from "../../../firebase/pushNotifications";
 import Condition from "./Condition";
 
@@ -83,6 +83,10 @@ const RegisterLastSteps = ({ route, navigation }) => {
 			address:`${pais},${departamento},${provincia}`,
 			})
 			.then(resp => {
+				const {objetoConDatos,tokenn}= resp
+				return createUserInDb(objetoConDatos, tokenn) //lo retorna
+			})
+			.then(resp=>{
 				navigation.navigate("Home")
 			})
 			.catch(err => {
