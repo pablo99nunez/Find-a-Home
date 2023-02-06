@@ -219,7 +219,7 @@ export const Header = ({ navigation }) => {
       ) : (
         <Modal transparent visible={visible} onRequestClose={()=>resizeBox(0)} onShow={() => resizeBox(1)} animationType="fade">
           <SafeAreaView style={{backgroundColor: 'rgba(171, 78, 104, 0.7)', height: height}}>
-            <Animated.View style={{height: height * 0.50}} className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[23%]">
+            <Animated.View style={{height: height * 0.55}} className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[23%]">
               <View className="p-[5%]">
                 <View className="flex flex-row justify-between">
                   <Text
@@ -252,6 +252,7 @@ export const Header = ({ navigation }) => {
                     position: "absolute",
                     top: width * 0.1,
                     zIndex: 1,
+                    elevation: 1
                   }}
                   dropdownItemStyles={{ width: width * 0.8 }}
                   dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
@@ -261,12 +262,12 @@ export const Header = ({ navigation }) => {
 
                 <Text
                   className="text-2xl mb-[3%] mt-[3%]"
-                  style={{ fontFamily: "Roboto_300Light" }}
+                  style={{ fontFamily: "Roboto_300Light" , zIndex: -1, elevation: -1}}
                 >
                   Tamaño:
                 </Text>
 
-                <View className="flex flex-row justify-around items-end w-11/12 mx-auto">
+                <View className="flex flex-row justify-around items-end w-11/12 mx-auto" style={{zIndex: -1, elevation:-1}}>
                   <TouchableOpacity
                     onPress={() => {
                       if (size !== "small") {
@@ -334,11 +335,11 @@ export const Header = ({ navigation }) => {
 
                 <Text
                   className="text-2xl mb-[3%] mt-[3%]"
-                  style={{ fontFamily: "Roboto_300Light" }}
+                  style={{ fontFamily: "Roboto_300Light", zIndex: -1, elevation: -1}}
                 >
                   Kilometros:
                 </Text>
-                <TouchableOpacity className="flex flex-row justify-center items-center mb-[3%] bg-[#D9D9D9] h-[14%] rounded-2xl" onPress={() => {navigation.navigate("Map", pin), resizeBox(0)}}>
+                <TouchableOpacity style={{zIndex: -1, elevation: -1}} className="flex flex-row justify-center items-center mb-[3%] bg-[#D9D9D9] h-[14%] rounded-2xl" onPress={() => {navigation.navigate("Map", pin), resizeBox(0)}}>
                   <Icon name="map" className="w-12 h-12" size={50} color={"#AB4E68"} />
                   <Text className="text-xl text-[#AB4E68]" style={{ fontFamily: "Roboto_300Light" }}>Ver mascotas en el mapa</Text>
                 </TouchableOpacity>
@@ -350,7 +351,7 @@ export const Header = ({ navigation }) => {
                   value={number}
                   onChangeText={(text) => setNumber(text)}
                   className="h-[12%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
-                  style={{ fontFamily: "Roboto_300Light" }}
+                  style={{ fontFamily: "Roboto_300Light", zIndex: -1, elevation: -1}}
                 />
                 
               </View>
