@@ -255,8 +255,8 @@ export default function App() {
             options={{
               headerStyle: { backgroundColor: "#f1f1f1" },
               headerShadowVisible: false,
-              headerTintColor: "#000",
-              title: "Admin",
+              headerTintColor: "#AB4E68",
+              title: "Panel de administrador",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}

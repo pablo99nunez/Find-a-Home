@@ -66,44 +66,44 @@ const AdminPanel = ({ navigation, route }) => {
 
   return (
     <ScrollView>
-      <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
+      <View className="flex flex-row justify-between items-center mx-[5%]">
         <TouchableOpacity
-          className="bg-[#d9d9d9] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl m-2"
           onPress={() => navigation.navigate("Reports")}
         >
-          <Text className="text-xl font-thin mx-auto">Reportes</Text>
+          <Text className="text-[#d9d9d9] text-xl font-thin mx-auto">Reportes</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-[#d9d9d9] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl m-2"
           onPress={() => navigation.navigate("Usuarios")}
         >
-          <Text className="text-xl font-thin mx-auto">Usuarios</Text>
+          <Text className="text-[#d9d9d9] text-xl font-thin mx-auto">Usuarios</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-[#d9d9d9] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl m-2"
           onPress={() => {
             alert("Donaciones");
           }}
         >
-          <Text className="text-xl font-thin">Donaciones</Text>
+          <Text className="text-[#d9d9d9] text-xl font-thin">Donaciones</Text>
         </TouchableOpacity>
       </View>
-      <View className="	text-align: center">
-        <Text className="bg-[#d9d9d9] p-3 rounded-xl m-2 h-10 flex-start align-items: center; 	text-align: center">
-          ESTADISTICAS
+      <View className="bg-[#d9d9d9] m-[3%] rounded-3xl">
+        <Text className="p-3 flex-start items-center text-center">
+          ESTADISTICAS:
         </Text>
-        <Text>TOTAL MASCOTAS: {pets?.length}</Text>
-        <Text>TOTAL MASCOTAS ADOPTABLES: {mascotasAdoptables?.length}</Text>
-        <Text>
-          TOTAL MASCOTAS NO ADOPTABLES: {mascotasNoAdoptables?.length}
-        </Text>
-        <Text>PERROS EN ADOPCION {perrosEnAdopcion?.length}</Text>
-        <Text>GATOS EN ADOPCION {gatosEnAdopcion?.length}</Text>
-        <Text>OTROS EN ADOPCION {otrosEnAdopción?.length}</Text>
-        <Text>REPORTES {CantidadDeReportes?.length}</Text>
-        <Text>PERROS ADOPTADOS HOY {hoy?.length}</Text>
-        <Text>PERROS ADOPTADOS ESTA SEMANA {semana?.length}</Text>
-        <Text>PERROS ADOPTADOS ESTE MES {mes?.length}</Text>
+        <View>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center">TOTAL MASCOTAS: {pets?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center">TOTAL MASCOTAS ADOPTABLES: {mascotasAdoptables?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">TOTAL MASCOTAS NO ADOPTABLES: {mascotasNoAdoptables?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS EN ADOPCION: {perrosEnAdopcion?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">GATOS EN ADOPCION: {gatosEnAdopcion?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">OTROS EN ADOPCION: {otrosEnAdopción?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">REPORTES: {CantidadDeReportes?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS HOY: {hoy?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS ESTA SEMANA: {semana?.length}</Text>
+          <Text className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS ESTE MES: {mes?.length}</Text>
+        </View>
       </View>
     </ScrollView>
   );
