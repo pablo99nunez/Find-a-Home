@@ -83,6 +83,10 @@ const RegisterLastSteps = ({ route, navigation }) => {
 			address:`${pais},${departamento},${provincia}`,
 			})
 			.then(resp => {
+				const {objetoConDatos,tokenn}= resp
+				return createUserInDb(objetoConDatos, tokenn) //lo retorna
+			})
+			.then(resp=>{
 				navigation.navigate("Home")
 			})
 			.catch(err => {
