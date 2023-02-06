@@ -97,10 +97,10 @@ export default function App() {
             name="Map"
             component={Map}
             options={{
-              headerTransparent: true,
+              headerStyle: { backgroundColor: "#d9d9d9" },
               headerShadowVisible: false,
-              headerTintColor: "#fff",
-              title: null,
+              headerTintColor: "#AB4E68",
+              title: "Ver macotas en el mapa",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}
