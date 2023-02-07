@@ -17,6 +17,7 @@ const AdminPanel = ({ navigation, route }) => {
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         try {
+          if(!pets){
           await axios
             .get(`${BASE_URL_IP}/admin/getAllPets`, {
               headers: {
@@ -25,6 +26,9 @@ const AdminPanel = ({ navigation, route }) => {
               },
             })
             .then((response) => setPets(response.data));
+          }
+          if(!hoy){
+
           await axios
             .get(`${BASE_URL_IP}/admin/analytics/day`, {
               headers: {
@@ -33,6 +37,9 @@ const AdminPanel = ({ navigation, route }) => {
               },
             })
             .then((response) => setHoy(response.data));
+          }
+          if(!semana){
+
           await axios
             .get(`${BASE_URL_IP}/admin/analytics/week`, {
               headers: {
@@ -41,6 +48,8 @@ const AdminPanel = ({ navigation, route }) => {
               },
             })
             .then((response) => setSemana(response.data));
+          }
+          if(!mes){
           await axios
             .get(`${BASE_URL_IP}/admin/analytics/month`, {
               headers: {
@@ -49,6 +58,7 @@ const AdminPanel = ({ navigation, route }) => {
               },
             })
             .then((response) => setMes(response.data));
+          }
         } catch (error) {
           console.error(error.message);
         }

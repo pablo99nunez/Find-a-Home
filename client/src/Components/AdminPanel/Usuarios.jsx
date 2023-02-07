@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import UserCard from "./UserCard";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Usuarios({ navigation }) {
   const token = auth.currentUser?.stsTokenManager.accessToken;
@@ -11,27 +12,27 @@ export default function Usuarios({ navigation }) {
   const [filter, setFilter] = useState("user")
   const [search, setSearch] = useState("")
   const [diferent, setDiferent] = useState("usuarios")
-  useEffect(
+
+  useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         try {
           await axios
-            .get(`${BASE_URL_IP}/${filter}`, {
-              headers: {
+          .get(`${BASE_URL_IP}/${filter}`, {
+            headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setUsuarios( response.data))
+            .then((response) => setUsuarios(response.data));
         } catch (error) {
-          console.error(
-             error.message
-          );
+          console.error(error.message);
         }
       }
       evitaReturnDelUseEffect();
-    }, [filter, search, diferent])
+    }, [filter])
   );
+
  
 const userBoton = () =>{
   setFilter("user")

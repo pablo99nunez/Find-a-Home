@@ -7,7 +7,6 @@ import { Donacion } from "../../Redux/Actions";
 
 const MercadoPago = (props) => {    
     const link = useSelector((state) => state.paymentLink)
-  console.log(props.route.params)
     const handleNavigationStateChange = (navState) => {
         console.log('vasadasdasds',navState);
       if (navState.url.includes("/success")) {

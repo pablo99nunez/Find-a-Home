@@ -61,8 +61,7 @@ export default function UserDetail({ route, navigation }) {
     setOpen(0);
   }
   //-----------------------------------------------------------
-  console.log("CURRENT USER OBJECT SOLICITUDES", currentUser.misSolicitudes);
-  console.log("CURRENT USER OBJECT NOTIFICATIONS", currentUser.Notifications);
+
   return (
     <View style={{ height: height }} className="bg-[#ACACAC]">
       <ImageBackground
