@@ -28,7 +28,9 @@ const solicitudesPersonalizadas = async (email) => {
     const owner = await UserModel.findOne({ email: solicitud.owner });
     obj.ownerFullname = owner.firstName + ' ' + owner.lastName;
     obj.petName = pet.name;
+    obj.profilePic = pet.profilePic;
     obj.message = solicitud.message;
+
     arrayAretornar.push(obj);
   }
 
