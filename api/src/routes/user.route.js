@@ -34,7 +34,7 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
   try {
     const email = req.user.email;
     const user = await findUser(email);
-    console.log(user);
+
     const solicitudes = user.misSolicitudes.map((el) => el.petID);
 
     let arraySolicitudes = solicitudes.forEach(async (el) => {

@@ -14,7 +14,7 @@ export const UserSolicitudes = () => {
       petData.push(await getPetdataById(petID));
     });
 
-    console.log("petDATA", petData);
+    /* console.log("petDATA", petData); */
   }, []);
 
   return (
