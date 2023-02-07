@@ -25,7 +25,7 @@ export async function registerForPushNotificationsAsync() {
       if (finalStatus !== 'granted') {
         throw new Error(errorStatus);
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@findahome/find-a-home-app' })).data;
       // console.log("THIS IS A REAL DEVICE AND THIS IS YOUR TOKEN: ", token);
     } else {
       throw new Error('Notifications not supported on this device');
