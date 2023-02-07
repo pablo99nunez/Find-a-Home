@@ -6,10 +6,13 @@
     "development": {
       "developmentClient": false,
       "distribution": "internal",
+      "env": {
+        "BASE_URL_IP": "http://100.25.46.52:8080"
+      },
       "ios": {
         "resourceClass": "m1-medium"
       },
-      "android":{
+      "android": {
         "buildType": "apk"
       }
     },

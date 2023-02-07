@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FindtheHome",
-    "slug": "FindtheHome",
+    "slug": "find-a-home-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
@@ -30,15 +28,11 @@
           "android:turnScreenOn": true
         }
       ],
-      [
-        "@react-native-google-signin/google-signin"
-      ],
+      ["@react-native-google-signin/google-signin"],
       [
         "expo-notifications",
         {
-          "notification.icon": [
-            "./src/images/bg1-welcome.png"
-          ]
+          "notification.icon": ["./src/images/bg1-welcome.png"]
         }
       ]
     ],
@@ -55,8 +49,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cd208fa4-4531-4fcb-831d-fadada1e1156"
+        "projectId": "d8a10516-30e4-4004-ad26-40f7c408f25a"
       }
-    }
+    },
+    "owner": "findahome"
   }
 }
+
