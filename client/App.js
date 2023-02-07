@@ -339,6 +339,7 @@ export default function App() {
             }}
           />
 
+
           <Stack.Screen name="MercadoPago" component={MercadoPago} />
 
           {/* =================================== */}

@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Photos } from "./Photo";
 import { useState } from "react";
 import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
 import { ScrollView } from "react-native-gesture-handler";
 import { ButtonYellow } from "../Buttons/Buttons";
 import { EditProfiles } from "../../Redux/Actions";
+import Condition from "../Register/Entering/Condition";
 
 const EditProfile = (props) => {
 
-  const { firstName, lastName, phone, profilePic, address, description } = props.route.params
+  const { firstName, lastName, phone, profilePic, address, description, conditions } = props.route.params
   const [profile, setProfile] = useState({
     firstName: firstName ? firstName : "",
     lastName: lastName ? lastName : "",
     phone: phone ? phone : "",
     profilePic: profilePic ? profilePic : "",
     address: address ? address : "",
-    description: description ? description : ""
+    description: description ? description : "",
+    conditions: conditions ? conditions : {}
   })
   // console.log(props.route.params)
   const HandleSubmit = async () => {
@@ -25,7 +27,8 @@ const EditProfile = (props) => {
       profilePic: profile.profilePic,
       address: profile.address,
       phone: profile.phone,
-      description: profile.description
+      description: profile.description,
+      conditions: profile.conditions
     };
 
     await EditProfiles(DatosPetAEnviar)
@@ -47,12 +50,21 @@ const EditProfile = (props) => {
         });
       });
   }
+  const [checkState, setCheckState] = useState({})
 
+	const HandleCheck = (option) => {
+		setCheckState({ ...checkState, [option]: !checkState[option] })
+		setProfile({ ...profile, conditions: { ...profile.conditions, [option]: !checkState[option] } })
+	}
 
+  useEffect(()=>{
+    setCheckState({...checkState, ...conditions})
+  }, [])
+  const [extras, setExtras] = useState(false)
   return (
     <ScrollView className='bg-[#d9d9d9]'>
 
-      <View className='w-10/12 mx-auto'>
+      <View className='w-10/15 mx-auto'>
         <Photos profile={profile} setProfile={setProfile} name={profile.name} />
 
         <View>
@@ -117,7 +129,15 @@ const EditProfile = (props) => {
             maxLength={140}
           />
         </View>
+        <Text className='text-2xl font-extralight m-2'>¿Cambiaron tus condiciones?</Text>
 
+				<View className="flex flex-row flex-wrap items-center justify-center mx-auto">
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"} />
+				</View>
         <View className="my-[10%]">
           <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />
 

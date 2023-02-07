@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Alert, Modal,  } from "react-native";
 import { useState } from "react";
 import { PetPost } from "../../Redux/Actions/index";
 import * as Location from "expo-location";
@@ -39,7 +39,6 @@ export const CreatePet = ({ navigation }) => {
       });
     })();
   }, []);
-
   const [crear, setCrear] = useState({
     name: "",
     description: "",
@@ -52,6 +51,7 @@ export const CreatePet = ({ navigation }) => {
   });
 
   const [error, setError] = useState({});
+  const [visible, setVisible] = React.useState(false);
 
   const HandleSubmit = async () => {
     if (!error.name && !error.description && !error.birthday) {
@@ -72,8 +72,7 @@ export const CreatePet = ({ navigation }) => {
       };
       await PetPost(DatosPetAEnviar)
         .then((sucess) => {
-          alert("se ha creado correctamente");
-          navigation.goBack();
+         navigation.navigate("Home");
         })
         .catch((error) => {
           console.error("⚠️ Error -> 🚨 CreatePet -> 🔔PetPost: " + error.message);
@@ -138,6 +137,7 @@ export const CreatePet = ({ navigation }) => {
         
           <ButtonYellow deshabilitar={disable2} onPress={() => HandleSubmit()} text={disable2?"Complete los datos":"Publicar"} />
         }
+
         </View>
       </ScrollView>
     </>

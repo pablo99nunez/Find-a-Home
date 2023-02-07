@@ -20,7 +20,7 @@ const EditPet = (props) => {
     profilePic,
     gallery,
     specie,
-    state
+    state,
   });
   const [error, setError] = useState({});
 
@@ -38,7 +38,6 @@ const EditPet = (props) => {
     };
     await PetEdit(DatosPetAEnviar)
       .then((sucess) => {
-        alert("Los datos de tu mascota se han editado exitosamente");
         props.navigation.navigate("UserDetail")
       })
       .catch((err) => {

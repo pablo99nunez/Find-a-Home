@@ -24,7 +24,7 @@ export default FormPetsTwo = ({setCrear, crear, error, setError}) => {
           className={crear.state === 'Lost'?
            "self-start rounded-full bg-[#AB4E68] p-3 m-2" :
             'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
-              <Text>Perdido</Text>
+              {/* <Text>Perdido</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'Found'})}}
           className={crear.state === 'Found'?
@@ -35,7 +35,7 @@ export default FormPetsTwo = ({setCrear, crear, error, setError}) => {
           <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'NotAdoptable'})}}
           className={crear.state === 'NotAdoptable'?
            "self-start  rounded-full bg-[#AB4E68] p-3 m-2" :
-            'self-start  rounded-full bg-[#77747470] p-3 m-2'}>
+            'self-start  rounded-full bg-[#77747470] p-3 m-2'}> */}
               <Text>Fuera de adopcion</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {setCrear({...crear, state: 'InAdoptionProcess'})}}
