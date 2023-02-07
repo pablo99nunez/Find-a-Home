@@ -14,10 +14,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.reactnativefirebase"
     },
     "plugins": [
       [
@@ -27,11 +30,15 @@
           "android:turnScreenOn": true
         }
       ],
-      ["@react-native-google-signin/google-signin"],
+      [
+        "@react-native-google-signin/google-signin"
+      ],
       [
         "expo-notifications",
         {
-          "notification.icon": ["./src/images/bg1-welcome.png"]
+          "notification.icon": [
+            "./src/images/bg1-welcome.png"
+          ]
         }
       ]
     ],
@@ -41,14 +48,14 @@
         "backgroundColor": "#FFFFFF"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.reactnativefirebas"
+      "package": "com.reactnativefirebase"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "2095e72a-8c05-4962-bc69-545d346a676f"
+        "projectId": "cd208fa4-4531-4fcb-831d-fadada1e1156"
       }
     }
   }
