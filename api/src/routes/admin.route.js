@@ -147,5 +147,15 @@ router.put('/admin', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
+router.get('/donaciones', async (req, res) => {
+    try {
+        const todoLosDonadores = await UserModel.find({
+            donaciones: { $exists: true, $not: { $size: 0 } },
+        });
+        res.status(200).send(todoLosDonadores);
 
+    } catch (err) {
+        res.status(501).send(err.message);
+    }
+});
 module.exports = router;

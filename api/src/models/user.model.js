@@ -140,7 +140,10 @@ const userSchema = mongoose.Schema(
     tipo: {
       type: String,
       // enum: ["User, Admin"],
-    }
+    },
+    donaciones: {
+      type: Array,
+    },
   },
   {
     timestamps: {
