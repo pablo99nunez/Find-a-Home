@@ -19,6 +19,7 @@ const setAdmin = (uid) => {
 const extractUserData = async (uid)=>{
   return await firebaseAdmin.auth(app).getUser(uid)
   .then(userRecord => userRecord.toJSON().email)
+  .catch(err=>err.message)
 }
 //rellena el req con una nueva clave "user" ahora se puede hacer req.user al decodificar correcamente el token
 const checkJwt = (req, res, next) => { //jason web token
@@ -87,4 +88,5 @@ module.exports = {
   checkVolunteer,
   setAdmin,
   messaging,
+  extractUserData
 };

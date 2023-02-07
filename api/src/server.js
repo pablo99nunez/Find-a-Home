@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { checkJwt, firebaseAdmin, setAdmin } = require('./utils/firebase-stuff');
+const { checkJwt, firebaseAdmin, setAdmin, extractUserData } = require('./utils/firebase-stuff');
 const {globalLimit} = require('./utils/rate-limiters');
 // permite leer archivo .env.
 require('dotenv').config();
