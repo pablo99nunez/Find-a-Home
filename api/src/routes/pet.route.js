@@ -16,6 +16,15 @@ router.get('/', async (req, res) => {
     res.status(501).send( error.message)
   }
 })
+router.get('/:id', async (req, res) => { 
+  const petId = req.params.id
+  try {
+    const getPetById = await findPetById(petId)
+    res.send({message: 'Todas las mascotas', payload: getPetById})
+  } catch (error) {
+    res.status(501).send({ error: error.message })
+  }
+})
 
 //CREAR PET
 //logeado, user, checkJwt te deja pasar si el token esta bien, y ademas
