@@ -449,13 +449,14 @@ export const createUserInDb = async (
     email,
     phone,
     address,
+    profilePic,
     conditions,
     pushToken }, tokenn
 ) => {
   const data = {
     firstName,
     lastName,
-    profilePic:
+    profilePic: profilePic||
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
     email,
     phone,

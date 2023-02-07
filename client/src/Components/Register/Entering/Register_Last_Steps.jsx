@@ -73,14 +73,14 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	const handleContinuar = () => {
 		setLoading(true)
 		crearYrellenarDB({
-			email,
-			password,
-			firstName,
-			lastName,
-			phone,
+			email:userNewInput.email,
+			password:userNewInput.password,
+			firstName:userNewInput.firstName,
+			lastName:userNewInput.lastName,
+			phone:userNewInput.phone,
 			conditions:userNewInput.condiciones,
 			pushToken:userNewInput.pushToken,
-			address:`${pais},${departamento},${provincia}`,
+			address:`${userNewInput.pais},${userNewInput.departamento},${userNewInput.provincia}`,
 			})
 			.then(resp => {
 				const {objetoConDatos,tokenn}= resp

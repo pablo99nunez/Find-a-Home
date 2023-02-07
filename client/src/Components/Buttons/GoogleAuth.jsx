@@ -40,7 +40,7 @@ export default function GoogleButton({ navigation }) {
 		}
 	}, [response]);
 	function goToRegister() {
-		console.log(userData)
+		console.log('linea 43 googleAuth.jsx',userData)
 		navigation.navigate("RegisterFirstStepsGoogle", userData)
 	}
 	function logoutUser() {
@@ -70,8 +70,8 @@ export default function GoogleButton({ navigation }) {
 			}}
 		/>
 		<Button
-			disabled={!request}
-			title="Login"
+			disabled={!(response ? response?.type === 'success' : true)} //deshabilita el boton
+			title="Continuar con el registro"
 			onPress={() => {
 				goToRegister()
 			}}

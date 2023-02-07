@@ -73,27 +73,23 @@ const RegisterLastStepsGoogle = ({ route, navigation }) => {
 	}
 	const handleContinuar = () => {
 		setLoading(true)
-
-
-		const objetoConDatos = {
-			email,
-			profilePic,
-			firstName,
-			lastName,
-			phone,
-			conditions: userNewInput.condiciones,
-			pushToken: userNewInput.pushToken,
-			address: `${pais},${departamento},${provincia}`
-		}
-		const tokenn = token;
-
-		createUserInDb(objetoConDatos, tokenn) //lo retorna
+		const objToSend = {
+			email:userNewInput.email,
+			firstName:userNewInput.firstName,
+			lastName:userNewInput.lastName,
+			phone:userNewInput.phone,
+			conditions:userNewInput.condiciones,
+			pushToken:userNewInput.pushToken,
+			profilePic: userNewInput.profilePic,
+			address:`${userNewInput.pais},${userNewInput.departamento},${userNewInput.provincia}`,
+			}
+		createUserInDb(objToSend, token) //lo retorna
 			.then(resp => {
 				navigation.navigate("Home")
 			})
 			.catch(err => {
 				if (typeof err.response !== "undefined" && err.response.data.error)
-					console.error(err.response.data.error)
+					alert(err.response.data.error)
 				setLoading(false)
 				console.error(err.message)
 			})
