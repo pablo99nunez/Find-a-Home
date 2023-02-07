@@ -21,35 +21,6 @@ import validate from "../validate";
 
 const { width } = Dimensions.get("screen")
 
-/*
-<SelectList
-                  data={[
-                    { key: "", value: "Todos" },
-                    { key: "Perro", value: "Perro" },
-                    { key: "Gato", value: "Gato" },
-                    { key: "Otro", value: "Otro" },
-                  ]}
-                  placeholder="Seleccionar"
-                  setSelected={(val) => {
-                    // filterBySpecie(val)
-                    setSpecie(val);
-                  }}
-                  boxStyles={{ backgroundColor: "#D9D9D9", width: width * 0.8 }}
-                  inputStyles={{ color: "#717171", fontSize: 18 }}
-                  dropdownStyles={{
-                    backgroundColor: "#D9D9D9",
-                    position: "absolute",
-                    top: width * 0.1,
-                    zIndex: 1,
-                    elevation: 1
-                  }}
-                  dropdownItemStyles={{ width: width * 0.8 }}
-                  dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
-                  search={false}
-                  fontFamily={"Roboto_300Light"}
-                />
-
-*/
 export default function RegisterFirstSteps({ navigation , route}) {
   const {password, email, firstName, lastName} = route.params
   const [loading, setLoading] = useState(false)
