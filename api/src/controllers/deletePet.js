@@ -31,7 +31,7 @@ const solicitudesPersonalizadas = async (email) => {
       //------objeto personalizado
       obj.ownerFullname = owner.firstName + ' ' + owner.lastName;
       obj.petName = pet.name;
-
+      obj.message = solicitud.message;
       //-------fin de personalización, pusheando al array
       arrayAretornar.push(obj);
     },

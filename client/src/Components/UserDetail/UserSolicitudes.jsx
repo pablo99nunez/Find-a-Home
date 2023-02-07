@@ -19,7 +19,7 @@ export const UserSolicitudes = () => {
       async function evitaReturnDelUseEffect() {
         try {
           await axios
-            .get(`${BASE_URL_IP}/user/misSolicitudes`, {
+            .get(`${BASE_URL_IP}/user/misSolicitudes2`, {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
