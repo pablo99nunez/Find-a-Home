@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     const allPets = await findAllPets({})
     res.send({message: 'Todas las mascotas', payload: allPets})
   } catch (error) {
-    res.status(501).send({ error: error.message })
+    res.status(501).send( error.message)
   }
 })
 router.get('/:id', async (req, res) => { 
@@ -35,7 +35,7 @@ router.post('/',limit5cada12horas,checkJwt, async (req, res) => {
     const newPet = await createPet(PetData, req.user.email)
     res.status(200).send({ message: 'Mascota creada', payload: newPet })
   } catch (error) {
-    res.status(501).send({ error: error.message })
+    res.status(501).send( error.message)
 
 
   }
@@ -49,7 +49,7 @@ router.get('/profile/', async (req, res) => {
     res.send({ message: 'Mascota encontrada', payload: pet})
   
   } catch (error) {
-    res.status(501).send({ error: error.message })
+    res.status(501).send( error.message)
   }
 })
 
@@ -60,7 +60,7 @@ router.put('/profile', checkJwt, async (req, res) => {
     const updatedPet = await updatePet(newData, req.body.id, req.user.email)
     res.send({ message: 'Mascota modificada', payload: updatedPet });
   } catch (err) {
-    res.status(501).send({ error: err.message })
+    res.status(501).send( err.message)
   }
 });
 
@@ -74,7 +74,7 @@ router.put('/profile/solicitud',limit5cada12horas, checkJwt, async (req, res) =>
     const petConNuevaSolicitud = await solicitarAdopcion(petID, message, req.user.email)
     res.send({ message: 'Solicitud Enviada', payload: petConNuevaSolicitud });
   } catch (err) {
-    res.status(501).send({ error: err.message })
+    res.status(501).send( err.message)
   }
 });
 
@@ -87,7 +87,7 @@ router.delete('/profile/solicitud',checkJwt, async (req, res) => {
     const petSinTuSolicitud = await solicitarAdopcion(petID, message, req.user.email,true)
     res.send({ message: 'Solicitud Eliminada', payload: petSinTuSolicitud });
   } catch (err) {
-    res.status(501).send({ error: err.message })
+    res.status(501).send( err.message)
   }
 });
 
@@ -98,7 +98,7 @@ router.delete('/profile/:ID',checkJwt, async (req, res) => {
     const deletedPet = await deletePet(req.params.ID)
     res.send({ message: 'Mascota borrada', payload: deletedPet });
   } catch (err) {
-    res.status(501).send({ error: err.message })
+    res.status(501).send( err.message)
   }
 });
 
@@ -115,7 +115,7 @@ router.get('/byowner',checkJwt, async (req, res) => {
     res.send(allPets);
   }
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 router.put('/denunciar', checkJwt, async (req, res) => {
@@ -124,7 +124,7 @@ router.put('/denunciar', checkJwt, async (req, res) => {
     const updatedPet = await denPet(denuncia, req.body.id, req.user.email)
     res.send({ message: 'mascota denunciada', payload: updatedPet });
   } catch (err) {
-    res.status(501).send({ error: err.message })
+    res.status(501).send( err.message)
   }
 });
 module.exports = router;
