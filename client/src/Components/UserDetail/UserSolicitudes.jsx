@@ -50,7 +50,7 @@ export const UserSolicitudes = () => {
             <Image
               className="h-[100%] w-[15%] m-2"
               resizeMode="contain"
-              source={require("../../images/FindAHome.png")}
+              source={{ uri: item?.profilePic }}
             />
             <View>
               <Text className="text-[#d9d9d9] font-extralight text-sm w-[60%]">
@@ -63,11 +63,6 @@ export const UserSolicitudes = () => {
               <Text className="text-[#d9d9d9] font-light w-[60%]">
                 Mensaje: {item?.message}
               </Text>
-              <Image
-                className="h-[100%] w-[15%] m-2"
-                resizeMode="contain"
-                source={{ uri: item?.profilePic }}
-              />
             </View>
           </View>
         )}

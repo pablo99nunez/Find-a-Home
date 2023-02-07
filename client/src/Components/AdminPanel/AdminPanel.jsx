@@ -17,47 +17,45 @@ const AdminPanel = ({ navigation, route }) => {
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         try {
-          if(!pets){
-          await axios
-            .get(`${BASE_URL_IP}/admin/getAllPets`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => setPets(response.data));
+          if (!pets) {
+            await axios
+              .get(`${BASE_URL_IP}/admin/getAllPets`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((response) => setPets(response.data));
           }
-          if(!hoy){
-
-          await axios
-            .get(`${BASE_URL_IP}/admin/analytics/day`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => setHoy(response.data));
+          if (!hoy) {
+            await axios
+              .get(`${BASE_URL_IP}/admin/analytics/day`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((response) => setHoy(response.data));
           }
-          if(!semana){
-
-          await axios
-            .get(`${BASE_URL_IP}/admin/analytics/week`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => setSemana(response.data));
+          if (!semana) {
+            await axios
+              .get(`${BASE_URL_IP}/admin/analytics/week`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((response) => setSemana(response.data));
           }
-          if(!mes){
-          await axios
-            .get(`${BASE_URL_IP}/admin/analytics/month`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => setMes(response.data));
+          if (!mes) {
+            await axios
+              .get(`${BASE_URL_IP}/admin/analytics/month`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((response) => setMes(response.data));
           }
         } catch (error) {
           console.error(error.message);
@@ -101,8 +99,7 @@ const AdminPanel = ({ navigation, route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
-          onPress={() => 
-            navigation.navigate("Donate")}
+          onPress={() => navigation.navigate("Donate")}
         >
           <Text
             style={{ fontFamily: "Roboto_300Light" }}
