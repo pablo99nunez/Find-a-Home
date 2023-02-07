@@ -37,11 +37,32 @@ export const checkToken = async () => {
     .then((resp) => {
       return true;
     })
-    .catch((err) => {
-      return false;
-    });
-  return response;
-};
+
+    .catch(err => {
+      return false
+
+    })
+  return response
+}
+//devuelve verdadero si el token se decodifico, falso otherrwise
+export const retriveUserData = async () => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const response = await axios.get(`${url}/check`, config)
+    .then(resp => {
+      return resp.data
+    })
+    .catch(err => {
+      return false
+
+    })
+  return response
+}
+
 //devuelve verdadero si el usuario existe en la base de datos
 export const checkEmail = async (email) => {
   const response = await axios
@@ -255,9 +276,12 @@ export const getUser = () => {
       })
       .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
-        console.error(err.response.data.error);
-        else  console.error("index.js " + err.message);
-      });
+
+          alert(err.response.data.error)
+        else
+          alert('index.js ' + err.message)
+      }
+      );
   };
 };
 
@@ -403,6 +427,7 @@ export const DeletePet = async (id) => {
     return desbanear;
   } catch (error) {
     console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data);
+
   }
 };
 
@@ -506,13 +531,20 @@ export const ReportPets = async (id, denuncia) => {
 };
 
 export const createUserInDb = async (
-  { firstName, lastName, email, phone, address, conditions, pushToken },
-  tokenn
+  { firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    profilePic,
+    conditions,
+    pushToken }, tokenn
+
 ) => {
   const data = {
     firstName,
     lastName,
-    profilePic:
+    profilePic: profilePic||
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
     email,
     phone,

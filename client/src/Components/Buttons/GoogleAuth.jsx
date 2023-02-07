@@ -1,18 +1,19 @@
-import * as React from 'react';
+import React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import { initializeApp } from 'firebase/app';
+import { useState } from 'react';
 import { getAuth, GoogleAuthProvider, signInWithCredential, signOut } from 'firebase/auth';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from 'react-native';
 import firebase from "../../firebase/firebase-config";
 import { TouchableOpacity, Text } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { retriveUserData } from '../../Redux/Actions/index'
 WebBrowser.maybeCompleteAuthSession();
 
-export default function GoogleButton() {
+export default function GoogleButton({ navigation }) {
 
 	const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
 		{
@@ -20,16 +21,28 @@ export default function GoogleButton() {
 		},
 	);
 
+	const [userData, setUserData] = useState({})
 	React.useEffect(() => {
 		if (response?.type === 'success') {
 			const { id_token } = response.params;
 			const auth = getAuth();
 			const credential = GoogleAuthProvider.credential(id_token);
-			signInWithCredential(auth, credential);
-			console.log(response)
+			signInWithCredential(auth, credential)
+				.then(async res => {
+					const result = await retriveUserData()
+					const token = await auth.currentUser.getIdToken();
+					const { name, email, photoURL } = result.user;
+					setUserData({ name, email, photoURL, token })
+					console.log("userData", userData)
+				})
+				.catch(error => error)
+
 		}
 	}, [response]);
-
+	function goToRegister() {
+		console.log('linea 43 googleAuth.jsx',userData)
+		navigation.navigate("RegisterFirstStepsGoogle", userData)
+	}
 	function logoutUser() {
 		const auth = getAuth(firebase);
 		signOut(auth)
@@ -37,7 +50,6 @@ export default function GoogleButton() {
 				// clear session storage
 				AsyncStorage.clear(() => {
 					AsyncStorage.clear();
-					navigation.navigate("LandigPage");
 				});
 			})
 			.catch((error) => {
@@ -53,7 +65,15 @@ export default function GoogleButton() {
 			disabled={!request}
 			title="Login"
 			onPress={() => {
-				promptAsync();
+				promptAsync()
+
+			}}
+		/>
+		<Button
+			disabled={!(response ? response?.type === 'success' : true)} //deshabilita el boton
+			title="Continuar con el registro"
+			onPress={() => {
+				goToRegister()
 			}}
 		/>
 		<TouchableOpacity

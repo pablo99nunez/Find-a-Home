@@ -15,11 +15,12 @@ import { createUserInDb, putUserData } from "../../../Redux/Actions";
 import { registerForPushNotificationsAsync as setPushToken } from "../../../firebase/pushNotifications";
 import Condition from "./Condition";
 
-const RegisterLastSteps = ({ route, navigation }) => {
+const RegisterLastStepsGoogle = ({ route, navigation }) => {
 
 	const {
 		email,
-		password,
+		profilePic,
+		token,
 		firstName,
 		lastName,
 		phone,
@@ -30,9 +31,9 @@ const RegisterLastSteps = ({ route, navigation }) => {
 
 	const [userNewInput, setuserNewInput] = useState({
 		email,
-		password,
 		firstName,
 		lastName,
+		profilePic,
 		phone,
 		pais,
 		departamento,
@@ -72,26 +73,23 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	}
 	const handleContinuar = () => {
 		setLoading(true)
-		crearYrellenarDB({
+		const objToSend = {
 			email:userNewInput.email,
-			password:userNewInput.password,
 			firstName:userNewInput.firstName,
 			lastName:userNewInput.lastName,
 			phone:userNewInput.phone,
 			conditions:userNewInput.condiciones,
 			pushToken:userNewInput.pushToken,
+			profilePic: userNewInput.profilePic,
 			address:`${userNewInput.pais},${userNewInput.departamento},${userNewInput.provincia}`,
-			})
+			}
+		createUserInDb(objToSend, token) //lo retorna
 			.then(resp => {
-				const {objetoConDatos,tokenn}= resp
-				return createUserInDb(objetoConDatos, tokenn) //lo retorna
-			})
-			.then(resp=>{
 				navigation.navigate("Home")
 			})
 			.catch(err => {
 				if (typeof err.response !== "undefined" && err.response.data.error)
-				console.error(err.response.data.error)	  
+					alert(err.response.data.error)
 				setLoading(false)
 				console.error(err.message)
 			})
@@ -102,7 +100,7 @@ const RegisterLastSteps = ({ route, navigation }) => {
 		<View>
 			<View className="h-screen items-center bg-[#FFC733] w-screen">
 				<Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-				¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))}
+					¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))}
 				</Text>
 				<Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
 					Que condiciones puedes ofrecer a tus mascotas?
@@ -165,4 +163,4 @@ const RegisterLastSteps = ({ route, navigation }) => {
 	)
 }
 
-export default RegisterLastSteps;
+export default RegisterLastStepsGoogle;
