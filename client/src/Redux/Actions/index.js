@@ -559,3 +559,26 @@ export const reviewAndRating = (ratedEmail, rating, review) => {
     }
   }
 }
+
+export const Donacion = async (cash) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    monto: cash,
+  };
+  try {
+    const donacion = await axios.put(
+      url + "/user/donate",
+      bodyPayload,
+      config
+    );
+
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 donacion: " + error.response.data);
+  }
+};

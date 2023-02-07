@@ -91,9 +91,8 @@ const AdminPanel = ({ navigation, route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
-          onPress={() => {
-            alert("Donaciones");
-          }}
+          onPress={() => 
+            navigation.navigate("Donate")}
         >
           <Text
             style={{ fontFamily: "Roboto_300Light" }}
