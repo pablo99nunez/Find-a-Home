@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { DesbanUser, UserBan, MakeAdmin } from "../../Redux/Actions";
+import { DesbanUser, UserBan, MakeAdmin, QuitarAdmin } from "../../Redux/Actions";
 
 const UserCard = (props, { navigation }) => {
   const banUser = (owneremail) => {
@@ -10,6 +10,10 @@ const UserCard = (props, { navigation }) => {
   const AdminUser = (owneremail) => {
     MakeAdmin(owneremail);
     alert("El usuario ahora es administrador");
+  };
+  const QuitarAdmin = (owneremail) => {
+    MakeAdmin(owneremail);
+    alert("El usuario ya no es administrador");
   };
   const Desban = (owneremail) => {
     DesbanUser(owneremail);
@@ -86,12 +90,14 @@ const UserCard = (props, { navigation }) => {
         </TouchableOpacity>
             )
         : null  }
-                {!props.item.owner ?
+                {props.item.tipo !== "Admin" ?
 
                 <TouchableOpacity onPress={() => AdminUser(props.item.email)}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Hacer Admin</Text>
         </TouchableOpacity>
-        : null }
+        : <TouchableOpacity onPress={() => QuitarAdmin(props.item.email)}>
+        <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Quitar Admin</Text>
+      </TouchableOpacity> }
       </View>
     </View>
   );
