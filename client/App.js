@@ -19,6 +19,8 @@ import Welcome from "./src/Components/WelcomePage/WelcomePage";
 import Detail from "./src/Components/Detail/Detail";
 import RegisterFirstSteps from "./src/Components/Register/Entering/Register_First_Steps";
 import RegisterLastSteps from "./src/Components/Register/Entering/Register_Last_Steps";
+import RegisterFirstStepsGoogle from "./src/Components/Register/Entering/Register_First_Steps_google";
+import RegisterLastStepsGoogle from "./src/Components/Register/Entering/Register_Last_Steps_google";
 import UserDetail from "./src/Components/UserDetail/UserDetail";
 import { CreatePet } from "./src/Components/CreatePet/CreatePet";
 import SolicitudPet from "./src/Components/Detail/SolicitudPet";
@@ -40,7 +42,7 @@ import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
-
+import GoogleButton from "./src/Components/Buttons/GoogleAuth";
 import UserPets from "./src/Components/AdminPanel/UserPets";
 
 LogBox.ignoreLogs([
@@ -71,6 +73,7 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
+
           {/* <Stack.Screen
             name="LoginTest"
             component={LoginTest}
@@ -80,6 +83,12 @@ export default function App() {
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
+            initialParams={{ fromChild: "Initial" }}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Google"
+            component={GoogleButton}
             initialParams={{ fromChild: "Initial" }}
             options={{ headerShown: false }}
           />
@@ -152,6 +161,19 @@ export default function App() {
             }}
           />
           <Stack.Screen
+            name="RegisterFirstStepsGoogle"
+            component={RegisterFirstStepsGoogle}
+            options={{
+              headerStyle: { backgroundColor: "#FFC733" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: "",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+              headerRight: (props) => <Logo {...props} />,
+            }}
+          />
+          <Stack.Screen
             name="RegisterMap"
             component={RegisterMap}
             options={{ headerShown: false }}
@@ -169,7 +191,19 @@ export default function App() {
               headerRight: (props) => <Logo {...props} />,
             }}
           />
-
+          <Stack.Screen
+            name="RegisterLastStepsGoogle"
+            component={RegisterLastStepsGoogle}
+            options={{
+              headerStyle: { backgroundColor: "#FFC733" },
+              headerShadowVisible: false,
+              headerTintColor: "#000",
+              title: "",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+              headerRight: (props) => <Logo {...props} />,
+            }}
+          />
           <Stack.Screen
             name="Login"
             component={LoginScreen}

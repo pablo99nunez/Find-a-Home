@@ -40,6 +40,24 @@ export const checkToken = async () => {
     })
   return response
 }
+//devuelve verdadero si el token se decodifico, falso otherrwise
+export const retriveUserData = async () => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const response = await axios.get(`${url}/check`, config)
+    .then(resp => {
+      return resp.data
+    })
+    .catch(err => {
+      return false
+
+    })
+  return response
+}
 //devuelve verdadero si el usuario existe en la base de datos
 export const checkEmail = async (email) => {
 
@@ -233,7 +251,7 @@ export const getUser = () => {
         if (typeof err.response !== "undefined" && err.response.data.error)
           alert(err.response.data.error)
         else
-          alert('index.js '+err.message)
+          alert('index.js ' + err.message)
       }
       );
   };
@@ -363,7 +381,7 @@ export const DeletePet = async (id) => {
 
     return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data )
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data)
   }
 };
 

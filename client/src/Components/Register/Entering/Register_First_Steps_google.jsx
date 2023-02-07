@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Picker } from "@react-native-picker/picker";
+
 import {
   View,
   Text,
@@ -9,8 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-//¿¿Why you import  Keyboard Aware Scroll View??
+
 
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
@@ -18,12 +17,18 @@ import Localities from "../Localities.json";
 
 import validate from "../validate";
 
-export default function RegisterFirstSteps({ navigation, route }) {
-  const { password, email, firstName, lastName } = route.params
+export default function RegisterFirstStepsGoogle({ navigation, route }) {
+  console.log("ESTA ES LA DATA MI REEEI:  ", route.params)
+  const { name, email, photoURL, token } = route.params
+  const fullName = name;
+  const firstName = fullName[0];
+  const lastName = fullName[1] || " ";
+  const profilePic = photoURL;
   const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
     email,
-    password,
+    profilePic,
+    token,
     firstName,
     lastName,
     phone: "",
@@ -48,7 +53,7 @@ export default function RegisterFirstSteps({ navigation, route }) {
   };
   const handleContinuar = () => {
     setLoading(true)
-    navigation.navigate("RegisterLastSteps", userInput)
+    navigation.navigate("RegisterLastStepsGoogle", userInput)
     setLoading(false)
   }
   const disable = `${userInput.phone}`.length === 0 ||
@@ -60,7 +65,7 @@ export default function RegisterFirstSteps({ navigation, route }) {
     <View>
       <View className="h-screen flex items-center bg-[#FFC733]">
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-          ¡Bienvenido/a {userInput.firstName[0].toUpperCase().concat(userInput.firstName.toLowerCase().substring(1))}
+          {/* ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} */}
         </Text>
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
