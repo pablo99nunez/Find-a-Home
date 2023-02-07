@@ -86,7 +86,7 @@ const AdminPanel = ({ navigation, route }) => {
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-[#d9d9d9] text-xl font-thin mx-auto"
           >
-            Usuarios
+            User/Pets
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

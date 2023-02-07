@@ -448,7 +448,28 @@ export const DesbanUser = async (owner) => {
     console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
   }
 };
+export const MakeAdmin = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    OwenerEmail: owner,
+  };
+  try {
+    const banear = await axios.put(
+      url + "/admin/admin",
+      bodyPayload,
+      config
+    );
 
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
+  }
+};
 export const ReportPets = async (id, denuncia) => {
   const config = {
     headers: {

@@ -23,7 +23,6 @@ export const ProfileOthers = ({ route, navigation }) => {
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [userProfile, setUserProfile] = useState({});
   const [pets, setPets] = useState([]);
-
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
