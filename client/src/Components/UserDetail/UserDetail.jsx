@@ -61,11 +61,6 @@ export default function UserDetail({ route, navigation }) {
     setOpen(0);
   }
   //-----------------------------------------------------------
-<<<<<<< HEAD
-  /* console.log("CURRENT USER OBJECT SOLICITUDES", currentUser.misSolicitudes);
-  console.log("CURRENT USER OBJECT NOTIFICATIONS", currentUser.Notifications); */
-=======
->>>>>>> cbe92975cd05da53280d17044c9690861076bce1
   return (
     <View style={{ height: height }} className="bg-[#ACACAC]">
       <ImageBackground
@@ -93,7 +88,6 @@ export default function UserDetail({ route, navigation }) {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
-
           <Text
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-4xl text-[#ffc733]"
@@ -116,7 +110,6 @@ export default function UserDetail({ route, navigation }) {
           style={{ fontFamily: "Roboto_300Light" }}
         >
           {currentUser?.description}
-
         </Text>
       </View>
       <ImageBackground
