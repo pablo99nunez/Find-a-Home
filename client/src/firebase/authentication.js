@@ -17,8 +17,8 @@ export const loginWithEmailAndPassword = async (email, password) => {
     })
 };
 
-export const enviarReseteoPasswordPorMail = (email) =>{
-  sendPasswordResetEmail(auth, email)
+export const enviarReseteoPasswordPorMail = async (email) =>{
+  await sendPasswordResetEmail(auth, email)
 }
 export const enviarEmailVerificacion = () =>{
   sendEmailVerification(auth.currentUser)
