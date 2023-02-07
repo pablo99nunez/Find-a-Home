@@ -13,7 +13,7 @@ const {
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
 const { ratingUpdate } = require('../controllers/ratingUserController');
-const { cleanUserInexistentPets } = require('../controllers/deletePet');
+const { cleanUserInexistentPets, solicitudesPersonalizadas } = require('../controllers/deletePet');
 const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
 const router = express.Router();
@@ -45,6 +45,18 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
     res.status(501).send({ error: error.message });
   }
 });
+
+
+router.get('/misSolicitudes2',checkJwt, async (req, res) => {
+    try {
+        const response = await solicitudesPersonalizadas(req.user.email)
+        res.send(response)
+    } catch (error) {
+        res.status(501).send( error.message )
+    }
+})
+
+
 
 router.get('/checkemail', limit5cada30minutos, async (req, res) => {
   try {
@@ -95,6 +107,7 @@ router.put('/profile', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
+
 
 //por body tiene q entrar 2 parametros
 //el email del nuevoOwner "newOwnerEmail": "asdasd@gmail.com"
