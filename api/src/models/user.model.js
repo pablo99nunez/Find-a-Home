@@ -89,8 +89,9 @@ const userSchema = mongoose.Schema(
         default: 0
       }
     },
-    reviewsQty: {
-      type: Number
+    reviews: {
+      type: Objects,
+      default: {}
     },
     description: {
       type: String,

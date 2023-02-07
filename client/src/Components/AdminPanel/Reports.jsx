@@ -36,17 +36,18 @@ export default function Reports() {
  
   return (
     <View>
-              <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>setFilter("reportPets")}>
-          <Text className='text-xl font-thin mx-auto'>Mascotas reportadas</Text>
+        <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>setFilter("reportPets")}>
+          <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-2xl font-thin mx-auto'>Mascotas reportadas</Text>
         </TouchableOpacity>
-        <TouchableOpacity className='bg-[#d9d9d9] p-5 rounded-xl m-2' onPress={() =>setFilter("reportUsers")}>
-          <Text className='text-xl font-thin mx-auto'>Usuarios reportados</Text>
+        <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>setFilter("reportUsers")}>
+          <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-2xl font-thin mx-auto'>Usuarios reportados</Text>
         </TouchableOpacity>
     <View>
       <FlatList
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={reports}
+        className="h-[78%]"
         renderItem={({ item }) => (
             <ReportCard item={item}/>
         )}

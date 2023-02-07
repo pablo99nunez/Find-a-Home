@@ -5,6 +5,7 @@ const routes = require('./routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { checkJwt, firebaseAdmin, setAdmin } = require('./utils/firebase-stuff');
+const {globalLimit} = require('./utils/rate-limiters');
 // permite leer archivo .env.
 require('dotenv').config();
 
@@ -27,6 +28,7 @@ const create = async () => {
     const app = express();
     //MIDDLEWARES, se meten en todos los request y en todos los sends
     app.use(cors()) //discrimina quien puede hacer peticiones al backend, poner pagina del frontend al deployar.
+    app.use(globalLimit)
     app.use(express.json({ limit: "50mb" })) //transforma json en strings automaticamente y viceversa.
     app.use(bodyParser.urlencoded({ extended: true })); //permite anidacion de objetos y arrays
     app.use(express.static('public')); //no recuerdo
@@ -35,8 +37,8 @@ const create = async () => {
     app.use(routes)
 
     app.get('/check', checkJwt, async (req, res) => {
-        setAdmin(req.user.uid)
-        res.send({message: 'Token asdasd, has accedido a esta ruta privilegiada pequeño saltamontes reached', user: req.user})
+        //setAdmin(req.user.uid)
+        res.send({message: 'Token decodificado exitosamente!', user: req.user})
     });
 
     return app

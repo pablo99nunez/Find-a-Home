@@ -34,7 +34,8 @@ const BottomView = ({ petId, auth, email, petName }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
-          if(isLoggedIn){ if (typeof error.response !== "undefined")
+          if(isLoggedIn){ 
+          if (typeof error.response !== "undefined")
           console.error("BottomView.jsx: " + error.response.data.error)
           else
           console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)}
@@ -86,6 +87,9 @@ const BottomView = ({ petId, auth, email, petName }) => {
         })
 
     } catch (error) {
+      if (typeof error.response !== "undefined")
+          alert(error.response.data)
+      else
       console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error.message);
     }
   }

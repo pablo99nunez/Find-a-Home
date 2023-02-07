@@ -20,6 +20,36 @@ Deleting pet algorithm is expensive but necessary:
 const UserModel = require('../models/user.model');
 const PetModel = require('../models/pet.model');
 const async = require('async');
+
+const solicitudesPersonalizadas = async (email) => {
+    const user = await UserModel.findOne({ email: email }) //busca dueño de solicitudes
+
+    let arrayAretornar = []
+    if(!user) throw new Error('user no existee')
+    async.each(user.misSolicitudes, async (solicitud) => {
+        const obj = {}
+        const pet = await PetModel.findOne({ _id: solicitud.petID });//Busca PERRO
+        const owner = await UserModel.findOne({ email: solicitud.owner });//Busca USUARIO
+        //------objeto personalizado
+        obj.ownerFullname = owner.firstName + " " + owner.lastName
+        obj.petName = pet.name
+
+        //-------fin de personalziacion, pusheando al array
+        arrayAretornar.push(obj)
+    }, (err, results) => { 
+        if (err) {
+         console.error('Error al eliminar la solicitu a un usuario: ' + err.message); 
+        } 
+        console.log('eeaaa eeaaa?', results)
+    });
+    console.log('Ultimo? este tiene q llegar despues de eaaa eaaa')
+    return arrayAretornar 
+}
+
+
+
+
+
 const deletePet = async (petID) => {
     //-----1)
     const pet = await PetModel.findOne({ _id: petID })
@@ -40,14 +70,11 @@ const deletePet = async (petID) => {
         }
     }, (err) => { if (err) { console.error('Error al eliminar la solicitu a un usuario: ' + err.message); } });
     //-----3)  buscar OWNER    
-    const owner = await UserModel.findOne({ email: pet.owner });
+    const theDuenioDelPet = await UserModel.findOne({ email: pet.owner });
     //-----4) Del OWNER: Quitar el perro de su lista   
-    if (!!owner) {
-        const ownerPetIndex = owner.pets.findIndex(el => el === petID)//Busca pet de solicitud
-        if (ownerPetIndex !== -1) {
-            owner.pets.splice(ownerPetIndex, 1);//borra solicitud del usuario 
-            await owner.save();
-        }
+    if (theDuenioDelPet) {
+        theDuenioDelPet.pets = theDuenioDelPet.pets.filter(el=> el !== petID)
+        await theDuenioDelPet.save();
     }
     //-----5) Borrar perro
     const deletedPet = await PetModel.deleteOne({ _id: petID })
@@ -79,4 +106,4 @@ const cleanUserInexistentPets = async (email) => {
     await user.save();
     return user 
 }
-module.exports = { deletePet, cleanUserInexistentPets }
+module.exports = { deletePet, cleanUserInexistentPets,solicitudesPersonalizadas }

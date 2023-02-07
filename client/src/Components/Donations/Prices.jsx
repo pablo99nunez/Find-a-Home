@@ -21,7 +21,7 @@ const Prices = ({ navigation }) => {
     };
 
     return (
-        <View className="flex flex-col justify-center items-center bg-[#AB4E68]">
+        <View className="bg-[#ffffff] flex flex-col justify-center items-center" style={{height: height}}>
             <Image
                 style={{
                     height: height * 0.15,
@@ -32,31 +32,38 @@ const Prices = ({ navigation }) => {
                 source={require("../../images/FindAHome.png")}
             />
             <Text className="text-center text-3xl mb-[5%] text-[#ffc733]" style={{ fontFamily: "Roboto_300Light" }}>Ayudanos para seguir ayudando</Text>
-            <View className="bg-[#4FC3F7] w-3/4 self-center rounded-2xl py-6 mb-2.5 shadow-md flex flex-row justify-center items-center">
+            <Image
+                style={{
+                    height: height * 0.08,
+                    width: width * 0.4,
+                    resizeMode: 'contain'
+                }}
+                source={require("../../images/MP.png")}
+            />
+            <Text className="text-center text-xm mb-[5%] mx-[5%] text-[#009ee3]" style={{ fontFamily: "Roboto_300Light" }}>Podes donar desde mercado pago ingresando el monto deseado</Text>
+            <View className="flex flex-row items-center">
                 <TextInput
-                    className='h-11 w-3/4 bg-[#417171] rounded-md px-3 font-light'
+                    className='h-14 w-3/4 bg-[#ffffff] rounded-xl px-3 font-light'
                     placeholder="Monto a donar:"
-                    placeholderTextColor="#fcfcfc"
+                    placeholderTextColor="#bfd4e8"
                     autoCapitalize="none"
                     keyboardType='numeric'
                     value={monto}
-                    maxLength={15}
+                    maxLength={6}
+                    style={{
+                        borderWidth: 2,
+                        borderColor: '#009ee3',
+                    }}
                     onBlur={() => { }}
                     onChangeText={(text) => { handleChange(text) }}
                 />
+                <Text className="text-center text-2xl ml-[1%]" style={{ fontFamily: "Roboto_300Light" }}>$ARS</Text>
                 {/*   <Tou className='h-5 mt-1'>
                     <Text className='text-[#ed3232]'>{error.name}</Text>
                 </View> */}
-            </View>
-            <ScrollView className="w-[100%]">
-                <DonateButton onPress={() => { donate(monto); navigation.navigate('MercadoPago') }} text={`Donar $${monto} ARS`} />
-                <DonateButton onPress={() => { donate(100); navigation.navigate('MercadoPago') }} text={"Donar $100 ARS"} />
-                <DonateButton onPress={() => { donate(200); navigation.navigate('MercadoPago') }} text={"Donar $200 ARS"} />
-                <DonateButton onPress={() => { donate(500); navigation.navigate('MercadoPago') }} text={"Donar $500 ARS"} />
-                <DonateButton onPress={() => { donate(1000); navigation.navigate('MercadoPago') }} text={"Donar $1000 ARS"} />
-                <DonateButton onPress={() => { donate(2000); navigation.navigate('MercadoPago') }} text={"Donar $2000 ARS"} />
-                <DonateButton onPress={() => { donate(5000); navigation.navigate('MercadoPago') }} text={"Donar $5000 ARS"} />
-                <DonateButton onPress={() => { donate(10000); navigation.navigate('MercadoPago') }} text={"Donar $10000 ARS"} />
+            </View>    
+            <ScrollView className="w-3/4 m-[5%]">
+                <DonateButton onPress={() => { donate(monto); navigation.navigate('MercadoPago') }} text={`Donar`} />
             </ScrollView>
         </View>
     )
