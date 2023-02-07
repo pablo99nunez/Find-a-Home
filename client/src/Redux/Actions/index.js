@@ -255,8 +255,8 @@ export const getUser = () => {
       })
       .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
-          alert(err.response.data.error);
-        else alert("index.js " + err.message);
+        console.error(err.response.data.error);
+        else  console.error("index.js " + err.message);
       });
   };
 };
