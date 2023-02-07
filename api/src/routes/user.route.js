@@ -17,7 +17,7 @@ const { cleanUserInexistentPets, solicitudesPersonalizadas } = require('../contr
 const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
 const { reviews } = require('../controllers/reviewUserController');
-const UserModel = require("../models/user.model") 
+const UserModel = require('../models/user.model');
 const router = express.Router();
 
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
