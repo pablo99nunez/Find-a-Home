@@ -16,6 +16,10 @@ const UserModel = require('../models/user.model');
 const setAdmin = (uid) => {
   firebaseAdmin.auth(app).setCustomUserClaims(uid, { admin: true, volunteer: true, user: true })
 } 
+const extractUserData = async (uid)=>{
+  return await firebaseAdmin.auth(app).getUser(uid)
+  .then(userRecord => userRecord.toJSON().email)
+}
 //rellena el req con una nueva clave "user" ahora se puede hacer req.user al decodificar correcamente el token
 const checkJwt = (req, res, next) => { //jason web token
   if (!req.headers.authorization) {
