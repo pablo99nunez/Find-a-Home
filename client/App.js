@@ -40,9 +40,9 @@ import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
+import { UserSolicitudes } from "./src/Components/UserDetail/UserSolicitudes";
 
 import UserPets from "./src/Components/AdminPanel/UserPets";
-
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
 ]);
@@ -131,6 +131,15 @@ export default function App() {
           <Stack.Screen
             name="Notificaciones"
             component={Notifications}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerBackTitleVisible: false,
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
+            name="UserSolicitudes"
+            component={UserSolicitudes}
             options={{
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerBackTitleVisible: false,

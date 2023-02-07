@@ -7,7 +7,7 @@ import {
   GET_PET_BY_OWNER,
   IS_LOGGED_IN,
   GET_PETS_BY_ZONE,
-  PAYMENT_LINK
+  PAYMENT_LINK,
 } from "../Actions";
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
   currentUser: {},
   currentPets: {},
   isLoggedIn: false,
-  paymentLink: ""
+  paymentLink: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -71,8 +71,8 @@ const rootReducer = (state = initialState, action) => {
     case PAYMENT_LINK:
       return {
         ...state,
-        paymentLink: action.payload
-      }
+        paymentLink: action.payload,
+      };
     default:
       return state;
   }
