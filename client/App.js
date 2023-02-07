@@ -42,9 +42,13 @@ import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
-import GoogleButton from "./src/Components/Buttons/GoogleAuth";
-import UserPets from "./src/Components/AdminPanel/UserPets";
 
+import GoogleButton from "./src/Components/Buttons/GoogleAuth";
+
+import { UserSolicitudes } from "./src/Components/UserDetail/UserSolicitudes";
+
+import UserPets from "./src/Components/AdminPanel/UserPets";
+import Donate from "./src/Components/AdminPanel/Donate";
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
 ]);
@@ -140,6 +144,15 @@ export default function App() {
           <Stack.Screen
             name="Notificaciones"
             component={Notifications}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerBackTitleVisible: false,
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
+            name="UserSolicitudes"
+            component={UserSolicitudes}
             options={{
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerBackTitleVisible: false,
@@ -307,6 +320,18 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
+                    <Stack.Screen
+            name="Donate"
+            component={Donate}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Donaciones",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
           <Stack.Screen
             name="Usuarios"
             component={Usuarios}
@@ -350,6 +375,7 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
+
 
           <Stack.Screen name="MercadoPago" component={MercadoPago} />
 

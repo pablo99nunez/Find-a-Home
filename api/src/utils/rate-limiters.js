@@ -25,8 +25,8 @@ const limit5cada12horas = rateLimit({
     message: "Demaciadas peticiones 2 cada 1 min, por favor purebe nuevamente en 2 minutos"
   });
   const globalLimit = rateLimit({
-    windowMs:  2 * 60 * 1000 , // 2 min
-    max: 50, // limit each IP to 100 requests per windowMs 
+    windowMs:  1 * 60 * 1000 , // 2 min
+    max: 150, // limit each IP to 100 requests per windowMs 
     message: "Limite 50 peticiones en margen de 2 minutos, espere 2 minutos"
   });
 

@@ -63,7 +63,7 @@ const Prices = ({ navigation }) => {
                 </View> */}
             </View>    
             <ScrollView className="w-3/4 m-[5%]">
-                <DonateButton onPress={() => { donate(monto); navigation.navigate('MercadoPago') }} text={`Donar`} />
+                <DonateButton onPress={() => { donate(monto); navigation.navigate('MercadoPago', monto) }} text={`Donar`} />
             </ScrollView>
         </View>
     )

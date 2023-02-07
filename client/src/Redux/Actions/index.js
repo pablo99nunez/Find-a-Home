@@ -20,7 +20,9 @@ export const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const CONFIRM_ADOPTION = "CONFIRM_ADOPTION";
 export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
-export const PAYMENT_LINK = "PAYMENT_LINK"
+export const PAYMENT_LINK = "PAYMENT_LINK";
+export const GET_PET_DATA_BY_ID = "GET_PET_DATA_BY_ID";
+export const RATING_REVIEW = "RATING_REVIEW";
 
 //devuelve verdadero si el token se decodifico, falso otherrwise
 export const checkToken = async () => {
@@ -30,10 +32,12 @@ export const checkToken = async () => {
       Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
-  const response = await axios.get(`${url}/check`, config)
-    .then(resp => {
-      return true
+  const response = await axios
+    .get(`${url}/check`, config)
+    .then((resp) => {
+      return true;
     })
+
     .catch(err => {
       return false
 
@@ -58,20 +62,19 @@ export const retriveUserData = async () => {
     })
   return response
 }
+
 //devuelve verdadero si el usuario existe en la base de datos
 export const checkEmail = async (email) => {
-
-  const response = await axios.get(`${url}/user/checkemail?email=${email}`)
-    .then(resp => {
-
-      return resp.data.payload
+  const response = await axios
+    .get(`${url}/user/checkemail?email=${email}`)
+    .then((resp) => {
+      return resp.data.payload;
     })
-    .catch(err => {
-      return false
-
-    })
-  return response
-}
+    .catch((err) => {
+      return false;
+    });
+  return response;
+};
 
 export const getAllPets = () => {
   return async (dispatch) => {
@@ -82,9 +85,10 @@ export const getAllPets = () => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.response.data);
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔  getAllPets: " + error.response.data
+      );
     }
-
   };
 };
 
@@ -97,9 +101,11 @@ export const getPetsFilteredBySpecie = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " + error.response.data);
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySpecie: " +
+          error.response.data
+      );
     }
-
   };
 };
 
@@ -112,9 +118,11 @@ export const getPetsFilteredBySize = (payload) => {
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " + error.response.data);
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredBySize: " +
+          error.response.data
+      );
     }
-
   };
 };
 
@@ -123,38 +131,51 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     try {
       const json = await axios.get(
         `${url}/pet/filter?size=${payload[0]}&specie=${payload[1]}`
-      )
+      );
       return dispatch({
         type: GET_PETS_FILTERED_BOTH_FILTERS,
         payload: json.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " + error.response.data);
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔  getPetsFilteredByTwoFilters: " +
+          error.response.data
+      );
     }
-
   };
 };
-
+/* export const getPetdataById = async (payload) => {
+  try {
+    const json = await axios.get(`${url}/pet/${payload}}`);
+    return json;
+  } catch (error) {
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔  getPetdataById: " + error.response.data
+    );
+  }
+}; */
 
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
     try {
       await axios
         .put(`${url}/pet/filter/zone/${radius}`, coords)
-        .then(response => { //if
+        .then((response) => {
+          //if
           dispatch({
             type: GET_PETS_BY_ZONE,
             payload: response.data,
-          })
+          });
         })
-        .catch(() => { //else
+        .catch(() => {
+          //else
           dispatch(getAllPets());
         });
-
     } catch (error) {
-      console.error("⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.response.data);
+      console.error(
+        "⚠️ - Error -> 🚨 Action -> 🔔  getPetsByZone: " + error.response.data
+      );
     }
-
   };
 };
 
@@ -183,8 +204,13 @@ export const putUserData = async (profile) => {
     phone: profile.phone,
   };
 
-  const json = await axios.put(`${url}/user/profile`, objetoAenviar, config)
-    .catch((error) => console.error("⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.response.data));
+  const json = await axios
+    .put(`${url}/user/profile`, objetoAenviar, config)
+    .catch((error) =>
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 putUserData: " + error.response.data
+      )
+    );
   return json;
 
   /*  return async (dispatch) => {
@@ -208,9 +234,8 @@ export const PetPost = async (bodyPayload) => {
     return pet;
   } catch (err) {
     if (typeof err.response !== "undefined" && err.response.data.error)
-      throw new Error(err.response.data.error)
-    else
-      throw err
+      throw new Error(err.response.data.error);
+    else throw err;
   }
 };
 
@@ -226,7 +251,9 @@ export const PetEdit = async (bodyPayload) => {
 
     return pet;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.response.data)
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 PetEdit: " + error.response.data
+    );
   }
 };
 
@@ -249,6 +276,7 @@ export const getUser = () => {
       })
       .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
+
           alert(err.response.data.error)
         else
           alert('index.js ' + err.message)
@@ -288,13 +316,15 @@ export const getPetByOwner = () => {
         });
       })
       .catch((error) => {
-        console.error("⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.response.data)
+        console.error(
+          "⚠️ Error -> 🚨 Action -> 🔔 PetByOwner: " + error.response.data
+        );
       });
   };
 };
 
 ///Accept adoption pet
-export const acceptAdoption = (petId, newOwnerEmail, rating) => {
+export const acceptAdoption = (petId, newOwnerEmail) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -306,21 +336,24 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       petID: petId,
       emailOwner: auth?.currentUser?.email,
       newOwnerEmail: newOwnerEmail,
-      rating: rating || 5,
     };
     try {
-      console.log(bodyPayload)
-      const adoptionConfirmed = await axios.put(url + "/user/confirm", bodyPayload, config);
+      const adoptionConfirmed = await axios.put(
+        url + "/user/confirm",
+        bodyPayload,
+        config
+      );
       dispatch({
         type: CONFIRM_ADOPTION,
         payload: adoptionConfirmed.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 acceptAdoption: " + error.message)
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 acceptAdoption: " + error.message
+      );
     }
   };
 };
-
 
 export const EditProfiles = async (bodyPayload) => {
   const config = {
@@ -334,11 +367,11 @@ export const EditProfiles = async (bodyPayload) => {
 
     return profile;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.response.data)
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 Profile: " + error.response.data
+    );
   }
 };
-
-
 
 ///Send Push Notifications
 export const PushNotifications = (token, title, body, email) => {
@@ -350,21 +383,29 @@ export const PushNotifications = (token, title, body, email) => {
       },
     };
     const bodyPayload = {
-      "token": token, "title": title, "body": body, email: email
+      token: token,
+      title: title,
+      body: body,
+      email: email,
     };
     try {
-      const status = await axios.post(url + "/send/push-notify", bodyPayload, config);
-      console.log(status.data)
+      const status = await axios.post(
+        url + "/send/push-notify",
+        bodyPayload,
+        config
+      );
+      console.log(status.data);
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.response.data)
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 PushNotifications: " + error.response.data
+      );
     }
   };
 };
-
 
 export const DeletePet = async (id) => {
   const config = {
@@ -374,14 +415,19 @@ export const DeletePet = async (id) => {
     },
   };
   const bodyPayload = {
-    "id": id
+    id: id,
   };
   try {
-    const desbanear = await axios.delete(url + "/admin/deletePet", bodyPayload, config);
+    const desbanear = await axios.delete(
+      url + "/admin/deletePet",
+      bodyPayload,
+      config
+    );
 
     return desbanear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data);
+
   }
 };
 
@@ -393,14 +439,14 @@ export const UserBan = async (owner) => {
     },
   };
   const bodyPayload = {
-    "OwenerEmail": owner
+    OwenerEmail: owner,
   };
   try {
     const banear = await axios.put(url + "/admin/ban", bodyPayload, config);
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
   }
 };
 
@@ -412,17 +458,56 @@ export const DesbanUser = async (owner) => {
     },
   };
   const bodyPayload = {
-    "OwenerEmail": owner
+    OwenerEmail: owner,
   };
   try {
-    const banear = await axios.put(url + "/admin/desbanear", bodyPayload, config);
+    const banear = await axios.put(
+      url + "/admin/desbanear",
+      bodyPayload,
+      config
+    );
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data)
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
   }
 };
+export const MakeAdmin = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    OwenerEmail: owner,
+  };
+  try {
+    const banear = await axios.put(url + "/admin/admin", bodyPayload, config);
 
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
+  }
+};
+export const QuitarAdmin = async (owner) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    OwenerEmail: owner,
+  };
+  try {
+    const banear = await axios.put(url + "/admin/desAmin", bodyPayload, config);
+
+    return banear;
+  } catch (error) {
+    console.error("⚠️ Error -> 🚨 Action -> 🔔 banear: " + error.response.data);
+  }
+};
 export const ReportPets = async (id, denuncia) => {
   const config = {
     headers: {
@@ -431,15 +516,17 @@ export const ReportPets = async (id, denuncia) => {
     },
   };
   const bodyPayload = {
-    "id": id,
-    "denuncia": denuncia
+    id: id,
+    denuncia: denuncia,
   };
   try {
     const banear = await axios.put(url + "/pet/denunciar", bodyPayload, config);
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 denunciar: " + error.response.data)
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 denunciar: " + error.response.data
+    );
   }
 };
 
@@ -452,6 +539,7 @@ export const createUserInDb = async (
     profilePic,
     conditions,
     pushToken }, tokenn
+
 ) => {
   const data = {
     firstName,
@@ -462,18 +550,16 @@ export const createUserInDb = async (
     phone,
     address,
     conditions,
-    pushToken
+    pushToken,
   };
   console.log("DATA FOR DB CREATION:", data);
 
-  return await axios
-    .post(`${url}/user`, data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenn}`,
-      },
-    })
-
+  return await axios.post(`${url}/user`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${tokenn}`,
+    },
+  });
 };
 
 export const amountDonate = (payload) => {
@@ -485,8 +571,53 @@ export const amountDonate = (payload) => {
         payload: json.data.init_point,
       });
     } catch (error) {
-      console.error("⚠️ Error -> 🚨 Action -> 🔔 amountDonate: " + error.response.data)
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 amountDonate: " + error.response.data
+      );
     }
-
   };
+};
+
+export const reviewAndRating = (ratedEmail, rating, review) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    ratedEmail,
+    rating,
+    review,
+  };
+  return async () => {
+    try {
+      await axios.put(`${url}/user/ratingreview`, bodyPayload, config);
+    } catch (error) {
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 reviewAndRating: " + error.response.data
+      );
+    }
+  };
+};
+
+export const Donacion = async (cash) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    monto: cash,
+  };
+  try {
+    const donacion = await axios.put(url + "/user/donate", bodyPayload, config);
+
+    return banear;
+  } catch (error) {
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 donacion: " + error.response.data
+    );
+  }
 };

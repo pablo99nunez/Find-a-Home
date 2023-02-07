@@ -89,8 +89,9 @@ const userSchema = mongoose.Schema(
         default: 0
       }
     },
-    reviewsQty: {
-      type: Number
+    reviews: {
+      type: Object,
+      default: {}
     },
     description: {
       type: String,
@@ -139,6 +140,9 @@ const userSchema = mongoose.Schema(
     tipo: {
       type: String,
       // enum: ["User, Admin"],
+    },
+    donaciones: {
+      type: Array,
     }
   },
   {

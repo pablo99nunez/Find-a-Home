@@ -33,6 +33,7 @@ export const crearYrellenarDB = async (objetoConDatos) => {
     const tokenn = await response1.user.getIdToken()
     await AsyncStorage.setItem("authorization", "Bearer " + tokenn);
     objetoConDatos.password = "" //para evitar recibir la contraseña de los usuarios
+    enviarEmailVerificacion(email)
     return {objetoConDatos,tokenn}
 
   } else {

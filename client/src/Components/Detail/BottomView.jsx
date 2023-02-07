@@ -15,10 +15,11 @@ const BottomView = ({ petId, auth, email, petName }) => {
   const isLoggedIn = useSelector(store=>store.isLoggedIn)
   const token = auth.currentUser?.stsTokenManager.accessToken;
   const [sent, setSent] = useState(false)
-  const [message, setMessage] = useState('')
   const [pushToken, setPushToken] = useState("")
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
+  const [message, setMessage] = useState("")
+// console.log(currentUser.misSolicitudes[0])
   //Push Notifications
   useFocusEffect(
     React.useCallback(() => {
@@ -87,7 +88,7 @@ const BottomView = ({ petId, auth, email, petName }) => {
 
     } catch (error) {
       if (typeof error.response !== "undefined")
-          alert(error.response.data)
+      console.error(error.response.data)
       else
       console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error.message);
     }

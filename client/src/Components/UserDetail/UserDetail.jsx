@@ -17,25 +17,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPetByOwner, getUser } from "../../Redux/Actions";
 import { useFocusEffect } from "@react-navigation/native";
 import BottomSheet from "@gorhom/bottom-sheet";
-import Card from "../Card/Card"
+import Card from "../Card/Card";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-
-
-const { width, height } = Dimensions.get("screen")
+const { width, height } = Dimensions.get("screen");
 
 export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
 
-
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
         dispatch(getPetByOwner());
         dispatch(getUser());
-
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
@@ -54,8 +50,7 @@ export default function UserDetail({ route, navigation }) {
       })
       .catch((error) => {
         // An error happened.
-        console.error("⚠️ Error -> 🚨 UserDetail -> 🔔logoutUser: " + error)
-
+        console.error("⚠️ Error -> 🚨 UserDetail -> 🔔logoutUser: " + error);
       });
   }
   const bottomSheetRef = useRef(null);
@@ -65,20 +60,16 @@ export default function UserDetail({ route, navigation }) {
   function handleButtons() {
     setOpen(0);
   }
-  //-----------------------------------------------------------
 
   return (
-    <View
-      style={{ height: height }}
-      className="bg-[#ACACAC]"
-    >
+    <View style={{ height: height }} className="bg-[#ACACAC]">
       <ImageBackground
         style={{
           width: "100%",
           height: 350,
           backgroundImage: "linear-gradient",
         }}
-        source={{ uri: currentUser.profilePic }}
+        source={{ uri: currentUser?.profilePic }}
         blurRadius={10}
       >
         <LinearGradient
@@ -86,45 +77,66 @@ export default function UserDetail({ route, navigation }) {
           style={{ height: "100%", width: "100%" }}
         >
           <View>
-            <Header 
+            <Header
               onPress={() => navigation.navigate("Home")}
               handleButtons={handleButtons}
             />
             <Image
               className="w-64 h-64 bottom-10 mx-auto rounded-full"
-              source={{ uri: currentUser.profilePic }}
+              source={{ uri: currentUser?.profilePic }}
             />
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">
-            {currentUser.firstName[0].toUpperCase().concat(currentUser.firstName.toLowerCase().substring(1))} {currentUser.lastName[0].toUpperCase().concat(currentUser.lastName.toLowerCase().substring(1))}
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="text-4xl text-[#ffc733]"
+          >
+            {currentUser?.firstName[0]
+              .toUpperCase()
+              .concat(currentUser?.firstName.toLowerCase().substring(1))}{" "}
+            {currentUser?.lastName[0]
+              .toUpperCase()
+              .concat(currentUser?.lastName.toLowerCase().substring(1))}
           </Text>
-          <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : 5 }★</Text>
+          <Text className=" text-4xl text-[#ffc733]">
+            {currentUser?.rating?.rating ? currentUser?.rating.rating : 5}★
+          </Text>
         </View>
       </ImageBackground>
       <View>
-        <Text className="text-center text-2xl text-[#2A2B20] m-[5%]" style={{fontFamily: 'Roboto_300Light'}}>
-          {currentUser.description}
+        <Text
+          className="text-center text-2xl text-[#2A2B20] m-[5%]"
+          style={{ fontFamily: "Roboto_300Light" }}
+        >
+          {currentUser?.description}
         </Text>
       </View>
-      <ImageBackground source={require('../../images/Banderin-r.png')} className='w-[70%]'>
-        <Text className="text-start text-2xl text-[#2A2B20] ml-[10%]" style={{fontFamily: 'Roboto_300Light'}}>Mascotas:</Text>
+      <ImageBackground
+        source={require("../../images/Banderin-r.png")}
+        className="w-[70%]"
+      >
+        <Text
+          className="text-start text-2xl text-[#2A2B20] ml-[10%]"
+          style={{ fontFamily: "Roboto_300Light" }}
+        >
+          Mascotas:
+        </Text>
       </ImageBackground>
       <FlatList
-        style={{width: width, height: width, marginBottom: height * 0.02}}
+        style={{ width: width, height: width, marginBottom: height * 0.02 }}
         numColumns={2}
         keyExtractor={(item) => item.id}
         data={currentPets}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate("Detail", item)}>
-            <Card item={item}/>
+            <Card item={item} />
           </TouchableOpacity>
-        )}>
-      </FlatList>
+        )}
+      ></FlatList>
 
       <BottomSheet
-        backgroundStyle={{backgroundColor: "rgba(134, 134, 134,0.9)"}}
+        backgroundStyle={{ backgroundColor: "rgba(134, 134, 134,0.9)" }}
         ref={bottomSheetRef}
         index={open}
         snapPoints={snapPoints}
@@ -132,51 +144,111 @@ export default function UserDetail({ route, navigation }) {
         enablePanDownToClose={true}
         onClose={() => setOpen(-1)}
       >
-        <TouchableOpacity 
-          onPress={()=> navigation.navigate('Notificaciones')} 
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Notificaciones")}
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
-          <Icon name="bell" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Notificaciones</Text>
+          <Icon
+            name="bell"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Notificaciones
+          </Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          onPress={()=> navigation.navigate('EditProfile', currentUser)} 
+        <TouchableOpacity
+          onPress={() => navigation.navigate("UserSolicitudes")}
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
-          <Icon name="pencil" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Editar Perfil</Text>
+          <Icon
+            name="chat"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Mis Solicitudes
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          onPress={() => navigation.navigate('CreatePet')} 
+        <TouchableOpacity
+          onPress={() => navigation.navigate("EditProfile", currentUser)}
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon
+            name="pencil"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Editar Perfil
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CreatePet")}
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Image
             className="w-12 h-12 mr-[20%]"
             source={require("../../images/Trust-profile.png")}
           />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Publicar Mascota</Text>
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Publicar Mascota
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          onPress={()=> navigation.navigate('Prices')} 
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Prices")}
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
-          <Icon name="hand-coin" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Donar</Text>
-        </TouchableOpacity>
-            
-        <TouchableOpacity 
-          onPress={logoutUser} 
-          className="flex flex-row items-center my-[5%] mx-[10%]"
-        >
-          <Icon name="logout" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-          <Text className="text-2xl" style={{fontFamily: 'Roboto_300Light', color: 'white'}}>Cerrar Sesión</Text>
+          <Icon
+            name="hand-coin"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Donar
+          </Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          onPress={logoutUser}
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon
+            name="logout"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Cerrar Sesión
+          </Text>
+        </TouchableOpacity>
       </BottomSheet>
     </View>
   );
 }
-
