@@ -18,34 +18,20 @@ const PetModel = require('../models/pet.model');
 const async = require('async');
 
 const solicitudesPersonalizadas = async (email) => {
-  const user = await UserModel.findOne({ email: email }); //busca dueño de solicitudes
+  const user = await UserModel.findOne({ email: email });
+  if (!user) throw new Error('user no existe');
 
   let arrayAretornar = [];
-  if (!user) throw new Error('user no existe');
-  async.each(
-    user.misSolicitudes,
-    async (solicitud) => {
-      const obj = {};
-      const pet = await PetModel.findOne({ _id: solicitud.petID }); //Busca MASCOTA
-      const owner = await UserModel.findOne({ email: solicitud.owner }); //Busca USUARIO
-      //------objeto personalizado
-      obj.ownerFullname = owner.firstName + ' ' + owner.lastName;
-      obj.petName = pet.name;
-      obj.message = solicitud.message;
-      //-------fin de personalización, pusheando al array
-      arrayAretornar.push(obj);
-      return arrayAretornar;
-    },
-    (err, results) => {
-      if (err) {
-        console.error(
-          'Error al eliminar la solicitu a un usuario: ' + err.message
-        );
-      }
-      console.log('eeaaa?', results);
-    }
-  );
-  console.log('Ultimo?');
+  for (const solicitud of user.misSolicitudes) {
+    const obj = {};
+    const pet = await PetModel.findOne({ _id: solicitud.petID });
+    const owner = await UserModel.findOne({ email: solicitud.owner });
+    obj.ownerFullname = owner.firstName + ' ' + owner.lastName;
+    obj.petName = pet.name;
+    obj.message = solicitud.message;
+    arrayAretornar.push(obj);
+  }
+
   return arrayAretornar;
 };
 
