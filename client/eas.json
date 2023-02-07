@@ -7,7 +7,7 @@
       "env": {
         "BASE_URL_IP": "http://100.25.46.52:8080"
       },
-      "developmentClient": true,
+      "developmentClient": false,
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
