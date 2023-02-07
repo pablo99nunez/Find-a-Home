@@ -40,6 +40,7 @@ import FormPets from "./src/Components/CreatePet/FormPetsTwo";
 import MercadoPago from "./src/Components/MercadoPago/MercadoPago";
 import Prices from "./src/Components/Donations/Prices";
 import { Notifications } from "./src/Components/UserDetail/Notifications";
+import { UserSolicitudes } from "./src/Components/UserDetail/UserSolicitudes";
 
 import UserPets from "./src/Components/AdminPanel/UserPets";
 
@@ -131,6 +132,15 @@ export default function App() {
           <Stack.Screen
             name="Notificaciones"
             component={Notifications}
+            options={{
+              headerStyle: { backgroundColor: "#d9d9d9" },
+              headerBackTitleVisible: false,
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
+            name="UserSolicitudes"
+            component={UserSolicitudes}
             options={{
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerBackTitleVisible: false,

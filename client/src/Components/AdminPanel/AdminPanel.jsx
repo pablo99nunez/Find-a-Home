@@ -71,13 +71,23 @@ const AdminPanel = ({ navigation, route }) => {
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
           onPress={() => navigation.navigate("Reports")}
         >
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="text-[#d9d9d9] text-xl font-thin mx-auto">Reportes</Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="text-[#d9d9d9] text-xl font-thin mx-auto"
+          >
+            Reportes
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
           onPress={() => navigation.navigate("Usuarios")}
         >
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="text-[#d9d9d9] text-xl font-thin mx-auto">Usuarios</Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="text-[#d9d9d9] text-xl font-thin mx-auto"
+          >
+            Usuarios
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
@@ -85,24 +95,82 @@ const AdminPanel = ({ navigation, route }) => {
             alert("Donaciones");
           }}
         >
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="text-[#d9d9d9] text-xl font-thin">Donaciones</Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="text-[#d9d9d9] text-xl font-thin"
+          >
+            Donaciones
+          </Text>
         </TouchableOpacity>
       </View>
       <View className="bg-[#d9d9d9] m-[3%] rounded-3xl">
-        <Text style={{ fontFamily: "Roboto_300Light" }} className="p-3 flex-start items-center text-center">
+        <Text
+          style={{ fontFamily: "Roboto_300Light" }}
+          className="p-3 flex-start items-center text-center"
+        >
           ESTADISTICAS:
         </Text>
         <View>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center">TOTAL MASCOTAS: {pets?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center">TOTAL MASCOTAS ADOPTABLES: {mascotasAdoptables?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">TOTAL MASCOTAS NO ADOPTABLES: {mascotasNoAdoptables?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS EN ADOPCION: {perrosEnAdopcion?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">GATOS EN ADOPCION: {gatosEnAdopcion?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">OTROS EN ADOPCION: {otrosEnAdopción?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">REPORTES: {CantidadDeReportes?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS HOY: {hoy?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS ESTA SEMANA: {semana?.length}</Text>
-          <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center">PERROS ADOPTADOS ESTE MES: {mes?.length}</Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center"
+          >
+            TOTAL MASCOTAS: {pets?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 flex-start items-center text-center"
+          >
+            TOTAL MASCOTAS ADOPTABLES: {mascotasAdoptables?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            TOTAL MASCOTAS NO ADOPTABLES: {mascotasNoAdoptables?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            PERROS EN ADOPCION: {perrosEnAdopcion?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            GATOS EN ADOPCION: {gatosEnAdopcion?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            OTROS EN ADOPCION: {otrosEnAdopción?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            REPORTES: {CantidadDeReportes?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            PERROS ADOPTADOS HOY: {hoy?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            PERROS ADOPTADOS ESTA SEMANA: {semana?.length}
+          </Text>
+          <Text
+            style={{ fontFamily: "Roboto_300Light" }}
+            className="bg-[#FFC733] p-3 rounded-xl m-2 h-10 flex-start items-center text-center"
+          >
+            PERROS ADOPTADOS ESTE MES: {mes?.length}
+          </Text>
         </View>
       </View>
     </ScrollView>
