@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Picker } from "@react-native-picker/picker";
+
 import {
   View,
   Text,
@@ -8,10 +8,8 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Dimensions,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-//¿¿Why you import  Keyboard Aware Scroll View??
+
 
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
@@ -19,15 +17,20 @@ import Localities from "../Localities.json";
 
 import validate from "../validate";
 
-
-const { width } = Dimensions.get("screen")
-
-export default function RegisterFirstSteps({ navigation , route}) {
-  const {password, email, firstName, lastName} = route.params
+export default function RegisterFirstStepsGoogle({ navigation, route }) {
+  //no olvidar de sacar console logs, este console log se pone cada vez q se renderiza el componente
+  console.log("ESTA ES LA DATA MI REEEI Register_First_steps_google.jsx:  ", route.params)
+  const { name, email, photoURL, token } = route.params
+  const fullName = name;
+  //primero vemos si llega la data, leugo la complicamos con arrays y esas cosas
+  const firstName = fullName + "XD"; 
+  const lastName = fullName + "XD";
+  const profilePic = photoURL;
   const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
     email,
-    password,
+    profilePic,
+    token,
     firstName,
     lastName,
     phone: "",
@@ -52,7 +55,7 @@ export default function RegisterFirstSteps({ navigation , route}) {
   };
   const handleContinuar = () => {
     setLoading(true)
-    navigation.navigate("RegisterLastSteps", userInput)
+    navigation.navigate("RegisterLastStepsGoogle", userInput)
     setLoading(false)
   }
   const disable = `${userInput.phone}`.length === 0 ||
@@ -63,12 +66,12 @@ export default function RegisterFirstSteps({ navigation , route}) {
   return (
     <View>
       <View className="h-screen flex items-center bg-[#FFC733]">
-        <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
-          ¡Bienvenido/a {userInput.firstName[0].toUpperCase().concat(userInput.firstName.toLowerCase().substring(1))}
-        </Text>
+        {/* <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5"> */}
+          {/* ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} */}
+        {/* </Text>
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
-        </Text>
+        </Text> */}
 
         <View className="w-11/12 mt-[5%]">
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Teléfono:</Text>
@@ -94,14 +97,8 @@ export default function RegisterFirstSteps({ navigation , route}) {
             search={false}
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
-            position: "absolute",
-            top: width * 0.1,
-            zIndex: 1,
-            elevation: 1
-          }}
-          dropdownItemStyles={{ width: width }}
-          dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+            dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
 
@@ -110,47 +107,37 @@ export default function RegisterFirstSteps({ navigation , route}) {
           <SelectList
             data={States}
             setSelected={(val) =>
+             { 
+              console.log('provincia esta bien?: ',val);
               setUserInput({ ...userInput, provincia: val })
+            }
             }
             placeholder="Provincia"
             search={false}
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
-            position: "absolute",
-            top: width * 0.1,
-            zIndex: 1,
-            elevation: 1
-          }}
-          dropdownItemStyles={{ width: width }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
 
         <View className="w-11/12 my-[5%]">
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">
-            Departamento:
+            Localidad:
           </Text>
           <SelectList
             data={Localities.filter((ele) => ele.key == userInput.provincia)}
-            setSelected={(value) =>
-              setUserInput({ ...userInput, departamento: value })
+            setSelected={(value) =>{
+              console.log('Localidad esta bien?: ',value);
+
+              setUserInput({ ...userInput, departamento: value })}
             }
             placeholder="Departamento"
             // search={false}
-
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
-
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
-            position: "absolute",
-            top: width * 0.1,
-            zIndex: 1,
-            elevation: 1
-          }}
-          dropdownItemStyles={{ width: width }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
-            search={false}
           />
         </View>
         {loading ? <TouchableOpacity

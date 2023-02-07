@@ -143,20 +143,6 @@ const SolicitudPet = ({ navigation, route }) => {
         onPress={() => setVisible(true)}
       />
 
-      {/* <DialogInput 
-                isDialogVisible={visible}
-                title={`Has aceptado la solicitud de ${firstName}`}
-                message={"Puedes puntuarlo del 1-5?"}
-                hintInput ={"1-5"}
-                textInputProps={{maxLength: 1}}
-                submitInput={ (inputText) => {
-                    setInput(inputText),
-                    setVisible(false);
-                    alert('linea 130 agregar dispatch de rating')
-                    navigation.navigate('UserDetail')
-                }}
-                closeDialog={() => setVisible(false)}>
-            </DialogInput> */}
 
         <Modal transparent visible={visible} animationType="slide">
           <SafeAreaView style={{backgroundColor: 'rgba(217,217,217,0.7)', height: height}}>

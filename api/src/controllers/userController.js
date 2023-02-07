@@ -5,15 +5,14 @@ const createNewUser = async (user) => {
   //if(!!userExists) throw new Error("El usuario ya existe")
   //si existe lo modifica XXDXDXD harcodeado para debugear
   if (!!userExists) {
-    userExists = { ...userExists, ...user };
-    await userExists.save();
-    return userExists;
+    return await updateUser(user, user.email)
   } else {
     const newUser = new UserModel(user);
     await newUser.save();
     return newUser;
   }
 };
+
 
 const findUser = async (email) => {
   try {
@@ -43,7 +42,7 @@ const updateUser = async (newUserData, userEmail) => {
 
   const updatedUser = await UserModel.updateOne(queryConditions, newUserData, {
     upsert: true,
-    setDefaultsOnInsert: true,
+    /* setDefaultsOnInsert: true, */
   });
   return updatedUser;
 };

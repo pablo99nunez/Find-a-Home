@@ -39,7 +39,7 @@ router.get('/profile', checkJwt, async (req, res) => {
   }
 });
 
-router.get('/misSolicitudes', checkJwt, async (req, res) => {
+/* router.get('/misSolicitudes', checkJwt, async (req, res) => {
   try {
     const email = req.user.email;
     const user = await findUser(email);
@@ -54,9 +54,9 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
   } catch (error) {
     res.status(501).send({ error: error.message });
   }
-});
+}); */
 
-/* router.get('/misSolicitudes2', checkJwt, async (req, res) => {
+router.get('/misSolicitudes2', checkJwt, async (req, res) => {
   try {
     const response = await solicitudesPersonalizadas(req.user.email);
     res.send(response);
@@ -64,7 +64,7 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
     res.status(501).send(error.message);
   }
 });
- */
+
 router.get('/checkemail', limit5cada30minutos, async (req, res) => {
   try {
     const { email } = req.query;

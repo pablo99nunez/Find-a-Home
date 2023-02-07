@@ -88,7 +88,7 @@ const BottomView = ({ petId, auth, email, petName }) => {
 
     } catch (error) {
       if (typeof error.response !== "undefined")
-          alert(error.response.data)
+      console.error(error.response.data)
       else
       console.error("⚠️ Error -> 🚨 BottomView -> 🔔 AdoptionRequest: " + error.message);
     }

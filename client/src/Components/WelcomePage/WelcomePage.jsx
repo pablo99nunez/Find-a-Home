@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import GoogleImage from "../../images/Google.svg";
-import GoogleButton from "../Buttons/GoogleAuth";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,10 +20,10 @@ const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
   const isLoggedIn = useSelector(store => store.isLoggedIn)
 
-  useEffect(() => {
-    if (isLoggedIn)
-      navigation.navigate("Home")
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn)
+  //     navigation.navigate("Home")
+  // }, [isLoggedIn]);
 
   //magia circulito expandible detectand el scroll
   const [xPos, setXPos] = useState(0);
@@ -260,7 +260,7 @@ const Welcome = ({ navigation }) => {
             </View>
           </TouchableOpacity> */}
 
-          <GoogleButton />
+
           <Image
             style={styles.iconoLogin}
             className="mb-[15%]"
@@ -272,7 +272,9 @@ const Welcome = ({ navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
             <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Regístrate</Text>
           </TouchableOpacity>
-
+          <TouchableOpacity onPress={() => navigation.navigate("Google")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Google</Text>
+          </TouchableOpacity>
 
           <View style={styles.divisionLine}></View>
           <TouchableOpacity onPress={() => navigation.navigate("Home")}>
