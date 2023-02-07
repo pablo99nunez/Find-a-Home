@@ -16,6 +16,7 @@ const { ratingUpdate } = require('../controllers/ratingUserController');
 const { cleanUserInexistentPets, solicitudesPersonalizadas } = require('../controllers/deletePet');
 const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
+const { reviews } = require('../controllers/reviewUserController');
 const router = express.Router();
 
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
@@ -137,6 +138,20 @@ router.put('/confirm', checkJwt, async (req, res) => {
     res.status(501).send({ error: err.message });
   }
 });
+
+router.put('/ratingreview', checkJwt, async (req, res) => {
+  try {
+    const userEmail = req.user.email
+    const { ratedEmail, rating, review } = req.body
+
+    await ratingUpdate(rating, ratedEmail)
+    await reviews(review, userEmail, ratedEmail)
+
+    res.status(200).send({ message: 'Rating y Review dados con éxito!'})
+  } catch (err) {
+    res.status(501).send({error: err.message})
+  }
+})
 
 router.put('/cleanup', checkJwt, async (req, res) => {
   try {
