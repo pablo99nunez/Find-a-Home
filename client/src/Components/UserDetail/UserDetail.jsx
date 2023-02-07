@@ -78,7 +78,7 @@ export default function UserDetail({ route, navigation }) {
           height: 350,
           backgroundImage: "linear-gradient",
         }}
-        source={{ uri: currentUser.profilePic }}
+        source={{ uri: currentUser?.profilePic }}
         blurRadius={10}
       >
         <LinearGradient
@@ -92,20 +92,20 @@ export default function UserDetail({ route, navigation }) {
             />
             <Image
               className="w-64 h-64 bottom-10 mx-auto rounded-full"
-              source={{ uri: currentUser.profilePic }}
+              source={{ uri: currentUser?.profilePic }}
             />
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
           <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">
-            {currentUser.firstName[0].toUpperCase().concat(currentUser.firstName.toLowerCase().substring(1))} {currentUser.lastName[0].toUpperCase().concat(currentUser.lastName.toLowerCase().substring(1))}
+            {currentUser?.firstName[0].toUpperCase().concat(currentUser?.firstName.toLowerCase().substring(1))} {currentUser?.lastName[0].toUpperCase().concat(currentUser?.lastName.toLowerCase().substring(1))}
           </Text>
-          <Text className=" text-4xl text-[#ffc733]">{currentUser.rating?.rating ? currentUser.rating.rating : 5 }★</Text>
+          <Text className=" text-4xl text-[#ffc733]">{currentUser?.rating?.rating ? currentUser?.rating.rating : 5 }★</Text>
         </View>
       </ImageBackground>
       <View>
         <Text className="text-center text-2xl text-[#2A2B20] m-[5%]" style={{fontFamily: 'Roboto_300Light'}}>
-          {currentUser.description}
+          {currentUser?.description}
         </Text>
       </View>
       <ImageBackground source={require('../../images/Banderin-r.png')} className='w-[70%]'>
