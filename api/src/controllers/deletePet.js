@@ -40,15 +40,14 @@ const solicitudesPersonalizadas = async (email) => {
 const deletePet = async (petID) => {
   //-----1)
   const pet = await PetModel.findOne({ _id: petID });
-  // if (!pet) throw new Error('La mascota no existe')
+  if (!pet) throw new Error('La mascota no existe')
   //-----2)     solicitudes: {'interestedEmail','FullName', 'requestMessage', 'profilePic'}
 
   async.each(
     pet.solicitudes,
     async (solicitud) => {
-      if (pet.solicitudes) {
-      }
-      if (!!interestedUser) {
+      const interestedUser = await UserModel.findOne({ email: solicitud.email });//Busca usuario
+       if (!!interestedUser) {
         //target existe
         const indexDeSolicitudUser = interestedUser.misSolicitudes.findIndex(
           (el) => el.petID === petID
