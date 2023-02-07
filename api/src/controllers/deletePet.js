@@ -20,6 +20,36 @@ Deleting pet algorithm is expensive but necessary:
 const UserModel = require('../models/user.model');
 const PetModel = require('../models/pet.model');
 const async = require('async');
+
+const solicitudesPersonalizadas = async (email) => {
+    const user = await UserModel.findOne({ email: email }) //busca dueño de solicitudes
+
+    let arrayAretornar = []
+    if(!user) throw new Error('user no existee')
+    async.each(user.misSolicitudes, async (solicitud) => {
+        const obj = {}
+        const pet = await PetModel.findOne({ _id: solicitud.petID });//Busca PERRO
+        const owner = await UserModel.findOne({ email: solicitud.owner });//Busca USUARIO
+        //------objeto personalizado
+        obj.ownerFullname = owner.firstName + " " + owner.lastName
+        obj.petName = pet.name
+
+        //-------fin de personalziacion, pusheando al array
+        arrayAretornar.push(obj)
+    }, (err, results) => { 
+        if (err) {
+         console.error('Error al eliminar la solicitu a un usuario: ' + err.message); 
+        } 
+        console.log('eeaaa eeaaa?', results)
+    });
+    console.log('Ultimo? este tiene q llegar despues de eaaa eaaa')
+    return arrayAretornar 
+}
+
+
+
+
+
 const deletePet = async (petID) => {
     //-----1)
     const pet = await PetModel.findOne({ _id: petID })
@@ -76,4 +106,4 @@ const cleanUserInexistentPets = async (email) => {
     await user.save();
     return user 
 }
-module.exports = { deletePet, cleanUserInexistentPets }
+module.exports = { deletePet, cleanUserInexistentPets,solicitudesPersonalizadas }
