@@ -90,7 +90,7 @@ const userSchema = mongoose.Schema(
       }
     },
     reviews: {
-      type: Objects,
+      type: Object,
       default: {}
     },
     description: {
@@ -143,7 +143,7 @@ const userSchema = mongoose.Schema(
     },
     donaciones: {
       type: Array,
-    },
+    }
   },
   {
     timestamps: {
