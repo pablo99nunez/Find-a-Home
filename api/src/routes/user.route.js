@@ -13,7 +13,10 @@ const {
 const validateroute = require('./validateroute');
 const { checkJwt } = require('../utils/firebase-stuff');
 const { ratingUpdate } = require('../controllers/ratingUserController');
-const { cleanUserInexistentPets, solicitudesPersonalizadas } = require('../controllers/deletePet');
+const {
+  cleanUserInexistentPets,
+  solicitudesPersonalizadas,
+} = require('../controllers/deletePet');
 const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
 const { reviews } = require('../controllers/reviewUserController');
@@ -25,8 +28,12 @@ router.get('/profile', checkJwt, async (req, res) => {
   try {
     const email = req.user.email;
     const user = await findUser(email);
-    if (user) res.send(user);
-    else throw new Error('Usuario no se encontró en la base de datos');
+    if (user) {
+      if (user['_doc'].profilePic.length === 0)
+        user['_doc'].profilePic =
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532';
+      res.send(user);
+    } else throw new Error('Usuario no se encontró en la base de datos');
   } catch (error) {
     res.status(501).send({ error: error.message });
   }
@@ -39,28 +46,25 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
     const solicitudes = user.misSolicitudes.map((el) => el.petID);
 
     let arraySolicitudes = await Promise.all(
- solicitudes.map(async (el) => {
-  return  await findPetByArray(el)
-    })
-);
+      solicitudes.map(async (el) => {
+        return await findPetByArray(el);
+      })
+    );
     res.status(200).send({ arraySolicitudes });
   } catch (error) {
     res.status(501).send({ error: error.message });
   }
 });
 
-
-router.get('/misSolicitudes2',checkJwt, async (req, res) => {
-    try {
-        const response = await solicitudesPersonalizadas(req.user.email)
-        res.send(response)
-    } catch (error) {
-        res.status(501).send( error.message )
-    }
-})
-
-
-
+/* router.get('/misSolicitudes2', checkJwt, async (req, res) => {
+  try {
+    const response = await solicitudesPersonalizadas(req.user.email);
+    res.send(response);
+  } catch (error) {
+    res.status(501).send(error.message);
+  }
+});
+ */
 router.get('/checkemail', limit5cada30minutos, async (req, res) => {
   try {
     const { email } = req.query;
@@ -111,7 +115,6 @@ router.put('/profile', checkJwt, async (req, res) => {
   }
 });
 
-
 //por body tiene q entrar 2 parametros
 //el email del nuevoOwner "newOwnerEmail": "asdasd@gmail.com"
 //el id del perro "petID": "id del perro"
@@ -119,11 +122,8 @@ router.put('/profile', checkJwt, async (req, res) => {
 router.put('/confirm', checkJwt, async (req, res) => {
   try {
     const parametros = [req.body.petID, req.user.email, req.body.newOwnerEmail];
-    const puntaje = [req.body.rating, req.body.newOwnerEmail];
-    // console.log(parametros, puntaje)
     validateroute['/user/confirm'](...parametros);
     const petWithNewOwner = await confirmAdoption(...parametros);
-    await ratingUpdate(...puntaje);
     await refreshStates({
       petID: req.body.petID,
       newOwnerEmail: req.body.newOwnerEmail,
@@ -142,17 +142,17 @@ router.put('/confirm', checkJwt, async (req, res) => {
 
 router.put('/ratingreview', checkJwt, async (req, res) => {
   try {
-    const userEmail = req.user.email
-    const { ratedEmail, rating, review } = req.body
+    const userEmail = req.user.email;
+    const { ratedEmail, rating, review } = req.body;
 
-    await ratingUpdate(rating, ratedEmail)
-    await reviews(review, userEmail, ratedEmail)
+    await ratingUpdate(rating, ratedEmail);
+    await reviews(review, userEmail, ratedEmail);
 
-    res.status(200).send({ message: 'Rating y Review dados con éxito!'})
+    res.status(200).send({ message: 'Rating y Review dados con éxito!' });
   } catch (err) {
-    res.status(501).send({error: err.message})
+    res.status(501).send({ error: err.message });
   }
-})
+});
 
 router.put('/cleanup', checkJwt, async (req, res) => {
   try {
@@ -174,16 +174,15 @@ router.put('/cleanup', checkJwt, async (req, res) => {
 
 router.put('/donate', checkJwt, async (req, res) => {
   try {
-    const { monto} = req.body;
-    const {email} = req.user
-     await UserModel.updateOne(
-        { email: email },
-        { $push: { donaciones: monto } }
-      );
-      res.status(200).send({
-        message: 'Registrado correctamente',
-      });
- 
+    const { monto } = req.body;
+    const { email } = req.user;
+    await UserModel.updateOne(
+      { email: email },
+      { $push: { donaciones: monto } }
+    );
+    res.status(200).send({
+      message: 'Registrado correctamente',
+    });
   } catch (error) {
     res.status(501).send({ error: err.message });
   }
