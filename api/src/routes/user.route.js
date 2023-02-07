@@ -17,6 +17,7 @@ const { cleanUserInexistentPets, solicitudesPersonalizadas } = require('../contr
 const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
 const { reviews } = require('../controllers/reviewUserController');
+const UserModel = require("../models/user.model") 
 const router = express.Router();
 
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
@@ -166,6 +167,23 @@ router.put('/cleanup', checkJwt, async (req, res) => {
     } else {
       throw new Error('Debes enviar un email por body');
     }
+  } catch (error) {
+    res.status(501).send({ error: err.message });
+  }
+});
+
+router.put('/donate', checkJwt, async (req, res) => {
+  try {
+    const { monto} = req.body;
+    const {email} = req.user
+     await UserModel.updateOne(
+        { email: email },
+        { $push: { donaciones: monto } }
+      );
+      res.status(200).send({
+        message: 'Registrado correctamente',
+      });
+ 
   } catch (error) {
     res.status(501).send({ error: err.message });
   }
