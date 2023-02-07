@@ -300,7 +300,7 @@ export const getPetByOwner = () => {
 };
 
 ///Accept adoption pet
-export const acceptAdoption = (petId, newOwnerEmail, rating) => {
+export const acceptAdoption = (petId, newOwnerEmail) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -312,7 +312,6 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       petID: petId,
       emailOwner: auth?.currentUser?.email,
       newOwnerEmail: newOwnerEmail,
-      rating: rating || 5,
     };
     try {
       const adoptionConfirmed = await axios.put(

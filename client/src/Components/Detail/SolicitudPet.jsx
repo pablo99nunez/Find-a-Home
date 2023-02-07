@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, Image, Linking, TouchableOpacity } from "react-native";
+import { ScrollView, Text, View, TextInput, Modal, Image, Linking, TouchableOpacity } from "react-native";
 import { ButtonYellow } from "../Buttons/Buttons";
-import { acceptAdoption, PushNotifications } from "../../Redux/Actions/index";
+import { acceptAdoption, PushNotifications, reviewAndRating } from "../../Redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 import { BASE_URL_IP } from "@env"
@@ -22,6 +22,7 @@ const SolicitudPet = ({ navigation, route }) => {
   const petId = route.params.petId;
   const name = route.params.name;
   const [visible, setVisible] = React.useState(false);
+  const [rating, setRating] = React.useState(0)
   const [input, setInput] = React.useState('');
 
 
@@ -82,11 +83,19 @@ const SolicitudPet = ({ navigation, route }) => {
     }
 
   }
+
+  async function giveRatingAndReview() {
+    const newOwnerEmail = email
+    setRating(rating),
+    setInput(input),
+    setVisible(false);
+    dispatch(reviewAndRating(newOwnerEmail, rating, input))
+  }
+
   async function confirmAdoption() {
     const newOwnerEmail = email;
     dispatch(acceptAdoption(petId, newOwnerEmail));
     sendPushNotification()
-    setVisible(true)
   }
 
   return (
@@ -124,9 +133,10 @@ const SolicitudPet = ({ navigation, route }) => {
 
       <ButtonYellow
         text={"Aceptar Solicitud"}
-        onPress={() => confirmAdoption()}
+        onPress={() => setVisible(true)}
       />
-      <DialogInput 
+
+      {/* <DialogInput 
                 isDialogVisible={visible}
                 title={`Has aceptado la solicitud de ${firstName}`}
                 message={"Puedes puntuarlo del 1-5?"}
@@ -139,7 +149,33 @@ const SolicitudPet = ({ navigation, route }) => {
                     navigation.navigate('UserDetail')
                 }}
                 closeDialog={() => setVisible(false)}>
-            </DialogInput>
+            </DialogInput> */}
+
+      <Modal visible={visible} animationType="slide">
+        <View>
+          <TextInput
+            value={rating}
+            keyboardType="numeric"
+            placeholder="0-5"
+            onChangeText={(number) => setRating(number)}
+          />
+          <TextInput
+            value={input}
+            placeholder="Review"
+            onChangeText={(text) => setInput(text)}
+          />
+          <TouchableOpacity onPress={()=>setVisible(false)}>
+            <Text>Cerrar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            giveRatingAndReview()
+            confirmAdoption()
+            navigation.navigate('UserDetail')
+          }}>
+            <Text>Enviar</Text>
+          </TouchableOpacity>
+        </View>
+    </Modal>
     </ScrollView>
   );
 };
