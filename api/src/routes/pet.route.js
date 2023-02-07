@@ -67,7 +67,7 @@ router.put('/profile', checkJwt, async (req, res) => {
 
 
 //solicitar perro
-router.put('/profile/solicitud',limit5cada12horas, checkJwt, async (req, res) => {
+router.put('/profile/solicitud', checkJwt, async (req, res) => {
   try {
     //solicitarAdopcion = async (petID, message, interestedEmail, deleteSolicitud)
     const message = req.body.message
