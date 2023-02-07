@@ -38,8 +38,13 @@ const create = async () => {
 
     app.get('/check', checkJwt, async (req, res) => {
         //setAdmin(req.user.uid)
-        const data = await extractUserData(req.user.uid)
-        res.send({message: 'Token decodificado exitosamente!', user: req.user, dataUID: data})
+        try{
+            const data = await extractUserData(req.user.uid)
+            res.send({message: 'Token decodificado exitosamente!', user: req.user, dataUID: data})
+
+        }catch(err){
+            res.send({message: 'el back exploto'})
+        }
     });
 
     return app
