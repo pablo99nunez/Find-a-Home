@@ -42,9 +42,9 @@ export const UserSolicitudes = () => {
       style={{ height: height * 0.98, width: width }}
       className="bg-[#d9d9d9] "
     >
-      {/*  <FlatList
+      <FlatList
         keyExtractor={(item) => item.title}
-        data={}
+        data={infoUser}
         renderItem={({ item }) => (
           <View className="bg-[#AB4E68] flex flex-row mx-[3%] my-[2%] p-[3%] rounded-xl items-center">
             <Image
@@ -53,14 +53,25 @@ export const UserSolicitudes = () => {
               source={require("../../images/FindAHome.png")}
             />
             <View>
-              <Text className="text-[#d9d9d9] font-light w-[60%]">{item}</Text>
               <Text className="text-[#d9d9d9] font-extralight text-sm w-[60%]">
-                {item.message}
+                Nombre de la mascota: {item?.petName}
               </Text>
+              <Text className="text-[#d9d9d9] font-extralight text-sm w-[60%]">
+                Dueño: {item?.ownerFullname}
+              </Text>
+
+              <Text className="text-[#d9d9d9] font-light w-[60%]">
+                Mensaje: {item?.message}
+              </Text>
+              <Image
+                className="h-[100%] w-[15%] m-2"
+                resizeMode="contain"
+                source={{ uri: item?.profilePic }}
+              />
             </View>
           </View>
         )}
-      ></FlatList> */}
+      ></FlatList>
     </View>
   );
 };
