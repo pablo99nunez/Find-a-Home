@@ -4,11 +4,11 @@
   },
   "build": {
     "development": {
-      "developmentClient": false,
-      "distribution": "internal",
       "env": {
         "BASE_URL_IP": "http://100.25.46.52:8080"
       },
+      "developmentClient": true,
+      "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
       },
@@ -23,6 +23,12 @@
       }
     },
     "production": {
+      "env": {
+        "BASE_URL_IP": "http://100.25.46.52:8080"
+      },
+      "android": {
+        "buildType": "apk"
+      },
       "ios": {
         "resourceClass": "m1-medium"
       }
