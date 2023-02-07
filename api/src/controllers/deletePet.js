@@ -34,6 +34,7 @@ const solicitudesPersonalizadas = async (email) => {
       obj.message = solicitud.message;
       //-------fin de personalización, pusheando al array
       arrayAretornar.push(obj);
+      return arrayAretornar;
     },
     (err, results) => {
       if (err) {
