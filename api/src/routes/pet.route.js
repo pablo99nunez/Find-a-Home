@@ -30,7 +30,7 @@ router.get('/poride/:id', async (req, res) => {
 //CREAR PET
 //logeado, user, checkJwt te deja pasar si el token esta bien, y ademas
 //mete adentro del req una propiedad user con los datos del usuario
-router.post('/',limit5cada12horas,checkJwt, async (req, res) => {
+router.post('/',checkJwt, async (req, res) => {
   try {
     const PetData = req.body
     const newPet = await createPet(PetData, req.user.email)
