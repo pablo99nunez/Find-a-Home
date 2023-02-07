@@ -21,6 +21,7 @@ const extractUserData = async (uid)=>{
   .then(userRecord => userRecord.toJSON())
   .catch(err=>err.message)
 }
+
 //rellena el req con una nueva clave "user" ahora se puede hacer req.user al decodificar correcamente el token
 const checkJwt = (req, res, next) => { //jason web token
   if (!req.headers.authorization) {
@@ -38,11 +39,16 @@ const checkJwt = (req, res, next) => { //jason web token
   firebaseAdmin
     .auth()
     .verifyIdToken(idToken)
-    .then((decodedIdToken) => {
+    .then(async (decodedIdToken) => {
       //se ha creado una propiedad "user" en el req
       //y está guardando la decodificacion, la decodificacion son todos los datos del usuario
       req.user = decodedIdToken;
+      if(!decodedIdToken.hasOwnProperty('email')){
+        const data = await extractUserData(decodedIdToken.uid)
+        req.user = {...req.user, ...data.providerData[0]}
+      }
       return next();
+      
     })
     .catch((error) => {//                                               
       return res.status(401).send("Tu token está mal no se decodificó" + error.message);
