@@ -13,7 +13,6 @@ const validate = {
       return emailRegex.test(valor) ? "":"Error en el email";
     }
     if(clave==='password'){
-      console.log(valor.length);
       return valor.length >= 6 ? "" : "Contraseña debe tener 6 caracteres o más";
     }
     

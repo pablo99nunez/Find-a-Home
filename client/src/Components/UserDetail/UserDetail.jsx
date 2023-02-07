@@ -60,7 +60,7 @@ export default function UserDetail({ route, navigation }) {
   function handleButtons() {
     setOpen(0);
   }
-  //-----------------------------------------------------------
+
   return (
     <View style={{ height: height }} className="bg-[#ACACAC]">
       <ImageBackground
