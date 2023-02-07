@@ -26,7 +26,7 @@ router.get('/specie/:variable', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 
@@ -36,7 +36,7 @@ router.get('/size/:tamano', async (req, res) => {
     const allPets = await filtroSize(req.params.tamano);
     res.send({ message: 'todas las mascotas', payload: allPets });
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
     const bothFilters = await combinedFilters(specie, size);
     res.send({ message: 'animales filtrades', payload: bothFilters });
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 
@@ -58,7 +58,7 @@ router.get('/age/', async (req, res) => {
     const allPets = await filtroAge(req.body.edad);
     res.send({ message: 'todas las edades', payload: allPets });
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 
@@ -71,7 +71,7 @@ router.put('/zone/:radius', async (req, res) => {
     const allPets = await getPetsByZone(req.params.radius, latitude, longitude);
     res.status(200).send({ message: 'mascotas por zona', payload: allPets });
   } catch (error) {
-    res.status(501).send({ error: error.message });
+    res.status(501).send( error.message);
   }
 });
 
