@@ -22,6 +22,7 @@ export const GET_PETS_BY_ZONE = "GET_PETS_BY_ZONE";
 export const SEND_NOTIFICATION = "SEND_NOTIFICATION";
 export const PAYMENT_LINK = "PAYMENT_LINK";
 export const GET_PET_DATA_BY_ID = "GET_PET_DATA_BY_ID";
+export const RATING_REVIEW = "RATING_REVIEW";
 
 //devuelve verdadero si el token se decodifico, falso otherrwise
 export const checkToken = async () => {
@@ -314,7 +315,6 @@ export const acceptAdoption = (petId, newOwnerEmail, rating) => {
       rating: rating || 5,
     };
     try {
-      console.log(bodyPayload);
       const adoptionConfirmed = await axios.put(
         url + "/user/confirm",
         bodyPayload,
@@ -532,3 +532,30 @@ export const amountDonate = (payload) => {
     }
   };
 };
+
+export const reviewAndRating = (ratedEmail, rating, review) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    ratedEmail,
+    rating,
+    review
+  };
+  return async () => {
+    try {
+      await axios.put(
+        `${url}/user/ratingreview`,
+        bodyPayload,
+        config
+      );      
+    } catch (error) {
+      console.error(
+        "⚠️ Error -> 🚨 Action -> 🔔 reviewAndRating: " + error.response.data
+      );
+    }
+  }
+}
