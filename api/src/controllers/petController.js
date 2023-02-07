@@ -81,8 +81,9 @@ const findPetById = async (id) => {
 
 const findPetByArray = async (arrayOfIds) => {
   try {
-    const petArray = await PetModel.find({ _id: { $in: arrayOfIds } });
+    const petArray = await PetModel.find({ _id: { $in: arrayOfIds } }); //busca el id del perro
     let solicitud = [];
+    const userId = await UserModel.findOne({_id:petArray},)
     const petAndOwner = await Promise.all(
       petArray.map(async (el) => {
         solicitud.push(el.name);
