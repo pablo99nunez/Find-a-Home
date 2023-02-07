@@ -26,8 +26,8 @@ router.get('/profile', checkJwt, async (req, res) => {
     const email = req.user.email;
     const user = await findUser(email);
     if (user) {
-      if(newPet['_doc'].profilePic.length === 0)
-        newPet['_doc'].profilePic = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532"
+      if(user['_doc'].profilePic.length === 0)
+        user['_doc'].profilePic = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532"
       res.send(user);
     }
     else throw new Error('Usuario no se encontró en la base de datos');
