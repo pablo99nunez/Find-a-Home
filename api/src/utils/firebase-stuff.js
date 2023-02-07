@@ -18,7 +18,7 @@ const setAdmin = (uid) => {
 } 
 const extractUserData = async (uid)=>{
   return await firebaseAdmin.auth(app).getUser(uid)
-  .then(userRecord => userRecord.toJSON().email)
+  .then(userRecord => userRecord.toJSON())
   .catch(err=>err.message)
 }
 //rellena el req con una nueva clave "user" ahora se puede hacer req.user al decodificar correcamente el token
