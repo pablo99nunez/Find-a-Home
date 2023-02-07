@@ -82,14 +82,16 @@ const findPetById = async (id) => {
 const findPetByArray = async (arrayOfIds) => {
   try {
     const petArray = await PetModel.find({ _id: { $in: arrayOfIds } });
+    let solicitud = [];
+    const petAndOwner = await Promise.all(
+      petArray.map(async (el) => {
+        solicitud.push(el.name);
+        solicitud.push(await findUserName(el.owner));
+        solicitud.push(await findUserName(el.email));
+      })
+    );
 
-    const petAndOwner =await Promise.all(
- petArray.map(async (el) => {
-    return  el.name + ' ' + await findUserName(el.owner);
-    })
-)
-
-return petAndOwner
+    return solicitud;
   } catch (error) {
     throw error;
   }

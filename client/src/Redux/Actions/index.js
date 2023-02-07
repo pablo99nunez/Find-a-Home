@@ -123,7 +123,7 @@ export const getPetsFilteredByTwoFilters = (payload) => {
     }
   };
 };
-export const getPetdataById = async (payload) => {
+/* export const getPetdataById = async (payload) => {
   try {
     const json = await axios.get(`${url}/pet/${payload}}`);
     return json;
@@ -132,7 +132,7 @@ export const getPetdataById = async (payload) => {
       "⚠️ Error -> 🚨 Action -> 🔔  getPetdataById: " + error.response.data
     );
   }
-};
+}; */
 
 export const getPetsByZone = (radius, coords) => {
   return async (dispatch) => {
@@ -458,11 +458,7 @@ export const MakeAdmin = async (owner) => {
     OwenerEmail: owner,
   };
   try {
-    const banear = await axios.put(
-      url + "/admin/admin",
-      bodyPayload,
-      config
-    );
+    const banear = await axios.put(url + "/admin/admin", bodyPayload, config);
 
     return banear;
   } catch (error) {
@@ -542,22 +538,18 @@ export const reviewAndRating = (ratedEmail, rating, review) => {
   const bodyPayload = {
     ratedEmail,
     rating,
-    review
+    review,
   };
   return async () => {
     try {
-      await axios.put(
-        `${url}/user/ratingreview`,
-        bodyPayload,
-        config
-      );      
+      await axios.put(`${url}/user/ratingreview`, bodyPayload, config);
     } catch (error) {
       console.error(
         "⚠️ Error -> 🚨 Action -> 🔔 reviewAndRating: " + error.response.data
       );
     }
-  }
-}
+  };
+};
 
 export const Donacion = async (cash) => {
   const config = {
@@ -570,14 +562,12 @@ export const Donacion = async (cash) => {
     monto: cash,
   };
   try {
-    const donacion = await axios.put(
-      url + "/user/donate",
-      bodyPayload,
-      config
-    );
+    const donacion = await axios.put(url + "/user/donate", bodyPayload, config);
 
     return banear;
   } catch (error) {
-    console.error("⚠️ Error -> 🚨 Action -> 🔔 donacion: " + error.response.data);
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 donacion: " + error.response.data
+    );
   }
 };
