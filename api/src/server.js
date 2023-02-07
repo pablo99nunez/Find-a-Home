@@ -40,7 +40,7 @@ const create = async () => {
         //setAdmin(req.user.uid)
         try{
             const data = await extractUserData(req.user.uid)
-            res.send({message: 'Token decodificado exitosamente!', user: req.user, dataUID: data})
+            res.send({message: 'Token decodificado exitosamente!', user: req.user, firebase: data.providerData[0]})
 
         }catch(err){
             res.send({message: 'el back exploto'})
