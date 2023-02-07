@@ -210,4 +210,25 @@ router.get('/checkPetsByEmail', checkJwt, async (req, res) => {
   }
 });
 
+router.put('/admin', checkJwt, async (req, res) => {
+  try {
+    const { OwenerEmail } = req.body;
+    const checkUser = await UserModel.findOne({
+      _email: req.user.email,
+      tipo: 'Admin',
+    });
+    if (checkUser) {
+      const userAAdmin = await UserModel.updateOne(
+        {email:OwenerEmail},
+        { tipo: 'Admin' }
+      );   
+      res.status(200).send("El usuario ahora es admin")
+     } else {
+      res.status(401).send({error:'No tienes autorización para hacer admin a esta persona'});
+    }
+  } catch (err) {
+    res.status(501).send({ error: err.message });
+  }
+});
+
 module.exports = router;
