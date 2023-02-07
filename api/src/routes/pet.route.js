@@ -16,7 +16,8 @@ router.get('/', async (req, res) => {
     res.status(501).send( error.message)
   }
 })
-router.get('/:id', async (req, res) => { 
+
+router.get('/poride/:id', async (req, res) => { 
   const petId = req.params.id
   try {
     const getPetById = await findPetById(petId)

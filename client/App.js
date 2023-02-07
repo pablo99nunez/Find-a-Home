@@ -43,7 +43,7 @@ import { Notifications } from "./src/Components/UserDetail/Notifications";
 import { UserSolicitudes } from "./src/Components/UserDetail/UserSolicitudes";
 
 import UserPets from "./src/Components/AdminPanel/UserPets";
-
+import Donate from "./src/Components/AdminPanel/Donate";
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
 ]);
@@ -279,6 +279,18 @@ export default function App() {
               headerShadowVisible: false,
               headerTintColor: "#AB4E68",
               title: "Reportes",
+              headerBackTitle: null,
+              headerBackTitleVisible: false,
+            }}
+          />
+                    <Stack.Screen
+            name="Donate"
+            component={Donate}
+            options={{
+              headerStyle: { backgroundColor: "#f1f1f1" },
+              headerShadowVisible: false,
+              headerTintColor: "#AB4E68",
+              title: "Donaciones",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}

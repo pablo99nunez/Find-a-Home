@@ -12,15 +12,16 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import GoogleImage from "../../images/Google.svg";
+import GoogleButton from "../Buttons/GoogleAuth";
 
 const { width, height } = Dimensions.get("window");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
-  const isLoggedIn = useSelector(store=>store.isLoggedIn)
+  const isLoggedIn = useSelector(store => store.isLoggedIn)
 
   useEffect(() => {
-    if(isLoggedIn)
+    if (isLoggedIn)
       navigation.navigate("Home")
   }, [isLoggedIn]);
 
@@ -37,14 +38,14 @@ const Welcome = ({ navigation }) => {
     side = 'top', 'right'  determina el flujo a seguir con los parametros y q retornar
     type = 'moving' o 'static' determina si algo debe estar fijo o moviendose junto con todo el View
   */
-  const responsiveHell = (fac,side,type) => {
+  const responsiveHell = (fac, side, type) => {
     const sign = type === 'moving' ? -1 : 1
     const proportion = height / width
-    if(side==='top'){
-      return (fac * height - height*0.46 - xPos*proportion )*sign
+    if (side === 'top') {
+      return (fac * height - height * 0.46 - xPos * proportion) * sign
     }
-    if(side==='right'){
-      return (fac * width - width*0.41 - xPos)*sign
+    if (side === 'right') {
+      return (fac * width - width * 0.41 - xPos) * sign
     }
   }
 
@@ -67,33 +68,33 @@ const Welcome = ({ navigation }) => {
 
       {/* FIRST SLIDE 0 0 */}
       <View style={{
-            ...styles.slide1,
-            ...styles.bg,
-            top: 0 * width + xPos,
-            right: 0 * width + xPos,
-            zIndex: 1,
-          }}>
-        
-      <View
+        ...styles.slide1,
+        ...styles.bg,
+        top: 0 * width + xPos,
+        right: 0 * width + xPos,
+        zIndex: 1,
+      }}>
+
+        <View
           style={{
             ...styles.slide1,
             ...styles.bg,
-            top:  0- xPos,
-            right:  0- xPos,
+            top: 0 - xPos,
+            right: 0 - xPos,
             zIndex: 2,
           }}
         >
-        <Image
+          <Image
             style={styles.icon}
             source={require("../../images/icon1-icon3-welcome.png")}
           />
-          
-        <Text style={styles.text1}>Somos una</Text>
-        <Text style={styles.text1}>organización sin</Text>
-        <Text style={styles.text1}>fines de lucro que</Text>
-        <Text style={styles.text1}>busca ayudar a las</Text>
-        <Text style={styles.text1}>mascotas a</Text>
-        <Text style={styles.text1}>encontrar un hogar.</Text>
+
+          <Text style={styles.text1}>Somos una</Text>
+          <Text style={styles.text1}>organización sin</Text>
+          <Text style={styles.text1}>fines de lucro que</Text>
+          <Text style={styles.text1}>busca ayudar a las</Text>
+          <Text style={styles.text1}>mascotas a</Text>
+          <Text style={styles.text1}>encontrar un hogar.</Text>
         </View>
       </View>
 
@@ -101,8 +102,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide2,
-          top: responsiveHell(2,'top','moving'),
-          right: responsiveHell(2,'right','moving'),
+          top: responsiveHell(2, 'top', 'moving'),
+          right: responsiveHell(2, 'right', 'moving'),
           zIndex: 2,
           overflow: "hidden",
           borderRadius: width,
@@ -121,22 +122,22 @@ const Welcome = ({ navigation }) => {
           source={require("../../images/bg1-welcome.png")}
         />
 
-       
+
 
         <View
           style={{
             ...styles.slide2,
             ...styles.bg,
-            top: responsiveHell(2,'top','static'),
-            right: responsiveHell(2,'right','static'),
+            top: responsiveHell(2, 'top', 'static'),
+            right: responsiveHell(2, 'right', 'static'),
             zIndex: 3,
           }}
         >
-           <Image
-          style={styles.icon}
-          source={require("../../images/icon1-icon3-welcome.png")}
-        />
-                  <Image
+          <Image
+            style={styles.icon}
+            source={require("../../images/icon1-icon3-welcome.png")}
+          />
+          <Image
             style={styles.imgbg2}
             source={require("../../images/image-bg2-welcome.png")}
           />
@@ -153,8 +154,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide3,
-          top: responsiveHell(3,'top','moving'),
-          right: responsiveHell(3,'right','moving'),
+          top: responsiveHell(3, 'top', 'moving'),
+          right: responsiveHell(3, 'right', 'moving'),
           zIndex: 5,
           overflow: "hidden",
           borderRadius: width,
@@ -177,8 +178,8 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide3,
             ...styles.bg,
-            top: responsiveHell(3,'top','static'),
-            right: responsiveHell(3,'right','static'),
+            top: responsiveHell(3, 'top', 'static'),
+            right: responsiveHell(3, 'right', 'static'),
             zIndex: 7,
           }}
         >
@@ -198,8 +199,8 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide4,
-          top: responsiveHell(4,'top','moving'),
-          right: responsiveHell(4,'right','moving'),
+          top: responsiveHell(4, 'top', 'moving'),
+          right: responsiveHell(4, 'right', 'moving'),
           zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
@@ -222,13 +223,13 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide4,
             ...styles.bg,
-            top: responsiveHell(4,'top','static'),
-            right: responsiveHell(4,'right','static'),
+            top: responsiveHell(4, 'top', 'static'),
+            right: responsiveHell(4, 'right', 'static'),
             zIndex: 15,
           }}
         >
 
-          
+
           {/* 
           ANTIGUA PANTALLA PRINCIPAL
           <Image
@@ -259,17 +260,17 @@ const Welcome = ({ navigation }) => {
             </View>
           </TouchableOpacity> */}
 
-
+          <GoogleButton />
           <Image
             style={styles.iconoLogin}
             className="mb-[15%]"
             source={require("../../images/ButtonLanding.png")}
           />
           <TouchableOpacity onPress={() => navigation.navigate("Login")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
-            <Text style={{fontFamily: 'Roboto_300Light'}} className="text-center text-2xl text-[#AB4E68]">Iniciá sesión</Text>
+            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-[#AB4E68]">Iniciá sesión</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
-            <Text style={{fontFamily: 'Roboto_300Light'}} className="text-center text-2xl text-white">Regístrate</Text>
+            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Regístrate</Text>
           </TouchableOpacity>
 
 
@@ -471,8 +472,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: 90,
     height: 90,
-    right:'-10%', //XDXDXDXD
-    marginTop:0
+    right: '-10%', //XDXDXDXD
+    marginTop: 0
   },
   divisionLine: {
     marginTop: 20,

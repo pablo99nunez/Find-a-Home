@@ -39,7 +39,6 @@ export default function UserPets(props) {
     }, [])
   );
   let filtro = mascotas?.filter((ele) => ele.owner === props.route.params);
-  console.log(filtro);
   return (
     <View>
       <FlatList

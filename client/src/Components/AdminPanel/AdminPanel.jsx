@@ -86,14 +86,13 @@ const AdminPanel = ({ navigation, route }) => {
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-[#d9d9d9] text-xl font-thin mx-auto"
           >
-            Usuarios
+            User/Pets
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#AB4E68] p-3 rounded-xl m-2"
-          onPress={() => {
-            alert("Donaciones");
-          }}
+          onPress={() => 
+            navigation.navigate("Donate")}
         >
           <Text
             style={{ fontFamily: "Roboto_300Light" }}
