@@ -26,7 +26,7 @@ const findUser = async (email) => {
 const findUserName = async (email) => {
   try {
     const userInDB = await UserModel.findOne({ email: email });
-    return userInDB.firstName + userInDB.lastName;
+    return userInDB.firstName + ' ' +  userInDB.lastName;
   } catch (error) {
     throw error;
   }

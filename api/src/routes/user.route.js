@@ -34,12 +34,13 @@ router.get('/misSolicitudes', checkJwt, async (req, res) => {
   try {
     const email = req.user.email;
     const user = await findUser(email);
-    console.log(user);
     const solicitudes = user.misSolicitudes.map((el) => el.petID);
 
-    let arraySolicitudes = solicitudes.forEach(async (el) => {
-      await findPetByArray(el);
-    });
+    let arraySolicitudes = await Promise.all(
+ solicitudes.map(async (el) => {
+  return  await findPetByArray(el)
+    })
+);
     res.status(200).send({ arraySolicitudes });
   } catch (error) {
     res.status(501).send({ error: error.message });

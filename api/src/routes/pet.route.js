@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
     res.status(501).send( error.message)
   }
 })
+
 router.get('/poride/:id', async (req, res) => { 
   const petId = req.params.id
   try {
