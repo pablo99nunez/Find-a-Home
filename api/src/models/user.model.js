@@ -158,8 +158,8 @@ userSchema.plugin(toJSON);
 //userSchema.plugin(paginate);
 
 userSchema.pre('save', function(next) {
-  if (!this.firstName) this.firstName = "Sin nombre";
-  if (!this.lastName) this.lastName = "Sin apellido";
+  if (!this.firstName || this.firstName === " ") this.firstName = "Sin nombre";
+  if (!this.lastName || this.lastName === " ") this.lastName = "Sin apellido";
   next();
 });
 
