@@ -62,9 +62,9 @@ const EditProfile = (props) => {
   }, [])
   const [extras, setExtras] = useState(false)
   return (
-    <ScrollView className='bg-[#d9d9d9]'>
+    <ScrollView className='bg-[#d9d9d9]' >
 
-      <View className='w-10/15 mx-auto'>
+      <View className='w-10/15 mx-[5%]'>
         <Photos profile={profile} setProfile={setProfile} name={profile.name} />
 
         <View>
@@ -133,10 +133,10 @@ const EditProfile = (props) => {
 
 				<View className="flex flex-row flex-wrap items-center justify-center mx-auto">
 					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Techo"} />
-					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
-					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
 					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Vacunas"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Paseos Diarios"} />
 					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Castración"} />
+					<Condition HandleCheck={HandleCheck} checkState={checkState} ConditionName={"Alimento Balanceado"} />
 				</View>
         <View className="my-[10%]">
           <ButtonYellow onPress={() => HandleSubmit()} text={"Editar"} />

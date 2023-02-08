@@ -90,7 +90,7 @@ export default function UserDetail({ route, navigation }) {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto bottom-8">
-          {/* <Text
+          <Text
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-4xl text-[#ffc733]"
           >
@@ -103,7 +103,7 @@ export default function UserDetail({ route, navigation }) {
           </Text>
           <Text className=" text-4xl text-[#ffc733]">
             {currentUser?.rating?.rating ? currentUser?.rating.rating : 5}★
-          </Text> */}
+          </Text>
         </View>
       </ImageBackground>
       <View>
