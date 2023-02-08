@@ -96,7 +96,7 @@ router.post('/', checkJwt, async (req, res) => {
       email: req.user.email,
       email_verified: req.user.email_verified,
     });
-    if(!newUser.hasOwnProperty('lastName')){
+    if(!newUser.lastName){
       newUser.lastName = ''+newUser.firstName
     }
     const createdUser = await createNewUser(newUser);
