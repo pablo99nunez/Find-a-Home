@@ -15,6 +15,7 @@ import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import { FlatList } from "react-native-gesture-handler";
+import Review from "./Review";
 
 const {width, height } = Dimensions.get("screen")
 
@@ -54,6 +55,7 @@ export const ProfileOthers = ({ route, navigation }) => {
     }, [])
   );
 
+  console.log(userProfile.reviews)
   return (
     <View
       style={{ height: height }}
@@ -128,21 +130,27 @@ export const ProfileOthers = ({ route, navigation }) => {
         </View>
       </View>
 
-      {/* <View>
+      <View>
+        <ImageBackground
+          source={require("../../images/Banderin-r.png")}
+          className="w-[70%] my-[3%]"
+        >
+          <Text
+            className="text-start text-2xl text-[#2A2B20] ml-[10%]"
+            style={{ fontFamily: "Roboto_300Light" }}
+          >
+            Reseñas:
+          </Text>
+        </ImageBackground>
         <FlatList
-          style={{width: width, height: width, marginBottom: height * 0.02}}
-          numColumns={2}
+          numColumns={1}
           keyExtractor={(item) => item.id}
-          data={pets}
+          data={userProfile.reviews}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", item)}
-            >
-              <Card style={{ width: 120, height: 120 }} item={item} />
-            </TouchableOpacity>
-          )}
+              <Review item={item} />
+            )}
         ></FlatList>
-      </View> */}
+      </View>
     </View>
   );
 };
