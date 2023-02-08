@@ -25,6 +25,7 @@ export default function Usuarios({ navigation }) {
               },
             })
             .then((response) => setUsuarios(response.data));
+            console.log("asd")
         } catch (error) {
           console.error(error.message);
         }
