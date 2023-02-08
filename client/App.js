@@ -321,7 +321,7 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-                    <Stack.Screen
+          <Stack.Screen
             name="Donate"
             component={Donate}
             options={{

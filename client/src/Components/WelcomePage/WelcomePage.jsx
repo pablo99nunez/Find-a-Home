@@ -20,10 +20,10 @@ const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
   const isLoggedIn = useSelector(store => store.isLoggedIn)
 
-  // useEffect(() => {
-  //   if (isLoggedIn)
-  //     navigation.navigate("Home")
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (isLoggedIn)
+      navigation.navigate("Home")
+  }, [isLoggedIn]);
 
   //magia circulito expandible detectand el scroll
   const [xPos, setXPos] = useState(0);

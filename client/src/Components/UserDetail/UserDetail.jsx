@@ -26,9 +26,13 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
+<<<<<<< HEAD
+  console.log(currentUser)
+=======
 
   console.log(currentPets)
 
+>>>>>>> 7ed9203f261cdab5c16350d070fd8f2ac1e4f671
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
@@ -38,6 +42,11 @@ export default function UserDetail({ route, navigation }) {
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
     }, [])
   );
+  function toCamelCase(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index === 0 ? word.toUpperCase() : word.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
   const auth = getAuth(firebase);
@@ -94,12 +103,8 @@ export default function UserDetail({ route, navigation }) {
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-4xl text-[#ffc733]"
           >
-            {currentUser?.firstName[0]
-              .toUpperCase()
-              .concat(currentUser?.firstName.toLowerCase().substring(1))}{" "}
-            {currentUser?.lastName[0]
-              .toUpperCase()
-              .concat(currentUser?.lastName.toLowerCase().substring(1))}
+            {`${toCamelCase(currentUser.firstName || " ")}  ${toCamelCase(currentUser.lastName || " ")}`}
+
           </Text>
           <Text className=" text-4xl text-[#ffc733]">
             {currentUser?.rating?.rating ? currentUser?.rating.rating : 5}★
@@ -256,7 +261,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon
-            name="logout"
+            name="logout" f
             className="w-12 h-12 mr-[20%]"
             size={50}
             color={"#FFC733"}
