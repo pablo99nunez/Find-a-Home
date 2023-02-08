@@ -23,8 +23,8 @@ export default function LoginScreen({ navigation }) {
             const firstName = '', lastName = '', phone = '', profilePic = '', address= '', description= ''
             if(resp)
                 navigation.navigate("Home");
-            else
-                navigation.navigate("EditProfile",{firstName, lastName, phone, profilePic, address, description})
+            //else
+            //    navigation.navigate("EditProfile",{firstName, lastName, phone, profilePic, address, description})
         })  
         }
       }, [isLoggedIn]);
