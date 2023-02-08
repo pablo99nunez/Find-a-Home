@@ -26,7 +26,13 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
+<<<<<<< HEAD
   console.log(currentUser)
+=======
+
+  console.log(currentPets)
+
+>>>>>>> 7ed9203f261cdab5c16350d070fd8f2ac1e4f671
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
@@ -229,6 +235,24 @@ export default function UserDetail({ route, navigation }) {
             style={{ fontFamily: "Roboto_300Light", color: "white" }}
           >
             Donar
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MisReseñas", currentUser)}
+          className="flex flex-row items-center my-[5%] mx-[10%]"
+        >
+          <Icon
+            name="message-draw"
+            className="w-12 h-12 mr-[20%]"
+            size={50}
+            color={"#FFC733"}
+          />
+          <Text
+            className="text-2xl"
+            style={{ fontFamily: "Roboto_300Light", color: "white" }}
+          >
+            Reseñas que te dieron
           </Text>
         </TouchableOpacity>
 

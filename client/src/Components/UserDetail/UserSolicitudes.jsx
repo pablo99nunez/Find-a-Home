@@ -39,28 +39,28 @@ export const UserSolicitudes = () => {
 
   return (
     <View
-      style={{ height: height * 0.98, width: width }}
+      style={{ height: height * 0.88, width: width }}
       className="bg-[#d9d9d9] "
     >
       <FlatList
         keyExtractor={(item) => item.title}
         data={infoUser}
         renderItem={({ item }) => (
-          <View className="bg-[#AB4E68] flex flex-row mx-[3%] my-[2%] p-[3%] rounded-xl items-center">
+          <View className="bg-[#AB4E68] flex flex-row m-[2%] p-[3%] rounded-xl items-center">
             <Image
-              className="h-[100%] w-[15%] m-2"
+              className="h-24 w-[25%] mx-[5%] rounded-2xl"
               resizeMode="contain"
               source={{ uri: item?.profilePic }}
             />
             <View>
-              <Text className="text-[#d9d9d9] font-extralight text-sm w-[60%]">
+              <Text className="text-[#d9d9d9] text-sm">
                 Nombre de la mascota: {item?.petName}
               </Text>
-              <Text className="text-[#d9d9d9] font-extralight text-sm w-[60%]">
+              <Text className="text-[#d9d9d9] text-sm">
                 Dueño: {item?.ownerFullname}
               </Text>
 
-              <Text className="text-[#d9d9d9] font-light w-[60%]">
+              <Text className="text-[#d9d9d9] font-light">
                 Mensaje: {item?.message}
               </Text>
             </View>

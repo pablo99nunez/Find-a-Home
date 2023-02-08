@@ -79,8 +79,10 @@ export const Photos = ({ name, profile, setProfile }) => {
       <TouchableOpacity onPress={() => pickImage()}>
 
         <Image
+
           source={{ uri: profile.profilePic || "https://img.freepik.com/premium-vector/cute-australian-shepherd-dog-avatar-cartoon_357749-252.jpg" }}
-          className='w-72 h-52 mx-auto rounded-md'
+          className='w-[70%] h-52 mx-auto rounded-3xl'
+
         />
 
       </TouchableOpacity>
