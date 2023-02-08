@@ -102,7 +102,7 @@ router.post('/', checkJwt, async (req, res) => {
     const createdUser = await createNewUser(newUser);
     res.status(200).send(createdUser);
   } catch (error) {
-    res.status(501).send({ error: 'back: '+error.message+newUser.lastName+newUser.firstName });
+    res.status(501).send({ error: 'back: '+error.message });
   }
 });
 
