@@ -90,8 +90,8 @@ const userSchema = mongoose.Schema(
       }
     },
     reviews: {
-      type: Object,
-      default: {}
+      type: Array,
+      default: []
     },
     description: {
       type: String,
