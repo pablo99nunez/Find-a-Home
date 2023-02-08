@@ -93,7 +93,7 @@ router.post('/', checkJwt, async (req, res) => {
   try {
     //para q no pueda cambiar su email desde el body
     if(!req.body.lastName) {
-      req.body.lastName = req.body.firstName;
+      req.body.lastName = 'Sin apellido';
     }
     const newUser = Object.assign(req.body, {
       email: req.user.email,
