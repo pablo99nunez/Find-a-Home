@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get("screen");
 export const BottomViewOwner = ({ solicitudes, navigation, petId, name }) => {
+  
 
   return (
     <View>

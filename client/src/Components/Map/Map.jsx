@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function Map(props) {
   const { latitude = 0, longitude = 0 } = props.route.params;
   const allPets = useSelector((state) => state.allPets);
-  //console.log(allPets.payload);
+  
 
   const coordsDelta = useMemo(() => 0.7111, []);
 

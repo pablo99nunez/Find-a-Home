@@ -55,7 +55,7 @@ export const ProfileOthers = ({ route, navigation }) => {
     }, [])
   );
 
-  console.log(userProfile.reviews)
+ 
   return (
     <View
       style={{ height: height }}

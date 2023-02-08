@@ -394,7 +394,7 @@ export const PushNotifications = (token, title, body, email) => {
         bodyPayload,
         config
       );
-      console.log(status.data);
+    
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,
@@ -594,7 +594,6 @@ export const createUserInDb = async (
     conditions,
     pushToken,
   };
-  console.log("DATA FOR DB CREATION:", data);
 
   return await axios.post(`${url}/user`, data, {
     headers: {

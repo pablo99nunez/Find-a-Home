@@ -5,24 +5,5 @@ fetch("https://www.googleapis.com/userinfo/v2/me", {
     .then(resp=>{
         console.log(resp)
     })
+    .catch(err => console.log(err))
 
-/* 
-
-export const callApiWithAppCheckExample = async () => {
-    //obtiene el token
-    const tokenLocalStorage = await AsyncStorage.getItem('@accessToken')
-    //const tokenLocalStorage = 'asds'
-    //hace fetch
-    const apiResponse = await fetch('http://18.208.120.129:8080/pet', {
-        headers: {
-            'Authorization': `Bearer ${tokenLocalStorage}`,
-            'X-Firebase-AppCheck': tokenLocalStorage
-        }
-    }
-    )
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
-    // consologea respue sta
-    console.log({ respuesta: apiResponse });
-}; */
