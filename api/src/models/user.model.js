@@ -21,15 +21,15 @@ const userSchema = mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      trim: true,
-      minlength: 2,
+      
+      minlength: 1,
       maxlength: 30
     },
     lastName: {
       type: String,
       required: true,
-      trim: true,
-      minlength: 2,
+      
+      minlength: 1,
       maxlength: 30
     },
     email: {
