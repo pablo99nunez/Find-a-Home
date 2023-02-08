@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
@@ -11,6 +12,8 @@ import firebase from "../../firebase/firebase-config";
 import { TouchableOpacity, Text } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { retriveUserData } from '../../Redux/Actions/index'
+import { url } from "../../Redux/Actions/index";
+import { useSelector, useDispatch } from "react-redux";
 WebBrowser.maybeCompleteAuthSession();
 
 export default function GoogleButton({ navigation }) {
@@ -23,6 +26,7 @@ export default function GoogleButton({ navigation }) {
 
 	const [userData, setUserData] = useState({})
 	React.useEffect(() => {
+
 		if (response?.type === 'success') {
 			const { id_token } = response.params;
 			const auth = getAuth();
@@ -33,17 +37,37 @@ export default function GoogleButton({ navigation }) {
 					const token = await auth.currentUser.getIdToken();
 					const { name, email, photoURL } = result.user;
 					setUserData({ name, email, photoURL, token })
-					console.log("userData", userData)
 				})
 				.catch(error => error)
 
 		}
 	}, [response]);
-	function goToRegister() {
-		console.log('linea 43 googleAuth.jsx',userData)
-		navigation.navigate("RegisterFirstStepsGoogle", userData)
+
+	React.useEffect(() => {
+		if (response?.type === 'success' && userData.email) {
+			try {
+				(async function () {
+					const response = await axios.get(url + "/user/profile", {
+						headers: {
+							Authorization: `Bearer ${userData?.token && userData.token}`,
+						},
+					});
+				})()
+					.then(res => goToRegister(true))
+					.catch(error => goToRegister(false))
+			}
+			catch (error) { }
+		}
+	}, [userData]);
+
+	async function goToRegister(userExistInDb) {
+		userExistInDb
+			? navigation.navigate("Home")
+			: navigation.navigate("RegisterFirstStepsGoogle", userData)
+
 	}
 	function logoutUser() {
+		setUserData({})
 		const auth = getAuth(firebase);
 		signOut(auth)
 			.then(() => {
@@ -60,31 +84,29 @@ export default function GoogleButton({ navigation }) {
 	}
 
 	return (<>
-
-		<Button
+		{!userData.email && <TouchableOpacity
 			disabled={!request}
 			title="Login"
-			onPress={() => {
-				promptAsync()
+			onPress={() => promptAsync()}
+			className="flex flex-row items-center my-[5%] mx-[10%]"
+		>
+			<Icon name="google" className="w-12 h-12 mr-[20%]" size={50} background={"#ACACAC"} color={"#AB4E68"} />
+			<Text className="text-2xl" style={{ fontFamily: 'Roboto_300Light', color: 'white' }}>Login</Text>
+		</TouchableOpacity>}
 
-			}}
-		/>
-		<Button
-			disabled={!(response ? response?.type === 'success' : true)} //deshabilita el boton
-			title="Continuar con el registro"
-			onPress={() => {
-				goToRegister()
-			}}
-		/>
-		<TouchableOpacity
+
+
+		{userData.email && <TouchableOpacity
 			onPress={logoutUser}
 			className="flex flex-row items-center my-[5%] mx-[10%]"
 		>
 			<Icon name="logout" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
 			<Text className="text-2xl" style={{ fontFamily: 'Roboto_300Light', color: 'white' }}>Cerrar Sesión</Text>
-		</TouchableOpacity>
+		</TouchableOpacity>}
 
 	</>
 
 	);
 }
+
+

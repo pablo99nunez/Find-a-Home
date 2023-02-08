@@ -21,10 +21,10 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
   //no olvidar de sacar console logs, este console log se pone cada vez q se renderiza el componente
   console.log("ESTA ES LA DATA MI REEEI Register_First_steps_google.jsx:  ", route.params)
   const { name, email, photoURL, token } = route.params
-  const fullName = name;
+  const fullName = name.split(" ");
   //primero vemos si llega la data, leugo la complicamos con arrays y esas cosas
-  const firstName = fullName + "XD"; 
-  const lastName = fullName + "XD";
+  const firstName = fullName[0] || name;
+  const lastName = fullName[1] || " ";
   const profilePic = photoURL;
   const [loading, setLoading] = useState(false)
   const [userInput, setUserInput] = useState({
@@ -67,7 +67,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
     <View>
       <View className="h-screen flex items-center bg-[#FFC733]">
         {/* <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5"> */}
-          {/* ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} */}
+        {/* ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} */}
         {/* </Text>
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
@@ -106,9 +106,8 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Provincia:</Text>
           <SelectList
             data={States}
-            setSelected={(val) =>
-             { 
-              console.log('provincia esta bien?: ',val);
+            setSelected={(val) => {
+              console.log('provincia esta bien?: ', val);
               setUserInput({ ...userInput, provincia: val })
             }
             }
@@ -127,10 +126,11 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
           </Text>
           <SelectList
             data={Localities.filter((ele) => ele.key == userInput.provincia)}
-            setSelected={(value) =>{
-              console.log('Localidad esta bien?: ',value);
+            setSelected={(value) => {
+              console.log('Localidad esta bien?: ', value);
 
-              setUserInput({ ...userInput, departamento: value })}
+              setUserInput({ ...userInput, departamento: value })
+            }
             }
             placeholder="Departamento"
             // search={false}
