@@ -92,9 +92,11 @@ router.get('/', checkJwt, async (req, res) => {
 router.post('/', checkJwt, async (req, res) => {
   try {
     //para q no pueda cambiar su email desde el body
-    if(!req.body.lastName) {
-      req.body.lastName = 'Sin apellido';
+    if(Object.keys(req.body).length===0) {
+      throw new Error('Se ha enviado un body vacío al servidor')
     }
+      
+    
     const newUser = Object.assign(req.body, {
       email: req.user.email,
       email_verified: req.user.email_verified,

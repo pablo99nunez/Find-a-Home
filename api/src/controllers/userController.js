@@ -1,6 +1,8 @@
 const UserModel = require('../models/user.model');
 
 const createNewUser = async (user) => {
+  user.firstName = user.firstName || 'sin nombre'
+  user.lastName = user.lastName || 'sin apellido'
   const userExists = await UserModel.findOne({ email: user.email });
   //if(!!userExists) throw new Error("El usuario ya existe")
   //si existe lo modifica XXDXDXD harcodeado para debugear
