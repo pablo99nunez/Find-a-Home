@@ -107,7 +107,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerShadowVisible: false,
               headerTintColor: "#AB4E68",
-              title: "Ver macotas en el mapa",
+              title: "Ver mascotas en el mapa",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}

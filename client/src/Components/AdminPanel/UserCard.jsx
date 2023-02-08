@@ -1,18 +1,24 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { DesbanUser, UserBan, MakeAdmin, QuitarAdmin } from "../../Redux/Actions";
+import { useState } from "react";
 
 const UserCard = (props, { navigation }) => {
+
+  const [admin, setAdmin] = useState()
   const banUser = (owneremail) => {
     UserBan(owneremail);
     alert("Usuario bloqueado");
   };
   const AdminUser = (owneremail) => {
     MakeAdmin(owneremail);
+    setAdmin(true)
     alert("El usuario ahora es administrador");
   };
   const QuitarAdmin = (owneremail) => {
     MakeAdmin(owneremail);
+    setAdmin(false)
+
     alert("El usuario ya no es administrador");
   };
   const Desban = (owneremail) => {
@@ -20,7 +26,9 @@ const UserCard = (props, { navigation }) => {
     alert("Usuario desbloqueado");
   };
 
-
+React.useEffect(() =>{
+if(props?.tipo?.admin === "Admin") setAdmin(true)
+}, [admin])
 
   return (
     <View className="bg-[#FFC733] m-[2%] px-[5%] py-[5%] rounded-2xl flex flex-col">
@@ -90,7 +98,7 @@ const UserCard = (props, { navigation }) => {
         </TouchableOpacity>
             )
         : null  }
-                {props.item.tipo !== "Admin" ?
+                {props.item.tipo !== "Admin" || !admin ?
 
                 <TouchableOpacity onPress={() => AdminUser(props.item.email)}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Hacer Admin</Text>

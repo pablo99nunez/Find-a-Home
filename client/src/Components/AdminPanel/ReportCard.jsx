@@ -46,16 +46,18 @@ const banUser = (owneremail) =>{
         />
       <View className="w-[60%]">
         <Text style={{ fontFamily: "Roboto_300Light" }} className="text-2xl font-semibold">{name ? name[0].toUpperCase().concat(name.toLowerCase().substring(1)) : props.item.firstName[0].toUpperCase().concat(props.item.firstName.toLowerCase().substring(1)) + " " + props.item.lastName[0].toUpperCase().concat(props.item.lastName.toLowerCase().substring(1))}</Text>
-        <Text style={{ fontFamily: "Roboto_300Light" }} className="text-gray-600">
-        {/* Ultimo reporte: {reportes[reportes.length-1].denuncia} */}
-        </Text>
+        {/* <Text style={{ fontFamily: "Roboto_300Light" }} className="text-gray-600">
+        Ultimo reporte: {reportes[reportes?.length-1].denuncia}
+        </Text> */}
         <Text style={{ fontFamily: "Roboto_300Light" }} className="text-gray-600">
         Cantidad de reportes: {reportes ? reportes.length : props.item.infracciones.length}
         </Text>
+
         {!props.item.address ? 
         <View>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="text-gray-600">Propietario:</Text>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="text-gray-600">{owner ? owner : null}</Text>
+
         </View>
         : 
         null

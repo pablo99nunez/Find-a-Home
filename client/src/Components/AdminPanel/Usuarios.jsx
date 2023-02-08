@@ -12,7 +12,7 @@ export default function Usuarios({ navigation }) {
   const [filter, setFilter] = useState("user")
   const [search, setSearch] = useState("")
   const [diferent, setDiferent] = useState("usuarios")
-
+  const [check, setCheck] = useState(false)
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
@@ -37,10 +37,13 @@ export default function Usuarios({ navigation }) {
 const userBoton = () =>{
   setFilter("user")
   setDiferent("usuarios")
+  setCheck(true)
 }
 const petBoton = () =>{
   setFilter("admin/getAllPets")
   setDiferent("pets")
+  setCheck(false)
+
 }
 
 const usersInhabilitados = () => {
@@ -51,7 +54,7 @@ const usersInhabilitados = () => {
 };
   return (
     <View>
-      {diferent  !== "usuarios" ? 
+      {diferent  !== "usuarios" && !check ? 
         <TouchableOpacity className='bg-[#AB4E68] p-5 rounded-xl m-2' onPress={() =>userBoton()}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className='text-[#d9d9d9] text-xl font-thin mx-auto'>Todos los usuarios</Text>
         </TouchableOpacity>
