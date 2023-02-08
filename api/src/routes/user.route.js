@@ -21,7 +21,6 @@ const { limit5cada30minutos } = require('../utils/rate-limiters');
 const { findPetByArray } = require('../controllers/petController');
 const { reviews } = require('../controllers/reviewUserController');
 const UserModel = require('../models/user.model');
-const { json } = require('body-parser');
 const router = express.Router();
 
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
@@ -103,7 +102,7 @@ router.post('/', checkJwt, async (req, res) => {
     const createdUser = await createNewUser(newUser);
     res.status(200).send(createdUser);
   } catch (error) {
-    res.status(501).send({ error: 'back: '+error.message+JSON.stringify(newUser) });
+    res.status(501).send({ error: 'back: '+error.message });
   }
 });
 
