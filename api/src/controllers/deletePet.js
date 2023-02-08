@@ -30,7 +30,7 @@ const solicitudesPersonalizadas = async (email) => {
     obj.petName = pet.name;
     obj.profilePic = pet.profilePic;
     obj.message = solicitud.message;
-
+    obj.state = solicitud.state
     arrayAretornar.push(obj);
   }
 
