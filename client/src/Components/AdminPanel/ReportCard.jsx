@@ -1,14 +1,21 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { DeletePet, UserBan } from "../../Redux/Actions";
+import { OcultPet, UserBan, MostrarPet } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
 const ReportCard = (props) => {
-const {profilePic, name, id, reportes, owner } = props.item
+const {profilePic, name, id, reportes, owner, state } = props.item
 const dispatch = useDispatch()
+
+
 const deletePets = (id) =>{
 
-    dispatch(DeletePet(id))
-    alert("Mascota eliminada")
+    OcultPet(id)
+    alert("Mascota Ocultada")
+}
+const Adoptpet = (id) =>{
+
+  MostrarPet(id)
+  alert("Mascota puesta en adopcion")
 }
 const banUser = (owneremail) =>{
     UserBan(owneremail)
@@ -40,10 +47,19 @@ const banUser = (owneremail) =>{
       }
       </View>
     </View>
+   
     <View className="flex flex-row justify-between">
-      <TouchableOpacity onPress={() => deletePets(props?.id)}>
-        <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Eliminar</Text>
+    {owner ? state === Adoptable ?
+      <TouchableOpacity onPress={() => deletePets(id)}>
+        <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Ocultar</Text>
       </TouchableOpacity>
+      :
+      <TouchableOpacity onPress={() => Adoptpet(id)}>
+      <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Poner en adopcion</Text>
+    </TouchableOpacity>
+    : null }
+ 
+    
       <TouchableOpacity onPress={() => banUser(owner ? owner : props.item.email)}>
         <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Bloquear usuario</Text>
       </TouchableOpacity>

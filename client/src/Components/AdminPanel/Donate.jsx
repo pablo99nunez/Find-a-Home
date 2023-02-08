@@ -30,7 +30,6 @@ export default function Donate({ navigation }) {
     }, [])
   );
 
- 
   return (
     <View>
     <View>
