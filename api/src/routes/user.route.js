@@ -92,17 +92,17 @@ router.get('/', checkJwt, async (req, res) => {
 router.post('/', checkJwt, async (req, res) => {
   try {
     //para q no pueda cambiar su email desde el body
+    if(!req.body.lastName) {
+      req.body.lastName = req.body.firstName;
+    }
     const newUser = Object.assign(req.body, {
       email: req.user.email,
       email_verified: req.user.email_verified,
     });
-    if(!newUser.lastName){
-      newUser.lastName = ''+newUser.firstName
-    }
     const createdUser = await createNewUser(newUser);
     res.status(200).send(createdUser);
   } catch (error) {
-    res.status(501).send({ error: 'back: '+error.message });
+    res.status(501).send({ error: error.message });
   }
 });
 
