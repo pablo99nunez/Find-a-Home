@@ -530,6 +530,48 @@ export const ReportPets = async (id, denuncia) => {
   }
 };
 
+export const OcultPet = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    id: id,
+  };
+  try {
+    const ocultar = await axios.put(url + "/admin/ocultar", bodyPayload, config);
+
+    return ocultar;
+  } catch (error) {
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 ocultar: " + error.response.data
+    );
+  }
+};
+export const MostrarPet = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json", //IMPORTANTE, SIEMPRE AÑADIR, sino no envia el body
+      Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
+    },
+  };
+  const bodyPayload = {
+    id: id,
+  };
+  try {
+    const ocultar = await axios.put(url + "/admin/enAdopcion", bodyPayload, config);
+
+    return ocultar;
+  } catch (error) {
+    console.error(
+      "⚠️ Error -> 🚨 Action -> 🔔 ocultar: " + error.response.data
+    );
+  }
+};
+
+
 export const createUserInDb = async (
   { firstName,
     lastName,

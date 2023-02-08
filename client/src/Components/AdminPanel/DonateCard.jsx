@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { DeletePet, UserBan } from "../../Redux/Actions";
-import { useDispatch } from "react-redux";
+import { View, Text, Image } from "react-native";
+
 const DonateCard = (props) => {
 const {profilePic, firstName, name, lastName, donaciones } = props.item
 
@@ -19,7 +18,7 @@ const {profilePic, firstName, name, lastName, donaciones } = props.item
         {/* Ultimo reporte: {reportes[reportes.length-1].denuncia} */}
         </Text>
         <Text style={{ fontFamily: "Roboto_300Light" }} className="text-white">
-        Ultima donacion: {donaciones ? donaciones[0] + "$ ARS": null}
+        Ultima donacion: {donaciones ? donaciones[donaciones.length-1] + "$ ARS": null}
         </Text>
        
       </View>

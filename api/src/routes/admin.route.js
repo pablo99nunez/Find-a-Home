@@ -178,4 +178,44 @@ router.get('/donaciones', async (req, res) => {
         res.status(501).send(err.message);
     }
 });
+router.put('/ocultar', async (req, res) => {
+    try {
+        const { id } = req.body;
+        const checkUser = await UserModel.findOne({
+          _email: req.user.email,
+          tipo: 'Admin',
+        });
+        if (checkUser) {
+          const userAAdmin = await PetModel.updateOne(
+            {_id:id},
+            { state: 'NotAdoptable' }
+          );   
+          res.status(200).send("La mascota fue ocultada")
+         } else {
+          res.status(401).send({error:'No tienes autorización para ocultar mascotas'});
+        }
+      } catch (err) {
+        res.status(501).send({ error: err.message });
+      }
+    });
+    router.put('/enAdopcion', async (req, res) => {
+        try {
+            const { id } = req.body;
+            const checkUser = await UserModel.findOne({
+              _email: req.user.email,
+              tipo: 'Admin',
+            });
+            if (checkUser) {
+              const userAAdmin = await PetModel.updateOne(
+                {_id:id},
+                { state: 'Adoptable' }
+              );   
+              res.status(200).send("La mascota es visible nuevamente")
+             } else {
+              res.status(401).send({error:'No tienes autorización para poner en adopcion esta mascota'});
+            }
+          } catch (err) {
+            res.status(501).send({ error: err.message });
+          }
+        });    
 module.exports = router;
