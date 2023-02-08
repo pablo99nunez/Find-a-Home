@@ -83,7 +83,7 @@ export default function Detail({ route, navigation }) {
   return (
     <View>
       <View className="bg-[#acacac] h-full">
-        <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
+       {/*  <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
           <LinearGradient
             colors={["#00000000", "rgba(172, 172, 172, 0)", "#acacac"]}
             style={{ height: "100%", width: "100%" }}
@@ -123,7 +123,7 @@ export default function Detail({ route, navigation }) {
               </View>
             </View>
           </LinearGradient>
-        </ImageBackground>
+        </ImageBackground> */}
 
         <View className="h-1/4">
           <Text

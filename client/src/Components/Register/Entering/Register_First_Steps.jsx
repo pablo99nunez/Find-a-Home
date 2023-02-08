@@ -63,12 +63,12 @@ export default function RegisterFirstSteps({ navigation , route}) {
   return (
     <View>
       <View className="h-screen flex items-center bg-[#FFC733]">
-        <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
+        {/* <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
           ¡Bienvenido/a {userInput.firstName[0].toUpperCase().concat(userInput.firstName.toLowerCase().substring(1))}
         </Text>
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
-        </Text>
+        </Text> */}
 
         <View className="w-11/12 mt-[5%]">
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Teléfono:</Text>
