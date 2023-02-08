@@ -48,11 +48,11 @@ export default function UserDetail({ route, navigation }) {
     signOut(auth)
       .then(() => {
         // clear session storage
-        AsyncStorage.clear(() => {
+        // AsyncStorage.clear(() => {
           AsyncStorage.clear();
-          navigation.navigate("LandigPage");
-        });
-      })
+          navigation.navigate("LandigPage")
+        })
+      // })
       .catch((error) => {
         // An error happened.
         console.error("⚠️ Error -> 🚨 UserDetail -> 🔔logoutUser: " + error);
@@ -255,7 +255,7 @@ export default function UserDetail({ route, navigation }) {
           className="flex flex-row items-center my-[5%] mx-[10%]"
         >
           <Icon
-            name="logout" f
+            name="logout"
             className="w-12 h-12 mr-[20%]"
             size={50}
             color={"#FFC733"}

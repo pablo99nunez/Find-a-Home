@@ -73,6 +73,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         paymentLink: action.payload,
       };
+
     default:
       return state;
   }
