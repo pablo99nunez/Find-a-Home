@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "exp+find-a-home-app",
     "name": "FindtheHome",
     "slug": "find-a-home-app",
     "version": "1.0.0",
@@ -55,4 +56,3 @@
     "owner": "findahome"
   }
 }
-

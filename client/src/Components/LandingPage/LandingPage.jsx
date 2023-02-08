@@ -12,7 +12,6 @@ const LandingPage = ({ navigation }) => {
     <View style={styles.container}>
       {isLoggedIn ? (
         <>
-          <GoogleButton />
           <LandingButton onPress={() => navigation.navigate("Welcome")} />
         </>
       ) : (
