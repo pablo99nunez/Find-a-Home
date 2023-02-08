@@ -22,14 +22,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: 1,
+      minlength: 2,
       maxlength: 30
     },
     lastName: {
       type: String,
       required: true,
       trim: true,
-      minlength: 1,
+      minlength: 2,
       maxlength: 30
     },
     email: {
@@ -156,12 +156,6 @@ const userSchema = mongoose.Schema(
 
 userSchema.plugin(toJSON);
 //userSchema.plugin(paginate);
-
-userSchema.pre('save', function(next) {
-  if (!this.firstName || this.firstName === " ") this.firstName = "Sin nombre";
-  if (!this.lastName || this.lastName === " ") this.lastName = "Sin apellido";
-  next();
-});
 
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
