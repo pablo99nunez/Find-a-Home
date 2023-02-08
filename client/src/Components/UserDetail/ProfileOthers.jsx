@@ -16,7 +16,7 @@ import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import { FlatList } from "react-native-gesture-handler";
 
-const {width, height } = Dimensions.get("screen")
+const { width, height } = Dimensions.get("screen")
 
 export const ProfileOthers = ({ route, navigation }) => {
   const { email, profilePic, firstName, lastName, rating } = route.params;
@@ -80,9 +80,9 @@ export const ProfileOthers = ({ route, navigation }) => {
           </View>
         </LinearGradient>
         <View className="flex flex-row justify-between w-11/12 mx-auto">
-          <Text style={{fontFamily: 'Roboto_300Light'}} className="text-4xl text-[#ffc733]">
-          {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} {lastName[0].toUpperCase().concat(lastName.toLowerCase().substring(1))}
-            </Text>
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-4xl text-[#ffc733]">
+            {/* {firstName[0]?.toUpperCase()?.concat(firstName?.toLowerCase()?.substring(1))} {lastName[0]?.toUpperCase()?.concat(lastName?.toLowerCase()?.substring(1))} */}
+          </Text>
           <Text className=" text-4xl text-[#ffc733]">
             {rating?.rating ? rating.rating : 5}★
           </Text>
@@ -90,8 +90,8 @@ export const ProfileOthers = ({ route, navigation }) => {
       </ImageBackground>
 
       <View>
-        <Text className="text-center text-2xl text-[#2A2B20] my-[15%]" style={{fontFamily: 'Roboto_300Light'}}>
-        {userProfile.description ? userProfile.description : null}
+        <Text className="text-center text-2xl text-[#2A2B20] my-[15%]" style={{ fontFamily: 'Roboto_300Light' }}>
+          {userProfile.description ? userProfile.description : null}
         </Text>
       </View>
 
