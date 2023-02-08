@@ -80,7 +80,7 @@ export const Photos = ({ name, profile, setProfile }) => {
 
         <Image
           source={{ uri: profile.profilePic }}
-          className='w-72 h-52 mx-auto rounded-md'
+          className='w-[70%] h-52 mx-auto rounded-3xl'
         />
 
       </TouchableOpacity>

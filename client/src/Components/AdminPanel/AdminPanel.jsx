@@ -76,7 +76,7 @@ const AdminPanel = ({ navigation, route }) => {
     <ScrollView>
       <View className="flex flex-row justify-between items-center mx-[5%]">
         <TouchableOpacity
-          className="bg-[#AB4E68] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl"
           onPress={() => navigation.navigate("Reports")}
         >
           <Text
@@ -87,7 +87,7 @@ const AdminPanel = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-[#AB4E68] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl"
           onPress={() => navigation.navigate("Usuarios")}
         >
           <Text
@@ -98,7 +98,7 @@ const AdminPanel = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="bg-[#AB4E68] p-3 rounded-xl m-2"
+          className="bg-[#AB4E68] p-3 rounded-xl"
           onPress={() => navigation.navigate("Donate")}
         >
           <Text
