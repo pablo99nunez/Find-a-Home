@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { OcultPet, UserBan, MostrarPet } from "../../Redux/Actions";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 const ReportCard = (props) => {
 const {profilePic, name, id, reportes, owner, state } = props.item
 const dispatch = useDispatch()
 
+const [boton, setBoton] = useState(false)
+
+
+useFocusEffect(
+  React.useCallback(() => {
+    async function evitaReturnDelUseEffect() {
+      if(state === "Adoptable") setBoton(true)
+    }
+    evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
+  }, [])
+);
 
 const deletePets = (id) =>{
 
     OcultPet(id)
+    setBoton(false)
     alert("Mascota Ocultada")
 }
 const Adoptpet = (id) =>{
 
   MostrarPet(id)
+  setBoton(true)
   alert("Mascota puesta en adopcion")
 }
 const banUser = (owneremail) =>{
@@ -49,7 +64,7 @@ const banUser = (owneremail) =>{
     </View>
    
     <View className="flex flex-row justify-between">
-    {owner ? state === "Adoptable" ?
+    {owner ? boton ?
       <TouchableOpacity onPress={() => deletePets(id)}>
         <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Ocultar</Text>
       </TouchableOpacity>

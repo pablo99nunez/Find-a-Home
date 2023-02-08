@@ -55,7 +55,7 @@ export default function Home({ navigation }) {
       ></FlatList>
       <StatusBar style="auto" />
       <ButtonCreatePet onPress={HandleLoginToAdoption} />
-      {currentUser?.tipo == "Admin" ? (
+      {currentUser?.tipo === "Admin" ? (
         <ButtonAdminDashboard
           onPress={() => {
             navigation.navigate("AdminPanel");
