@@ -26,13 +26,7 @@ export default function UserDetail({ route, navigation }) {
   const dispatch = useDispatch();
   const currentPets = useSelector((state) => state.currentPets);
   const currentUser = useSelector((state) => state.currentUser);
-<<<<<<< HEAD
-  console.log(currentUser)
-=======
 
-  console.log(currentPets)
-
->>>>>>> 7ed9203f261cdab5c16350d070fd8f2ac1e4f671
   useFocusEffect(
     React.useCallback(() => {
       async function evitaReturnDelUseEffect() {
