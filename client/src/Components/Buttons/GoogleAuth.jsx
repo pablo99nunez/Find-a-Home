@@ -9,11 +9,14 @@ import { getAuth, GoogleAuthProvider, signInWithCredential, signOut } from 'fire
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from 'react-native';
 import firebase from "../../firebase/firebase-config";
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, View, Image, ImageBackground, } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { retriveUserData } from '../../Redux/Actions/index'
 import { url } from "../../Redux/Actions/index";
 import { useSelector, useDispatch } from "react-redux";
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 WebBrowser.maybeCompleteAuthSession();
 
 export default function GoogleButton({ navigation }) {
@@ -25,6 +28,7 @@ export default function GoogleButton({ navigation }) {
 	);
 
 	const [userData, setUserData] = useState({})
+	const [loading, setLoading] = useState(false)
 	React.useEffect(() => {
 
 		if (response?.type === 'success') {
@@ -83,28 +87,44 @@ export default function GoogleButton({ navigation }) {
 			});
 	}
 
-	return (<>
-		{!userData.email && <TouchableOpacity
-			disabled={!request}
-			title="Login"
-			onPress={() => promptAsync()}
-			className="flex flex-row items-center my-[5%] mx-[10%]"
-		>
-			<Icon name="google" className="w-12 h-12 mr-[20%]" size={50} background={"#ACACAC"} color={"#AB4E68"} />
-			<Text className="text-2xl" style={{ fontFamily: 'Roboto_300Light', color: 'white' }}>Login</Text>
-		</TouchableOpacity>}
+	return (<View className="h-full min-w-full relative">
+		<ImageBackground style={{
+			backgroundImage: "linear-gradient",
+			backgroundSize: "cover",
+		}}
+			className="h-full w-full"
+			source={require('../../images/bg-google.png')}
+			blurRadius={0}>
+			{!loading && <TouchableOpacity
+				disabled={!request}
+				title="Login"
+				// onPress={() => promptAsync()}
+				className="flex flex-col items-center justify-between content-around m-auto"
+			><View className="flex flex-row items-center justify-between content-around m-auto">
+					<Image className="h-32 w-32 justify-self-start my-16 rounded-full z-10"
+						source={require("../../images/LOGO-1024PX.png")}
+					/></View>
+
+				<View>
+					<FontAwesome.Button name="google" onPress={() => promptAsync()} backgroundColor="#FFC733" style={{ fontFamily: "Roboto" }}>
+						Login with Google
+					</FontAwesome.Button>
+					<View className="h-32 text-center my-5 text-[#FFC733]">
+						<Text className="text-center text-[#FFC733]">Accedé a Find A Home</Text>
+						<Text className="text-center text-[#FFC733]">desde tu cuenta de Google</Text>
+					</View>
+				</View>
 
 
+			</TouchableOpacity>}
 
-		{userData.email && <TouchableOpacity
-			onPress={logoutUser}
-			className="flex flex-row items-center my-[5%] mx-[10%]"
-		>
-			<Icon name="logout" className="w-12 h-12 mr-[20%]" size={50} color={"#FFC733"} />
-			<Text className="text-2xl" style={{ fontFamily: 'Roboto_300Light', color: 'white' }}>Cerrar Sesión</Text>
-		</TouchableOpacity>}
+			<Image
+				className="absolute top-[65%]"
+				source={require("../../images/pets-png.png")}
+			/>
 
-	</>
+		</ImageBackground>
+	</View>
 
 	);
 }
