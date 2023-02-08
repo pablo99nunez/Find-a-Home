@@ -49,7 +49,7 @@ const banUser = (owneremail) =>{
     </View>
    
     <View className="flex flex-row justify-between">
-    {owner ? state === Adoptable ?
+    {owner ? state === "Adoptable" ?
       <TouchableOpacity onPress={() => deletePets(id)}>
         <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[6%] rounded-xl">Ocultar</Text>
       </TouchableOpacity>
