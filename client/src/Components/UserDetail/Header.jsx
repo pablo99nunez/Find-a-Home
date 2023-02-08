@@ -14,7 +14,7 @@ const Header = ({ onPress, handleButtons }) => {
                 />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleButtons()}>
-                <Icon name="dots-horizontal" className="w-12 h-12" size={50} color={"#FFC733"} />
+                <Icon name="dots-horizontal" className="w-12 h-12 drop-shadow-lg" size={50} color={"#100c00"} />
             </TouchableOpacity>
         </View>
     )

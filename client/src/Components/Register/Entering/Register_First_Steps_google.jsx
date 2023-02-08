@@ -19,7 +19,6 @@ import validate from "../validate";
 
 export default function RegisterFirstStepsGoogle({ navigation, route }) {
   //no olvidar de sacar console logs, este console log se pone cada vez q se renderiza el componente
-  console.log("ESTA ES LA DATA MI REEEI Register_First_steps_google.jsx:  ", route.params)
   const { name, email, photoURL, token } = route.params
   const fullName = name.split(" ");
   //primero vemos si llega la data, leugo la complicamos con arrays y esas cosas
@@ -97,17 +96,18 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             search={false}
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E", zIndex: 1,
+            elevation: 1}}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
 
-        <View className="w-11/12 mt-[5%]">
-          <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Provincia:</Text>
+        <View className="w-11/12 mt-[5%]" style={{ zIndex: -1,
+                    elevation: -1 }}>
+          <Text style={{ fontFamily: 'Roboto_300Light'}} className="">Provincia:</Text>
           <SelectList
             data={States}
             setSelected={(val) => {
-              console.log('provincia esta bien?: ', val);
               setUserInput({ ...userInput, provincia: val })
             }
             }
@@ -127,8 +127,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
           <SelectList
             data={Localities.filter((ele) => ele.key == userInput.provincia)}
             setSelected={(value) => {
-              console.log('Localidad esta bien?: ', value);
-
+            
               setUserInput({ ...userInput, departamento: value })
             }
             }

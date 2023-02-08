@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -55,6 +54,7 @@ export const Header = ({ navigation }) => {
   const [specie, setSpecie] = useState("");
   const [size, setSize] = useState("");
 
+  const [profilePic, setProfilepic] = useState("")
   useEffect(() => {
     if (size === "" && specie === "") {
       dispatch(getAllPets());
@@ -71,7 +71,11 @@ export const Header = ({ navigation }) => {
     if (isLoggedIn) {
       dispatch(getUser())
     }
-  }, []);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    setProfilepic(!profilePic)
+  }, [currentUser.profilePic]);
 
   useEffect(() => {
     ///Check Push Token
@@ -100,7 +104,7 @@ export const Header = ({ navigation }) => {
     };
     currentUser.pushToken && checkToken()
   }, [currentUser])
-  // console.log(currentUser.pushToken)
+ 
 
   const [pin, setPin] = useState({
     latitude: 0,
@@ -160,7 +164,6 @@ export const Header = ({ navigation }) => {
   }, [number]);
 
 
-
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
@@ -183,7 +186,7 @@ export const Header = ({ navigation }) => {
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
             source={{
-              uri: currentUser.profilePic,
+              uri: currentUser.profilePic
             }}
           />
         </TouchableOpacity>

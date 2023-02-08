@@ -11,7 +11,7 @@ if (!global.atob) {
 }
 
 import { Image, LogBox } from "react-native";
-import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { NavigationContainer} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
 import LandingPage from "./src/Components/LandingPage/LandingPage";
@@ -78,13 +78,6 @@ export default function App() {
       <PersistentLogin />
       <NavigationContainer>
         <Stack.Navigator>
-
-          {/* <Stack.Screen
-            name="LoginTest"
-            component={LoginTest}
-            initialParams={{ fromChild: "Initial" }}
-            options={{ headerShown: false }}
-          /> */}
           <Stack.Screen
             name="LandigPage"
             component={LandingPage}
@@ -158,6 +151,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#d9d9d9" },
               headerBackTitleVisible: false,
               headerTintColor: "#000",
+              title: "Mis Solicitudes",
             }}
           />
 
@@ -168,7 +162,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: "",
+              title: null,
               headerBackTitle: null,
               headerBackTitleVisible: false,
               headerRight: (props) => <Logo {...props} />,
@@ -181,7 +175,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: "",
+              title: null,
               headerBackTitle: null,
               headerBackTitleVisible: false,
               headerRight: (props) => <Logo {...props} />,
@@ -199,7 +193,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: "",
+              title: null,
               headerBackTitle: null,
               headerBackTitleVisible: false,
               headerRight: (props) => <Logo {...props} />,
@@ -212,7 +206,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#FFC733" },
               headerShadowVisible: false,
               headerTintColor: "#000",
-              title: "",
+              title: null,
               headerBackTitle: null,
               headerBackTitleVisible: false,
               headerRight: (props) => <Logo {...props} />,
@@ -371,7 +365,7 @@ export default function App() {
               headerStyle: { backgroundColor: "#009ee3" },
               headerShadowVisible: false,
               headerTintColor: "#ffffff",
-              title: "Donar",
+              title: "Ayudanos a mejorar",
               headerBackTitle: null,
               headerBackTitleVisible: false,
             }}

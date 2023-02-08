@@ -1,22 +1,15 @@
-import React, { useState, useRef } from "react";
-import { Picker } from "@react-native-picker/picker";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TextInput,
   TouchableOpacity,
-  Image,
   Dimensions,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-//¿¿Why you import  Keyboard Aware Scroll View??
-
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
 import Localities from "../Localities.json";
-
 import validate from "../validate";
 
 
@@ -105,7 +98,8 @@ export default function RegisterFirstSteps({ navigation , route}) {
           />
         </View>
 
-        <View className="w-11/12 mt-[5%]">
+        <View className="w-11/12 mt-[5%]" style={{ zIndex: -1,
+                    elevation: -1 }}>
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Provincia:</Text>
           <SelectList
             data={States}
@@ -127,7 +121,8 @@ export default function RegisterFirstSteps({ navigation , route}) {
           />
         </View>
 
-        <View className="w-11/12 my-[5%]">
+        <View className="w-11/12 my-[5%]" style={{ zIndex: -2,
+                    elevation: -2 }}>
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">
             Departamento:
           </Text>
@@ -140,7 +135,6 @@ export default function RegisterFirstSteps({ navigation , route}) {
             // search={false}
 
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
-
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" , 
             position: "absolute",
@@ -161,12 +155,13 @@ export default function RegisterFirstSteps({ navigation , route}) {
           </Text>
         </TouchableOpacity>
           :
-          <TouchableOpacity disabled={disable} className='flex flex-row justify-end w-11/12 mt-5'
+          <TouchableOpacity disabled={disable} className='flex flex-row justify-end w-11/12 mt-5' 
+            style={{ zIndex: -3, elevation: -3 }}
             onPress={() => {
               handleContinuar()
             }}
           >
-            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-3xl font-light ">
+            <Text style={{ fontFamily: 'Roboto_300Light'}} className="text-3xl font-light ">
               {disable ? "Rellene los Datos" : "Continuar"}
             </Text>
           </TouchableOpacity>

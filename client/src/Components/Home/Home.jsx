@@ -9,7 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { ButtonCreatePet, ButtonAdminDashboard } from "../Buttons/Buttons";
 
 export default function Home({ navigation }) {
-  /*  console.log("Bearer " + tkn); */
+
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);

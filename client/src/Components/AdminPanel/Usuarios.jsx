@@ -24,8 +24,7 @@ export default function Usuarios({ navigation }) {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setUsuarios(response.data));
-            console.log("asd")
+            .then((response) => setUsuarios(response.data))
         } catch (error) {
           console.error(error.message);
         }

@@ -25,7 +25,8 @@ export const UserSolicitudes = () => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => setInfoUser(response.data));
+            .then((response) => {
+             setInfoUser(response.data)})
         } catch (error) {
           console.error(error.message);
         }
@@ -34,8 +35,7 @@ export const UserSolicitudes = () => {
     }, [])
   );
 
-  console.log("infoUser", infoUser);
-  /*   console.log("currentUser.misSolicitudes", currentUser.misSolicitudes); */
+ 
 
   return (
     <View
@@ -63,6 +63,9 @@ export const UserSolicitudes = () => {
               <Text className="text-[#d9d9d9] font-light">
                 Mensaje: {item?.message}
               </Text>
+              {/* <Text className="text-[#d9d9d9] font-light">
+                Estado: {item?.state}
+              </Text> */}
             </View>
           </View>
         )}

@@ -19,7 +19,7 @@ const BottomView = ({ petId, auth, email, petName }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
   const [message, setMessage] = useState("")
-// console.log(currentUser.misSolicitudes[0])
+
   //Push Notifications
   useFocusEffect(
     React.useCallback(() => {
@@ -49,8 +49,7 @@ const BottomView = ({ petId, auth, email, petName }) => {
   async function sendPushNotification(message) {
     try {
       // Usamos firebase para obtener el token de android o ios
-      // console.log("This is the Push Token:", getPushToken)
-      // console.log(pushToken)
+      
 
       const titleNotification = `¡Felicidades! ${petName} Ha recibido una solicitud de adopción de ${currentUser.firstName} `;
       const bodyNotification = `${message}`
@@ -82,7 +81,7 @@ const BottomView = ({ petId, auth, email, petName }) => {
           sendPushNotification(message)
         })
         .then(response => {
-          //console.log(response);
+       
           setSent(true)
         })
 

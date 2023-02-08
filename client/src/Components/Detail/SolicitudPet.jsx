@@ -73,8 +73,7 @@ const SolicitudPet = ({ navigation, route }) => {
   async function sendPushNotification() {
     try {
       // Usamos firebase para obtener el token de android o ios
-      // console.log("This is the Push Token:", getPushToken)
-      // console.log(pushToken)
+     
 
       const titleNotification = `¡Felicidades ${firstName}! Te han aceptado en la solicitud de adopción de mascota.`;
       const bodyNotification = `${currentUser.firstName} cree que eres la mejor opción para darle un nuevo hogar a ${name}.`

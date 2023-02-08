@@ -19,7 +19,7 @@ const EditProfile = (props) => {
     description: description ? description : "",
     conditions: conditions ? conditions : {}
   })
-  // console.log(props.route.params)
+  
   const HandleSubmit = async () => {
     const DatosPetAEnviar = {
       firstName: profile.firstName,
