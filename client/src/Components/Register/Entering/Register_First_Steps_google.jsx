@@ -8,14 +8,17 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Dimensions
 } from "react-native";
 
 
 import { SelectList } from "react-native-dropdown-select-list";
 import States from "../States.json";
 import Localities from "../Localities.json";
-
 import validate from "../validate";
+
+
+const { width } = Dimensions.get("screen")
 
 export default function RegisterFirstStepsGoogle({ navigation, route }) {
   //no olvidar de sacar console logs, este console log se pone cada vez q se renderiza el componente
@@ -63,14 +66,14 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
     `${userInput.departamento}`.length === 0 ||
     `${errors.phone}`.length > 0
   return (
-    <View>
+    <ScrollView>
       <View className="h-screen flex items-center bg-[#FFC733]">
-        {/* <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5"> */}
-        {/* ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))} */}
-        {/* </Text>
+        <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-auto mx-auto font-light text-4xl leading-auto items-center text-center mb-5">
+        ¡Bienvenido/a {firstName[0].toUpperCase().concat(firstName.toLowerCase().substring(1))}
+        </Text>
         <Text style={{ fontFamily: 'Roboto_300Light' }} className="w-11/12 mx-auto px-8 mb-5 text-xl leading-auto flex items-center text-center">
           Solo unos datos más y podrás comenzar:
-        </Text> */}
+        </Text>
 
         <View className="w-11/12 mt-[5%]">
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Teléfono:</Text>
@@ -109,7 +112,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
 
         <View className="w-11/12 mt-[5%]" style={{ zIndex: -1,
                     elevation: -1 }}>
-          <Text style={{ fontFamily: 'Roboto_300Light'}} className="">Provincia:</Text>
+          <Text style={{ fontFamily: 'Roboto_300Light' }} className="">Provincia:</Text>
           <SelectList
             data={States}
             setSelected={(val) => {
@@ -118,6 +121,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             }
             placeholder="Provincia"
             search={false}
+            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" , 
               position: "absolute",
@@ -130,7 +134,8 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
           />
         </View>
 
-        <View className="w-11/12 my-[5%]">
+        <View className="w-11/12 my-[5%]" style={{ zIndex: -2,
+                    elevation: -2 }}>
           <Text style={{ fontFamily: 'Roboto_300Light' }} className="">
             Localidad:
           </Text>
@@ -143,6 +148,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             }
             placeholder="Departamento"
             // search={false}
+
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
             dropdownStyles={{ backgroundColor: "#2E2E2E" , 
@@ -165,6 +171,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
         </TouchableOpacity>
           :
           <TouchableOpacity disabled={disable} className='flex flex-row justify-end w-11/12 mt-5'
+          style={{ zIndex: -3, elevation: -3 }}
             onPress={() => {
               handleContinuar()
             }}
@@ -175,7 +182,7 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
           </TouchableOpacity>
         }
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

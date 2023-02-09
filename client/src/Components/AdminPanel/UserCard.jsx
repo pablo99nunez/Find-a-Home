@@ -6,23 +6,28 @@ import { useState } from "react";
 const UserCard = (props, { navigation }) => {
 
   const [admin, setAdmin] = useState()
+  const [tipo,setTipo] = useState(props.item.tipo)
   const banUser = (owneremail) => {
     UserBan(owneremail);
+    setTipo('inhabilitado')
     alert("Usuario bloqueado");
   };
   const AdminUser = (owneremail) => {
     MakeAdmin(owneremail);
     setAdmin(true)
+    setTipo('Admin')
     alert("El usuario ahora es administrador");
   };
   const QuitarAdmin = (owneremail) => {
     MakeAdmin(owneremail);
     setAdmin(false)
+    setTipo('User')
 
     alert("El usuario ya no es administrador");
   };
   const Desban = (owneremail) => {
     DesbanUser(owneremail);
+    setTipo('User')
     alert("Usuario desbloqueado");
   };
 
@@ -87,7 +92,7 @@ if(props?.tipo?.admin === "Admin") setAdmin(true)
         </TouchableOpacity>
           }
         {!props.item.owner ?
-        props.item.tipo !== "inhabilitado" ? (
+        tipo !== "inhabilitado" ? (
         <TouchableOpacity onPress={() => banUser(props.item.email)}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Bloquear usuario</Text>
         </TouchableOpacity>
@@ -98,14 +103,14 @@ if(props?.tipo?.admin === "Admin") setAdmin(true)
         </TouchableOpacity>
             )
         : null  }
-                {props.item.tipo !== "Admin" || !admin ?
+        {!props.item.owner ? tipo !== "Admin" || !admin ?
 
                 <TouchableOpacity onPress={() => AdminUser(props.item.email)}>
           <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Hacer Admin</Text>
         </TouchableOpacity>
         : <TouchableOpacity onPress={() => QuitarAdmin(props.item.email)}>
         <Text style={{ fontFamily: "Roboto_300Light" }} className="bg-[#AB4E68] text-[#d9d9d9] py-[3%] px-[1%] rounded-xl">Quitar Admin</Text>
-      </TouchableOpacity> }
+      </TouchableOpacity>:null }
       </View>
     </View>
   );
