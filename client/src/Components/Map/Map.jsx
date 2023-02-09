@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import MapView, { Callout, Marker, Circle } from "react-native-maps";
+import MapView, { Callout, Marker, Circle, PROVIDER_GOOGLE } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -13,6 +13,7 @@ export default function Map(props) {
   const petRender = useCallback(
     ({ id, coordinates, name }) => (
       <Marker
+        key={id}
         coordinate={coordinates}
         onPress={() => {
           const item = allPets.payload.find((pet) => pet.id === id);
@@ -29,6 +30,7 @@ export default function Map(props) {
   return (
     <View style={styles.container}>
       <MapView
+        provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
           latitude,
