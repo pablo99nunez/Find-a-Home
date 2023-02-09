@@ -42,7 +42,7 @@ const Welcome = ({ navigation }) => {
     const sign = type === 'moving' ? -1 : 1
     const proportion = height / width
     if (side === 'top') {
-      return (fac * height - height * 0.46 - xPos * proportion) * sign
+      return (fac * height - height * 0.42 - xPos * proportion) * sign
     }
     if (side === 'right') {
       return (fac * width - width * 0.41 - xPos) * sign
@@ -205,7 +205,7 @@ const Welcome = ({ navigation }) => {
           overflow: "hidden",
           borderBottomLeftRadius: width,
         }}
-      >
+        >
         <Image
           style={{
             resizeMode: "contain",
@@ -229,7 +229,10 @@ const Welcome = ({ navigation }) => {
           }}
         >
 
-
+          <Image
+            style={styles.icon}
+            source={require("../../images/icon1-icon3-welcome.png")}
+          />
           {/* 
           ANTIGUA PANTALLA PRINCIPAL
           <Image
@@ -261,18 +264,18 @@ const Welcome = ({ navigation }) => {
           </TouchableOpacity> */}
 
 
-          <Image
+      {/*         <Image
             style={styles.iconoLogin}
             className="mb-[15%]"
             source={require("../../images/ButtonLanding.png")}
-          />
-          <TouchableOpacity onPress={() => navigation.navigate("Login")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+          /> */}
+          <TouchableOpacity onPress={() => navigation.navigate("Login")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
             <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-[#AB4E68]">Iniciá sesión</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+          <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
             <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Regístrate</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Google")} className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md">
+          <TouchableOpacity onPress={() => navigation.navigate("Google")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
             <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Google</Text>
           </TouchableOpacity>
 

@@ -34,9 +34,10 @@ const BottomView = ({ petId, auth, email, petName }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
-          if(isLoggedIn){ 
+          //sino tira error como invitado al ver un pet
+          if(isLoggedIn){
           if (typeof error.response !== "undefined")
-          console.error("BottomView.jsx: " + error.response.data.error)
+          alert(error.response.data.error)
           else
           console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)}
         }
