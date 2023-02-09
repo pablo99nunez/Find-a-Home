@@ -34,11 +34,11 @@ const BottomView = ({ petId, auth, email, petName }) => {
             .then(response => setPushToken(response.data[0].pushToken))
 
         } catch (error) {
-          if(isLoggedIn){ 
+          
           if (typeof error.response !== "undefined")
-          console.error("BottomView.jsx: " + error.response.data.error)
+          alert(error.response.data.error)
           else
-          console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)}
+          console.error("⚠️ Error -> 🚨 profileOthers -> 🔔 gettingUser: " + error.message)
         }
       }
       evitaReturnDelUseEffect(); //porq saltaba un warning, pedia autonvocarla adentro
