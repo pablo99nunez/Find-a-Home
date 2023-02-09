@@ -96,8 +96,13 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             search={false}
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E", zIndex: 1,
-            elevation: 1}}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
+              position: "absolute",
+              top: width * 0.1,
+              zIndex: 1,
+              elevation: 1
+            }}
+            dropdownItemStyles={{ width: width }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
@@ -113,9 +118,14 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             }
             placeholder="Provincia"
             search={false}
-            boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
+              position: "absolute",
+              top: width * 0.1,
+              zIndex: 1,
+              elevation: 1
+            }}
+            dropdownItemStyles={{ width: width }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
           />
         </View>
@@ -135,8 +145,15 @@ export default function RegisterFirstStepsGoogle({ navigation, route }) {
             // search={false}
             boxStyles={{ backgroundColor: "#1E1E1E", width: '100%' }}
             inputStyles={{ color: "#7E7E7E", fontSize: 18 }}
-            dropdownStyles={{ backgroundColor: "#2E2E2E" }}
+            dropdownStyles={{ backgroundColor: "#2E2E2E" , 
+              position: "absolute",
+              top: width * 0.1,
+              zIndex: 1,
+              elevation: 1
+            }}
+            dropdownItemStyles={{ width: width }}
             dropdownTextStyles={{ color: "#6E6E6E", fontSize: 18 }}
+            search={false}
           />
         </View>
         {loading ? <TouchableOpacity
