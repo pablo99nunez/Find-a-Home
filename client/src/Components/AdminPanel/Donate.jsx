@@ -1,10 +1,12 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL_IP } from "@env";
 import { auth } from "../../firebase/authentication";
 import DonateCard from "./DonateCard";
 import { useFocusEffect } from "@react-navigation/native";
+
+const {width, height} = Dimensions.get("screen")
 
 export default function Donate({ navigation }) {
   const token = auth.currentUser?.stsTokenManager.accessToken;
@@ -37,7 +39,7 @@ export default function Donate({ navigation }) {
         initialNumToRender={10}
         keyExtractor={(item) => item.id}
         data={donadores}
-        className="h-[76%]"
+        style={{height: height * 0.88}}
         renderItem={({ item }) => (
             <DonateCard item={item} navigation={navigation}/>
         )}
