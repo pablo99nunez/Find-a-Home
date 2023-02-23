@@ -41,7 +41,7 @@ mongoose
     //Todas las Rutas:
     app.use(routes);
 
-    app.get('/check', checkJwt, async (req, res) => {
+    app.get('/api/check', checkJwt, async (req, res) => {
       //setAdmin(req.user.uid)
       try {
         res.send({
