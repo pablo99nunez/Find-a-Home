@@ -57,6 +57,7 @@ const create = async () => {
   app.use(routes);
 
   app.get('/', async (req, res) => {
+    console.log(process.env);
     res.send({
       message: 'Server working',
     });
