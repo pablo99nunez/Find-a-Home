@@ -5,7 +5,7 @@ require('dotenv').config();
 var firebaseAdmin = require('firebase-admin');
 let privateKey = process.env.GOOGLE_PRIVATE_KEY;
 if (!privateKey) {
-  console.error('Private Key is invalid: ', privateKey);
+  throw new Error('Private Key is invalid: ', privateKey);
 }
 var firebaseJson = {
   type: 'service_account',
