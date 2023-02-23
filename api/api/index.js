@@ -20,6 +20,9 @@ const password = process.env.MONGO_PASS;
 const URI = process.env.MONGODB_URI;
 
 const app = express();
+(async () => {
+  console.log(await connect());
+})();
 app.get('/api', async (req, res) => {
   console.log(process.env);
   res.send({
@@ -28,44 +31,45 @@ app.get('/api', async (req, res) => {
 });
 app.get('/api/check-db', async (req, res) => {
   try {
-    await mongoose.connection.db.admin().ping();
-    res.send({ message: 'Database connection successful' });
+    res.send({ message: await connect() });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Unable to connect to database' });
   }
 });
-mongoose
-  .connect(URI)
-  .then(() => {
-    console.log('Database connected, starting server');
-    //MIDDLEWARES, se meten en todos los request y en todos los sends
-    app.use(cors()); //discrimina quien puede hacer peticiones al backend, poner pagina del frontend al deployar.
-    app.use(globalLimit);
-    app.use(express.json({ limit: '50mb' })); //transforma json en strings automaticamente y viceversa.
-    app.use(bodyParser.urlencoded({ extended: true })); //permite anidacion de objetos y arrays
-    app.use(express.static('public')); //no recuerdo
-    //FIN MIDDLEWARES
-    //Todas las Rutas:
-    app.use(routes);
+//MIDDLEWARES, se meten en todos los request y en todos los sends
+app.use(cors()); //discrimina quien puede hacer peticiones al backend, poner pagina del frontend al deployar.
+app.use(globalLimit);
+app.use(express.json({ limit: '50mb' })); //transforma json en strings automaticamente y viceversa.
+app.use(bodyParser.urlencoded({ extended: true })); //permite anidacion de objetos y arrays
+app.use(express.static('public')); //no recuerdo
+//FIN MIDDLEWARES
+//Todas las Rutas:
+app.use(routes);
 
-    app.get('/api/check', checkJwt, async (req, res) => {
-      //setAdmin(req.user.uid)
-      try {
-        res.send({
-          message: 'Token decodificado exitosamente!',
-          user: req.user,
-        });
-      } catch (err) {
-        res.send({ message: 'el back exploto' + err.message });
-      }
+app.get('/api/check', checkJwt, async (req, res) => {
+  //setAdmin(req.user.uid)
+  try {
+    res.send({
+      message: 'Token decodificado exitosamente!',
+      user: req.user,
     });
-    app.listen(port, () => {
-      console.log(`Server has started on port ${port}!`);
+  } catch (err) {
+    res.send({ message: 'el back exploto' + err.message });
+  }
+});
+app.listen(port, () => {
+  console.log(`Server has started on port ${port}!`);
+});
+async function connect() {
+  return mongoose
+    .connect(URI)
+    .then(() => {
+      return 'Database connected';
+    })
+    .catch((error) => {
+      throw new Error(error);
     });
-  })
-  .catch((error) => {
-    throw new Error(error);
-  });
+}
 
 module.exports = app;
