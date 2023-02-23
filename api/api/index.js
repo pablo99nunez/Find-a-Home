@@ -20,6 +20,12 @@ const password = process.env.MONGO_PASS;
 const URI = process.env.MONGODB_URI;
 
 const app = express();
+app.get('/', async (req, res) => {
+  console.log(process.env);
+  res.send({
+    message: 'Server working',
+  });
+});
 
 mongoose
   .connect(URI)
@@ -34,13 +40,6 @@ mongoose
     //FIN MIDDLEWARES
     //Todas las Rutas:
     app.use(routes);
-
-    app.get('/', async (req, res) => {
-      console.log(process.env);
-      res.send({
-        message: 'Server working',
-      });
-    });
 
     app.get('/check', checkJwt, async (req, res) => {
       //setAdmin(req.user.uid)
