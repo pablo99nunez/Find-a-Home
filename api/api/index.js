@@ -26,7 +26,15 @@ app.get('/api', async (req, res) => {
     message: 'Server working',
   });
 });
-
+app.get('/api/check-db', async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.send({ message: 'Database connection successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Unable to connect to database' });
+  }
+});
 mongoose
   .connect(URI)
   .then(() => {
