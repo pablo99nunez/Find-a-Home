@@ -1,16 +1,67 @@
-const server = require('../src/server'); //se mete en el contexto de ejecucion de server.js
-//luego de que termine de ejecutarse, sigue a la siguiente linea
-//crea una constante port
-
+// IMPORTS
+const express = require('express');
+const mongoose = require('mongoose');
+const routes = require('../src/routes');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const port = process.env.PORT || 8080;
-//ejecuta el metodo .create() que pertenese a express (server.js exporta app)
-server
-  .create()
-  .then((app) => {
+const { checkJwt } = require('../src/utils/firebase-stuff');
+const { globalLimit } = require('../src/utils/rate-limiters');
+// permite leer archivo .env.
+require('dotenv').config();
+
+//#region  MONGOOSE
+mongoose.set('strictQuery', true);
+const DATABASE_URL = process.env.DATABASE_URL
+  ? process.env.DATABASE_URL
+  : 'mongodb://localhost:27017';
+const DATABASE_NAME = process.env.DATABASE_NAME || 'findahome';
+const password = process.env.MONGO_PASS;
+const URI =
+  process.env.NODE_ENV == 'development'
+    ? `mongodb+srv://pablo99nunez:${password}@findahome.lprcxvm.mongodb.net/?retryWrites=true&w=majority`
+    : `mongodb+srv://pablo99nunez:${password}@findahome.lprcxvm.mongodb.net/?retryWrites=true&w=majority`;
+
+const app = express();
+
+mongoose
+  .connect(URI)
+  .then(() => {
+    console.log('Database connected, starting server');
+    //MIDDLEWARES, se meten en todos los request y en todos los sends
+    app.use(cors()); //discrimina quien puede hacer peticiones al backend, poner pagina del frontend al deployar.
+    app.use(globalLimit);
+    app.use(express.json({ limit: '50mb' })); //transforma json en strings automaticamente y viceversa.
+    app.use(bodyParser.urlencoded({ extended: true })); //permite anidacion de objetos y arrays
+    app.use(express.static('public')); //no recuerdo
+    //FIN MIDDLEWARES
+    //Todas las Rutas:
+    app.use(routes);
+
+    app.get('/', async (req, res) => {
+      console.log(process.env);
+      res.send({
+        message: 'Server working',
+      });
+    });
+
+    app.get('/check', checkJwt, async (req, res) => {
+      //setAdmin(req.user.uid)
+      try {
+        res.send({
+          message: 'Token decodificado exitosamente!',
+          user: req.user,
+        });
+      } catch (err) {
+        res.send({ message: 'el back exploto' + err.message });
+      }
+    });
     app.listen(port, () => {
       console.log(`Server has started on port ${port}!`);
     });
   })
-  .catch((err) => console.log(err));
+  .catch((error) => {
+    throw new Error(error);
+  });
 
-module.exports = server;
+module.exports = app;
