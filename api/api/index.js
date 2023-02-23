@@ -17,10 +17,7 @@ const DATABASE_URL = process.env.DATABASE_URL
   : 'mongodb://localhost:27017';
 const DATABASE_NAME = process.env.DATABASE_NAME || 'findahome';
 const password = process.env.MONGO_PASS;
-const URI =
-  process.env.NODE_ENV == 'development'
-    ? `mongodb+srv://pablo99nunez:${password}@findahome.lprcxvm.mongodb.net/?retryWrites=true&w=majority`
-    : `mongodb+srv://pablo99nunez:${password}@findahome.lprcxvm.mongodb.net/?retryWrites=true&w=majority`;
+const URI = process.env.MONGODB_URI;
 
 const app = express();
 
