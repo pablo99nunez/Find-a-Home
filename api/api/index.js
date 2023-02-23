@@ -20,7 +20,7 @@ const password = process.env.MONGO_PASS;
 const URI = process.env.MONGODB_URI;
 
 const app = express();
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   console.log(process.env);
   res.send({
     message: 'Server working',
