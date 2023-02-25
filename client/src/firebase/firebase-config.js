@@ -24,13 +24,15 @@ import '@firebase/firestore'; */
 import { initializeApp } from "@firebase/app";
 
 const firebaseConfig = {
+  name: "Find a Home",
   apiKey: "AIzaSyDRTnBQKqCxWVqBmvOG3p9ykmx9LI30Yjk",
   authDomain: "findahomehenry.firebaseapp.com",
+  databaseURL: "https://findahomehenry-default-rtdb.firebaseio.com",
   projectId: "findahomehenry",
   storageBucket: "findahomehenry.appspot.com",
   messagingSenderId: "328480437483",
   appId: "1:328480437483:web:e54fb1f45facfaaa86baae",
- // measurementId: "G-KP2VVJD4MR"
+  measurementId: "G-KP2VVJD4MR",
 };
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -40,7 +42,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 export { firebase }; */
 
 // Initialize Firebase
-export default firebaseApp
+export default firebaseApp;
 
 //como usar
 //1) importar firebaseApp donde se necesite

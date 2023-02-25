@@ -1,8 +1,8 @@
 {
   "expo": {
     "scheme": "exp+find-a-home-app",
-    "name": "FindtheHome",
-    "slug": "find-a-home-app",
+    "name": "FindAHome",
+    "slug": "findahome",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#38202E"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.reactnativefirebase"
+      "bundleIdentifier": "com.pablo99nunez.findAHome"
     },
     "plugins": [
       [
@@ -43,7 +43,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.reactnativefirebase",
+      "package": "com.pablo99nunez.findAHome",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAZbpPU8syf-oumM0hRb_VeqRxiGfeoaGQ"
@@ -55,9 +55,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "d8a10516-30e4-4004-ad26-40f7c408f25a"
+        "projectId": "28a328de-def4-4bdf-8c6c-d3771fe0a0f2"
       }
     },
-    "owner": "findahome"
+    "owner": "pablo99nunez"
   }
 }

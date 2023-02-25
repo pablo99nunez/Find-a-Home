@@ -2,17 +2,14 @@ const UserModel = require('../models/user.model');
 
 const createNewUser = async (user) => {
   const userExists = await UserModel.findOne({ email: user.email });
-  //if(!!userExists) throw new Error("El usuario ya existe")
-  //si existe lo modifica XXDXDXD harcodeado para debugear
   if (!!userExists) {
-    return await updateUser(user, user.email)
+    return await updateUser(user, user.email);
   } else {
     const newUser = new UserModel(user);
     await newUser.save();
     return newUser;
   }
 };
-
 
 const findUser = async (email) => {
   try {
@@ -25,7 +22,7 @@ const findUser = async (email) => {
 const findUserName = async (email) => {
   try {
     const userInDB = await UserModel.findOne({ email: email });
-    return userInDB.firstName + ' ' +  userInDB.lastName;
+    return userInDB.firstName + ' ' + userInDB.lastName;
   } catch (error) {
     throw error;
   }

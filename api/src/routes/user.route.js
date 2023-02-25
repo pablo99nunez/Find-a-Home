@@ -23,7 +23,25 @@ const { reviews } = require('../controllers/reviewUserController');
 const UserModel = require('../models/user.model');
 const router = express.Router();
 
+//loggeado, todos, lista todos los usuarios o encuentra al usuario por email
+
+//logeado, user, crea un usuario con los datos del token + los q se manden por body
+//Tabien sirve como ruta de edicion por ahora.
+router.post('/', checkJwt, async (req, res) => {
+  try {
+    //para q no pueda cambiar su email desde el body
+    const newUser = Object.assign(req.body, {
+      email: req.user.email,
+      email_verified: req.user.email_verified,
+    });
+    const createdUser = await createNewUser(newUser);
+    res.status(200).send(createdUser);
+  } catch (error) {
+    res.status(501).send({ error: error.message });
+  }
+});
 //loggeeado, todos, envia los datos de quien hizo la peticion mediante el token:
+// checkJwt,
 router.get('/profile', checkJwt, async (req, res) => {
   try {
     const email = req.user.email;
@@ -71,33 +89,6 @@ router.get('/checkemail', limit5cada30minutos, async (req, res) => {
     const user = await findUser(email);
     if (user) res.send({ message: 'checked', payload: true });
     else res.send({ message: 'checked', payload: false });
-  } catch (error) {
-    res.status(501).send({ error: error.message });
-  }
-});
-//loggeado, todos, lista todos los usuarios o encuentra al usuario por email
-router.get('/', checkJwt, async (req, res) => {
-  try {
-    const email = req.query;
-    if (!email) email = {};
-    const users = await findAllUsers(email);
-    res.status(200).send(users);
-  } catch (error) {
-    res.status(501).send({ error: error.message });
-  }
-});
-// checkJwt,
-//logeado, user, crea un usuario con los datos del token + los q se manden por body
-//Tabien sirve como ruta de edicion por ahora.
-router.post('/', checkJwt, async (req, res) => {
-  try {
-    //para q no pueda cambiar su email desde el body
-    const newUser = Object.assign(req.body, {
-      email: req.user.email,
-      email_verified: req.user.email_verified,
-    });
-    const createdUser = await createNewUser(newUser);
-    res.status(200).send(createdUser);
   } catch (error) {
     res.status(501).send({ error: error.message });
   }

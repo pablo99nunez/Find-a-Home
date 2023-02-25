@@ -9,20 +9,21 @@ import {
   Image,
   Platform,
   Animated,
+  ImageBackground,
 } from "react-native";
 import { useSelector } from "react-redux";
-import GoogleImage from "../../images/Google.svg";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import GoogleAuth from "../Buttons/GoogleAuth";
+import Dots from "../Dots/Dots";
 
-
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("screen");
 
 const Welcome = ({ navigation }) => {
   const [viewActive, setViewActive] = useState(1);
-  const isLoggedIn = useSelector(store => store.isLoggedIn)
+  const isLoggedIn = useSelector((store) => store.isLoggedIn);
 
   useEffect(() => {
-    if (isLoggedIn)
-      navigation.navigate("Home")
+    if (isLoggedIn) navigation.navigate("Home");
   }, [isLoggedIn]);
 
   //magia circulito expandible detectand el scroll
@@ -39,15 +40,15 @@ const Welcome = ({ navigation }) => {
     type = 'moving' o 'static' determina si algo debe estar fijo o moviendose junto con todo el View
   */
   const responsiveHell = (fac, side, type) => {
-    const sign = type === 'moving' ? -1 : 1
-    const proportion = height / width
-    if (side === 'top') {
-      return (fac * height - height * 0.42 - xPos * proportion) * sign
+    const sign = type === "moving" ? -1 : 1;
+    const proportion = height / width;
+    if (side === "top") {
+      return (fac * height - height * 0.42 - xPos * proportion) * sign;
     }
-    if (side === 'right') {
-      return (fac * width - width * 0.41 - xPos) * sign
+    if (side === "right") {
+      return (fac * width - width * 0.41 - xPos) * sign;
     }
-  }
+  };
 
   const onchange = (nativeEvent) => {
     if (nativeEvent) {
@@ -67,14 +68,15 @@ const Welcome = ({ navigation }) => {
       {/* CIRCULOS DE FUEGO*/}
 
       {/* FIRST SLIDE 0 0 */}
-      <View style={{
-        ...styles.slide1,
-        ...styles.bg,
-        top: 0 * width + xPos,
-        right: 0 * width + xPos,
-        zIndex: 1,
-      }}>
-
+      <View
+        style={{
+          ...styles.slide1,
+          ...styles.bg,
+          top: 0 * width + xPos,
+          right: 0 * width + xPos,
+          zIndex: 1,
+        }}
+      >
         <View
           style={{
             ...styles.slide1,
@@ -84,17 +86,17 @@ const Welcome = ({ navigation }) => {
             zIndex: 2,
           }}
         >
-          <Image
-            style={styles.icon}
-            source={require("../../images/icon1-icon3-welcome.png")}
-          />
-
-          <Text style={styles.text1}>Somos una</Text>
-          <Text style={styles.text1}>organización sin</Text>
-          <Text style={styles.text1}>fines de lucro que</Text>
-          <Text style={styles.text1}>busca ayudar a las</Text>
-          <Text style={styles.text1}>mascotas a</Text>
-          <Text style={styles.text1}>encontrar un hogar.</Text>
+          <Text
+            className="color-white text-3xl text-center"
+            style={{ fontFamily: "Roboto_300Light" }}
+          >
+            Somos una{"\n"}
+            organización sin{"\n"}
+            fines de lucro que{"\n"}
+            busca ayudar a las{"\n"}
+            mascotas a{"\n"}
+            encontrar un hogar.
+          </Text>
         </View>
       </View>
 
@@ -102,96 +104,78 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide2,
-          top: responsiveHell(2, 'top', 'moving'),
-          right: responsiveHell(2, 'right', 'moving'),
+          top: responsiveHell(2, "top", "moving"),
+          right: responsiveHell(2, "right", "moving"),
           zIndex: 2,
           overflow: "hidden",
           borderRadius: width,
         }}
+        className="bg-yellow"
       >
-        <Image
-          style={{
-            resizeMode: "contain",
-            top: 0,
-            right: 0,
-            width: height,
-            height: height,
-            overflow: "hidden",
-            zIndex: 2,
-          }}
-          source={require("../../images/bg1-welcome.png")}
-        />
-
-
-
         <View
           style={{
             ...styles.slide2,
             ...styles.bg,
-            top: responsiveHell(2, 'top', 'static'),
-            right: responsiveHell(2, 'right', 'static'),
+            top: responsiveHell(2, "top", "static"),
+            right: responsiveHell(2, "right", "static"),
             zIndex: 3,
-          }}
-        >
-          <Image
-            style={styles.icon}
-            source={require("../../images/icon1-icon3-welcome.png")}
-          />
-          <Image
-            style={styles.imgbg2}
-            source={require("../../images/image-bg2-welcome.png")}
-          />
-
-          <Text style={styles.text2}>Podrás adoptar a tu</Text>
-          <Text style={styles.text2}>mascota soñada o</Text>
-          <Text style={styles.text2}>encontrarle un</Text>
-          <Text style={styles.text2}>mejor hogar a un</Text>
-          <Text style={styles.text2}>gatito rescatado.</Text>
-        </View>
-      </View>
-
-      {/* SLIDE 3 */}
-      <View
-        style={{
-          ...styles.slide3,
-          top: responsiveHell(3, 'top', 'moving'),
-          right: responsiveHell(3, 'right', 'moving'),
-          zIndex: 5,
-          overflow: "hidden",
-          borderRadius: width,
-        }}
-      >
-        <Image
-          style={{
-            resizeMode: "contain",
-            top: 0,
-            right: 0,
-            width: height,
-            height: height,
-            overflow: "hidden",
-            zIndex: 3,
-          }}
-          source={require("../../images/bg2-welcome.png")}
-        />
-
-        <View
-          style={{
-            ...styles.slide3,
-            ...styles.bg,
-            top: responsiveHell(3, 'top', 'static'),
-            right: responsiveHell(3, 'right', 'static'),
-            zIndex: 7,
           }}
         >
           <Image
             style={styles.icon}
             source={require("../../images/icon2-welcome.png")}
           />
-          <Text style={styles.text3}>No discriminamos</Text>
-          <Text style={styles.text3}>por raza y</Text>
-          <Text style={styles.text3}>priorizamos a los</Text>
-          <Text style={styles.text3}>que más tiempo</Text>
-          <Text style={styles.text3}>lleven sin un hogar.</Text>
+          <Image
+            style={styles.imgbg2}
+            source={require("../../images/image-bg2-welcome.png")}
+          />
+
+          <Text
+            className="color-black text-3xl text-center"
+            style={{ fontFamily: "Roboto_300Light" }}
+          >
+            Podrás adoptar a tu{"\n"}
+            mascota soñada{"\n"}o encontrarle un mejor hogar{"\n"}a un gatito
+            rescatado.
+          </Text>
+        </View>
+      </View>
+
+      {/* SLIDE 3 */}
+      <View
+        className="bg-pink"
+        style={{
+          ...styles.slide3,
+          top: responsiveHell(3, "top", "moving"),
+          right: responsiveHell(3, "right", "moving"),
+          zIndex: 5,
+          overflow: "hidden",
+          borderRadius: width,
+        }}
+      >
+        <View
+          style={{
+            ...styles.slide3,
+            ...styles.bg,
+            top: responsiveHell(3, "top", "static"),
+            right: responsiveHell(3, "right", "static"),
+            zIndex: 7,
+          }}
+        >
+          <Image
+            style={styles.icon}
+            source={require("../../images/icon1-icon3-welcome.png")}
+          />
+          <Text
+            className="color-white text-3xl text-center"
+            style={{ fontFamily: "Roboto_300Light" }}
+          >
+            No discriminamos{"\n"}
+            por raza y{"\n"}
+            priorizamos a los{"\n"}
+            que más tiempo{"\n"}
+            lleven sin un hogar.
+          </Text>
         </View>
       </View>
 
@@ -199,13 +183,13 @@ const Welcome = ({ navigation }) => {
       <View
         style={{
           ...styles.slide4,
-          top: responsiveHell(4, 'top', 'moving'),
-          right: responsiveHell(4, 'right', 'moving'),
-          zIndex: viewActive === 4 ? 15 : 7, //porque sino no deja hacer clicks
+          top: responsiveHell(4, "top", "moving"),
+          right: responsiveHell(4, "right", "moving"),
+          zIndex: viewActive === 4 ? 13 : 7, //porque sino no deja hacer clicks
           overflow: "hidden",
           borderBottomLeftRadius: width,
         }}
-        >
+      >
         <Image
           style={{
             resizeMode: "contain",
@@ -223,72 +207,30 @@ const Welcome = ({ navigation }) => {
           style={{
             ...styles.slide4,
             ...styles.bg,
-            top: responsiveHell(4, 'top', 'static'),
-            right: responsiveHell(4, 'right', 'static'),
+            top: responsiveHell(4, "top", "static"),
+            right: responsiveHell(4, "right", "static"),
             zIndex: 15,
           }}
         >
-
+          <ImageBackground
+            style={{
+              backgroundImage: "linear-gradient",
+              backgroundSize: "cover",
+            }}
+            className="h-full w-full top-0 left-0 absolute z-[-50]"
+            source={require("../../images/bg-google.png")}
+            blurRadius={0}
+          ></ImageBackground>
           <Image
-            style={styles.icon}
-            source={require("../../images/icon1-icon3-welcome.png")}
+            className="absolute -bottom-20 z-[5]"
+            source={require("../../images/pets-png.png")}
           />
-          {/* 
-          ANTIGUA PANTALLA PRINCIPAL
-          <Image
-            style={styles.icon}
-            source={require("../../images/icon1-icon3-welcome.png")}
-          />
-
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.textSubTitlesLogin}>Iniciá sesión</Text>
-          </TouchableOpacity>
-
-          <Image
-            style={styles.icon}
-            source={require("../../images/icon1-icon3-welcome.png")}
-          />
-          
-          <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
-            <Text style={styles.textTitles}>Registrate</Text>
-            <View style={styles.googleCircle}>
-              {Platform.OS === "web" ? (
-                <Text>WEB REGISTER</Text>
-              ) : (
-                <>
-                <GoogleImage width={90} height={90} />
-                </>
-              
-              )}
-            </View>
-          </TouchableOpacity> */}
-
-
-      {/*         <Image
-            style={styles.iconoLogin}
-            className="mb-[15%]"
-            source={require("../../images/ButtonLanding.png")}
-          /> */}
-          <TouchableOpacity onPress={() => navigation.navigate("Login")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
-            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-[#AB4E68]">Iniciá sesión</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Registration")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
-            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Regístrate</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Google")} className="bg-[#ffc733] w-2/4 self-center rounded-2xl py-4 mb-2.5 shadow-md">
-            <Text style={{ fontFamily: 'Roboto_300Light' }} className="text-center text-2xl text-white">Google</Text>
-          </TouchableOpacity>
-
-          <View style={styles.divisionLine}></View>
-          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-            <Text style={styles.textSubTitles}>Ingresá como invitado</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
       {/* SCROLL STUFF */}
       <ScrollView
-        style={{ zIndex: 14 }}
+        style={{ zIndex: 14, backgroundColor: "rbga(255,0,0,0.5)" }}
         onScroll={({ nativeEvent }) => onchange(nativeEvent)}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -314,14 +256,12 @@ const Welcome = ({ navigation }) => {
           style={{
             width,
           }}
-        ></View>
+        >
+          <GoogleAuth></GoogleAuth>
+        </View>
       </ScrollView>
-      <View style={styles.wrapDot}>
-        <Text style={viewActive === 1 ? styles.dotActive : styles.dot}>●</Text>
-        <Text style={viewActive === 2 ? styles.dotActive : styles.dot}>●</Text>
-        <Text style={viewActive === 3 ? styles.dotActive : styles.dot}>●</Text>
-        <Text style={viewActive === 4 ? styles.dotActive : styles.dot}>●</Text>
-      </View>
+
+      <Dots page={viewActive - 1} steps={4}></Dots>
     </View>
   );
 };
@@ -349,7 +289,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width,
     height: height * 0.3,
-    bottom: 0,
+    bottom: height * 0.1,
   },
   slide1: {
     position: "absolute",
@@ -368,7 +308,6 @@ const styles = StyleSheet.create({
     zIndex: 3,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#AB4E68",
   },
   slide3: {
     width: width * 2,
@@ -377,7 +316,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFC733",
   },
   slide4: {
     width: width * 2,
@@ -391,22 +329,22 @@ const styles = StyleSheet.create({
   text: {
     color: "#FFFFFF",
     fontSize: 30,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   text1: {
     color: "#FFFFFF",
     fontSize: 30,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   text2: {
     color: "#FFFFFF",
     fontSize: 30,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   text3: {
     color: "#3A302E",
     fontSize: 30,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   wrapDot: {
     position: "absolute",
@@ -414,7 +352,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     bottom: 0,
     marginBottom: 40,
-    zIndex: 14
+    zIndex: 14,
   },
   dotActive: {
     color: "#AB4E68",
@@ -441,7 +379,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: "normal",
     fontSize: 35,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   textSubTitles: {
     top: 20,
@@ -449,15 +387,15 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     textAlign: "center",
     fontSize: 25,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   textSubTitlesLogin: {
     top: 20,
     color: "#AB4E68",
     fontWeight: "normal",
-    textAlign: "center",//hola que onda? 
+    textAlign: "center", //hola que onda?
     fontSize: 35,
-    fontFamily: 'Roboto_300Light'
+    fontFamily: "Roboto_300Light",
   },
   input: {
     width: 200,
@@ -468,7 +406,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   googleLogo: {
-
     width: 50,
     height: 50,
   },
@@ -477,8 +414,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: 90,
     height: 90,
-    right: '-10%', //XDXDXDXD
-    marginTop: 0
+    right: "-10%", //XDXDXDXD
+    marginTop: 0,
   },
   divisionLine: {
     marginTop: 20,
@@ -490,8 +427,8 @@ const styles = StyleSheet.create({
   iconoLogin: {
     height: height * 0.3,
     width: width * 0.7,
-    resizeMode: 'contain'
-  }
+    resizeMode: "contain",
+  },
 });
 
 export default Welcome;

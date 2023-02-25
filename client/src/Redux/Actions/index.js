@@ -8,6 +8,8 @@ if (!BASE_URL_IP) {
   alert(
     "No se cargó bien el .env! Ejemplo: BASE_URL_IP=http://100.26.168.38:8080/"
   );
+} else {
+  console.log("Backend URL: " + BASE_URL_IP);
 }
 
 export const GET_ALL_PETS = "GET_ALL_PETS";
@@ -38,12 +40,11 @@ export const checkToken = async () => {
       return true;
     })
 
-    .catch(err => {
-      return false
-
-    })
-  return response
-}
+    .catch((err) => {
+      return false;
+    });
+  return response;
+};
 //devuelve verdadero si el token se decodifico, falso otherrwise
 export const retriveUserData = async () => {
   const config = {
@@ -52,16 +53,16 @@ export const retriveUserData = async () => {
       Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
     },
   };
-  const response = await axios.get(`${url}/check`, config)
-    .then(resp => {
-      return resp.data
+  const response = await axios
+    .get(`${url}/check`, config)
+    .then((resp) => {
+      return resp.data;
     })
-    .catch(err => {
-      return false
-
-    })
-  return response
-}
+    .catch((err) => {
+      return false;
+    });
+  return response;
+};
 
 //devuelve verdadero si el usuario existe en la base de datos
 export const checkEmail = async (email) => {
@@ -276,12 +277,9 @@ export const getUser = () => {
       })
       .catch((err) => {
         if (typeof err.response !== "undefined" && err.response.data.error)
-
-          alert(err.response.data.error)
-        else
-          alert('index.js ' + err.message)
-      }
-      );
+          alert(err.response.data.error);
+        else alert("index.js " + err.message + " to: " + url + "/user/profile");
+      });
   };
 };
 
@@ -394,7 +392,7 @@ export const PushNotifications = (token, title, body, email) => {
         bodyPayload,
         config
       );
-    
+
       dispatch({
         type: SEND_NOTIFICATION,
         payload: status.data,
@@ -427,7 +425,6 @@ export const DeletePet = async (id) => {
     return desbanear;
   } catch (error) {
     console.error("⚠️ Error -> 🚨 Action -> 🔔 delete: " + error.response.data);
-
   }
 };
 
@@ -541,7 +538,11 @@ export const OcultPet = async (id) => {
     id: id,
   };
   try {
-    const ocultar = await axios.put(url + "/admin/ocultar", bodyPayload, config);
+    const ocultar = await axios.put(
+      url + "/admin/ocultar",
+      bodyPayload,
+      config
+    );
 
     return ocultar;
   } catch (error) {
@@ -561,7 +562,11 @@ export const MostrarPet = async (id) => {
     id: id,
   };
   try {
-    const ocultar = await axios.put(url + "/admin/enAdopcion", bodyPayload, config);
+    const ocultar = await axios.put(
+      url + "/admin/enAdopcion",
+      bodyPayload,
+      config
+    );
 
     return ocultar;
   } catch (error) {
@@ -571,22 +576,24 @@ export const MostrarPet = async (id) => {
   }
 };
 
-
 export const createUserInDb = async (
-  { firstName,
+  {
+    firstName,
     lastName,
     email,
     phone,
     address,
     profilePic,
     conditions,
-    pushToken }, tokenn
-
+    pushToken,
+  },
+  tokenn
 ) => {
   const data = {
     firstName,
     lastName,
-    profilePic: profilePic||
+    profilePic:
+      profilePic ||
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Color_icon_warm.svg/600px-Color_icon_warm.svg.png?20100407180532",
     email,
     phone,
@@ -594,13 +601,17 @@ export const createUserInDb = async (
     conditions,
     pushToken,
   };
-
-  return await axios.post(`${url}/user`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${tokenn}`,
-    },
-  });
+  console.log(data);
+  return await axios
+    .post(`${url}/user`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenn}`,
+      },
+    })
+    .catch((error) => {
+      console.error("⚠️ Error -> 🚨 Action -> 🔔 createUserInDB: " + error);
+    });
 };
 
 export const amountDonate = (payload) => {

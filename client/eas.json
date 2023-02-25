@@ -9,18 +9,12 @@
       },
       "developmentClient": false,
       "distribution": "internal",
-      "ios": {
-        "resourceClass": "m1-medium"
-      },
       "android": {
         "buildType": "apk"
       }
     },
     "preview": {
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m1-medium"
-      }
+      "distribution": "internal"
     },
     "production": {
       "env": {
@@ -28,9 +22,6 @@
       },
       "android": {
         "buildType": "apk"
-      },
-      "ios": {
-        "resourceClass": "m1-medium"
       }
     }
   },

@@ -37,9 +37,11 @@ export default function UserDetail({ route, navigation }) {
     }, [])
   );
   function toCamelCase(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-      return index === 0 ? word.toUpperCase() : word.toUpperCase();
-    }).replace(/\s+/g, '');
+    return str
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index === 0 ? word.toUpperCase() : word.toUpperCase();
+      })
+      .replace(/\s+/g, "");
   }
 
   //NO BORRAR A NO SER Q QUIERAN MEJORARLO---------------------
@@ -49,9 +51,9 @@ export default function UserDetail({ route, navigation }) {
       .then(() => {
         // clear session storage
         // AsyncStorage.clear(() => {
-          AsyncStorage.clear();
-          navigation.navigate("LandigPage")
-        })
+        AsyncStorage.clear();
+        navigation.navigate("Welcome");
+      })
       // })
       .catch((error) => {
         // An error happened.
@@ -97,8 +99,9 @@ export default function UserDetail({ route, navigation }) {
             style={{ fontFamily: "Roboto_300Light" }}
             className="text-4xl text-[#ffc733]"
           >
-            {`${toCamelCase(currentUser.firstName || " ")}  ${toCamelCase(currentUser.lastName || " ")}`}
-
+            {`${toCamelCase(currentUser.firstName || " ")}  ${toCamelCase(
+              currentUser.lastName || " "
+            )}`}
           </Text>
           <Text className=" text-4xl text-[#ffc733]">
             {currentUser?.rating?.rating ? currentUser?.rating.rating : 5}★

@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "start:dev": "npm run lint && npm run start",
-    "start": "nodemon node src/index.js",
+    "start": "nodemon node api/index.js",
     "lint": "eslint src/**/*.js --fix"
   },
   "repository": {

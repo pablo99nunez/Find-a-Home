@@ -3,11 +3,10 @@
 require('dotenv').config();
 //firebaseAdmin es un objeto que tiene privilegios de admin en firebase
 var firebaseAdmin = require('firebase-admin');
+
 let { private_key } = JSON.parse(process.env.GOOGLE_PRIVATE_KEY);
 if (!private_key) {
   throw new Error('Private Key is invalid: ', private_key);
-} else {
-  console.log(private_key);
 }
 var firebaseJson = {
   type: 'service_account',

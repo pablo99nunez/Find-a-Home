@@ -11,10 +11,9 @@ if (!global.atob) {
 }
 
 import { Image, LogBox } from "react-native";
-import { NavigationContainer} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
-import LandingPage from "./src/Components/LandingPage/LandingPage";
 import Welcome from "./src/Components/WelcomePage/WelcomePage";
 import Detail from "./src/Components/Detail/Detail";
 import RegisterFirstSteps from "./src/Components/Register/Entering/Register_First_Steps";
@@ -79,20 +78,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="LandigPage"
-            component={LandingPage}
-            initialParams={{ fromChild: "Initial" }}
+            name="Welcome"
+            component={Welcome}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Google"
             component={GoogleButton}
             initialParams={{ fromChild: "Initial" }}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -370,7 +363,6 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
-
 
           <Stack.Screen
             name="MisReseñas"
