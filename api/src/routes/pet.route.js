@@ -42,7 +42,7 @@ router.post('/', checkJwt, async (req, res) => {
     const newPet = await createPet(PetData, req.user.email);
     res.status(200).send({ message: 'Mascota creada', payload: newPet });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ message: error.message });
   }
 });
 
