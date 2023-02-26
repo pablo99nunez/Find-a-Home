@@ -24,7 +24,16 @@ const UserModel = require('../models/user.model');
 const router = express.Router();
 
 //loggeado, todos, lista todos los usuarios o encuentra al usuario por email
-
+router.get('/', checkJwt, async (req, res) => {
+  try {
+    const email = req.query;
+    if (!email) email = {};
+    const users = await findAllUsers(email);
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(501).send({ error: error.message });
+  }
+});
 //logeado, user, crea un usuario con los datos del token + los q se manden por body
 //Tabien sirve como ruta de edicion por ahora.
 router.post('/', checkJwt, async (req, res) => {
