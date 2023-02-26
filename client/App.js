@@ -66,7 +66,7 @@ const Logo = () => (
   />
 );
 
-//Inicio componente App:
+//Inicio componente App :
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
