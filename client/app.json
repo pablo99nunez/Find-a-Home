@@ -2,7 +2,7 @@
   "expo": {
     "scheme": "exp+find-a-home-app",
     "name": "Find a home",
-    "slug": "FindAHome",
+    "slug": "findahome",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/ic_launcher.png",
