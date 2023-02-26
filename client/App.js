@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
 import { LoginScreen, RegistrationScreen } from "./src/Components/Register";
 import { decode, encode } from "base-64";
 
@@ -11,7 +11,7 @@ if (!global.atob) {
 }
 
 import { Image, LogBox } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Components/Home/Home";
 import Welcome from "./src/Components/WelcomePage/WelcomePage";
@@ -31,7 +31,7 @@ import EditProfile from "./src/Components/EditProfile/EditProfile";
 import { ProfileOthers } from "./src/Components/UserDetail/ProfileOthers";
 import PushNotification from "./src/firebase/pushNotifications";
 import { useFonts } from "expo-font";
-import { Roboto_300Light } from "@expo-google-fonts/roboto";
+import { Roboto_300Light, Roboto_100Thin } from "@expo-google-fonts/roboto";
 import PersistentLogin from "./src/PersistentLogin.jsx";
 import AdminPanel from "./src/Components/AdminPanel/AdminPanel";
 import Reports from "./src/Components/AdminPanel/Reports";
@@ -49,6 +49,7 @@ import { UserSolicitudes } from "./src/Components/UserDetail/UserSolicitudes";
 import UserPets from "./src/Components/AdminPanel/UserPets";
 import Donate from "./src/Components/AdminPanel/Donate";
 import ReviewQueMeDieron from "./src/Components/UserDetail/ReviewsQueMeDieron";
+import { SafeAreaView } from "react-native-safe-area-context";
 LogBox.ignoreLogs([
   `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage`,
 ]);
@@ -69,13 +70,20 @@ const Logo = () => (
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
+    Roboto_100Thin,
   });
-
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: "rgb(255, 0, 0)",
+    },
+  };
   if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
       <PersistentLogin />
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           <Stack.Screen
             name="Welcome"

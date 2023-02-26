@@ -1,165 +1,174 @@
-import React, {useState} from 'react'
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { ScrollView} from 'react-native-gesture-handler'
-import { validateBirthday, validateDesc, validateName } from './validations';
-import { Photos } from './Photos';
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import DateTimePicker, {
+  AndroidNativeProps,
+} from "@react-native-community/datetimepicker";
+import { ScrollView } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { validateBirthday, validateDesc, validateName } from "./validations";
+import { formatDate } from "./utils";
+import Select from "../Buttons/Select";
+import Size from "../Size/Size";
+import { Photos } from "./Photos";
 
-export default FormPet = ({setCrear, crear, error, setError, paginas, setPaginas}) => {
-
+export default FormPet = ({ setCrear, crear, error, setError }) => {
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
   return (
-    
-    <ScrollView className='bg-[#d9d9d9] flex px-[7%]'>
+    <ScrollView className="bg-grey flex px-[7%] gap-2">
       <View>
-        <Text className='text-2xl font-extralight mb-3'>Nombre</Text>
+        <Text className="text-2xl font-extralight mb-3">Nombre</Text>
         <TextInput
-            className='h-11 bg-[#717171] rounded-md px-3 font-light'
-            placeholder="Nombre de tu mascota"
-            placeholderTextColor="#fcfcfc"
-            autoCapitalize="none"
-            value={crear.name}
-            maxLength={15}
-            onBlur={() => {
-              const wrongName = validateName(crear.name)
-              if(wrongName) setError({...error, name : 'El nombre no puede contener caracteres especiales'})
-              else{ setError({...error, name: ''})}
-            }}
-            onChangeText={
-              (text) => setCrear({ ...crear, name: text })
+          className={`h-11 bg-grey-800 text-white rounded-md px-3 font-light ${
+            error.name && "border border-[red]"
+          }`}
+          placeholder="Nombre de tu mascota"
+          placeholderTextColor="#ececec"
+          autoCapitalize="none"
+          value={crear.name}
+          maxLength={15}
+          onBlur={() => {
+            if (crear.name.length > 0) {
+              const wrongName = validateName(crear.name);
+              if (wrongName)
+                setError({
+                  ...error,
+                  name: "El nombre no puede contener caracteres especiales",
+                });
+              else {
+                setError({ ...error, name: "" });
+              }
+            } else {
+              setError({
+                ...error,
+                name: "El nombre no puede estar vacio",
+              });
             }
-          />
-          <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.name}</Text>
+          }}
+          onChangeText={(text) => setCrear({ ...crear, name: text })}
+        />
+        {error.name && (
+          <View className="h-10 mt-1">
+            <Text className="text-[#ed3232]">{error.name}</Text>
           </View>
+        )}
       </View>
 
       <View>
-        <Text className='text-2xl font-extralight mb-3'>Descripcion</Text>
+        <Text className="text-2xl font-extralight mb-3">Descripción</Text>
         <TextInput
-          className='h-20 bg-[#717171] rounded-md px-3 font-light'
+          className={`"h-20 bg-grey-800 text-white rounded-md px-3 font-light ${
+            error.description && "border border-[red]"
+          }`}
           multiline={true}
           numberOfLines={4}
-          placeholder="Cómo es? describe a tu mascota...
+          placeholder="Describe a tu mascota...
           Necesita alguna vacúna o atencion veterinaria?"
-          placeholderTextColor="#fcfcfc" 
+          placeholderTextColor="#ececec"
           autoCapitalize="none"
           value={crear.description}
           maxLength={140}
           onChangeText={(text) => setCrear({ ...crear, description: text })}
           onBlur={() => {
-            const wrongDesc = validateDesc(crear.description)
-            if(wrongDesc) setError({...error, description: 'Por favor agrega una descripcion'})
-            else{setError({...error, description: ''})}
+            const wrongDesc = validateDesc(crear.description);
+            if (wrongDesc)
+              setError({
+                ...error,
+                description: "Por favor agrega una descripcion",
+              });
+            else {
+              setError({ ...error, description: "" });
+            }
           }}
         />
-        
-        <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.description}</Text>
+        {error.description && (
+          <View className="h-10 mt-1">
+            <Text className="text-[#ed3232]">{error.description}</Text>
           </View>
+        )}
       </View>
 
       <View>
-        <Text className='text-2xl font-extralight mb-3'>Fecha de Nacimiento</Text>
-        <TextInput
-          className='h-11 bg-[#717171] rounded-md px-3 font-light'
-          placeholder="Cuando nacio? AAAA/MM/DD"
-          placeholderTextColor="#fcfcfc"
-          autoCapitalize="none"
-          value={crear.birthday}
-          onChangeText={(text) => setCrear({ ...crear, birthday: text })}
-          onBlur={() => {
-            const wrongBirth = validateBirthday(crear.birthday)
-            if(wrongBirth) setError({...error, birthday: 'La fecha debe estar en el formato AAAA/MM/DD'})
-            else setError({...error, birthday:''})
-          }}
-        />
-         <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.birthday}</Text>
+        <Text className="text-2xl font-extralight mb-3">
+          Fecha de Nacimiento
+        </Text>
+        <TouchableOpacity
+          className="flex flex-row justify-between items-center px-4"
+          onPressOut={() => setShowDatePicker(!showDatePicker)}
+        >
+          <Text className="text-xl">
+            {crear.birthday || "Selecciona una fecha: "}
+          </Text>
+          <View className="bg-yellow rounded p-2 shadow">
+            <MaterialCommunityIcons
+              name={crear.birthday ? "calendar-refresh" : "calendar-question"}
+              size={32}
+              color="black"
+            />
           </View>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            maximumDate={new Date()}
+            onChange={(event, date) => {
+              setShowDatePicker(false);
+              if (event.type == "set") {
+                setDate(date);
+                setCrear({
+                  ...crear,
+                  birthday: formatDate(date),
+                });
+              }
+            }}
+          ></DateTimePicker>
+        )}
       </View>
       <View>
-        <Text className='text-2xl font-extralight mb-3'>Especie</Text>
-        <View className='flex flex-row justify-center'>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Perro'})}}
-          className={crear.specie === 'Perro'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Perro</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Gato'})}}
-          className={crear.specie === 'Gato'?
-           "self-start rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Gato</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> {setCrear({...crear, specie: 'Otro'})}}
-          className={crear.specie === 'Otro'?
-           "self-start  rounded-full bg-[#AB4E68] p-3 mx-3" :
-            'self-start  rounded-full bg-[#77747470] p-3 mx-3'}>
-              <Text>Otro</Text>
-          </TouchableOpacity>
+        <Text className="text-2xl font-extralight mb-3">Especie</Text>
+        <View className="flex flex-1 flex-row justify-center">
+          <Select
+            options={["Perro", "Gato", "Otro"]}
+            state={crear.specie}
+            setState={(value) => setCrear({ ...crear, specie: value })}
+          ></Select>
         </View>
-        <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.specie}</Text>
-          </View>
-      </View>
-      <View>
-        
-        <Text className='text-2xl font-extralight'>Tamaño</Text>
-        <View className='flex flex-row items-end justify-center'>
-          <TouchableOpacity
-          onPressIn={() => setCrear({...crear, size: 'small'})}
-          >
-            {crear.size === "small" ? (
-              <Image
-                source={require("../../images/perro_rosa.png")}
-                className='w-10 h-10 mx-3'
-              />
-            ) : (
-              <Image
-                source={require("../../images/perro_negro.png")}
-                className='w-10 h-10 mx-3'
-              />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPressIn={() => setCrear({...crear, size: 'medium'})}
-          >
-            {crear.size === "medium" ? (
-              <Image
-                source={require("../../images/perro_rosa.png")}
-                className='w-12 h-12 mx-3'
-              />
-            ) : (
-              <Image
-                source={require("../../images/perro_negro.png")}
-                className='w-12 h-12 mx-3'
-              />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPressIn={() => setCrear({...crear, size: 'large'})}
-            >
-            {crear.size === "large" ? (
-              <Image
-                source={require("../../images/perro_rosa.png")}
-                className='w-14 h-14 mx-3'
-              />
-            ) : (
-              <Image
-                source={require("../../images/perro_negro.png")}
-                className='w-14 h-14 mx-3'
-              />
-            )}
-          </TouchableOpacity>
+
+        <View className="h-5 mt-1">
+          <Text className="text-[#ed3232]">{error.specie}</Text>
         </View>
-        <View className='h-5 mt-1'>
-            <Text className='text-[#ed3232]'>{error.size}</Text>
-          </View>
       </View>
 
+      <View>
+        <Text className="text-2xl font-extralight">Tamaño</Text>
+        <Size
+          state={crear.size}
+          setState={(value) => setCrear({ ...crear, size: value })}
+        ></Size>
+        <View className="h-5 mt-1">
+          <Text className="text-[#ed3232]">{error.size}</Text>
+        </View>
+      </View>
+      <View>
+        <Text className="text-2xl font-extralight mb-3">Estado del animal</Text>
+        <View className="flex flex-row justify-center flex-wrap">
+          <Select
+            options={["Adoptable", "Lost", "Found"]}
+            labels={["En busca de adopción", "Perdido", "Encontrado"]}
+            state={crear.state}
+            setState={(value) => setCrear({ ...crear, state: value })}
+          ></Select>
+        </View>
+        <View className="h-5 mt-1">
+          <Text className="text-[#ed3232]">{error.state}</Text>
+        </View>
+
+        <Photos
+          photos={crear.photos}
+          setPhotos={(value) => setCrear({ ...crear, photos: value })}
+        />
+      </View>
     </ScrollView>
-   
-  )
-}
-
-
+  );
+};

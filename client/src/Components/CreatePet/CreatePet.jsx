@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, ScrollView, Alert, Modal,  } from "react-native";
+import { StyleSheet, View, ScrollView, Alert, Modal } from "react-native";
 import { useState } from "react";
 import { PetPost } from "../../Redux/Actions/index";
 import * as Location from "expo-location";
 import { ButtonYellow } from "../Buttons/Buttons";
 import FormPet from "./FormPet";
 import FormPetsTwo from "./FormPetsTwo";
+import { EvilIcons } from "@expo/vector-icons";
+import { uploadImage } from "./utils";
 
 export const CreatePet = ({ navigation }) => {
   const [pin, setPin] = useState({
@@ -21,7 +23,9 @@ export const CreatePet = ({ navigation }) => {
         }
       );
       if (status !== "granted") {
-        console.error("CreatePet.jsx: Permission to access location was denied");
+        console.error(
+          "CreatePet.jsx: Permission to access location was denied"
+        );
 
         return;
       }
@@ -47,97 +51,111 @@ export const CreatePet = ({ navigation }) => {
     state: "",
     specie: "",
     profilePic: "",
-    gallery: [],
+    photos: [],
   });
 
   const [error, setError] = useState({});
   const [visible, setVisible] = React.useState(false);
 
-  const HandleSubmit = async () => {
+  const handleSubmit = async () => {
+    if (!crear.specie) {
+      setError({ ...error, specie: "Por favor, selecciona una especie" });
+      return;
+    }
+
     if (!error.name && !error.description && !error.birthday) {
-      const DatosPetAEnviar = {
-        name: crear.name,
-        description: crear.description,
-        birthday: crear.birthday,
-        size: crear.size,
-        profilePic: crear.profilePic ||
-          "https://us.123rf.com/450wm/natbasil/natbasil1601/natbasil160100031/52068222-animales-siluetas-perro-gato-y-conejo-logotipo-de-la-tienda-de-animales-o-cl%C3%ADnica-veterinaria-ilustr.jpg?ver=6",
-        gallery: crear.gallery,
-        specie: crear.specie,
-        state: crear.state,
-        coordinates: {
-          latitude: pin.latitude,
-          longitude: pin.longitude,
-        },
-      };
-      await PetPost(DatosPetAEnviar)
-        .then((sucess) => {
-         navigation.navigate("Home");
-        })
-        .catch((error) => {
-          console.error("⚠️ Error -> 🚨 CreatePet -> 🔔PetPost: " + error.message);
-        })
-        .finally((e) => {
-          setCrear({
-            name: "",
-            description: "",
-            birthday: "",
-            size: "",
-            state: "",
-            specie: "",
-            profilePic: "",
-            gallery: [],
-          });
+      try {
+        let photos = [];
+        let promises = [];
+        let profilePic;
+
+        crear.photos.forEach((e, i) => {
+          promises.push(
+            uploadImage(e, setUploading)
+              .then((url) => {
+                if (i == 0) {
+                  profilePic = url;
+                } else photos.push(url);
+              })
+              .catch((err) => console.error(err))
+          );
         });
+
+        await Promise.all(promises);
+
+        const DatosPetAEnviar = {
+          name: crear.name,
+          description: crear.description,
+          birthday: crear.birthday,
+          size: crear.size,
+          profilePic:
+            profilePic ||
+            "https://us.123rf.com/450wm/natbasil/natbasil1601/natbasil160100031/52068222-animales-siluetas-perro-gato-y-conejo-logotipo-de-la-tienda-de-animales-o-cl%C3%ADnica-veterinaria-ilustr.jpg?ver=6",
+          gallery: photos,
+          specie: crear.specie,
+          state: crear.state,
+          coordinates: {
+            latitude: pin.latitude,
+            longitude: pin.longitude,
+          },
+        };
+        console.log(DatosPetAEnviar);
+
+        await PetPost(DatosPetAEnviar);
+
+        navigation.navigate("Home");
+        setCrear({
+          name: "",
+          description: "",
+          birthday: "",
+          size: "",
+          state: "",
+          specie: "",
+          profilePic: "",
+          photos: [],
+        });
+      } catch (error) {
+        console.error(
+          "⚠️ Error -> 🚨 CreatePet -> 🔔PetPost: " + error.message
+        );
+      }
     } else {
       alert("Por favor completa todos los datos");
     }
   };
-  const [paginas, setPaginas] = useState(1)
- 
+
   //verbo singular, el useState altera el valor de esta variable en cada renderizado
   //disable=true si UNA de las condiciones de abajo se cumple
-  const disable = `${crear.name}`.length===0 ||
-  `${crear.description}`.length===0 ||
-  `${crear.birthday}`.length===0 ||
-  `${crear.size}`.length===0 ||
-  `${crear.specie}`.length===0 ||
-  `${error.name}${error.description}${error.birthday}`.length > 0
+  const disable =
+    crear.name.length === 0 ||
+    crear.description.length === 0 ||
+    crear.birthday.length === 0 ||
+    crear.size.length === 0 ||
+    crear.specie.length === 0 ||
+    crear.photos.length === 0;
 
-  const disable2 = `${crear.state}`.length===0 
+  const [uploading, setUploading] = useState(false);
 
   return (
     <>
-
       <ScrollView className="bg-[#d9d9d9]">
-        {paginas === 1  ?
-       <FormPet
-       setCrear={setCrear}
-       crear={crear}
-       error={error}
-       setError={setError}
-     />
-      
-        :
-        <FormPetsTwo
-        setCrear={setCrear}
-        crear={crear}
-        error={error}
-        paginas={paginas}
-        setPaginas={setPaginas}
-        setError={setError}
-      />  
-          }
+        <FormPet
+          setCrear={setCrear}
+          crear={crear}
+          error={error}
+          setError={setError}
+        />
+
         <View className="my-[10%]">
-          {paginas === 1 && !error.size && !error.state && !error.specie ?
-
-        <ButtonYellow deshabilitar={disable} onPress={() => setPaginas(2) } text={disable? "Complete los datos":"Siguiente"}/>
-
-:          
-        
-          <ButtonYellow deshabilitar={disable2} onPress={() => HandleSubmit()} text={disable2?"Complete los datos":"Publicar"} />
-        }
-
+          {/* {!uploading ? ( */}
+          <ButtonYellow
+            deshabilitar={disable}
+            onPress={() => handleSubmit()}
+            text="Publicar"
+          />
+          {/*   ) : (
+            <EvilIcons name="spinner-3" size={24} color="black" />
+          )} */}
         </View>
       </ScrollView>
     </>

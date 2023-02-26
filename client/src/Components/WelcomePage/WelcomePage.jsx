@@ -222,7 +222,7 @@ const Welcome = ({ navigation }) => {
             blurRadius={0}
           ></ImageBackground>
           <Image
-            className="absolute -bottom-20 z-[5]"
+            className="absolute -bottom-40 z-[5]"
             source={require("../../images/pets-png.png")}
           />
         </View>
@@ -257,7 +257,7 @@ const Welcome = ({ navigation }) => {
             width,
           }}
         >
-          <GoogleAuth></GoogleAuth>
+          <GoogleAuth navigation={navigation} showBg={false}></GoogleAuth>
         </View>
       </ScrollView>
 

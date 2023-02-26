@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, SafeAreaView } from "react-native";
 import Card from "../Card/Card";
 import { Header } from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { ButtonCreatePet, ButtonAdminDashboard } from "../Buttons/Buttons";
 
 export default function Home({ navigation }) {
-
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((store) => store.isLoggedIn);
   const allPets = useSelector((state) => state.allPets);
@@ -29,18 +28,18 @@ export default function Home({ navigation }) {
       alert(
         "Tu cuenta se encuentra inhabilitada para mas detalles envia un email a hola@findahome.com.ar"
       );
-      navigation.navigate("Login");
+      navigation.navigate("Google");
     }
   }, []);
   function HandleLoginToAdoption() {
     //función que si eres User dirige a crear Pet; si eres Guest te dirige a Loggearte o Registrarte
     isLoggedIn
       ? navigation.navigate("CreatePet")
-      : navigation.navigate("Login");
+      : navigation.navigate("Google");
   }
 
   return (
-    <View className="flex-1 bg-[#AB4E68]">
+    <SafeAreaView className="flex-1 bg-[#AB4E68]">
       <Header navigation={navigation} />
       <FlatList
         numColumns={2}
@@ -62,6 +61,6 @@ export default function Home({ navigation }) {
           }}
         />
       ) : null}
-    </View>
+    </SafeAreaView>
   );
 }

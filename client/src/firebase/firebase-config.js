@@ -22,6 +22,7 @@ React Native does not support the File and Blob types, so Firebase Storage uploa
 import '@firebase/auth';
 import '@firebase/firestore'; */
 import { initializeApp } from "@firebase/app";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   name: "Find a Home",
@@ -43,7 +44,7 @@ export { firebase }; */
 
 // Initialize Firebase
 export default firebaseApp;
-
+export const storage = getStorage(firebaseApp);
 //como usar
 //1) importar firebaseApp donde se necesite
 // import firebaseApp from "../rutarelativa/firebase-config.js"

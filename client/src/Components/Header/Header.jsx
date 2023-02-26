@@ -27,12 +27,11 @@ import {
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import * as Location from "expo-location";
-import axios from 'axios'
+import axios from "axios";
 import { BASE_URL_IP } from "@env";
 export const url = BASE_URL_IP;
 
-import { registerForPushNotificationsAsync as getPushToken } from '../../firebase/pushNotifications'
-
+import { registerForPushNotificationsAsync as getPushToken } from "../../firebase/pushNotifications";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -54,7 +53,7 @@ export const Header = ({ navigation }) => {
   const [specie, setSpecie] = useState("");
   const [size, setSize] = useState("");
 
-  const [profilePic, setProfilepic] = useState("")
+  const [profilePic, setProfilepic] = useState("");
   useEffect(() => {
     if (size === "" && specie === "") {
       dispatch(getAllPets());
@@ -69,42 +68,47 @@ export const Header = ({ navigation }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getUser())
+      dispatch(getUser());
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
-    setProfilepic(!profilePic)
+    setProfilepic(!profilePic);
   }, [currentUser.profilePic]);
 
   useEffect(() => {
     ///Check Push Token
     const checkToken = async () => {
       let newToken = [...currentUser.pushToken];
-      const pushToken = await getPushToken()
+      const pushToken = await getPushToken();
       //Si el token existe en el user, no hacemos nada
-      const verifyToken = newToken?.some(token => token === pushToken)
+      const verifyToken = newToken?.some((token) => token === pushToken);
 
       if (!verifyToken && pushToken) {
-        newToken = [...newToken, pushToken]
+        newToken = [...newToken, pushToken];
         const config = {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.currentUser?.stsTokenManager?.accessToken}`,
           },
         };
-        const newUserInfo = { ...currentUser, pushToken: newToken }
+        const newUserInfo = { ...currentUser, pushToken: newToken };
 
         try {
-          const verifyTokenInBackend = await axios.put(url + "/user/profile", newUserInfo, config);
+          const verifyTokenInBackend = await axios.put(
+            url + "/user/profile",
+            newUserInfo,
+            config
+          );
         } catch (error) {
-          console.error("⚠️ Error -> 🚨 Header -> 🔔 checkToken: " + error.message)
+          console.error(
+            "⚠️ Error -> 🚨 Header -> 🔔 checkToken: " + error.message
+          );
         }
       }
     };
-    currentUser.pushToken && checkToken()
-  }, [currentUser])
- 
+    currentUser.pushToken && checkToken();
+  }, [currentUser]);
 
   const [pin, setPin] = useState({
     latitude: 0,
@@ -139,8 +143,6 @@ export const Header = ({ navigation }) => {
     })();
   }, []);
 
-
-
   const resizeBox = (to) => {
     to === 1 && setVisible(true);
     Animated.timing(scale, {
@@ -163,35 +165,40 @@ export const Header = ({ navigation }) => {
     dispatch(getPetsByZone(number, coordsToSend));
   }, [number]);
 
-
   return (
     <View className="flex flex-row justify-between items-center mt-[10%] mb-[5%] pl-[5%] pr-[5%]">
       {isLoggedIn ? (
-        <TouchableOpacity onPress={() => {
-          //talvez se tenga que hacer lo siguiente
-          /*
+        <TouchableOpacity
+          onPress={() => {
+            //talvez se tenga que hacer lo siguiente
+            /*
           const auth = getAuth()
           auth.currentUser?
           A lo mejor haciendo una instancia de getAuth() se refresca el token solo.
           */
-          checkToken().then(resp => {
-            //resp=true si token es valido
-            //resp=false si token expiró o es inválido
-            resp ? navigation.navigate("UserDetail") : navigation.navigate("Login");
-          }).catch(resp => {
-            //solo ocurre si el server esta offline
-          })
-        }}>
+            checkToken()
+              .then((resp) => {
+                //resp=true si token es valido
+                //resp=false si token expiró o es inválido
+                resp
+                  ? navigation.navigate("UserDetail")
+                  : navigation.navigate("Google");
+              })
+              .catch((resp) => {
+                //solo ocurre si el server esta offline
+              });
+          }}
+        >
           <Image
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
             source={{
-              uri: currentUser.profilePic
+              uri: currentUser.profilePic,
             }}
           />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Google")}>
           <Image
             className="w-14 h-14 rounded-full"
             resizeMode={"contain"}
@@ -206,7 +213,7 @@ export const Header = ({ navigation }) => {
         resizeMode={"contain"}
       />
       {Platform.OS === "web" ? <></> : <></>}
-      <TouchableOpacity onPress={() => resizeBox(1)} >
+      <TouchableOpacity onPress={() => resizeBox(1)}>
         <Icon name="menu" className="w-12 h-12" size={50} color={"#FFC733"} />
       </TouchableOpacity>
       {/* WEB BROWSER ACA ----------------------- userddetlail */}
@@ -214,25 +221,47 @@ export const Header = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             if (auth.currentUser?.uid) navigation.navigate("UserDetail");
-            else navigation.navigate("Login");
+            else navigation.navigate("Google");
           }}
         >
           <Text>USER PROFILE WEB BROWSER</Text>
         </TouchableOpacity>
       ) : (
-        <Modal transparent visible={visible} onRequestClose={()=>resizeBox(0)} onShow={() => resizeBox(1)} animationType="fade">
-          <SafeAreaView style={{backgroundColor: 'rgba(171, 78, 104, 0.7)', height: height}}>
-            <Animated.View style={{height: height * 0.55}} className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[23%]">
+        <Modal
+          transparent
+          visible={visible}
+          onRequestClose={() => resizeBox(0)}
+          onShow={() => resizeBox(1)}
+          animationType="fade"
+        >
+          <SafeAreaView
+            style={{
+              backgroundColor: "rgba(171, 78, 104, 0.7)",
+              height: height,
+            }}
+          >
+            <Animated.View
+              style={{ height: height * 0.55 }}
+              className="rounded-3xl bg-[#FFC733] w-[90%] mx-[5%] mt-[23%]"
+            >
               <View className="p-[5%]">
                 <View className="flex flex-row justify-between">
                   <Text
                     className="text-2xl"
                     style={{ fontFamily: "Roboto_300Light" }}
-                    >
+                  >
                     Especie:
                   </Text>
-                  <TouchableOpacity className="flex flex-row justify-center items-center rounded-2xl" onPress={() => resizeBox(0)}>
-                    <Icon name="close-box" className="w-12 h-12" size={40} color={"#AB4E68"} />
+                  <TouchableOpacity
+                    className="flex flex-row justify-center items-center rounded-2xl"
+                    onPress={() => resizeBox(0)}
+                  >
+                    <Icon
+                      name="close-box"
+                      className="w-12 h-12"
+                      size={40}
+                      color={"#AB4E68"}
+                    />
                   </TouchableOpacity>
                 </View>
 
@@ -255,7 +284,7 @@ export const Header = ({ navigation }) => {
                     position: "absolute",
                     top: width * 0.1,
                     zIndex: 1,
-                    elevation: 1
+                    elevation: 1,
                   }}
                   dropdownItemStyles={{ width: width * 0.8 }}
                   dropdownTextStyles={{ color: "#717171", fontSize: 18 }}
@@ -265,12 +294,19 @@ export const Header = ({ navigation }) => {
 
                 <Text
                   className="text-2xl mb-[3%] mt-[3%]"
-                  style={{ fontFamily: "Roboto_300Light" , zIndex: -1, elevation: -1}}
+                  style={{
+                    fontFamily: "Roboto_300Light",
+                    zIndex: -1,
+                    elevation: -1,
+                  }}
                 >
                   Tamaño:
                 </Text>
 
-                <View className="flex flex-row justify-around items-end w-11/12 mx-auto" style={{zIndex: -1, elevation:-1}}>
+                <View
+                  className="flex flex-row justify-around items-end w-11/12 mx-auto"
+                  style={{ zIndex: -1, elevation: -1 }}
+                >
                   <TouchableOpacity
                     onPress={() => {
                       if (size !== "small") {
@@ -338,13 +374,33 @@ export const Header = ({ navigation }) => {
 
                 <Text
                   className="text-2xl mb-[3%] mt-[3%]"
-                  style={{ fontFamily: "Roboto_300Light", zIndex: -1, elevation: -1}}
+                  style={{
+                    fontFamily: "Roboto_300Light",
+                    zIndex: -1,
+                    elevation: -1,
+                  }}
                 >
                   Kilometros:
                 </Text>
-                <TouchableOpacity style={{zIndex: -1, elevation: -1}} className="flex flex-row justify-center items-center mb-[3%] bg-[#D9D9D9] h-[14%] rounded-2xl" onPress={() => {navigation.navigate("Map", pin), resizeBox(0)}}>
-                  <Icon name="map" className="w-12 h-12" size={50} color={"#AB4E68"} />
-                  <Text className="text-xl text-[#AB4E68]" style={{ fontFamily: "Roboto_300Light" }}>Ver mascotas en el mapa</Text>
+                <TouchableOpacity
+                  style={{ zIndex: -1, elevation: -1 }}
+                  className="flex flex-row justify-center items-center mb-[3%] bg-[#D9D9D9] h-[14%] rounded-2xl"
+                  onPress={() => {
+                    navigation.navigate("Map", pin), resizeBox(0);
+                  }}
+                >
+                  <Icon
+                    name="map"
+                    className="w-12 h-12"
+                    size={50}
+                    color={"#AB4E68"}
+                  />
+                  <Text
+                    className="text-xl text-[#AB4E68]"
+                    style={{ fontFamily: "Roboto_300Light" }}
+                  >
+                    Ver mascotas en el mapa
+                  </Text>
                 </TouchableOpacity>
                 <TextInput
                   placeholder="Mascotas en tu radio de km."
@@ -354,9 +410,12 @@ export const Header = ({ navigation }) => {
                   value={number}
                   onChangeText={(text) => setNumber(text)}
                   className="h-[12%] bg-[#D9D9D9] rounded-md text-[#717171] text-center"
-                  style={{ fontFamily: "Roboto_300Light", zIndex: -1, elevation: -1}}
+                  style={{
+                    fontFamily: "Roboto_300Light",
+                    zIndex: -1,
+                    elevation: -1,
+                  }}
                 />
-                
               </View>
             </Animated.View>
           </SafeAreaView>

@@ -23,11 +23,13 @@ export const ButtonYellow = (props) => {
   return (
     <TouchableOpacity
       disabled={deshabilitar}
-      className="bg-[#ffc733] w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md"
+      className={`bg-yellow shadow w-2/3 self-center rounded-2xl py-4 mb-2.5 shadow-md ${
+        deshabilitar && "bg-grey-300"
+      }`}
       onPress={onPress}
     >
       <Text
-        className="text-center text-2xl"
+        className={`text-center text-2xl ${deshabilitar && "text-brown"}`}
         style={{ fontFamily: "Roboto_300Light" }}
       >
         {text}
@@ -40,7 +42,7 @@ export const ButtonCreatePet = (props) => {
   const { onPress } = props;
   return (
     <TouchableOpacity
-      className="bg-[#FFC733] items-center justify-center border rounded-full w-[19%] h-[9%] absolute right-[5%] bottom-[5%]"
+      className="bg-yellow items-center justify-center shadow rounded-full w-16 h-16 absolute right-[5%] bottom-[5%]"
       onPress={onPress}
     >
       <Image
@@ -94,10 +96,11 @@ export const DonateButton = (props) => {
     <TouchableOpacity
       className="bg-[#4FC3F7] w-3/4 self-center rounded-2xl py-4 shadow-md flex flex-row justify-center items-center"
       onPress={onPress}
-      // onPress={()=> navigation.navigate('MercadoPago')} 
+      // onPress={()=> navigation.navigate('MercadoPago')}
     >
       <Text
-        className="text-center text-xl text-[#ffffff] font-black" style={{ fontFamily: "Roboto_300Light" }}
+        className="text-center text-xl text-[#ffffff] font-black"
+        style={{ fontFamily: "Roboto_300Light" }}
       >
         {text}
       </Text>

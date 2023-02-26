@@ -8,6 +8,8 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
@@ -17,12 +19,15 @@ import { HeaderDetail } from "./HeaderDetail";
 import BottomView from "./BottomView";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Characteristics } from "./Characteristics";
+import mapStyle from "./mapStyle.json";
 //FIREBASE IMPORT ZONE
 import firebase from "../../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { BottomViewOwner } from "./BottomViewOwner";
 import { ReportPet } from "./ReportPet";
+import ImageModal from "../ImageModal/ImageModal";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 const { width } = Dimensions.get("screen");
 
@@ -79,88 +84,85 @@ export default function Detail({ route, navigation }) {
   const petId = route.params.id;
 
   const currentUser = useSelector((state) => state.currentUser);
-
+  const [openImageModal, setOpenImageModal] = useState(false);
+  const [imageModal, setImageModal] = useState(null);
   return (
-    <View>
-      <View className="bg-[#acacac] h-full">
-        <ImageBackground style={styles.profilePic} source={{ uri: profilePic }}>
+    <View className="h-full w-full bg-grey-100 flex">
+      <HeaderDetail
+        onPress={() => navigation.goBack()}
+        days={days}
+        owner={owner}
+        currentUser={currentUser}
+      />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className={`h-[50vh] flex items-center justify-center -z-[10]`}>
           <LinearGradient
-            colors={["#00000000", "rgba(172, 172, 172, 0)", "#acacac"]}
-            style={{ height: "100%", width: "100%" }}
-          >
-            <View className="h-1/3">
-              <View>
-                <HeaderDetail
-                  onPress={() => navigation.goBack()}
-                  days={days}
-                  owner={owner}
-                  currentUser={currentUser}
-                />
-              </View>
-
-              <View className="h-52">
-                <Text
-                  style={{ fontFamily: "Roboto_300Light" }}
-                  className="text-[#f5c936] text-5xl text-center my-12"
-                >
-                  {name.toUpperCase()}
-                </Text>
-              </View>
-
-              <View className="mx-auto">
-                {gallery ? (
-                  <FlatList
-                    horizontal={true}
-                    keyExtractor={(item, index) => name + index}
-                    data={gallery}
-                    renderItem={({ item }) => (
-                      <Image style={styles.gallery} source={{ uri: item }} />
-                    )}
-                  ></FlatList>
-                ) : (
-                  <View className="min-h-[120px]"></View>
-                )}
-              </View>
-            </View>
-          </LinearGradient>
-        </ImageBackground>
-
-        <View className="h-1/4">
+            className="h-1/2 w-full z-[10] absolute bottom-0"
+            colors={["#00000000", "#d9d9d9"]}
+          ></LinearGradient>
+          <Image
+            className="absolute w-full h-full"
+            style={{
+              resizeMode: "cover",
+            }}
+            source={{ uri: profilePic }}
+          ></Image>
           <Text
-            style={{ fontFamily: "Roboto_300Light" }}
-            className="text-2xl text-center w-10/12 mx-auto font-semibold bg-[#f5c936] rounded-xl my-[5%]"
+            style={{ fontFamily: "Roboto_100Thin" }}
+            className="text-yellow text-7xl text-center my-12"
           >
-            {state === "Lost"
-              ? "Perdido"
-              : state === "Adopted"
-              ? "Adoptado"
-              : state === "Found"
-              ? "Encontrado"
-              : state === "NotAdoptable"
-              ? "No adoptable"
-              : state === "InAdoptionProcess"
-              ? "En proceso de adopción"
-              : "En adopción"}
+            {name}
           </Text>
+          {gallery && (
+            <FlatList
+              horizontal={true}
+              keyExtractor={(item, index) => name + index}
+              data={gallery}
+              className="absolute bottom-0 z-[11] "
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  className="w-[90] h-[90] rounded overflow-hidden ml-2"
+                  onPress={() => {
+                    setImageModal(item);
+                    setOpenImageModal(true);
+                  }}
+                >
+                  <Image source={{ uri: item }} className="flex-1" />
+                </TouchableOpacity>
+              )}
+            ></FlatList>
+          )}
+        </View>
+        <View className="mt-6">
           <Text
             style={{ fontFamily: "Roboto_300Light" }}
-            className="text-2xl text-center w-11/12 mx-auto"
+            className="text-3xl text-center w-11/12 mx-auto"
           >
             {description}
           </Text>
         </View>
-        <Characteristics
-          size={size.toLowerCase()}
-          age={age ? age : calcAge()}
-        />
-        <View>
-          {/* <Text>
-            Coordenadas: latitud:{coordinates.latitude} longitud:
-            {coordinates.longitude}
-          </Text> */}
+        <View className="mt-6 px-6">
+          <Characteristics
+            size={size.toLowerCase()}
+            age={age ? age : calcAge()}
+          />
         </View>
-        {["Adopted"].includes(state) ? null : (
-          <View className="h-1/4 justify-center">
+        <View className="w-[80%] self-center bg-red-400 h-32 mt-6 rounded-xl overflow-hidden">
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={{ width: "100%", height: "100%" }}
+            customMapStyle={mapStyle}
+            initialRegion={{
+              ...coordinates,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.03,
+            }}
+          >
+            <Marker coordinate={coordinates}></Marker>
+          </MapView>
+        </View>
+        {state != "Adopted" && (
+          <View className="h-[25vh] justify-center">
             {currentUser.email === owner ? (
               <View className="flex flex-row justify-start">
                 <View className="w-[80%]">
@@ -183,7 +185,7 @@ export default function Detail({ route, navigation }) {
                 </View>
               </View>
             ) : (
-              <View className="flex flex-row justify-center items-center">
+              <View className="flex flex-row justify-center items-center mb-4">
                 <ButtonYellow
                   text="Adoptar"
                   onPress={() => HandleLoginToAdoption()}
@@ -193,11 +195,11 @@ export default function Detail({ route, navigation }) {
             )}
           </View>
         )}
-      </View>
+      </ScrollView>
 
       {Platform.OS !== "web" ? (
         <BottomSheet
-          backgroundStyle={styles.containerInput}
+          style={{ zIndex: 100 }}
           ref={bottomSheetRef}
           index={open}
           snapPoints={snapPoints}
@@ -229,22 +231,11 @@ export default function Detail({ route, navigation }) {
           />
         </View>
       )}
+      <ImageModal
+        imageUrl={imageModal}
+        isOpen={openImageModal}
+        onClose={() => setOpenImageModal(false)}
+      ></ImageModal>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  profilePic: {
-    width: "100%",
-    height: 400,
-  },
-  gallery: {
-    marginHorizontal: width * 0.01,
-    width: 90,
-    height: 90,
-    borderRadius: 5,
-  },
-  containerInput: {
-    backgroundColor: "#d9d9d9",
-  },
-});

@@ -30,7 +30,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function GoogleButton({ navigation }) {
+export default function GoogleButton({ navigation, showBg = true }) {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "328480437483-ui4cd46sm4u1cug87tglkctvaejd4m0u.apps.googleusercontent.com",
@@ -107,6 +107,23 @@ export default function GoogleButton({ navigation }) {
 
   return (
     <View className="h-full min-w-full relative items-center justify-center">
+      {showBg && (
+        <>
+          <ImageBackground
+            style={{
+              backgroundImage: "linear-gradient",
+              backgroundSize: "cover",
+            }}
+            className="h-full w-full top-0 left-0 absolute z-[-50]"
+            source={require("../../images/bg-google.png")}
+            blurRadius={0}
+          ></ImageBackground>
+          <Image
+            className="absolute -bottom-40 z-[5]"
+            source={require("../../images/pets-png.png")}
+          />
+        </>
+      )}
       <View
         title="Login"
         // onPress={() => promptAsync()}
@@ -120,7 +137,7 @@ export default function GoogleButton({ navigation }) {
         </View>
 
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity className="shadow">
             <FontAwesome.Button
               name="google"
               onPress={() => promptAsync()}
@@ -130,16 +147,16 @@ export default function GoogleButton({ navigation }) {
               Login with Google
             </FontAwesome.Button>
           </TouchableOpacity>
-          <View className="h-32 text-center my-5 text-[#FFC733]">
-            <Text className="text-center text-[#FFC733]">
+          <View className="h-32 my-5">
+            <Text className="text-center text-yellow">
               Accedé a Find A Home
             </Text>
-            <Text className="text-center text-[#FFC733]">
+            <Text className="text-center text-yellow">
               desde tu cuenta de Google
             </Text>
-            <Text className="text-center text-[#FFC733]">o</Text>
+            <Text className="text-center text-yellow">o</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-              <Text className="text-center text-[#FFC733] text-[16px] font-bold">
+              <Text className="text-center text-yellow text-[16px] font-bold">
                 Ingresá como invitado
               </Text>
             </TouchableOpacity>
