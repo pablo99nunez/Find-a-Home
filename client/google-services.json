@@ -1,33 +1,62 @@
 {
   "project_info": {
-    "project_number": "328480437483",
-    "project_id": "findahomehenry",
-    "storage_bucket": "findahomehenry.appspot.com"
+    "project_number": "385516020629",
+    "project_id": "find-a-home-d06d7",
+    "storage_bucket": "find-a-home-d06d7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:328480437483:android:2f85100c9ae747c386baae",
+        "mobilesdk_app_id": "1:385516020629:android:f5782b3d216cd2ef1fcc9c",
         "android_client_info": {
-          "package_name": "com.reactnativefirebase"
+          "package_name": "com.nunez.find_a_home"
         }
       },
       "oauth_client": [
         {
-          "client_id": "328480437483-2r8dfjugoqcomqa83su8qpr5rd8sido1.apps.googleusercontent.com",
+          "client_id": "385516020629-dv0u204gimgnavns3hhcg659aq6o0hau.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6tFOTP1fYYoVL2_1Z2v7dY1ylAfqLKxU"
+          "current_key": "AIzaSyCtAPfMBGReG5JKMjI94op-hSXlJyoLNd4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "328480437483-2r8dfjugoqcomqa83su8qpr5rd8sido1.apps.googleusercontent.com",
+              "client_id": "385516020629-dv0u204gimgnavns3hhcg659aq6o0hau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385516020629:android:3517e8d90c4214da1fcc9c",
+        "android_client_info": {
+          "package_name": "com.pablo99nunez.findAHome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385516020629-dv0u204gimgnavns3hhcg659aq6o0hau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtAPfMBGReG5JKMjI94op-hSXlJyoLNd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385516020629-dv0u204gimgnavns3hhcg659aq6o0hau.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
