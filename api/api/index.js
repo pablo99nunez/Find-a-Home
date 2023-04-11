@@ -60,7 +60,7 @@ app.get('/api/check', checkJwt, async (req, res) => {
 });
 
 app.get('/api/auth', async (req, res) => {
-  const userToken = req.header('Authorization'); // Get token from the request header
+  const userToken = req.header('Auth'); // Get token from the request header
   const cargaToken = process.env.CARGA_TOKEN; // Get CARGA_TOKEN from environment variables
 
   if (userToken && userToken === cargaToken) {
