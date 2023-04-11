@@ -63,7 +63,7 @@ app.get('/api/auth', async (req, res) => {
   const userToken = req.header('Auth'); // Get token from the request header
   const cargaToken = process.env.CARGA_TOKEN; // Get CARGA_TOKEN from environment variables
 
-  if (userToken && userToken === cargaToken) {
+  if (userToken && userToken == cargaToken) {
     // Compare tokens
     res.sendStatus(200); // Return 200 status if they are equal
   } else {
