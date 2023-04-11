@@ -58,6 +58,37 @@ app.get('/api/check', checkJwt, async (req, res) => {
     res.send({ message: 'el back exploto' + err.message });
   }
 });
+
+app.get('/api/auth', async (req, res) => {
+  const userToken = req.header('Authorization'); // Get token from the request header
+  const cargaToken = process.env.CARGA_TOKEN; // Get CARGA_TOKEN from environment variables
+
+  if (userToken && userToken === cargaToken) {
+    // Compare tokens
+    res.sendStatus(200); // Return 200 status if they are equal
+  } else {
+    res.sendStatus(401); // Otherwise, return unauthorized status
+  }
+});
+// Define Mongoose schema
+const ReportSchema = new mongoose.Schema({
+  number: Number,
+});
+
+// Create Mongoose model
+const Report = mongoose.model('Report', ReportSchema);
+
+app.get('/api/report/:number', async (req, res) => {
+  const { number } = req.params;
+  try {
+    const report = new Report({ number: parseInt(number) });
+    await report.save();
+    res.status(201).send(report);
+  } catch (err) {
+    res.status(500).send('Error: ' + err.message);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server has started on port ${port}!`);
 });
